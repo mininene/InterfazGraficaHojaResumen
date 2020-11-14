@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -10,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WebResumen.Models;
+using WebResumen.Services.Authorization;
 
 namespace WebResumen
 {
@@ -25,9 +27,18 @@ namespace WebResumen
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AppDbContext>(options => options
+            services.AddDbContext<AppDbContext>(options => options  //Crear el context desde la base de datos
             .UseSqlServer(Configuration
             .GetConnectionString("DefaultConnection")));
+
+            services.AddAuthorization(options =>                        //Servicio de Autorizacion
+            {
+                options.AddPolicy("ADRoleOnly", policy =>
+                    //policy.Requirements.Add(new CheckADGroupRequirement("GLOBAL\\ESSA-HojaResumen_Users")));
+                    policy.RequireRole(Configuration["SecuritySettings:ADGroup"]));  //verifica el grupo desde el json
+        });
+
+            services.AddSingleton<IAuthorizationHandler, CheckADGroupHandler>();   //Servicio de Handler
 
             services.AddControllersWithViews();
         }
