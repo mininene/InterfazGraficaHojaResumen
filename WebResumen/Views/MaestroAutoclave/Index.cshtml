@@ -4,38 +4,41 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Control Autoclaves</h1>
+<h1>Index</h1>
 
 <p>
-    @*<a asp-action="Create">Create New</a>*@
+    <a asp-action="Create">Create New</a>
 </p>
-<table class="table table-striped">
+<table class="table">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Matricula)
             </th>
-            @*<th>
+            <th>
                 @Html.DisplayNameFor(model => model.Nombre)
-            </th>*@
-            @*<th>
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Version)
-            </th>*@
-            @*<th>
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Ip)
-            </th>*@
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Seccion)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Estado)
             </th>
-            @*<th>
+            <th>
                 @Html.DisplayNameFor(model => model.UltimoCiclo)
-            </th>*@
-            @*<th>
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.RutaSalida)
-            </th>*@
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RutaSalidaPdf)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -45,37 +48,35 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Matricula)
             </td>
-            @*<td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Nombre)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Version)
-            </td>*@
-            @*<td>
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Ip)
-            </td>*@
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Seccion)
             </td>
             <td>
-                @*@Html.EditorFor(modelItem => item.Estado)*@
-                <div class="checkbox">
-                    <label>@Html.CheckBoxFor(modelItem => item.Estado.Value)&nbsp;@*@Html.DisplayNameFor(x => item.Estado)*@</label>
-                </div>
-
+                @Html.DisplayFor(modelItem => item.Estado)
             </td>
-            @*<td>
+            <td>
                 @Html.DisplayFor(modelItem => item.UltimoCiclo)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.RutaSalida)
-            </td>*@
-        <td>
-            
-            <a class="btn btn-success btn-sm text-white" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-            @*<a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
-        </td>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RutaSalidaPdf)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
         </tr>
 }
     </tbody>

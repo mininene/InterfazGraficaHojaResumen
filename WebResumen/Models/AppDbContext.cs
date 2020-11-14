@@ -15,21 +15,50 @@ namespace WebResumen.Models
         {
         }
 
+        public virtual DbSet<AudiTrail> AudiTrail { get; set; }
         public virtual DbSet<CiclosAutoclaves> CiclosAutoclaves { get; set; }
         public virtual DbSet<CiclosSabiDos> CiclosSabiDos { get; set; }
         public virtual DbSet<MaestroAutoclave> MaestroAutoclave { get; set; }
+        public virtual DbSet<Parametros> Parametros { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Data Source=ESSA0538NA\\SQLEXPRESS;Initial Catalog=CiclosAutoclaves;Integrated Security=True");
+                optionsBuilder.UseSqlServer("Data Source=ESSAAPPSERVER01;Initial Catalog=CiclosAutoclaves;Integrated Security=True");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<AudiTrail>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.Property(e => e.Comentario)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Evento)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.FechaHora).HasColumnType("datetime");
+
+                entity.Property(e => e.Usuario)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Valor)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ValorActualizado)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+            });
+
             modelBuilder.Entity<CiclosAutoclaves>(entity =>
             {
                 entity.Property(e => e.AperturaPuerta)
@@ -630,12 +659,32 @@ namespace WebResumen.Models
                     .HasMaxLength(300)
                     .IsUnicode(false);
 
+                entity.Property(e => e.RutaSalidaPdf)
+                    .HasColumnName("RutaSalidaPDF")
+                    .HasMaxLength(300)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.Seccion)
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
                 entity.Property(e => e.UltimoCiclo)
                     .HasMaxLength(100)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Parametros>(entity =>
+            {
+                entity.Property(e => e.ImpresoraSabiDos)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ImpresoraSabiUno)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.RutaLog)
+                    .HasMaxLength(300)
                     .IsUnicode(false);
             });
 

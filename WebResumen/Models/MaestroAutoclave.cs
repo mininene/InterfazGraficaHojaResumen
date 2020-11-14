@@ -14,5 +14,6 @@ namespace WebResumen.Models
         public bool? Estado { get; set; }
         public string UltimoCiclo { get; set; }
         public string RutaSalida { get; set; }
+        public string RutaSalidaPdf { get; set; }
     }
 }

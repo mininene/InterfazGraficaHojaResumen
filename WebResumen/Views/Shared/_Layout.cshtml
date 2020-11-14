@@ -19,19 +19,22 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         @*<li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </li>*@
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="MaestroAutoclave" asp-action="Index">Control Maestro</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>*@
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="MaestroAutoclaves" asp-action="Index">Control Maestro</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="CiclosAutoClaveAgua" asp-action="Index">AutoClavesAgua</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="CiclosSabiUno" asp-action="Index">AutoClavesAgua</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="CiclosAutoClaveVapor" asp-action="Index">AutoClavesVapor</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="CiclosSabiDos" asp-action="Index">AutoClavesvapor</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Parametro" asp-action="Index">Configuración</a>
                         </li>
                     </ul>
                 </div>

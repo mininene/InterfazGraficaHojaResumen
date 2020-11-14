@@ -1,0 +1,363 @@
+﻿@model WebResumen.Models.CiclosSabiDos
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>CiclosSabiDos</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="IdAutoclave" class="control-label"></label>
+                <input asp-for="IdAutoclave" class="form-control" />
+                <span asp-validation-for="IdAutoclave" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdSeccion" class="control-label"></label>
+                <input asp-for="IdSeccion" class="form-control" />
+                <span asp-validation-for="IdSeccion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tinicio" class="control-label"></label>
+                <input asp-for="Tinicio" class="form-control" />
+                <span asp-validation-for="Tinicio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumeroCiclo" class="control-label"></label>
+                <input asp-for="NumeroCiclo" class="form-control" />
+                <span asp-validation-for="NumeroCiclo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Programa" class="control-label"></label>
+                <input asp-for="Programa" class="form-control" />
+                <span asp-validation-for="Programa" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Modelo" class="control-label"></label>
+                <input asp-for="Modelo" class="form-control" />
+                <span asp-validation-for="Modelo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Programador" class="control-label"></label>
+                <input asp-for="Programador" class="form-control" />
+                <span asp-validation-for="Programador" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Operador" class="control-label"></label>
+                <input asp-for="Operador" class="form-control" />
+                <span asp-validation-for="Operador" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CodigoProducto" class="control-label"></label>
+                <input asp-for="CodigoProducto" class="form-control" />
+                <span asp-validation-for="CodigoProducto" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Lote" class="control-label"></label>
+                <input asp-for="Lote" class="form-control" />
+                <span asp-validation-for="Lote" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Notas" class="control-label"></label>
+                <input asp-for="Notas" class="form-control" />
+                <span asp-validation-for="Notas" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdUsuario" class="control-label"></label>
+                <input asp-for="IdUsuario" class="form-control" />
+                <span asp-validation-for="IdUsuario" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Fase1" class="control-label"></label>
+                <input asp-for="Fase1" class="form-control" />
+                <span asp-validation-for="Fase1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DuracionTotalF1" class="control-label"></label>
+                <input asp-for="DuracionTotalF1" class="form-control" />
+                <span asp-validation-for="DuracionTotalF1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Fase2" class="control-label"></label>
+                <input asp-for="Fase2" class="form-control" />
+                <span asp-validation-for="Fase2" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DuracionTotalF2" class="control-label"></label>
+                <input asp-for="DuracionTotalF2" class="form-control" />
+                <span asp-validation-for="DuracionTotalF2" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tif2" class="control-label"></label>
+                <input asp-for="Tif2" class="form-control" />
+                <span asp-validation-for="Tif2" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TisubF2" class="control-label"></label>
+                <input asp-for="TisubF2" class="form-control" />
+                <span asp-validation-for="TisubF2" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tff2" class="control-label"></label>
+                <input asp-for="Tff2" class="form-control" />
+                <span asp-validation-for="Tff2" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TfsubF2" class="control-label"></label>
+                <input asp-for="TfsubF2" class="form-control" />
+                <span asp-validation-for="TfsubF2" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Fase3" class="control-label"></label>
+                <input asp-for="Fase3" class="form-control" />
+                <span asp-validation-for="Fase3" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DuracionTotalF3" class="control-label"></label>
+                <input asp-for="DuracionTotalF3" class="form-control" />
+                <span asp-validation-for="DuracionTotalF3" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tif3" class="control-label"></label>
+                <input asp-for="Tif3" class="form-control" />
+                <span asp-validation-for="Tif3" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TisubF3" class="control-label"></label>
+                <input asp-for="TisubF3" class="form-control" />
+                <span asp-validation-for="TisubF3" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tff3" class="control-label"></label>
+                <input asp-for="Tff3" class="form-control" />
+                <span asp-validation-for="Tff3" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TfsubF3" class="control-label"></label>
+                <input asp-for="TfsubF3" class="form-control" />
+                <span asp-validation-for="TfsubF3" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Fase4" class="control-label"></label>
+                <input asp-for="Fase4" class="form-control" />
+                <span asp-validation-for="Fase4" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DuracionTotalF4" class="control-label"></label>
+                <input asp-for="DuracionTotalF4" class="form-control" />
+                <span asp-validation-for="DuracionTotalF4" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tif4" class="control-label"></label>
+                <input asp-for="Tif4" class="form-control" />
+                <span asp-validation-for="Tif4" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TisubF4" class="control-label"></label>
+                <input asp-for="TisubF4" class="form-control" />
+                <span asp-validation-for="TisubF4" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Fase5" class="control-label"></label>
+                <input asp-for="Fase5" class="form-control" />
+                <span asp-validation-for="Fase5" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DuracionTotalF5" class="control-label"></label>
+                <input asp-for="DuracionTotalF5" class="form-control" />
+                <span asp-validation-for="DuracionTotalF5" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Fase6" class="control-label"></label>
+                <input asp-for="Fase6" class="form-control" />
+                <span asp-validation-for="Fase6" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DuracionTotalF6" class="control-label"></label>
+                <input asp-for="DuracionTotalF6" class="form-control" />
+                <span asp-validation-for="DuracionTotalF6" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Fase7A" class="control-label"></label>
+                <input asp-for="Fase7A" class="form-control" />
+                <span asp-validation-for="Fase7A" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DuracionTotalF7a" class="control-label"></label>
+                <input asp-for="DuracionTotalF7a" class="form-control" />
+                <span asp-validation-for="DuracionTotalF7a" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Fase8A" class="control-label"></label>
+                <input asp-for="Fase8A" class="form-control" />
+                <span asp-validation-for="Fase8A" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DuracionTotalF8a" class="control-label"></label>
+                <input asp-for="DuracionTotalF8a" class="form-control" />
+                <span asp-validation-for="DuracionTotalF8a" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Fase7B" class="control-label"></label>
+                <input asp-for="Fase7B" class="form-control" />
+                <span asp-validation-for="Fase7B" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DuracionTotalF7b" class="control-label"></label>
+                <input asp-for="DuracionTotalF7b" class="form-control" />
+                <span asp-validation-for="DuracionTotalF7b" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Fase8B" class="control-label"></label>
+                <input asp-for="Fase8B" class="form-control" />
+                <span asp-validation-for="Fase8B" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DuracionTotalF8b" class="control-label"></label>
+                <input asp-for="DuracionTotalF8b" class="form-control" />
+                <span asp-validation-for="DuracionTotalF8b" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Fase9" class="control-label"></label>
+                <input asp-for="Fase9" class="form-control" />
+                <span asp-validation-for="Fase9" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DuracionTotalF9" class="control-label"></label>
+                <input asp-for="DuracionTotalF9" class="form-control" />
+                <span asp-validation-for="DuracionTotalF9" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tif9" class="control-label"></label>
+                <input asp-for="Tif9" class="form-control" />
+                <span asp-validation-for="Tif9" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TisubF9" class="control-label"></label>
+                <input asp-for="TisubF9" class="form-control" />
+                <span asp-validation-for="TisubF9" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tff9" class="control-label"></label>
+                <input asp-for="Tff9" class="form-control" />
+                <span asp-validation-for="Tff9" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Fase10" class="control-label"></label>
+                <input asp-for="Fase10" class="form-control" />
+                <span asp-validation-for="Fase10" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DuracionTotalF10" class="control-label"></label>
+                <input asp-for="DuracionTotalF10" class="form-control" />
+                <span asp-validation-for="DuracionTotalF10" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Fase11" class="control-label"></label>
+                <input asp-for="Fase11" class="form-control" />
+                <span asp-validation-for="Fase11" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DuracionTotalF11" class="control-label"></label>
+                <input asp-for="DuracionTotalF11" class="form-control" />
+                <span asp-validation-for="DuracionTotalF11" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Fase12" class="control-label"></label>
+                <input asp-for="Fase12" class="form-control" />
+                <span asp-validation-for="Fase12" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tif12" class="control-label"></label>
+                <input asp-for="Tif12" class="form-control" />
+                <span asp-validation-for="Tif12" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TisubF12" class="control-label"></label>
+                <input asp-for="TisubF12" class="form-control" />
+                <span asp-validation-for="TisubF12" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HoraInicio" class="control-label"></label>
+                <input asp-for="HoraInicio" class="form-control" />
+                <span asp-validation-for="HoraInicio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HoraFin" class="control-label"></label>
+                <input asp-for="HoraFin" class="form-control" />
+                <span asp-validation-for="HoraFin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EsterilizacionN" class="control-label"></label>
+                <input asp-for="EsterilizacionN" class="form-control" />
+                <span asp-validation-for="EsterilizacionN" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tminima" class="control-label"></label>
+                <input asp-for="Tminima" class="form-control" />
+                <span asp-validation-for="Tminima" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tmaxima" class="control-label"></label>
+                <input asp-for="Tmaxima" class="form-control" />
+                <span asp-validation-for="Tmaxima" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DuracionTotal" class="control-label"></label>
+                <input asp-for="DuracionTotal" class="form-control" />
+                <span asp-validation-for="DuracionTotal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FtzMin" class="control-label"></label>
+                <input asp-for="FtzMin" class="form-control" />
+                <span asp-validation-for="FtzMin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FtzMax" class="control-label"></label>
+                <input asp-for="FtzMax" class="form-control" />
+                <span asp-validation-for="FtzMax" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DifMaxMin" class="control-label"></label>
+                <input asp-for="DifMaxMin" class="form-control" />
+                <span asp-validation-for="DifMaxMin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AperturaPuerta" class="control-label"></label>
+                <input asp-for="AperturaPuerta" class="form-control" />
+                <span asp-validation-for="AperturaPuerta" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TiempoCiclo" class="control-label"></label>
+                <input asp-for="TiempoCiclo" class="form-control" />
+                <span asp-validation-for="TiempoCiclo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ErrorCiclo" class="control-label"></label>
+                <input asp-for="ErrorCiclo" class="form-control" />
+                <span asp-validation-for="ErrorCiclo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FechaRegistro" class="control-label"></label>
+                <input asp-for="FechaRegistro" class="form-control" />
+                <span asp-validation-for="FechaRegistro" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

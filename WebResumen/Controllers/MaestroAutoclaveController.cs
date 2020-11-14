@@ -9,22 +9,22 @@ using WebResumen.Models;
 
 namespace WebResumen.Controllers
 {
-    public class MaestroAutoclavesController : Controller
+    public class MaestroAutoclaveController : Controller
     {
         private readonly AppDbContext _context;
 
-        public MaestroAutoclavesController(AppDbContext context)
+        public MaestroAutoclaveController(AppDbContext context)
         {
             _context = context;
         }
 
-        // GET: MaestroAutoclaves
+        // GET: MaestroAutoclave
         public async Task<IActionResult> Index()
         {
             return View(await _context.MaestroAutoclave.ToListAsync());
         }
 
-        // GET: MaestroAutoclaves/Details/5
+        // GET: MaestroAutoclave/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -42,18 +42,18 @@ namespace WebResumen.Controllers
             return View(maestroAutoclave);
         }
 
-        // GET: MaestroAutoclaves/Create
+        // GET: MaestroAutoclave/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: MaestroAutoclaves/Create
+        // POST: MaestroAutoclave/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Matricula,Nombre,Version,Ip,Seccion,Estado,UltimoCiclo,RutaSalida")] MaestroAutoclave maestroAutoclave)
+        public async Task<IActionResult> Create([Bind("Id,Matricula,Nombre,Version,Ip,Seccion,Estado,UltimoCiclo,RutaSalida,RutaSalidaPdf")] MaestroAutoclave maestroAutoclave)
         {
             if (ModelState.IsValid)
             {
@@ -64,7 +64,7 @@ namespace WebResumen.Controllers
             return View(maestroAutoclave);
         }
 
-        // GET: MaestroAutoclaves/Edit/5
+        // GET: MaestroAutoclave/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -80,12 +80,12 @@ namespace WebResumen.Controllers
             return View(maestroAutoclave);
         }
 
-        // POST: MaestroAutoclaves/Edit/5
+        // POST: MaestroAutoclave/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Matricula,Nombre,Version,Ip,Seccion,Estado,UltimoCiclo,RutaSalida")] MaestroAutoclave maestroAutoclave)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Matricula,Nombre,Version,Ip,Seccion,Estado,UltimoCiclo,RutaSalida,RutaSalidaPdf")] MaestroAutoclave maestroAutoclave)
         {
             if (id != maestroAutoclave.Id)
             {
@@ -115,7 +115,7 @@ namespace WebResumen.Controllers
             return View(maestroAutoclave);
         }
 
-        // GET: MaestroAutoclaves/Delete/5
+        // GET: MaestroAutoclave/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -133,7 +133,7 @@ namespace WebResumen.Controllers
             return View(maestroAutoclave);
         }
 
-        // POST: MaestroAutoclaves/Delete/5
+        // POST: MaestroAutoclave/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
