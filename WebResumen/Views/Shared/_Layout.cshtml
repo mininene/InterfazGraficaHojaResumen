@@ -11,7 +11,10 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Bieffe Medital</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/img/Baxter.png" width="150" height="30" class="d-inline-block align-top" alt="">
+                </a>
+               
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -20,11 +23,11 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         @*<li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </li>*@
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            </li>*@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="MaestroAutoclave" asp-action="Index">Control Maestro</a>
                         </li>
@@ -37,35 +40,35 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Parametro" asp-action="Index">Configuración</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="AutoClaveA" asp-action="Index">AutoClaveA</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="AutoClaveJJ" asp-action="Index">AutoClaveJ</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="AutoClaveK" asp-action="Index">AutoClaveK</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="AutoClaveL" asp-action="Index">AutoClaveL</a>
-                        </li>
+                        @*<li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="AutoClaveA" asp-action="Index">AutoClaveA</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="AutoClaveJJ" asp-action="Index">AutoClaveJ</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="AutoClaveK" asp-action="Index">AutoClaveK</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="AutoClaveL" asp-action="Index">AutoClaveL</a>
+                            </li>*@
 
                     </ul>
                 </div>
             </div>
-          
-                <ul class="navbar-nav ml-auto">
 
-                    <li class="nav-item">
-                        <p class="float-right navbar-text navbar-right">Hola, @User.Identity.Name.Replace("GLOBAL\\", "")!</p>
-                       
+            <ul class="navbar-nav ml-auto">
 
-                    </li>
-                </ul>
-            
+                <li class="nav-item">
+                    <p class="float-right navbar-text navbar-right text-danger">Hola, @User.Identity.Name.Replace("GLOBAL\\", "")!</p>
+
+
+                </li>
+            </ul>
+
         </nav>
 
-       
+
     </header>
     <div class="container">
         <main role="main" class="pb-3">
@@ -73,14 +76,16 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted footer-copyright text-center py-3 blue">
         <div class="container">
-            &copy; 2020 - WebResumen - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            @*&copy; 2020 - WebResumen - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>*@
+            &copy; 2020 Copyright - <a asp-area="" asp-controller="Home" asp-action="Privacy">Baxter</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    
     @RenderSection("Scripts", required: false)
 </body>
 </html>
