@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,26 +9,28 @@ using WebResumen.Models;
 
 namespace WebResumen.Controllers
 {
-
-    [Authorize(Policy = "ADRoleOnly")]
-    //[Authorize(Policy = "readOnly")]
-    
-    public class CiclosAutoclaveAguaController : Controller
+    public class AutoClaveAController : Controller
     {
         private readonly AppDbContext _context;
 
-        public CiclosAutoclaveAguaController(AppDbContext context)
+        public AutoClaveAController(AppDbContext context)
         {
             _context = context;
         }
 
-        // GET: CiclosAutoclaveAgua
+        // GET: AutoClaveA
         public async Task<IActionResult> Index()
         {
-            return View(await _context.CiclosAutoclaves.ToListAsync());
+            List<ViewModelAutoClaveJ> _autoJ = new List<ViewModelAutoClaveJ>();
+            List<CiclosAutoclaves> _sabiUno = await _context.CiclosAutoclaves.ToListAsync();
+
+
+            var query = from x in _sabiUno.Where(x => x.IdAutoclave == "NF8387A").OrderByDescending(X => X.Id).Take(50) select x;
+
+            return View(query);
         }
 
-        // GET: CiclosAutoclaveAgua/Details/5
+        // GET: AutoClaveA/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -47,13 +48,13 @@ namespace WebResumen.Controllers
             return View(ciclosAutoclaves);
         }
 
-        // GET: CiclosAutoclaveAgua/Create
+        // GET: AutoClaveA/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: CiclosAutoclaveAgua/Create
+        // POST: AutoClaveA/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -69,7 +70,7 @@ namespace WebResumen.Controllers
             return View(ciclosAutoclaves);
         }
 
-        // GET: CiclosAutoclaveAgua/Edit/5
+        // GET: AutoClaveA/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -85,7 +86,7 @@ namespace WebResumen.Controllers
             return View(ciclosAutoclaves);
         }
 
-        // POST: CiclosAutoclaveAgua/Edit/5
+        // POST: AutoClaveA/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -120,7 +121,7 @@ namespace WebResumen.Controllers
             return View(ciclosAutoclaves);
         }
 
-        // GET: CiclosAutoclaveAgua/Delete/5
+        // GET: AutoClaveA/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -138,7 +139,7 @@ namespace WebResumen.Controllers
             return View(ciclosAutoclaves);
         }
 
-        // POST: CiclosAutoclaveAgua/Delete/5
+        // POST: AutoClaveA/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

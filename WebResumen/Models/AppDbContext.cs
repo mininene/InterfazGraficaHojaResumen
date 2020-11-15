@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using WebResumen.Models;
 
 namespace WebResumen.Models
 {
@@ -692,5 +693,7 @@ namespace WebResumen.Models
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+        public DbSet<WebResumen.Models.ViewModelAutoClaveJ> ViewModelAutoClaveJ { get; set; }
     }
 }

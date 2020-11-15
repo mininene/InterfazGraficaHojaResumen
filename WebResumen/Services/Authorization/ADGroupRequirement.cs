@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace WebResumen.Services.Authorization
 {
-    public class CheckADGroupRequirement : IAuthorizationRequirement
+    public class ADGroupRequirement : IAuthorizationRequirement
     {
         public string GroupName { get; private set; }
 
-        public CheckADGroupRequirement(string groupName)
+        public ADGroupRequirement(string groupName)
         {
             GroupName = groupName;
         }

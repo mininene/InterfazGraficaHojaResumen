@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace WebResumen.Services.Authorization
 {
-    public class CheckADGroupHandler : AuthorizationHandler<CheckADGroupRequirement>
+    public class ADGroupHandler : AuthorizationHandler<ADGroupRequirement>
     {
-        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, CheckADGroupRequirement requirement)
+        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, ADGroupRequirement requirement)
         {
             //var isAuthorized = context.User.IsInRole(requirement.GroupName);
 

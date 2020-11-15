@@ -20,11 +20,11 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         @*<li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                    </li>*@
+            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </li>*@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="MaestroAutoclave" asp-action="Index">Control Maestro</a>
                         </li>
@@ -37,6 +37,19 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Parametro" asp-action="Index">Configuración</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="AutoClaveA" asp-action="Index">AutoClaveA</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="AutoClaveJJ" asp-action="Index">AutoClaveJ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="AutoClaveK" asp-action="Index">AutoClaveK</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="AutoClaveL" asp-action="Index">AutoClaveL</a>
+                        </li>
+
                     </ul>
                 </div>
             </div>
@@ -44,7 +57,9 @@
                 <ul class="navbar-nav ml-auto">
 
                     <li class="nav-item">
-                        <p class="float-right navbar-text navbar-right">Hola, @User.Identity.Name!</p>
+                        <p class="float-right navbar-text navbar-right">Hola, @User.Identity.Name.Replace("GLOBAL\\", "")!</p>
+                       
+
                     </li>
                 </ul>
             
