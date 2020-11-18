@@ -11,9 +11,9 @@ using WebResumen.Models;
 namespace WebResumen.Controllers
 {
 
-    [Authorize(Policy = "ADRoleOnly")]
+    [Authorize(Policy = "ADUsers")]
     //[Authorize(Policy = "readOnly")]
-    
+
     public class CiclosAutoclaveAguaController : Controller
     {
         private readonly AppDbContext _context;

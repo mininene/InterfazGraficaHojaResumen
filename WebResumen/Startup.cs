@@ -32,25 +32,43 @@ namespace WebResumen
             .UseSqlServer(Configuration
             .GetConnectionString("DefaultConnection")));
 
+
+
             // Add all of your handlers to DI.
-            services.AddSingleton<IAuthorizationHandler, ADGroupHandler>();
-            services.AddTransient<IClaimsTransformation, ClaimsTransformer>();
+          
+
+           // services.AddTransient<IClaimsTransformation, ClaimsTransformer>();
             // services.AddTransient<IClaimsTransformation, ClaimsTransformer>();
 
             // Configure your policies
             services.AddAuthorization(options =>                        
             {
-                options.AddPolicy("ADRoleOnly", policy =>
-                    //policy.Requirements.Add(new CheckADGroupRequirement("GLOBAL\\ESSA-HojaResumen_Users")));
-                    policy.RequireRole(Configuration["SecuritySettings:ADGroup"]));  //verifica el grupo desde el json
-                options.AddPolicy("Readonly", policy =>
-                              policy.RequireClaim("permission", "readOnly"));
-                options.AddPolicy("Write", policy =>
-                        policy.RequireClaim("permission", "write"));
+                options.AddPolicy("ADUsers", policy =>
+                   policy.RequireRole(Configuration["SecuritySettings:ADGroupUsers"]));  //verifica el grupo desde el json
+
+                options.AddPolicy("ADAdmins", policy =>
+                   policy.RequireRole(Configuration["SecuritySettings:ADGroupAdmins"]));
+
+                options.AddPolicy("ADSupervisors", policy =>
+                   policy.RequireRole(Configuration["SecuritySettings:ADGroupSupervisors"]));
+
+                options.AddPolicy("ADTodos", policy =>
+                  policy.RequireRole("ADUsers", "ADAdmins","ADSupervisors"));
+
+
+
+
+                //policy.Requirements.Add(new CheckADGroupRequirement("GLOBAL\\ESSA-HojaResumen_Users")));
+                //options.AddPolicy("Readonly", policy =>
+                //              policy.RequireClaim("permission", "readOnly"));
+                //options.AddPolicy("Write", policy =>
+                //        policy.RequireClaim("permission", "write"));
 
             });
+            services.AddSingleton<IAuthorizationHandler, ADGroupUsersHandler>();
+            services.AddSingleton<IAuthorizationHandler, ADGroupAdminsHandler>();
+            services.AddSingleton<IAuthorizationHandler, ADGroupSupervisorsHandler>();
 
-           
 
             services.AddControllersWithViews();
         }

@@ -10,7 +10,7 @@ using WebResumen.Models;
 
 namespace WebResumen.Controllers
 {
-    [Authorize(Policy = "ADRoleOnly")]
+   
     public class AutoClaveAController : Controller
     {
         private readonly AppDbContext _context;
