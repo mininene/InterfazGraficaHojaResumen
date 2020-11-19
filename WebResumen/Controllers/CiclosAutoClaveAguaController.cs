@@ -11,7 +11,7 @@ using WebResumen.Models;
 namespace WebResumen.Controllers
 {
 
-    [Authorize(Policy = "ADUsers")]
+    //[Authorize(Policy = "ADUsers")]
     //[Authorize(Policy = "readOnly")]
 
     public class CiclosAutoclaveAguaController : Controller
@@ -26,7 +26,7 @@ namespace WebResumen.Controllers
         // GET: CiclosAutoclaveAgua
         public async Task<IActionResult> Index()
         {
-            return View(await _context.CiclosAutoclaves.ToListAsync());
+            return View(await _context.CiclosAutoclaves.OrderByDescending(x=>x.Id).ToListAsync());
         }
 
         // GET: CiclosAutoclaveAgua/Details/5

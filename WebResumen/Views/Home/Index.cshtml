@@ -51,43 +51,65 @@
         </tr>
     </thead>*@
 @*<tbody>*@
+
+
+
+
+
+
+
+
+
 @foreach (var item in Model)
 {
 
-    @*<tr>
-         var actual = Regex.Replace(n.UltimoCiclo, "\\d+",
-                       m => (int.Parse(m.Value) - 1).ToString(new string('0', m.Value.Length)));
+@*<tr>
+     var actual = Regex.Replace(n.UltimoCiclo, "\\d+",
+                   m => (int.Parse(m.Value) - 1).ToString(new string('0', m.Value.Length)));
 
-        <td>*@
+    <td>*@
 
     foreach (var n in ViewBag.data as List<UltimoCiclo>)
     {
 
-        @*@Html.Raw(item.RutaSalida.Substring(33, 10))*@ //MEJOR FORMA DE HACER SUB
+@*@Html.Raw(item.RutaSalida.Substring(33, 10))*@ //MEJOR FORMA DE HACER SUB
 
 
 
-        <div class="card" style="width: 13rem; text-align:left;display:inline-block;">
-            <a href="/@Html.Raw(item.Nombre)"> <img class="card-img-top" src="~/img/Autoclave.png" alt="Card image cap"></a>
-            <div class="card-body">
-                <a href="/@Html.Raw(item.Nombre)">   <h5 class="card-title">@Html.DisplayFor(modelItem => item.Matricula)</h5></a>
-                 <h5 class="card-title text-danger">Ciclo:  @Html.DisplayFor(modelItem => item.UltimoCiclo)</h5>
-                <h5 class="card-title text-danger ">Estado:  @Html.DisplayFor(modelItem => item.Estado)</h5>
-                <h5 class="card-title ">Sección:  @Html.DisplayFor(modelItem => item.Seccion)</h5>
+<div class="card" style="width: 13rem; text-align:left;display:inline-block;">
+    <a href="/@Html.Raw(item.Nombre)"> <img class="card-img-top" src="~/img/Autoclave.png" alt="Card image cap"></a>
+    <div class="card-body">
+        <a href="/@Html.Raw(item.Nombre)">   <h5 class="card-title">@Html.DisplayFor(modelItem => item.Matricula)</h5></a>
+        <h5 class="card-title text-danger">Ciclo:  @Html.DisplayFor(modelItem => item.UltimoCiclo)</h5>
+        <h5 class="card-title text-danger ">Estado:  @Html.DisplayFor(modelItem => item.Estado)</h5>
+        <h5 class="card-title ">Sección:  @Html.DisplayFor(modelItem => item.Seccion)</h5>
 
 
-                @*<h5 class="card-title ">Sección:  @n.ciclo</h5>*@
-                <h5 class="card-title ">Modelo: FOW5</h5>
-                <p class="card-text"><small class="text-muted">Para más detalles haga click en el título o en la imagen</small></p>
-            </div>
-        </div>
+        @*<h5 class="card-title ">Sección:  @n.ciclo</h5>*@
+        <h5 class="card-title ">Modelo: FOW5</h5>
+        <p class="card-text"><small class="text-muted">Para más detalles haga click en el título o en la imagen</small></p>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     }
 
-    @*</td>
+@*</td>
 
-        </tr>*@
+    </tr>*@
 }
 @*</tbody>*@
 @*</table>*@

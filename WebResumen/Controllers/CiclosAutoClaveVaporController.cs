@@ -23,7 +23,7 @@ namespace WebResumen.Controllers
         // GET: CiclosAutoClaveVapor
         public async Task<IActionResult> Index()
         {
-            return View(await _context.CiclosSabiDos.ToListAsync());
+            return View(await _context.CiclosSabiDos.OrderByDescending(x => x.Id).ToListAsync());
         }
 
         // GET: CiclosAutoClaveVapor/Details/5

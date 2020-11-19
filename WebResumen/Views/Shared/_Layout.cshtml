@@ -5,7 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - HojaResumen</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/MDB/css/addons/datatables.min.css">
+
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/examplec.css" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <!-- Bootstrap core CSS -->
+    <link href="~/lib/MDB/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="~/lib/MDB/css/mdb.min.css" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="~/lib/MDBcss/style.css" rel="stylesheet">
+
 </head>
 <body>
     <header>
@@ -14,7 +26,7 @@
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
                     <img src="~/img/Baxter.png" width="150" height="30" class="d-inline-block align-top" alt="">
                 </a>
-               
+
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -23,9 +35,9 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
-                            </li>
-                            @*<li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
+                        </li>
+                        @*<li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                             </li>*@
                         <li class="nav-item">
@@ -60,7 +72,7 @@
             <ul class="navbar-nav ml-auto">
 
                 <li class="nav-item">
-                    <p class="float-right navbar-text navbar-right text-danger">Hola, @User.Identity.Name.Replace("GLOBAL\\", "")!</p>
+                    <p class="float-right navbar-text navbar-right text-danger">Hola, <strong>@User.Identity.Name.Replace("GLOBAL\\", "")!</strong> </p>
 
 
                 </li>
@@ -76,16 +88,40 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted footer-copyright text-center py-3 blue">
-        <div class="container">
-            @*&copy; 2020 - WebResumen - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>*@
+    <footer class="border-top page-footer font-small blue">
+
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3">
             &copy; 2020 Copyright - <a asp-area="" asp-controller="Home" asp-action="Privacy">Baxter</a>
         </div>
+        <!-- Copyright -->
+
     </footer>
+    <!--<footer class="border-top footer text-muted footer-copyright text-center py-3 ">-->
+
+        @*&copy; 2020 - WebResumen - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>*@
+        @*&copy; 2020 Copyright - <a asp-area="" asp-controller="Home" asp-action="Privacy">Baxter</a>*@
+
+
+
+    <!--</footer>-->
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- MDBootstrap Datatables  -->
+    <!-- JQuery -->
+    <script type="text/javascript" src="~/lib/MDB/js/jquery-3.4.1.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="/lib/MDB/js/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="/lib/MDB/js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="/lib/MDB/js/mdb.min.js"></script>
+
+    <script type="text/javascript" src="~/lib/MDB/js/addons/datatables.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    
+    <script src="~/js/example.js" asp-append-version="true"></script>
+
     @RenderSection("Scripts", required: false)
 </body>
 </html>
