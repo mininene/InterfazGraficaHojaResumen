@@ -14,11 +14,11 @@ namespace WebResumen.Controllers
     //[Authorize(Policy = "ADUsers")]
    
    // [Authorize(Policy = "ADSupervisors")]
-    public class InicioxController : Controller
+    public class HomettController : Controller
     {
-        private readonly ILogger<InicioxController> _logger;
+        private readonly ILogger<HomettController> _logger;
 
-        public InicioxController(ILogger<InicioxController> logger)
+        public HomettController(ILogger<HomettController> logger)
         {
             _logger = logger;
         }

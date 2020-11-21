@@ -35,9 +35,9 @@ namespace WebResumen
 
 
             // Add all of your handlers to DI.
-          
 
-           // services.AddTransient<IClaimsTransformation, ClaimsTransformer>();
+
+            // services.AddTransient<IClaimsTransformation, ClaimsTransformer>();
             // services.AddTransient<IClaimsTransformation, ClaimsTransformer>();
 
             // Configure your policies

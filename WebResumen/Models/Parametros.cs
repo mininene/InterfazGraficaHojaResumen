@@ -10,5 +10,6 @@ namespace WebResumen.Models
         public string ImpresoraSabiDos { get; set; }
         public string RutaLog { get; set; }
         public int Tiempo { get; set; }
+        public bool? Reinicio { get; set; }
     }
 }

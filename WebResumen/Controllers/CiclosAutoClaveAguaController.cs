@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebResumen.Models;
 
+
 namespace WebResumen.Controllers
 {
 
@@ -22,11 +23,22 @@ namespace WebResumen.Controllers
         {
             _context = context;
         }
-
-        // GET: CiclosAutoclaveAgua
         public async Task<IActionResult> Index()
         {
-            return View(await _context.CiclosAutoclaves.OrderByDescending(x=>x.Id).ToListAsync());
+           
+            return View();
+           
+
+        }
+        // GET: CiclosAutoclaveAgua
+        public  async Task<JsonResult> List()
+        {
+            var result= await _context.CiclosAutoclaves.OrderByDescending(x => x.Id).ToListAsync();
+            //return View(await _context.CiclosAutoclaves.OrderByDescending(x=>x.Id).ToListAsync());
+
+            return Json(result);
+           
+
         }
 
         // GET: CiclosAutoclaveAgua/Details/5

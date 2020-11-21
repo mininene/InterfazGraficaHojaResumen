@@ -55,7 +55,7 @@ namespace WebResumen.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ImpresoraSabiUno,ImpresoraSabiDos,RutaLog,Tiempo")] Parametros parametros)
+        public async Task<IActionResult> Create([Bind("Id,ImpresoraSabiUno,ImpresoraSabiDos,RutaLog,Tiempo,Reinicio")] Parametros parametros)
         {
             if (ModelState.IsValid)
             {
@@ -87,7 +87,7 @@ namespace WebResumen.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ImpresoraSabiUno,ImpresoraSabiDos,RutaLog,Tiempo")] Parametros parametros)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,ImpresoraSabiUno,ImpresoraSabiDos,RutaLog,Tiempo,Reinicio")] Parametros parametros)
         {
             if (id != parametros.Id)
             {

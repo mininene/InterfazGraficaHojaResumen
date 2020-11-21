@@ -5,6 +5,7 @@
 
 #dtHorizontalVerticalExample th, td {
     white-space: nowrap;
+
 }
 
 table.dataTable thead .sorting:after,
