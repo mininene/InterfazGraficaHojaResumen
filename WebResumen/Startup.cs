@@ -32,6 +32,9 @@ namespace WebResumen
             .UseSqlServer(Configuration
             .GetConnectionString("DefaultConnection")));
 
+           
+
+
 
 
             // Add all of your handlers to DI.
