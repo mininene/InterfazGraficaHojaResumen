@@ -11,9 +11,7 @@
                     });
                     return defer.promise;
                 })
-            buttons: [
-                'copy', 'excel', 'pdf', 'print'
-            ]
+           
                 .withOption('scrollX', 'true')
                 .withOption('scrollY', '380px')
                 .withOption('lengthMenu', [[10, 50, 100, -1], [10, 50, 100, 'All']]);
