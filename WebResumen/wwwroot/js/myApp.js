@@ -1,6 +1,6 @@
 ﻿(function (angular) {
     'use strict';
-    angular.module('datatablesSampleApp', ['datatables']).
+    angular.module('datatablesSampleApp', ['datatables', 'datatables.buttons']).
         controller('sampleCtrl', function ($scope, $http, $q, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder) {
 
             $scope.dtOptions = DTOptionsBuilder
@@ -11,7 +11,28 @@
                     });
                     return defer.promise;
                 })
+
            
+                .withButtons([
+                    {
+                        
+                        extend: 'excel',
+                        text: '<i class="fa fa-file-text-o"></i> Excel',
+                        titleAttr: 'Excel'
+                    },
+                    {
+                        extend: 'print',
+                        text: '<i class="fa fa-print" aria-hidden="true"></i> Print',
+                        titleAttr: 'Print'
+                    },
+                    {
+                        extend: 'copy',
+                        text: '<i class="fa fa-files-o"></i> Copy',
+                        titleAttr: 'Copy'
+                        
+                    }
+                ]
+                )
                 .withOption('scrollX', 'true')
                 .withOption('scrollY', '380px')
                 .withOption('lengthMenu', [[10, 50, 100, -1], [10, 50, 100, 'All']]);
