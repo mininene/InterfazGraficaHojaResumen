@@ -31,7 +31,7 @@ namespace WebResumen.Controllers
 
         }
         // GET: CiclosAutoclaveAgua
-        public  async Task<JsonResult> List()
+        public  async Task<JsonResult> ListAgua()
         {
             var result= await _context.CiclosAutoclaves.OrderByDescending(x => x.Id).ToListAsync();
             //return View(await _context.CiclosAutoclaves.OrderByDescending(x=>x.Id).ToListAsync());

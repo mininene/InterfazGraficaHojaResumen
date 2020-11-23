@@ -1,12 +1,12 @@
 ﻿(function (angular) {
     'use strict';
-    angular.module('datatablesSampleApp', ['datatables', 'datatables.buttons']).
-        controller('sampleCtrl', function ($scope, $http, $q, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder,DTDefaultOptions) {
+    angular.module('datatablesAguaApp', ['datatables', 'datatables.buttons']).
+        controller('aguaCtrl', function ($scope, $http, $q, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder,DTDefaultOptions) {
             DTDefaultOptions.setLoadingTemplate('<div class="spinner-border text-primary" role="status"></div >' + '  ' + '<span class="sr - only">Cargando...</span>') //spinner carga
             $scope.dtOptions = DTOptionsBuilder
                 .fromFnPromise(function () {
                     var defer = $q.defer();
-                    $http.get('/CiclosAutoClaveAgua/List').then(function (result) {
+                    $http.get('/CiclosAutoClaveAgua/ListAgua').then(function (result) {
                         defer.resolve(result.data);
                     });
                    
