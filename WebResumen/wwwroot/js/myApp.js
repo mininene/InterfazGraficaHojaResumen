@@ -64,7 +64,7 @@
                 }),
               
                 DTColumnBuilder.newColumn('duracionTotalF6').withTitle('Duración F6'),
-                DTColumnBuilder.newColumn('tif6').withTitle('P.FINAL F6').renderWith(function (data, type, full, meta) {
+                DTColumnBuilder.newColumn('tif6').withTitle('P.INICIAL F6').renderWith(function (data, type, full, meta) {
                     var x = data.substring(5, 14)
                     return x
                 }),
@@ -80,16 +80,69 @@
                     var x = data.substring(28, 35)
                     return x
                 }),
-             
+
+                DTColumnBuilder.newColumn('tff6').withTitle('P.FINAL F6').renderWith(function (data, type, full, meta) {
+                    var x = data.substring(6, 14)
+                    return x
+                }),
+                DTColumnBuilder.newColumn('tff6').withTitle('TE2 FF6').renderWith(function (data, type, full, meta) {
+                    var x = data.substring(14, 21)
+                    return x
+                }),
+                DTColumnBuilder.newColumn('tff6').withTitle('TE3 FF6').renderWith(function (data, type, full, meta) {
+                    var x = data.substring(21, 28)
+                    return x
+                }),
+                DTColumnBuilder.newColumn('tff6').withTitle('TE4 FF6').renderWith(function (data, type, full, meta) {
+                    var x = data.substring(28, 35)
+                    return x
+                }),
+
+                DTColumnBuilder.newColumn('tfsubF6').withTitle('FoTE2 FF6').renderWith(function (data, type, full, meta) {
+                    var x = data.substring(2, 9)
+                    return x
+                }),
+                DTColumnBuilder.newColumn('tfsubF6').withTitle('FoTE3 FF6').renderWith(function (data, type, full, meta) {
+                    var x = data.substring(9, 18)
+                    return x
+                }),
+                DTColumnBuilder.newColumn('tfsubF6').withTitle('FoTE4 FF6').renderWith(function (data, type, full, meta) {
+                    var x = data.substring(18, 27)
+                    return x
+                }),
+                DTColumnBuilder.newColumn('tminima').withTitle('TMinina Estr.'),
+                DTColumnBuilder.newColumn('tmaxima').withTitle('TMaximaa Estr.'),
+                DTColumnBuilder.newColumn('duracionTotalF7').withTitle('Duración F7'),
+                DTColumnBuilder.newColumn('tif7').withTitle('P.FINAL F7').renderWith(function (data, type, full, meta) {
+                    var x = data.substring(6, 14)
+                    return x
+                }),
+                DTColumnBuilder.newColumn('duracionTotalF7').withTitle('Duración F8'),
+                DTColumnBuilder.newColumn('duracionTotalF7').withTitle('Duración F9'),
+                DTColumnBuilder.newColumn('duracionTotalF7').withTitle('Duración F10'),
+                DTColumnBuilder.newColumn('duracionTotalF7').withTitle('Duración F11'),
+                DTColumnBuilder.newColumn('duracionTotalF7').withTitle('Duración F12'),
+                DTColumnBuilder.newColumn('tff13').withTitle('T.TOTAL').renderWith(function (data, type, full, meta) {
+                    var x = data.substring(0, 7)
+                    return x
+                }),
+                DTColumnBuilder.newColumn('tiempoCiclo').withTitle('T.CALCULADO'),
+                DTColumnBuilder.newColumn('tfsubF13').withTitle('FoTE2 FF13').renderWith(function (data, type, full, meta) {
+                    var x = data.substring(2, 9)
+                    return x
+                }),
+                DTColumnBuilder.newColumn('tfsubF13').withTitle('FoTE3 FF13').renderWith(function (data, type, full, meta) {
+                    var x = data.substring(9, 18)
+                    return x
+                }),
+                DTColumnBuilder.newColumn('tfsubF13').withTitle('FoTE4 FF13').renderWith(function (data, type, full, meta) {
+                    var x = data.substring(18, 27)
+                    return x
+                }),
+                DTColumnBuilder.newColumn('difMaxMin').withTitle('FoMax-FoMin'),
             ]
 
-            $scope.dtColumnDefs = [
-                DTColumnDefBuilder.newColumnDef(0),
-                DTColumnDefBuilder.newColumnDef(1),
-                DTColumnDefBuilder.newColumnDef(2),
-                DTColumnDefBuilder.newColumnDef(3),
-                DTColumnDefBuilder.newColumnDef(4)
-            ];
+         
 
 
         })

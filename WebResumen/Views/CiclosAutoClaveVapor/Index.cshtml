@@ -1,431 +1,437 @@
 ﻿@model IEnumerable<WebResumen.Models.CiclosSabiDos>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "AutoClaves de Vapor";
 }
 
-<h1>Pagina en MAntenimiento.....</h1>
+
+<body ng-app="datatablesVaporApp" ng-controller="vaporCtrl">
+    <table datatable class="table table-striped table-bordered thead-dark"
+           dt-options="dtOptions"
+           dt-columns="dtColumns">
+    </table>
+</body>
 
 @*<p>
-    <a asp-action="Create">Create New</a>
-</p>*@
+        <a asp-action="Create">Create New</a>
+    </p>*@
 @*<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.IdAutoclave)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdSeccion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Tinicio)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NumeroCiclo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Programa)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Modelo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Programador)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Operador)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CodigoProducto)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Lote)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Notas)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdUsuario)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Fase1)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DuracionTotalF1)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Fase2)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DuracionTotalF2)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Tif2)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TisubF2)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Tff2)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TfsubF2)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Fase3)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DuracionTotalF3)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Tif3)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TisubF3)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Tff3)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TfsubF3)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Fase4)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DuracionTotalF4)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Tif4)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TisubF4)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Fase5)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DuracionTotalF5)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Fase6)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DuracionTotalF6)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Fase7A)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DuracionTotalF7a)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Fase8A)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DuracionTotalF8a)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Fase7B)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DuracionTotalF7b)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Fase8B)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DuracionTotalF8b)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Fase9)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DuracionTotalF9)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Tif9)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TisubF9)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Tff9)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Fase10)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DuracionTotalF10)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Fase11)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DuracionTotalF11)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Fase12)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Tif12)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TisubF12)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HoraInicio)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HoraFin)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EsterilizacionN)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Tminima)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Tmaxima)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DuracionTotal)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FtzMin)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FtzMax)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DifMaxMin)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AperturaPuerta)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TiempoCiclo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ErrorCiclo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaRegistro)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdAutoclave)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdSeccion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Tinicio)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NumeroCiclo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Programa)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Modelo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Programador)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Operador)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CodigoProducto)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Lote)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Notas)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdUsuario)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fase1)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DuracionTotalF1)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fase2)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DuracionTotalF2)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Tif2)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TisubF2)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Tff2)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TfsubF2)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fase3)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DuracionTotalF3)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Tif3)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TisubF3)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Tff3)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TfsubF3)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fase4)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DuracionTotalF4)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Tif4)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TisubF4)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fase5)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DuracionTotalF5)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fase6)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DuracionTotalF6)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fase7A)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DuracionTotalF7a)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fase8A)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DuracionTotalF8a)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fase7B)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DuracionTotalF7b)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fase8B)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DuracionTotalF8b)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fase9)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DuracionTotalF9)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Tif9)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TisubF9)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Tff9)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fase10)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DuracionTotalF10)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fase11)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DuracionTotalF11)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fase12)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Tif12)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TisubF12)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HoraInicio)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HoraFin)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EsterilizacionN)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Tminima)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Tmaxima)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DuracionTotal)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FtzMin)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FtzMax)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DifMaxMin)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AperturaPuerta)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TiempoCiclo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ErrorCiclo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaRegistro)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>*@
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.IdAutoclave)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IdSeccion)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Tinicio)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NumeroCiclo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Programa)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Modelo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Programador)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Operador)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CodigoProducto)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Lote)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Notas)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IdUsuario)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Fase1)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DuracionTotalF1)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Fase2)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DuracionTotalF2)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Tif2)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TisubF2)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Tff2)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TfsubF2)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Fase3)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DuracionTotalF3)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Tif3)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TisubF3)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Tff3)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TfsubF3)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Fase4)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DuracionTotalF4)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Tif4)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TisubF4)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Fase5)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DuracionTotalF5)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Fase6)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DuracionTotalF6)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Fase7A)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DuracionTotalF7a)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Fase8A)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DuracionTotalF8a)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Fase7B)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DuracionTotalF7b)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Fase8B)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DuracionTotalF8b)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Fase9)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DuracionTotalF9)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Tif9)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TisubF9)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Tff9)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Fase10)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DuracionTotalF10)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Fase11)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DuracionTotalF11)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Fase12)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Tif12)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TisubF12)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HoraInicio)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HoraFin)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EsterilizacionN)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Tminima)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Tmaxima)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DuracionTotal)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FtzMin)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FtzMax)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DifMaxMin)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AperturaPuerta)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TiempoCiclo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ErrorCiclo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FechaRegistro)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdAutoclave)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdSeccion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tinicio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumeroCiclo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Programa)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Modelo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Programador)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Operador)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CodigoProducto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Lote)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Notas)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdUsuario)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fase1)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DuracionTotalF1)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fase2)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DuracionTotalF2)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tif2)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TisubF2)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tff2)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TfsubF2)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fase3)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DuracionTotalF3)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tif3)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TisubF3)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tff3)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TfsubF3)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fase4)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DuracionTotalF4)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tif4)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TisubF4)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fase5)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DuracionTotalF5)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fase6)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DuracionTotalF6)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fase7A)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DuracionTotalF7a)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fase8A)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DuracionTotalF8a)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fase7B)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DuracionTotalF7b)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fase8B)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DuracionTotalF8b)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fase9)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DuracionTotalF9)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tif9)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TisubF9)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tff9)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fase10)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DuracionTotalF10)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fase11)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DuracionTotalF11)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fase12)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tif12)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TisubF12)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HoraInicio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HoraFin)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EsterilizacionN)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tminima)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tmaxima)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DuracionTotal)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FtzMin)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FtzMax)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DifMaxMin)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AperturaPuerta)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TiempoCiclo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ErrorCiclo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FechaRegistro)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+    }
+        </tbody>
+    </table>*@
