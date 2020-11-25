@@ -53,10 +53,10 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="MaestroAutoclave" asp-action="Index">Control Maestro</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="CiclosAutoClaveAgua" asp-action="Index">AutoClavesAgua</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="CiclosAutoClaveAgua" asp-action="Index">DatosExplotacionAgua</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="CiclosAutoClaveVapor" asp-action="Index">AutoClavesVapor</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="CiclosAutoClaveVapor" asp-action="Index">DatosExplotacionVapor</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Parametro" asp-action="Index">Configuración</a>
@@ -91,7 +91,7 @@
 
 
     </header>
-    <div class="container">
+    <div class="container-fluid">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
@@ -154,8 +154,11 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/example.js" asp-append-version="true"></script>
     @*<script src="~/js/Agua.js" asp-append-version="true"></script>*@
+    @*<script src="~/js/ajax.js" asp-append-version="true"></script>*@
     <script src="~/js/vaporApp.js" asp-append-version="true"></script>
     <script src="~/js/aguaApp.js" asp-append-version="true"></script>
+    <script src="~/js/maestroApp.js" asp-append-version="true"></script>
+    <script src="~/js/homeApp.js" asp-append-version="true"></script>
 
 
 

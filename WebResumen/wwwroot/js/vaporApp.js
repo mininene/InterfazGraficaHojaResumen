@@ -79,7 +79,7 @@
 
 
                 DTColumnBuilder.newColumn('idAutoclave').withTitle('idAutoclave'),
-                DTColumnBuilder.newColumn('idSeccion').withTitle('N.Carro'),
+                DTColumnBuilder.newColumn('notas').withTitle('N.Carro'),
                 DTColumnBuilder.newColumn('numeroCiclo').withTitle('N.Progresivo'),
                 DTColumnBuilder.newColumn('programa').withTitle('N.Programa'),
                 DTColumnBuilder.newColumn('codigoProducto').withTitle('Cod.Producto'),

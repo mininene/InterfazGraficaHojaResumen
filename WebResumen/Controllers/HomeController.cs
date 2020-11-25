@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebResumen.Models;
 
+
 namespace WebResumen.Controllers
 {
    // [Authorize(Policy = "ADUsers")]
@@ -46,6 +47,20 @@ namespace WebResumen.Controllers
 
             return View(await _context.MaestroAutoclave.ToListAsync());
         }
+
+        public async Task<JsonResult> ListHome()
+        {
+            var result = await _context.MaestroAutoclave.ToListAsync();
+            //return View(await _context.CiclosAutoclaves.OrderByDescending(x=>x.Id).ToListAsync());
+
+            return Json(result);
+
+
+        }
+
+
+
+
 
         // GET: Inicio/Details/5
         public async Task<IActionResult> Details(int? id)

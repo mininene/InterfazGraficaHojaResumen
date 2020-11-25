@@ -26,6 +26,15 @@ namespace WebResumen.Controllers
             return View(await _context.MaestroAutoclave.ToListAsync());
         }
 
+        public async Task<JsonResult> ListMaestro()
+        {
+            var result = await _context.MaestroAutoclave.ToListAsync();
+            
+            return Json(result);
+
+
+        }
+
         // GET: MaestroAutoclave/Details/5
         public async Task<IActionResult> Details(int? id)
         {

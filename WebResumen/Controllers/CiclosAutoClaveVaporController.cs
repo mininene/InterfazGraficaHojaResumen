@@ -28,10 +28,10 @@ namespace WebResumen.Controllers
 
         public async Task<JsonResult> ListVapor()
         {
-            var result = await _context.CiclosSabiDos.OrderByDescending(x => x.Id).ToListAsync();
+            var result =  await _context.CiclosSabiDos.OrderByDescending(x => x.Id).ToListAsync();
             //return View(await _context.CiclosAutoclaves.OrderByDescending(x=>x.Id).ToListAsync());
 
-            return Json(result);
+            return Json( result);
 
 
         }
