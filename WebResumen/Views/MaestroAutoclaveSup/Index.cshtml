@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<WebResumen.Models.MaestroAutoclave>
 
 @{
-    ViewData["Title"] = "Control AutoClaves";
+    ViewData["Title"] = "Control Estado";
 }
 
-<h1>Maestro AutoClave</h1>
+<h1>Estado AutoClaves</h1>
 
 @*<p>
     <a asp-action="Create">Create New</a>
@@ -18,7 +18,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Nombre)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.Version)
             </th>
             <th>
@@ -26,11 +26,11 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Seccion)
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.Estado)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.UltimoCiclo)
             </th>
             <th>
@@ -38,7 +38,7 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.RutaSalidaPdf)
-            </th>
+            </th>*@
             <th></th>
         </tr>
     </thead>
@@ -51,7 +51,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Nombre)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.Version)
             </td>
             <td>
@@ -59,11 +59,11 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Seccion)
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.Estado)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.UltimoCiclo)
             </td>
             <td>
@@ -71,10 +71,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.RutaSalidaPdf)
-            </td>
+            </td>*@
             <td>
                 <a class="btn btn-success btn-sm text-white" asp-action="Edit" asp-route-id="@item.Id">Editar</a>
-                @*<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |*@
                 @*<a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
             </td>
