@@ -46,6 +46,18 @@ namespace WebResumen
             // Configure your policies
             services.AddAuthorization(options =>                        
             {
+                //Para controladores
+                options.AddPolicy("ADTodos", policy =>
+                policy.Requirements.Add(new ADGroupAllRequirement("GLOBAL\\ESSA-HojaResumen_Users", "GLOBAL\\ESSA-HojaResumen_Admins", "GLOBAL\\ESSA-HojaResumen_Supervisors")));
+
+                options.AddPolicy("ADAS", policy =>
+                policy.Requirements.Add(new ADGroupASRequirement("GLOBAL\\ESSA-HojaResumen_Admins", "GLOBAL\\ESSA-HojaResumen_Supervisors")));
+
+                options.AddPolicy("Admins", policy =>
+                policy.Requirements.Add(new ADGroupAdminsRequirement("GLOBAL\\ESSA-HojaResumen_Admins")));
+
+
+                //Para control de vistas
                 options.AddPolicy("ADUsers", policy =>
                    policy.RequireRole(Configuration["SecuritySettings:ADGroupUsers"]));  //verifica el grupo desde el json
 
@@ -55,10 +67,8 @@ namespace WebResumen
                 options.AddPolicy("ADSupervisors", policy =>
                    policy.RequireRole(Configuration["SecuritySettings:ADGroupSupervisors"]));
 
-                options.AddPolicy("ADTodos", policy =>
-                  policy.RequireRole("ADUsers", "ADAdmins","ADSupervisors"));
-
-
+                //options.AddPolicy("ADTodos", policy =>
+                //  policy.RequireRole("ADUsers", "ADAdmins","ADSupervisors"));
 
 
                 //policy.Requirements.Add(new CheckADGroupRequirement("GLOBAL\\ESSA-HojaResumen_Users")));
@@ -68,9 +78,12 @@ namespace WebResumen
                 //        policy.RequireClaim("permission", "write"));
 
             });
-            services.AddSingleton<IAuthorizationHandler, ADGroupUsersHandler>();
+            //services.AddSingleton<IAuthorizationHandler, ADGroupUsersHandler>();
+            //services.AddSingleton<IAuthorizationHandler, ADGroupAdminsHandler>();
+            //services.AddSingleton<IAuthorizationHandler, ADGroupSupervisorsHandler>();
+            services.AddSingleton<IAuthorizationHandler, ADGroupAllHandler>();
+            services.AddSingleton<IAuthorizationHandler, ADGroupASHandler>();
             services.AddSingleton<IAuthorizationHandler, ADGroupAdminsHandler>();
-            services.AddSingleton<IAuthorizationHandler, ADGroupSupervisorsHandler>();
 
 
             services.AddControllersWithViews();

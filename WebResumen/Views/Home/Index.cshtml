@@ -7,8 +7,8 @@
 
 
 <div class="text-center">
-    <h1 class="">Autoclaves Baxter</h1>
-    <p> <a href="">Ciclos de Esterilización Completada</a>.</p>
+    @*<h1 class="">Autoclaves Baxter</h1>*@
+    @*<p> <a href="">Ciclos de Esterilización Completada</a>.</p>*@
 </div>
 
 <!--<div class="container-fluid">
@@ -74,7 +74,19 @@
 
 
 
+@*<style>
+    .sky {
+        background-image: url(https://i.ibb.co/cgQC1bW/Autoclave.jpg);
+        height: 355px;
+        width: auto;
+    }
 
+    .tomato {
+        background-image: linear-gradient( rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5) ), url(https://i.ibb.co/cgQC1bW/Autoclave.jpg);
+        height: 355px;
+        width: auto;
+    }
+</style>*@
 
 
 <body ng-app="datatablesHomeApp" ng-controller="homeCtrl">
@@ -86,17 +98,24 @@
     </table>*@
 
     <div class="spinner-border text-primary" role="status" ng-show="loading"></div> 
-<h1 ng-repeat="x in myWelcome"style="width: 13rem; text-align:left;display:inline-flex;flex-wrap: nowrap;">
+<div ng-repeat="x in myWelcome "style="width: 12rem; text-align:left;display:inline-flex;flex-wrap: nowrap;">
 
     <div class="card" >
-        <a href="{{x.nombre}}"> <img class="card-img-top" src="~/img/Autoclave.png" alt="Card image cap"></a>
+        <a href="{{x.nombre}}"> </a>
         <div class="card-body">
-            <span class="rounded-circle" ng-style="{{x.estado}} && { 'background' : 'green' } || !{{x.estado}} && { 'background' : 'red' }">&nbsp&nbsp&nbsp&nbsp&nbsp </span>
+            <h5><i class="fa fa-2x" ng-class="x.estado ? 'fa fa-cog fa-spin fa-2x fa-fw text-success' : 'fa fa-cog fa-2x text-danger'">{{x.estado ? '' : ''}}</i></h5>
 
-            <a href="{{x.nombre}}">   <h5 class="card-title">{{x.nombre}}</h5></a>
-            <h5 class="card-title text-danger">Ciclo: {{x.ultimoCiclo}}</h5>
+            <img class="card-img-top" src="~/img/{{x.nombre}}.png" alt="Card image cap">
+            @*<img class="card-img-top" ng-class="x.estado ? 'sky' : 'tomato'"></img>*@
+            <a href="{{x.nombre}}">   <h3 class="card-title">{{x.nombre}}</h3></a>
+            <h5 class="card-title text-dark">Ciclo: {{x.ultimoCiclo}}</h5>
+
+            <h5><i class="" ng-class="x.estado ? ' text-success' : ' text-danger'">{{x.estado ? 'Activo' : 'Inactivo'}}</i></h5>
 
 
+
+
+            
 
         </div>
     </div>
@@ -109,7 +128,7 @@
     
 
 
-</h1>
+</div>
    
 
 

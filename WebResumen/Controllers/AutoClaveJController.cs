@@ -10,10 +10,9 @@ using WebResumen.Models;
 
 namespace WebResumen.Controllers
 {
+    [Authorize(Policy = "ADTodos")]
 
-    //[MultiplePolicysAuthorize("Assets View;Assets Edit;Assets Delete")]
-    //[Authorize(Policy = "ADAdmins")]
-    [Authorize(Policy = "ADUsers")]
+   
     public class AutoClaveJController : Controller
     {
         private readonly AppDbContext _context;

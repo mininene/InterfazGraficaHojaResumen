@@ -43,36 +43,59 @@
 
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
-                        </li>
+                        @using Microsoft.AspNetCore.Authorization
+                        @inject IAuthorizationService AuthorizationService
+                        @if ((await AuthorizationService.AuthorizeAsync(User, "ADUsers")).Succeeded)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
+                            </li>
+                        }
+
+
                         @*<li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                            </li>*@
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="MaestroAutoclave" asp-action="Index">Control Maestro</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="CiclosAutoClaveAgua" asp-action="Index">DatosExplotacionAgua</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="CiclosAutoClaveVapor" asp-action="Index">DatosExplotacionVapor</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Parametro" asp-action="Index">Configuración</a>
-                        </li>
+            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </li>*@
+                        else
+                        {
+                            @if ((await AuthorizationService.AuthorizeAsync(User, "ADAS")).Succeeded)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
+                                </li>
+
+
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="CiclosAutoClaveAgua" asp-action="Index">DatosExplotacionAgua</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="CiclosAutoClaveVapor" asp-action="Index">DatosExplotacionVapor</a>
+                                </li>
+                                @if ((await AuthorizationService.AuthorizeAsync(User, "ADAdmins")).Succeeded)
+                                {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="MaestroAutoclave" asp-action="Index">Control Maestro</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Parametro" asp-action="Index">Configuración</a>
+                                </li>
+                                    }
+                                }
+                        }
+
                         @*<li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="AutoClaveA" asp-action="Index">AutoClaveA</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="AutoClaveJJ" asp-action="Index">AutoClaveJ</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="AutoClaveK" asp-action="Index">AutoClaveK</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="AutoClaveL" asp-action="Index">AutoClaveL</a>
-                            </li>*@
+            <a class="nav-link text-dark" asp-area="" asp-controller="AutoClaveA" asp-action="Index">AutoClaveA</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="AutoClaveJJ" asp-action="Index">AutoClaveJ</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="AutoClaveK" asp-action="Index">AutoClaveK</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="AutoClaveL" asp-action="Index">AutoClaveL</a>
+        </li>*@
 
                     </ul>
                 </div>
@@ -155,10 +178,11 @@
     <script src="~/js/example.js" asp-append-version="true"></script>
     @*<script src="~/js/Agua.js" asp-append-version="true"></script>*@
     @*<script src="~/js/ajax.js" asp-append-version="true"></script>*@
+    <script src="~/js/homeApp.js" asp-append-version="true"></script>
     <script src="~/js/vaporApp.js" asp-append-version="true"></script>
     <script src="~/js/aguaApp.js" asp-append-version="true"></script>
     <script src="~/js/maestroApp.js" asp-append-version="true"></script>
-    <script src="~/js/homeApp.js" asp-append-version="true"></script>
+
 
 
 

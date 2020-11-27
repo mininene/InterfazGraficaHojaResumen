@@ -1,6 +1,12 @@
 ﻿var app = angular.module('datatablesHomeApp', []);
 app.controller('homeCtrl', function ($scope, $http, $interval,$timeout) {
     $scope.loading = true;
+    $http.get('/Home/ListHome')
+        .then(function (response) {
+            $scope.loading = false;
+            $scope.myWelcome = response.data;
+
+        });
     $scope.LoadData = function () {
        
 
@@ -12,7 +18,7 @@ app.controller('homeCtrl', function ($scope, $http, $interval,$timeout) {
                 
             });
     }; 
-    $interval($scope.LoadData, 1000);
+    $interval($scope.LoadData, 5000);
 });
 
 

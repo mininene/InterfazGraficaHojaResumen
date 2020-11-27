@@ -11,8 +11,8 @@ using WebResumen.Models;
 namespace WebResumen.Controllers
 {
 
-    [Authorize(Policy = "ADUsers")]
-    //[Authorize(Policy = "ADSupervisors")]
+    [Authorize(Policy = "ADTodos")]
+    
     public class AutoClaveKController : Controller
     {
         private readonly AppDbContext _context;

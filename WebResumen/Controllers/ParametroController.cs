@@ -10,7 +10,7 @@ using WebResumen.Models;
 
 namespace WebResumen.Controllers
 {
-    [Authorize(Policy = "ADUsers")]
+    [Authorize(Policy = "Admins")]
     public class ParametroController : Controller
     {
         private readonly AppDbContext _context;

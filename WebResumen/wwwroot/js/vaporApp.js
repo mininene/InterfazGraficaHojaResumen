@@ -53,11 +53,11 @@
                         text: '<i class="fa fa-file-text-o"></i> Excel',
                         titleAttr: 'Excel'
                     },
-                    {
-                        extend: 'print',
-                        text: '<i class="fa fa-print" aria-hidden="true"></i> Print',
-                        titleAttr: 'Print'
-                    },
+                    //{
+                    //    extend: 'print',
+                    //    text: '<i class="fa fa-print" aria-hidden="true"></i> Print',
+                    //    titleAttr: 'Print'
+                    //},
                     {
                         extend: 'copy',
                         text: '<i class="fa fa-files-o"></i> Copy',

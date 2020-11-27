@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace WebResumen.Services.Authorization
 {
-    public class ADGroupAdminsHandler : AuthorizationHandler<ADGroupAdminsRequirement>
+    public class ADGroupAllHandler : AuthorizationHandler<ADGroupAllRequirement>
     {
-        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, ADGroupAdminsRequirement requirement)
+        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, ADGroupAllRequirement requirement)
         {
-             var groups = new List<string>();//save all your groups' name
+            var groups = new List<string>();//save all your groups' name
             var wi = (WindowsIdentity)context.User.Identity;
             if (wi.Groups != null)
             {
@@ -26,7 +26,7 @@ namespace WebResumen.Services.Authorization
                         // ignored
                     }
                 }
-                if (groups.Contains(requirement.adminsGroupName))//do the check
+                if (groups.Contains(requirement.usersGroupName) || groups.Contains(requirement.supervisorsGroupName) || groups.Contains(requirement.adminsGroupName) )//do the check
                 {
                     context.Succeed(requirement);
                 }
@@ -35,5 +35,5 @@ namespace WebResumen.Services.Authorization
             return Task.CompletedTask;
         }
     }
- }
-
+    
+}

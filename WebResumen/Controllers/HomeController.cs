@@ -12,8 +12,9 @@ using WebResumen.Models;
 
 namespace WebResumen.Controllers
 {
-   // [Authorize(Policy = "ADUsers")]
-    //[Authorize(Roles = "ADTodos")]
+   
+
+    [Authorize(Policy = "ADTodos")]
     public class HomeController : Controller
     {
         private readonly AppDbContext _context;
