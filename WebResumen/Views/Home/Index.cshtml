@@ -5,77 +5,29 @@
 }
 
 
-
 <div class="text-center">
-    @*<h1 class="">Autoclaves Baxter</h1>*@
+    <h1 class="">Autoclaves Baxter</h1>
     @*<p> <a href="">Ciclos de Esterilización Completada</a>.</p>*@
 </div>
 
-<!--<div class="container-fluid">
-    <table id="dtHorizontalVerticalExample" class="table table-striped table-bordered  " cellspacing="0" style="width:150%">
-        <thead>
-            <tr>
-
-                <th>ID </th>
-                <th>CICLO                  </th>
-                <th>ESTADO</th>
-                <th>NOMBRE</th>
 
 
-
-            </tr>
-        </thead>
-        <tbody class="tbody"></tbody>
-    </table>
-</div>
-
-
-
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">×</button>
-                <h4 class="modal-title" id="myModalLabel">Add Employee</h4>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="ID">ID</label>
-                        <input type="text" class="form-control" id="ID" placeholder="Id" disabled="disabled" />
-                    </div>
-                    <div class="form-group">
-                        <label for="CICLO">CICLO</label>
-                        <input type="text" class="form-control" id="CICLO" placeholder="Name" />
-                    </div>
-                    <div class="form-group">
-                        <label for="ESTADO">ESTADO</label>
-                        <input type="text" class="form-control" id="ESTADO" placeholder="Age" />
-                    </div>
-                    <div class="form-group">
-                        <label for="NOMBRE">NOMBRE</label>
-                        <input type="text" class="form-control" id="NOMBRE" placeholder="State" />
-                    </div>-->
-                    @*<div class="form-group">
-                        <label for="Country">Country</label>
-                        <input type="text" class="form-control" id="Country" placeholder="Country" />
-                    </div>*@
-                <!--</form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="btnAdd" onclick="return Create();">Añadir</button>
-                <button type="button" class="btn btn-primary" id="btnUpdate" style="display:none;" onclick="Edit();">Actualizar</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>-->
-
-
-
-
-@*<style>
-    .sky {
+<style>
+    .fullscreen-spinner {
+        width: 100vw;
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 100000;
+        background: #FFFFFF;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+/*    .sky {
         background-image: url(https://i.ibb.co/cgQC1bW/Autoclave.jpg);
         height: 355px;
         width: auto;
@@ -85,148 +37,202 @@
         background-image: linear-gradient( rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5) ), url(https://i.ibb.co/cgQC1bW/Autoclave.jpg);
         height: 355px;
         width: auto;
-    }
-</style>*@
+    }*/
+
+</style>
 
 
+
+
+@*<div id="load" class="spinner-border text-primary" role="status" ng-show="loading"></div>*@
+<div class="fullscreen-spinner" ng-show="loading">
+    <img src="~/img/spinner.gif" alt="spinner logo" />
+</div>
 <body ng-app="datatablesHomeApp" ng-controller="homeCtrl">
+
+    <div class="card-group">
+        <div class="card">
+
+            <div class="card-body">
+                <h5><i class="fa fa-2x" ng-class="ea ? 'fa fa-cog fa-spin fa-2x fa-fw text-success' : 'fa fa-cog fa-2x text-danger'">{{ea ? '' : ''}}</i></h5>
+                <img class="card-img-top" src="~/img/AutoclaveA.png" alt="Card image cap">
+                <a href="{{na}}">   <h3 class="card-title">{{na}}</h3></a>
+                <h5 class="card-title text-dark">Ciclo: {{a}}</h5>
+                <h5><i class="" ng-class="ea ? ' text-success' : ' text-danger'">{{ea ? 'Activo' : 'Inactivo'}}</i></h5>
+
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h5><i class="fa fa-2x" ng-class="eb ? 'fa fa-cog fa-spin fa-2x fa-fw text-success' : 'fa fa-cog fa-2x text-danger'">{{eb ? '' : ''}}</i></h5>
+                <img class="card-img-top" src="~/img/AutoclaveB.png" alt="Card image cap">
+                <a href="{{nb}}">   <h3 class="card-title">{{nb}}</h3></a>
+                <h5 class="card-title text-dark">Ciclo: {{b}}</h5>
+                <h5><i class="" ng-class="eb ? ' text-success' : ' text-danger'">{{eb ? 'Activo' : 'Inactivo'}}</i></h5>
+
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h5><i class="fa fa-2x" ng-class="ec ? 'fa fa-cog fa-spin fa-2x fa-fw text-success' : 'fa fa-cog fa-2x text-danger'">{{ec ? '' : ''}}</i></h5>
+                <img class="card-img-top" src="~/img/AutoclaveC.png" alt="Card image cap">
+                <a href="{{nc}}">   <h3 class="card-title">{{nc}}</h3></a>
+                <h5 class="card-title text-dark">Ciclo: {{c}}</h5>
+                <h5><i class="" ng-class="ec ? ' text-success' : ' text-danger'">{{ec ? 'Activo' : 'Inactivo'}}</i></h5>
+
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h5><i class="fa fa-2x" ng-class="ed ? 'fa fa-cog fa-spin fa-2x fa-fw text-success' : 'fa fa-cog fa-2x text-danger'">{{ed ? '' : ''}}</i></h5>
+                <img class="card-img-top" src="~/img/AutoclaveD.png" alt="Card image cap">
+                <a href="{{nd}}">   <h3 class="card-title">{{nd}}</h3></a>
+                <h5 class="card-title text-dark">Ciclo: {{d}}</h5>
+                <h5><i class="" ng-class="ed ? ' text-success' : ' text-danger'">{{ed ? 'Activo' : 'Inactivo'}}</i></h5>
+
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h5><i class="fa fa-2x" ng-class="ee ? 'fa fa-cog fa-spin fa-2x fa-fw text-success' : 'fa fa-cog fa-2x text-danger'">{{ee ? '' : ''}}</i></h5>
+                <img class="card-img-top" src="~/img/AutoclaveE.png" alt="Card image cap">
+                <a href="{{ne}}">   <h3 class="card-title">{{ne}}</h3></a>
+                <h5 class="card-title text-dark">Ciclo: {{e}}</h5>
+                <h5><i class="" ng-class="ee ? ' text-success' : ' text-danger'">{{ee ? 'Activo' : 'Inactivo'}}</i></h5>
+
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h5><i class="fa fa-2x" ng-class="ef ? 'fa fa-cog fa-spin fa-2x fa-fw text-success' : 'fa fa-cog fa-2x text-danger'">{{ef ? '' : ''}}</i></h5>
+                <img class="card-img-top" src="~/img/AutoclaveF.png" alt="Card image cap">
+                <a href="{{nf}}">   <h3 class="card-title">{{nf}}</h3></a>
+                <h5 class="card-title text-dark">Ciclo: {{f}}</h5>
+                <h5><i class="" ng-class="ef ? ' text-success' : ' text-danger'">{{ef ? 'Activo' : 'Inactivo'}}</i></h5>
+
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h5><i class="fa fa-2x" ng-class="eg ? 'fa fa-cog fa-spin fa-2x fa-fw text-success' : 'fa fa-cog fa-2x text-danger'">{{eg ? '' : ''}}</i></h5>
+                <img class="card-img-top" src="~/img/AutoclaveG.png" alt="Card image cap">
+                <a href="{{ng}}">   <h3 class="card-title">{{ng}}</h3></a>
+                <h5 class="card-title text-dark">Ciclo: {{g}}</h5>
+                <h5><i class="" ng-class="eg ? ' text-success' : ' text-danger'">{{eg ? 'Activo' : 'Inactivo'}}</i></h5>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="card-group">
+
+        <div class="card">
+            <div class="card-body">
+                <h5><i class="fa fa-2x" ng-class="eh ? 'fa fa-cog fa-spin fa-2x fa-fw text-success' : 'fa fa-cog fa-2x text-danger'">{{eh ? '' : ''}}</i></h5>
+                <img class="card-img-top" src="~/img/AutoclaveH.png" alt="Card image cap">
+                <a href="{{nh}}">   <h3 class="card-title">{{nh}}</h3></a>
+                <h5 class="card-title text-dark">Ciclo: {{h}}</h5>
+                <h5><i class="" ng-class="eh ? ' text-success' : ' text-danger'">{{eh ? 'Activo' : 'Inactivo'}}</i></h5>
+
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h5><i class="fa fa-2x" ng-class="ei ? 'fa fa-cog fa-spin fa-2x fa-fw text-success' : 'fa fa-cog fa-2x text-danger'">{{ei ? '' : ''}}</i></h5>
+                <img class="card-img-top" src="~/img/AutoclaveI.png" alt="Card image cap">
+                <a href="{{ni}}">   <h3 class="card-title">{{ni}}</h3></a>
+                <h5 class="card-title text-dark">Ciclo: {{i}}</h5>
+                <h5><i class="" ng-class="ei ? ' text-success' : ' text-danger'">{{ei ? 'Activo' : 'Inactivo'}}</i></h5>
+
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h5><i class="fa fa-2x" ng-class="ej ? 'fa fa-cog fa-spin fa-2x fa-fw text-success' : 'fa fa-cog fa-2x text-danger'">{{ej ? '' : ''}}</i></h5>
+                <img class="card-img-top" src="~/img/AutoclaveJ.png" alt="Card image cap">
+                <a href="{{nj}}">   <h3 class="card-title">{{nj}}</h3></a>
+                <h5 class="card-title text-dark">Ciclo: {{j}}</h5>
+                <h5><i class="" ng-class="ej ? ' text-success' : ' text-danger'">{{ej ? 'Activo' : 'Inactivo'}}</i></h5>
+
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h5><i class="fa fa-2x" ng-class="ek ? 'fa fa-cog fa-spin fa-2x fa-fw text-success' : 'fa fa-cog fa-2x text-danger'">{{ek ? '' : ''}}</i></h5>
+                <img class="card-img-top" src="~/img/AutoclaveK.png" alt="Card image cap">
+                <a href="{{nk}}">   <h3 class="card-title">{{nk}}</h3></a>
+                <h5 class="card-title text-dark">Ciclo: {{k}}</h5>
+                <h5><i class="" ng-class="ek ? ' text-success' : ' text-danger'">{{ek ? 'Activo' : 'Inactivo'}}</i></h5>
+
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h5><i class="fa fa-2x" ng-class="el ? 'fa fa-cog fa-spin fa-2x fa-fw text-success' : 'fa fa-cog fa-2x text-danger'">{{el ? '' : ''}}</i></h5>
+                <img class="card-img-top" src="~/img/AutoclaveL.png" alt="Card image cap">
+                <a href="{{nl}}">   <h3 class="card-title">{{nl}}</h3></a>
+                <h5 class="card-title text-dark">Ciclo: {{l}}</h5>
+                <h5><i class="" ng-class="el ? ' text-success' : ' text-danger'">{{el ? 'Activo' : 'Inactivo'}}</i></h5>
+
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h5><i class="fa fa-2x" ng-class="em ? 'fa fa-cog fa-spin fa-2x fa-fw text-success' : 'fa fa-cog fa-2x text-danger'">{{em ? '' : ''}}</i></h5>
+                <img class="card-img-top" src="~/img/AutoclaveM.png" alt="Card image cap">
+                <a href="{{nm}}">   <h3 class="card-title">{{nm}}</h3></a>
+                <h5 class="card-title text-dark">Ciclo: {{m}}</h5>
+                <h5><i class="" ng-class="em ? ' text-success' : ' text-danger'">{{em ? 'Activo' : 'Inactivo'}}</i></h5>
+
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+
+
+
 
 
     @*<table datatable class="cell-border thead-dark table table-striped table-bordered "
-           dt-options="dtOptions"
-           dt-columns="dtColumns">
-    </table>*@
+               dt-options="dtOptions"
+               dt-columns="dtColumns">
+        </table>*@
 
-    <div class="spinner-border text-primary" role="status" ng-show="loading"></div> 
-<div ng-repeat="x in myWelcome "style="width: 12rem; text-align:left;display:inline-flex;flex-wrap: nowrap;">
+    <!--<div class="spinner-border text-primary" role="status" ng-show="loading"></div>
+    <div ng-repeat="x in myWelcome " style="width: 12rem; text-align:left;display:inline-flex;flex-wrap: nowrap;">
 
-    <div class="card" >
-        <a href="{{x.nombre}}"> </a>
-        <div class="card-body">
-            <h5><i class="fa fa-2x" ng-class="x.estado ? 'fa fa-cog fa-spin fa-2x fa-fw text-success' : 'fa fa-cog fa-2x text-danger'">{{x.estado ? '' : ''}}</i></h5>
+        <div class="card">
+            <a href="{{x.nombre}}"> </a>
+            <div class="card-body">
+                <h5><i class="fa fa-2x" ng-class="x.estado ? 'fa fa-cog fa-spin fa-2x fa-fw text-success' : 'fa fa-cog fa-2x text-danger'">{{x.estado ? '' : ''}}</i></h5>
 
-            <img class="card-img-top" src="~/img/{{x.nombre}}.png" alt="Card image cap">
-            @*<img class="card-img-top" ng-class="x.estado ? 'sky' : 'tomato'"></img>*@
-            <a href="{{x.nombre}}">   <h3 class="card-title">{{x.nombre}}</h3></a>
-            <h5 class="card-title text-dark">Ciclo: {{x.ultimoCiclo}}</h5>
+                <img class="card-img-top" src="~/img/{{x.nombre}}.png" alt="Card image cap">-->
+    @*<img class="card-img-top" ng-class="x.estado ? 'sky' : 'tomato'"></img>*@
+    <!--<a href="{{x.nombre}}">   <h3 class="card-title">{{x.nombre}}</h3></a>
+            <h5 class="card-title text-dark">Ciclo: {{ix.ultimoCiclo)}}</h5>
 
             <h5><i class="" ng-class="x.estado ? ' text-success' : ' text-danger'">{{x.estado ? 'Activo' : 'Inactivo'}}</i></h5>
 
 
 
 
-            
+
 
         </div>
-    </div>
+    </div>-->
+    @*</div>*@
 
 
 
+</body>
 
 
 
-    
-
-
-</div>
-   
-
-
-</body> 
-    
-    
-    
-    
-    @*<div ng-app="myApp" ng-controller="myCtrl">
-
-    <p>Today's welcome message is:</p>
-
-    <h1>{{myWelcome}}</h1>
-
-</div>*@
-          @*<table class="table">*@
-          @*<thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Matricula)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Nombre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Version)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Ip)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Seccion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Estado)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UltimoCiclo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RutaSalida)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RutaSalidaPdf)
-            </th>
-            <th></th>
-        </tr>
-    </thead>*@
-          @*<tbody>*@
-          @*@foreach (var item in Model)
-{
-
-<tr>
-     var actual = Regex.Replace(n.UltimoCiclo, "\\d+",
-                   m => (int.Parse(m.Value) - 1).ToString(new string('0', m.Value.Length)));
-
-    <td>
-
-
-
-@Html.Raw(item.RutaSalida.Substring(33, 10)) //MEJOR FORMA DE HACER SUB
-
-
-
-<div class="card" style="width: 13rem; text-align:left;display:inline-flex;flex-wrap: nowrap;">
-    <a href="/@Html.Raw(item.Nombre)"> <img class="card-img-top" src="~/img/Autoclave.png" alt="Card image cap"></a>
-    <div class="card-body">
-        <a href="/@Html.Raw(item.Nombre)">   <h5 class="card-title">@Html.DisplayFor(modelItem => item.Nombre)</h5></a>
-        <h5 class="card-title text-danger">Ciclo:  @Html.DisplayFor(modelItem => item.UltimoCiclo)</h5>
-        <h5 class="card-title text-danger ">Estado:  @Html.DisplayFor(modelItem => item.Estado)</h5>
-        <h5 class="card-title ">Sección:  @Html.DisplayFor(modelItem => item.Seccion)</h5>
-
-
-        <h5 class="card-title ">Sección:  @n.ciclo</h5>
-        <h5 class="card-title ">Modelo: FOW5</h5>
-        <p class="card-text"><small class="text-muted">Para más detalles haga click en el título o en la imagen</small></p>
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</td>
-
-    </tr>
-}
-</tbody>
-</table>*@

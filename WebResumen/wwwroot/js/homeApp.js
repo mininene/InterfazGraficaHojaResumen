@@ -6,6 +6,52 @@ app.controller('homeCtrl', function ($scope, $http, $interval,$timeout) {
             $scope.loading = false;
             $scope.myWelcome = response.data;
 
+            $scope.a = parseInt(response.data[0].ultimoCiclo) - 1
+            $scope.b = parseInt(response.data[1].ultimoCiclo) - 1
+            $scope.c = parseInt(response.data[2].ultimoCiclo) - 1
+            $scope.d = parseInt(response.data[3].ultimoCiclo) - 1
+            $scope.e = parseInt(response.data[4].ultimoCiclo) - 1
+            $scope.f = parseInt(response.data[5].ultimoCiclo) - 1
+            $scope.g = parseInt(response.data[6].ultimoCiclo) - 1
+            $scope.h = parseInt(response.data[7].ultimoCiclo) - 1
+            $scope.i = parseInt(response.data[8].ultimoCiclo) - 1
+            $scope.j = parseInt(response.data[9].ultimoCiclo) - 1
+            $scope.k = parseInt(response.data[10].ultimoCiclo) - 1
+            $scope.l = parseInt(response.data[11].ultimoCiclo) - 1
+            $scope.m = parseInt(response.data[12].ultimoCiclo) - 1
+
+            $scope.ea = response.data[0].estado
+            $scope.eb = response.data[1].estado
+            $scope.ec = response.data[2].estado
+            $scope.ed = response.data[3].estado
+            $scope.ee = response.data[4].estado
+            $scope.ef = response.data[5].estado
+            $scope.eg = response.data[6].estado
+            $scope.eh = response.data[7].estado
+            $scope.ei = response.data[8].estado
+            $scope.ej = response.data[9].estado
+            $scope.ek = response.data[10].estado
+            $scope.el = response.data[11].estado
+            $scope.em = response.data[12].estado
+
+
+            $scope.na = response.data[0].nombre
+            $scope.nb = response.data[1].nombre
+            $scope.nc = response.data[2].nombre
+            $scope.nd = response.data[3].nombre
+            $scope.ne = response.data[4].nombre
+            $scope.nf = response.data[5].nombre
+            $scope.ng = response.data[6].nombre
+            $scope.nh = response.data[7].nombre
+            $scope.ni = response.data[8].nombre
+            $scope.nj = response.data[9].nombre
+            $scope.nk = response.data[10].nombre
+            $scope.nl = response.data[11].nombre
+            $scope.nm = response.data[12].nombre
+
+
+
+
         });
     $scope.LoadData = function () {
        
@@ -15,10 +61,52 @@ app.controller('homeCtrl', function ($scope, $http, $interval,$timeout) {
             .then(function (response) {
                 $scope.loading = false;
                 $scope.myWelcome = response.data;
+                $scope.a = parseInt(response.data[0].ultimoCiclo) - 1
+                $scope.b = parseInt(response.data[1].ultimoCiclo) - 1
+                $scope.c = parseInt(response.data[2].ultimoCiclo) - 1
+                $scope.d = parseInt(response.data[3].ultimoCiclo) - 1
+                $scope.e = parseInt(response.data[4].ultimoCiclo) - 1
+                $scope.f = parseInt(response.data[5].ultimoCiclo) - 1
+                $scope.g = parseInt(response.data[6].ultimoCiclo) - 1
+                $scope.h = parseInt(response.data[7].ultimoCiclo) - 1
+                $scope.i = parseInt(response.data[8].ultimoCiclo) - 1
+                $scope.j = parseInt(response.data[9].ultimoCiclo) - 1
+                $scope.k = parseInt(response.data[10].ultimoCiclo) - 1
+                $scope.l = parseInt(response.data[11].ultimoCiclo) - 1
+                $scope.m = parseInt(response.data[12].ultimoCiclo) - 1
+
+                $scope.ea = response.data[0].estado
+                $scope.eb = response.data[1].estado
+                $scope.ec = response.data[2].estado
+                $scope.ed = response.data[3].estado
+                $scope.ee = response.data[4].estado
+                $scope.ef = response.data[5].estado
+                $scope.eg = response.data[6].estado
+                $scope.eh = response.data[7].estado
+                $scope.ei = response.data[8].estado
+                $scope.ej = response.data[9].estado
+                $scope.ek = response.data[10].estado
+                $scope.el = response.data[11].estado
+                $scope.em = response.data[12].estado
+
+
+                $scope.na = response.data[0].nombre
+                $scope.nb = response.data[1].nombre
+                $scope.nc = response.data[2].nombre
+                $scope.nd = response.data[3].nombre
+                $scope.ne = response.data[4].nombre
+                $scope.nf = response.data[5].nombre
+                $scope.ng = response.data[6].nombre
+                $scope.nh = response.data[7].nombre
+                $scope.ni = response.data[8].nombre
+                $scope.nj = response.data[9].nombre
+                $scope.nk = response.data[10].nombre
+                $scope.nl = response.data[11].nombre
+                $scope.nm = response.data[12].nombre
                 
             });
     }; 
-    $interval($scope.LoadData, 5000);
+    $interval($scope.LoadData, 2000);
 });
 
 
