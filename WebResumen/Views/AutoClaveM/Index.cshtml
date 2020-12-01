@@ -11,6 +11,23 @@
 <p>
     @*<a asp-action="Create">Create New</a>*@
 </p>
+
+@using (Html.BeginForm())
+{
+    <p>
+          <form>
+            Buscar por Nº Ciclo: @Html.TextBox("nCiclo")
+            Buscar por Nº Programa: @Html.TextBox("nPrograma")
+            Buscar por Fecha:@Html.TextBox("fecha")
+            @*Buscar por Fecha:  <input type="date" id="fecha" name="fecha" asp-format="{0:dd/MM/yy}" class="form-control">*@@*@Html.TextBox("fecha")*@
+
+
+            <input type="submit" value="Buscar" />
+        </form>
+    </p>
+
+
+}
 <table class="table">
     <thead>
         <tr>

@@ -3,6 +3,10 @@
     angular.module('datatablesAguaApp', ['datatables', 'datatables.buttons']).
         controller('aguaCtrl', function ($scope, $http, $q, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder,DTDefaultOptions) {
             DTDefaultOptions.setLoadingTemplate('<div class="spinner-border text-primary" role="status"></div >' + '  ' + '<span class="sr - only">Cargando...</span>') //spinner carga
+
+
+
+
             $scope.dtOptions = DTOptionsBuilder
                 .fromFnPromise(function () {
                     var defer = $q.defer();
@@ -12,9 +16,33 @@
                    
                     
                     return defer.promise;
+
+
                    
                 })
-           
+               
+         
+                //.withColumnFilter({
+                //    aoColumns: [{
+                //        type: 'text',
+                //        bRegex: true,
+                //        bSmart: true
+                //    }, {
+                //        type: 'text',
+                //        bRegex: true,
+                //        bSmart: true
+                //    }, {
+                //        type: 'text',
+                //        bRegex: true,
+                //        bSmart: true
+                //    }, {
+                //        type: 'text',
+                //        bRegex: true,
+                //        bSmart: true
+                //    }]
+                //})
+
+          
 
            
            
@@ -64,10 +92,14 @@
                      
                 ]
             )
-          
+              
                 .withOption('scrollX', 'true')
                 .withOption('scrollY', '380px')
                 .withOption('lengthMenu', [[10, 50, 100, -1], [10, 50, 100, 'All']]);
+          
+
+             
+
 
             $scope.dtColumns = [
                 DTColumnBuilder.newColumn(null).withTitle('#').renderWith(function (data, type, full, meta) {
@@ -149,11 +181,11 @@
                     var x = data.substring(6, 14)
                     return x
                 }),
-                DTColumnBuilder.newColumn('duracionTotalF7').withTitle('Duración F8'),
-                DTColumnBuilder.newColumn('duracionTotalF7').withTitle('Duración F9'),
-                DTColumnBuilder.newColumn('duracionTotalF7').withTitle('Duración F10'),
-                DTColumnBuilder.newColumn('duracionTotalF7').withTitle('Duración F11'),
-                DTColumnBuilder.newColumn('duracionTotalF7').withTitle('Duración F12'),
+                DTColumnBuilder.newColumn('duracionTotalF8').withTitle('Duración F8'),
+                DTColumnBuilder.newColumn('duracionTotalF9').withTitle('Duración F9'),
+                DTColumnBuilder.newColumn('duracionTotalF10').withTitle('Duración F10'),
+                DTColumnBuilder.newColumn('duracionTotalF11').withTitle('Duración F11'),
+                DTColumnBuilder.newColumn('duracionTotalF12').withTitle('Duración F12'),
                 DTColumnBuilder.newColumn('tff13').withTitle('T.TOTAL').renderWith(function (data, type, full, meta) {
                     var x = data.substring(0, 7)
                     return x
@@ -174,37 +206,14 @@
                 DTColumnBuilder.newColumn('difMaxMin').withTitle('FoMax-FoMin'),
             ]
 
+              
          
 
 
         })
+     
+
+ 
 
 })(angular);
 
-//var app = angular.module('myApp', [/*'datatables'*/]);
-//app.controller('myCtrl', function ($scope) { });
-//app.controller('homeCtrl', ['$scope', '$http', 'DTOptionsBuilder', 'DTColumnBuilder',
-//    function ($scope, $http, DTOptionsBuilder, DTColumnBuilder) {
-
-//        $scope.dtColumns = [
-//            DTColumnBuilder.newColumn("idAutoclave", "idAutoclave"),
-        
-//            //DTColumnBuilder.newColumn("CompanyName", "Company Name"),
-//            //DTColumnBuilder.newColumn("ContactName", "Contact Name"),
-//            //DTColumnBuilder.newColumn("Phone", "Phone"),
-//            //DTColumnBuilder.newColumn("City", "City")
-//        ]
-
-//        $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
-//            url: "/CiclosAutoClaveAgua/List",
-//            type: "GET"
-//        })
-//            .withPaginationType('full_numbers')
-//            .withDisplayLength(10);
-//    }])
-
-//var app = angular.module('myApp', []);
-//app.controller('myCtrl', function ($scope) {
-//    $scope.firstName = "John";
-//    $scope.lastName = "Doe";
-//});

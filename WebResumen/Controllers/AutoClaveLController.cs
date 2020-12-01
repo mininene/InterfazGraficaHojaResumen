@@ -21,13 +21,39 @@ namespace WebResumen.Controllers
         }
 
         // GET: AutoClaveL
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string nCiclo, string nPrograma, string fecha)
         {
             List<ViewModelAutoClaveJ> _autoJ = new List<ViewModelAutoClaveJ>();
             List<CiclosSabiDos> _sabiDos = await _context.CiclosSabiDos.ToListAsync();
 
 
             var query = from x in _sabiDos.Where(x => x.IdAutoclave == "1167L").OrderByDescending(X => X.Id).Take(50) select x;
+            if (!String.IsNullOrEmpty(nCiclo))
+            {
+                query = query.Where(x => x.NumeroCiclo.Contains(nCiclo));
+
+            }
+
+            if (!String.IsNullOrEmpty(nPrograma))
+            {
+                query = query.Where(x => x.Programa.Contains(nPrograma));
+            }
+
+
+
+            if (!String.IsNullOrEmpty(fecha))
+            {
+                query = query.Where(x => x.HoraFin.Contains(fecha));
+
+            }
+
+            if (!String.IsNullOrEmpty(nCiclo) && !String.IsNullOrEmpty(nPrograma) && !String.IsNullOrEmpty(fecha))
+            {
+                query = query.Where(x => x.NumeroCiclo.Contains(nCiclo)
+                                       || x.Programa.Contains(nPrograma)
+                                         || x.HoraFin.Contains(fecha));  // si pongo la fecha como string si que lo coge
+            }
+
 
             return View(query);
         }

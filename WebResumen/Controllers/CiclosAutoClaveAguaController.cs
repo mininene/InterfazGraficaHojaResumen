@@ -31,12 +31,20 @@ namespace WebResumen.Controllers
 
         }
         // GET: CiclosAutoclaveAgua
-        public  async Task<JsonResult> ListAgua()
+        public  async Task<JsonResult> ListAgua(string customFilter)
         {
-            var result=  await _context.CiclosAutoclaves.OrderByDescending(x => x.Id).ToListAsync();
+            //var result=  await _context.CiclosAutoclaves.OrderByDescending(x => x.Id).ToListAsync();
             //return View(await _context.CiclosAutoclaves.OrderByDescending(x=>x.Id).ToListAsync());
 
-            return Json( result);
+            var result = from s in _context.CiclosAutoclaves.OrderByDescending(x => x.Id)
+                           select s;
+            //if (!String.IsNullOrEmpty(customFilter))
+            //{
+            //    result = result.Where(s => s.IdAutoclave.Contains(customFilter));
+                                      
+            //}
+
+            return Json(await  result.ToListAsync());
            
 
         }
