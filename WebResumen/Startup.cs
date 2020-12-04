@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WebResumen.Models;
 using WebResumen.Services.Authorization;
+using WebResumen.Services.PrinterService;
 
 namespace WebResumen
 {
@@ -33,9 +34,6 @@ namespace WebResumen
             .GetConnectionString("DefaultConnection")));
 
            
-
-
-
 
             // Add all of your handlers to DI.
 
@@ -84,6 +82,10 @@ namespace WebResumen
             services.AddSingleton<IAuthorizationHandler, ADGroupAllHandler>();
             services.AddSingleton<IAuthorizationHandler, ADGroupASHandler>();
             services.AddSingleton<IAuthorizationHandler, ADGroupAdminsHandler>();
+
+            services.AddScoped(typeof(IPrinterOchoVeinte), typeof(PrinterOchoVeinte));
+            services.AddScoped(typeof(IPrinterDosTresCuatro), typeof(PrinterDosTresCuatro));
+            services.AddScoped(typeof(IPrinterNueveDiez), typeof(PrinterNueveDiez));
 
 
             services.AddControllersWithViews();

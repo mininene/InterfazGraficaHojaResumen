@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebResumen.Models;
+using WebResumen.Services.PrinterService;
 
 namespace WebResumen.Controllers
 {
@@ -14,10 +15,12 @@ namespace WebResumen.Controllers
     public class AutoClaveLController : Controller
     {
         private readonly AppDbContext _context;
+        private readonly IPrinterNueveDiez _printerNueveDiez;
 
-        public AutoClaveLController(AppDbContext context)
+        public AutoClaveLController(AppDbContext context, IPrinterNueveDiez printerNueveDiez)
         {
             _context = context;
+            _printerNueveDiez = printerNueveDiez;
         }
 
         // GET: AutoClaveL
@@ -57,6 +60,37 @@ namespace WebResumen.Controllers
 
             return View(query);
         }
+
+
+        public async Task<IActionResult> Print(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var ciclosAutoclaves = await _context.CiclosSabiDos
+               .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (ciclosAutoclaves.Programa.Trim().Equals("9") || ciclosAutoclaves.Programa.Trim().Equals("10"))
+
+            {
+                _printerNueveDiez.printNueveDiez(id);
+            }
+
+
+            if (ciclosAutoclaves == null)
+            {
+                return NotFound();
+            }
+
+
+            return View(ciclosAutoclaves);
+        }
+
+
+
+
+
 
         // GET: AutoClaveL/Details/5
         public async Task<IActionResult> Details(int? id)

@@ -59,7 +59,7 @@ app.controller('homeCtrl', function ($scope, $http, $interval,$timeout) {
        
         $http.get('/Home/ListHome')
             .then(function (response) {
-                $scope.loading = false;
+                //$scope.loading = false;
                 $scope.myWelcome = response.data;
                 $scope.a = parseInt(response.data[0].ultimoCiclo) - 1
                 $scope.b = parseInt(response.data[1].ultimoCiclo) - 1

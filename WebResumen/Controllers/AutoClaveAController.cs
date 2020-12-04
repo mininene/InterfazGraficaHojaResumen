@@ -60,6 +60,41 @@ namespace WebResumen.Controllers
                 return View(query);
         }
 
+        public async Task<JsonResult> ListAutoclaveA()
+        {
+            //var result=  await _context.CiclosAutoclaves.OrderByDescending(x => x.Id).ToListAsync();
+            //return View(await _context.CiclosAutoclaves.OrderByDescending(x=>x.Id).ToListAsync());
+            List<CiclosAutoclaves> _sabiUno = await _context.CiclosAutoclaves.ToListAsync();
+            var query = from x in _sabiUno.Where(x => x.IdAutoclave == "NF8387A").OrderByDescending(X => X.Id).Take(50) select x;
+
+
+            return Json( query.ToList());
+
+
+        }
+
+
+        [HttpPost]
+        public async Task<JsonResult> Vista(int? id)
+        {
+           
+            var ciclosAutoclaves = await _context.CiclosAutoclaves
+                .FirstOrDefaultAsync(m => m.Id == id);
+          
+            return Json(ciclosAutoclaves);
+        } 
+
+
+
+
+
+
+
+
+
+
+
+
         // GET: AutoClaveA/Details/5
         public async Task<IActionResult> Details(int? id)
         {

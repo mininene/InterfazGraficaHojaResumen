@@ -1,27 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Printing;
+using System.Text.RegularExpressions;
+using System.Text;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebResumen.Models;
+using WebResumen.Services.PrinterService;
+
 
 namespace WebResumen.Controllers
 {
     [Authorize(Policy = "ADTodos")]
+
+
     public class AutoClaveBController : Controller
     {
+        
         private readonly AppDbContext _context;
+        private readonly IPrinterOchoVeinte _printerOchoVeinte;
+        private readonly IPrinterDosTresCuatro _printerDosTresCuatro;
 
-        public AutoClaveBController(AppDbContext context)
+        public AutoClaveBController(AppDbContext context, IPrinterOchoVeinte printerOchoVeinte, IPrinterDosTresCuatro printerDosTresCuatro)
         {
             _context = context;
-        }
+            _printerOchoVeinte = printerOchoVeinte;
+            _printerDosTresCuatro = printerDosTresCuatro;
 
-        // GET: AutoClaveB
-        public async Task<IActionResult> Index(string nCiclo, string nPrograma, string fecha)
+    }
+
+    // GET: AutoClaveB
+    public async Task<IActionResult> Index(string nCiclo, string nPrograma, string fecha)
         {
            
             List<CiclosAutoclaves> _sabiUno = await _context.CiclosAutoclaves.ToListAsync();
@@ -55,7 +72,70 @@ namespace WebResumen.Controllers
             }
 
             return View(query);
+
         }
+
+
+        public async Task<IActionResult> Print(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var ciclosAutoclaves = await _context.CiclosAutoclaves
+               .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (ciclosAutoclaves.Programa.Trim().Equals("8") || ciclosAutoclaves.Programa.Trim().Equals("20"))
+
+            {
+                _printerOchoVeinte.printOchoVeinte(id);
+            }
+
+            if (ciclosAutoclaves.Programa.Trim().Equals("2") || ciclosAutoclaves.Programa.Trim().Equals("3") || ciclosAutoclaves.Programa.Trim().Equals("4"))
+            {
+                _printerDosTresCuatro.printDosTresCuatro(id);
+            }
+
+
+            if (ciclosAutoclaves == null)
+            {
+                return NotFound();
+            }
+           
+
+            return View(ciclosAutoclaves);
+
+            //Document doc = new Document(PageSize.Letter);
+            //FileStream file = new FileStream("hola_Mundo.pdf", FileMode.Create);
+            //PdfWriter writer = PdfWriter.GetInstance(doc, file);
+            //doc.AddAuthor("Iranzo");
+            //doc.AddTitle("Hoja Resumen");
+            //doc.Open();
+            //doc.Add(new Phrase(ciclosAutoclaves.IdAutoclave));
+            //doc.Add(new Phrase(ciclosAutoclaves.Programa));
+            //doc.Add(new Phrase(ciclosAutoclaves.CodigoProducto));
+            //doc.Add(new Phrase(ciclosAutoclaves.Programador));
+            //doc.Add(new Phrase(ciclosAutoclaves.HoraInicio));
+            //doc.Add(new Phrase(ciclosAutoclaves.HoraFin));
+            //writer.Close();
+            //doc.Close();
+            //file.Dispose();
+            //var pdf = new FileStream("hola_Mundo.pdf", FileMode.Open, FileAccess.Read);
+
+            //return File(pdf, "application/pdf");
+
+
+            
+        }
+
+
+
+
+
+
+
+
+
 
         // GET: AutoClaveB/Details/5
         public async Task<IActionResult> Details(int? id)

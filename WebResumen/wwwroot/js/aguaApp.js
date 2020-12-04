@@ -1,9 +1,8 @@
 ﻿(function (angular) {
     'use strict';
     angular.module('datatablesAguaApp', ['datatables', 'datatables.buttons']).
-        controller('aguaCtrl', function ($scope, $http, $q, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder,DTDefaultOptions) {
+        controller('aguaCtrl', function ($scope, $http, $q, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder, DTDefaultOptions, $filter) {
             DTDefaultOptions.setLoadingTemplate('<div class="spinner-border text-primary" role="status"></div >' + '  ' + '<span class="sr - only">Cargando...</span>') //spinner carga
-
 
 
 
@@ -12,40 +11,22 @@
                     var defer = $q.defer();
                     $http.get('/CiclosAutoClaveAgua/ListAgua').then(function (result) {
                         defer.resolve(result.data);
+                        $scope.searchid = result.data
+                        
+                       // console.log(result.data)
+
+                           
                     });
+
                    
-                    
                     return defer.promise;
 
 
-                   
+
                 })
-               
-         
-                //.withColumnFilter({
-                //    aoColumns: [{
-                //        type: 'text',
-                //        bRegex: true,
-                //        bSmart: true
-                //    }, {
-                //        type: 'text',
-                //        bRegex: true,
-                //        bSmart: true
-                //    }, {
-                //        type: 'text',
-                //        bRegex: true,
-                //        bSmart: true
-                //    }, {
-                //        type: 'text',
-                //        bRegex: true,
-                //        bSmart: true
-                //    }]
-                //})
-
-          
-
-           
-           
+                //.withOption('searching', false)
+    
+              
                 .withLanguage({
                     "sEmptyTable": "Ningún dato disponible en esta tabla",
                     "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
@@ -97,7 +78,7 @@
                 .withOption('scrollY', '380px')
                 .withOption('lengthMenu', [[10, 50, 100, -1], [10, 50, 100, 'All']]);
           
-
+           
              
 
 
@@ -108,7 +89,7 @@
                    
                 }),
                 
-                                
+                //DTColumnBuilder.newColumn('id').withTitle('id'),             
                 DTColumnBuilder.newColumn('idAutoclave').withTitle('idAutoclave'),
                 DTColumnBuilder.newColumn('notas').withTitle('N.Carro'),
                 DTColumnBuilder.newColumn('numeroCiclo').withTitle('N.Progresivo'),
@@ -206,13 +187,97 @@
                 DTColumnBuilder.newColumn('difMaxMin').withTitle('FoMax-FoMin'),
             ]
 
-              
+            $scope.dtInstance = {};
+            $scope.dtInstance1 = {};
+         
+
+
+           
+            $scope.searchTable = function () {
+                console.log($scope.dtInstance);
+                var query = $scope.searchText;
+               // console.log(query);
+               
+                //console.log($scope.dtInstance.DataTable);
+              var resultado2=$scope.dtInstance.DataTable.search(query)
+              var resultado = $scope.dtInstance.DataTable.search(query).draw();
+               console.log(resultado2);
+
+               
+            };
+
+
+            $scope.searchTable2 = function () {
+
+                var query = $scope.searchText;
+                // console.log(query);
+
+                //console.log($scope.dtInstance.DataTable);
+                var resultado2 = $scope.dtInstance.DataTable.search(query)
+                var resultado = $scope.dtInstance.DataTable.search(query).draw();
+                console.log(resultado2);
+
+
+            };
+
+             $scope.$on('event:dataTableLoaded', function(event, loadedDT) {
+      // Setup - add a text input to each footer cell
+      var id = '#' + loadedDT.id;
+      $(id + ' tfoot th').each(function() {
+        var title = $(id + ' thead th').eq($(this).index()).text();
+          $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+          console.log("hola")
+      });
+
+      var table = loadedDT.DataTable;
+      // Apply the search
+      table.columns().eq(0).each(function(colIdx) {
+        $('input', table.column(colIdx).footer()).on('keyup change', function() {
+          table
+            .column(colIdx)
+            .search(this.value)
+                .draw();
+            console.log("asas")
+        });
+      });
+    });
+
+           
+            //$scope.dtInstance = {};
+
+            //$scope.dtIntanceCallback = function (instance) {
+            //    $scope.dtInstance = instance;
+            //}
+
+            // You should be able to get the table instance
+           
+
+            //$scope.dtInstance = {};
+            //$scope.dtIntanceCallback = function (instance) {
+            //    $scope.dtInstance = instance;
+            //    $scope.dtInstance.DataTable.search(query).draw()
+            
+            //}
+            //console.log($scope.dtInstance);
+            //$scope.dtRebind = function () {
+            //    $scope.dtInstance.DataTable.draw()
+            //}
+
+            //$scope.dtInstance = {};
+            //$scope.search = search;
+
+            //function search(query, dtInstance) {
+            //    $scope.dtInstance.DataTable.search(query).draw()
+            //}
          
 
 
         })
-     
 
+    
+
+
+  
  
 
 })(angular);

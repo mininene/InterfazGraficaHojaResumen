@@ -19,7 +19,7 @@
         <form>
             Buscar por Nº Ciclo: @Html.TextBox("nCiclo")
             Buscar por Nº Programa: @Html.TextBox("nPrograma")
-            Buscar por Fecha:@Html.TextBox("fecha")
+            @*Buscar por Fecha:@Html.TextBox("fecha")*@
             @*Buscar por Fecha:  <input type="date" id="fecha" name="fecha" asp-format="{0:dd/MM/yy}" class="form-control">*@@*@Html.TextBox("fecha")*@
 
 
@@ -32,9 +32,9 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.IdAutoclave)
-            </th>
+            </th>*@
             @*<th>
                     @Html.DisplayNameFor(model => model.IdSeccion)
                 </th>*@
@@ -240,9 +240,9 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>
+                @*<td>
                     @Html.DisplayFor(modelItem => item.IdAutoclave)
-                </td>
+                </td>*@
                 @*<td>
                         @Html.DisplayFor(modelItem => item.IdSeccion)
                     </td>
@@ -441,11 +441,13 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.FechaRegistro)
                     </td>*@
-                <td>
-                    @*<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
-                </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Id">Vista Previa</a> |
+                <a asp-action="Print" asp-route-id="@item.Id">Print</a> |
+                @*<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+             <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
+            </td>
             </tr>
         }
     </tbody>

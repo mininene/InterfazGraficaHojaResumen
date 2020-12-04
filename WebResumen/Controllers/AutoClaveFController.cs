@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebResumen.Models;
+using WebResumen.Services.PrinterService;
 
 namespace WebResumen.Controllers
 {
@@ -14,10 +15,13 @@ namespace WebResumen.Controllers
     public class AutoClaveFController : Controller
     {
         private readonly AppDbContext _context;
-
-        public AutoClaveFController(AppDbContext context)
+        private readonly IPrinterOchoVeinte _printerOchoVeinte;
+        private readonly IPrinterDosTresCuatro _printerDosTresCuatro;
+        public AutoClaveFController(AppDbContext context, IPrinterOchoVeinte printerOchoVeinte, IPrinterDosTresCuatro printerDosTresCuatro)
         {
             _context = context;
+            _printerOchoVeinte = printerOchoVeinte;
+            _printerDosTresCuatro = printerDosTresCuatro;
         }
 
         // GET: AutoClaveF
@@ -57,6 +61,42 @@ namespace WebResumen.Controllers
 
             return View(query);
         }
+
+
+        public async Task<IActionResult> Print(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var ciclosAutoclaves = await _context.CiclosAutoclaves
+               .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (ciclosAutoclaves.Programa.Trim().Equals("8") || ciclosAutoclaves.Programa.Trim().Equals("20"))
+
+            {
+                _printerOchoVeinte.printOchoVeinte(id);
+            }
+
+            if (ciclosAutoclaves.Programa.Trim().Equals("2") || ciclosAutoclaves.Programa.Trim().Equals("3") || ciclosAutoclaves.Programa.Trim().Equals("4"))
+            {
+                _printerDosTresCuatro.printDosTresCuatro(id);
+            }
+
+
+            if (ciclosAutoclaves == null)
+            {
+                return NotFound();
+            }
+
+
+            return View(ciclosAutoclaves);
+        }
+
+
+
+
+
 
         // GET: AutoClaveF/Details/5
         public async Task<IActionResult> Details(int? id)

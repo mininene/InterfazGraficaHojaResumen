@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebResumen.Models;
+using WebResumen.Services.PrinterService;
 
 namespace WebResumen.Controllers
 {
@@ -14,10 +15,14 @@ namespace WebResumen.Controllers
     public class AutoClaveCController : Controller
     {
         private readonly AppDbContext _context;
+        private readonly IPrinterOchoVeinte _printerOchoVeinte;
+        private readonly IPrinterDosTresCuatro _printerDosTresCuatro;
 
-        public AutoClaveCController(AppDbContext context)
+        public AutoClaveCController(AppDbContext context, IPrinterOchoVeinte printerOchoVeinte, IPrinterDosTresCuatro printerDosTresCuatro)
         {
             _context = context;
+            _printerOchoVeinte = printerOchoVeinte;
+            _printerDosTresCuatro = printerDosTresCuatro;
         }
 
         // GET: AutoClaveC
@@ -58,8 +63,46 @@ namespace WebResumen.Controllers
             return View(query);
         }
 
-        // GET: AutoClaveC/Details/5
-        public async Task<IActionResult> Details(int? id)
+
+        public async Task<IActionResult> Print(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var ciclosAutoclaves = await _context.CiclosAutoclaves
+               .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (ciclosAutoclaves.Programa.Trim().Equals("8") || ciclosAutoclaves.Programa.Trim().Equals("20"))
+
+            {
+                _printerOchoVeinte.printOchoVeinte(id);
+            }
+
+            if (ciclosAutoclaves.Programa.Trim().Equals("2") || ciclosAutoclaves.Programa.Trim().Equals("3") || ciclosAutoclaves.Programa.Trim().Equals("4"))
+            {
+                _printerDosTresCuatro.printDosTresCuatro(id);
+            }
+
+
+            if (ciclosAutoclaves == null)
+            {
+                return NotFound();
+            }
+
+
+            return View(ciclosAutoclaves);
+        }
+
+
+
+
+
+
+
+
+            // GET: AutoClaveC/Details/5
+            public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {

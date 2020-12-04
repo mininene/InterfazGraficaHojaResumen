@@ -6,7 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="angularjs" Version="1.8.2" />
     <PackageReference Include="Bootstrap.Datepicker" Version="1.8.0.1" />
+    <PackageReference Include="iTextSharp.LGPLv2.Core" Version="1.7.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -23,6 +25,12 @@
 
   <ItemGroup>
     <Folder Include="Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\AngularJSApp\AutoClaveA\Controller.js" />
+    <None Include="wwwroot\AngularJSApp\AutoClaveA\Module.js" />
+    <None Include="wwwroot\AngularJSApp\AutoClaveA\Service.js" />
   </ItemGroup>
 
 </Project>
