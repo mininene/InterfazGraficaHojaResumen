@@ -128,11 +128,34 @@ namespace WebResumen.Controllers
             
         }
 
+        public async Task<IActionResult> Preview(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var ciclosAutoclaves = await _context.CiclosAutoclaves
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (ciclosAutoclaves == null)
+            {
+                return NotFound();
+            }
+
+            int numero = int.Parse(ciclosAutoclaves.NumeroCiclo);
+
+            string ciclo = ciclosAutoclaves.IdAutoclave + string.Format("{0:00000}", numero) + ".LOG";
+            string path = @"\\essaappserver01\HojaResumen\API\AutoClaveB\" + ciclo;
+
+
+            string[] texts = System.IO.File.ReadAllLines(path, new UnicodeEncoding());
+            ViewBag.Data = texts;
 
 
 
+            return View(ciclosAutoclaves);
 
-
+        }
 
 
 

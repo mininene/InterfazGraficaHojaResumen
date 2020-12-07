@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -91,6 +93,35 @@ namespace WebResumen.Controllers
 
 
             return View(ciclosAutoclaves);
+        }
+
+        public async Task<IActionResult> Preview(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var ciclosAutoclaves = await _context.CiclosAutoclaves
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (ciclosAutoclaves == null)
+            {
+                return NotFound();
+            }
+
+            int numero = int.Parse(ciclosAutoclaves.NumeroCiclo);
+
+            string ciclo = ciclosAutoclaves.IdAutoclave +string.Format("{0:00000}",numero) + ".LOG";
+            string path = @"\\essaappserver01\HojaResumen\API\AutoClaveM\" + ciclo;
+
+
+            string[] texts = System.IO.File.ReadAllLines(path, new UnicodeEncoding());
+            ViewBag.Data = texts;
+
+
+
+            return View(ciclosAutoclaves);
+
         }
 
 
