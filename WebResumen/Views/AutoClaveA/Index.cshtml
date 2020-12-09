@@ -5,47 +5,78 @@
 }
 
 <h1>NF8387A</h1>
-<div class="spinner-border text-primary" role="status" ng-show="loading">
-    <span class="sr-only">Loading...</span>
-</div>
+
 
 <body ng-app="my-autoclaves" ng-controller="autoclave-controller">
 
+    <div class="spinner-border text-primary" role="status" ng-show="loading">
+        <span class="sr-only">Loading...</span>
+    </div>
 
-    @*<div class="panel panel-info">
-        <div class="panel-heading">
-            Employee Details - Grid CRUD operations
-        </div>*@
-        <label>Buscar por N.Ciclo <input ng-model="search.numeroCiclo"></label>    <label>Buscar por N.Progama <input ng-model="search.programa"></label>
-
-
-        <table class="table table-bordered "  >
-            <thead style="background-color:lightblue;">
-                <tr>
-                    <th> N.Programa</th>
-                    <th> N.Ciclo</th>
-                    <th>Hora Inicio</th>
-                    <th>Hora Fin</th>
-                    <th>Acciones</th>
+    @*<p>The button has been clicked {{count}} times.</p>*@
 
 
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="emp in Autoclaves | filter:search">
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
 
-                    <td> {{emp.numeroCiclo}}</td>
-                    <td> {{emp.programa}}</td>
-                    <td>{{emp.horaInicio}}</td>
-                    <td>{{emp.horaFin}}</td>
+                <div class="modal-body">
+                    <div class="spinner-border text-primary" role="status" ng-show="loading">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    <p ng-repeat="text in original track by $index">{{text}}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
-                    <td style="width:200px;">
-                        <a href="#" class="btn btn-info">Vista</a> |
-                        <a href="#" class="btn btn-success">Imprimir</a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+
+    <label>Buscar por N.Ciclo <input ng-model="search.numeroCiclo"></label>    <label>Buscar por N.Progama <input ng-model="search.programa"></label>
+
+
+    <table class="table table-bordered ">
+        <thead style="background-color:lightblue;">
+            <tr>
+                <th> N.Programa</th>
+                <th> N.Ciclo</th>
+                <th>Hora Inicio</th>
+                <th>Hora Fin</th>
+                <th>Acciones</th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="emp in Autoclaves | filter:search">
+
+                <td> {{emp.numeroCiclo}}</td>
+                <td> {{emp.programa}}</td>
+                <td>{{emp.horaInicio}}</td>
+                <td>{{emp.horaFin}}</td>
+
+
+
+                <td style="width:200px;">
+
+                    <button href="#" type="button" data-toggle="modal" data-target="#exampleModal" value="submit" class="btn btn-info" ng-click="vistaPrevia(emp.id)">Ver</button> 
+                    <button href="#" type="button" value="submit" class="btn btn-success" ng-click="imprimir(emp.id)">Imprimir</button> |
+
+                  
+                </td>
+            </tr>
+        </tbody>
+    </table>
     </div>
 </body>
 

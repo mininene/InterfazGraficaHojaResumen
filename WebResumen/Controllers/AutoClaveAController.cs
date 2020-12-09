@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebResumen.Models;
+using WebResumen.Services.PrinterService;
 
 namespace WebResumen.Controllers
 {
@@ -14,10 +16,14 @@ namespace WebResumen.Controllers
     public class AutoClaveAController : Controller
     {
         private readonly AppDbContext _context;
+        private readonly IPrinterOchoVeinte _printerOchoVeinte;
+        private readonly IPrinterDosTresCuatro _printerDosTresCuatro;
 
-        public AutoClaveAController(AppDbContext context)
+        public AutoClaveAController(AppDbContext context, IPrinterOchoVeinte printerOchoVeinte, IPrinterDosTresCuatro printerDosTresCuatro)
         {
             _context = context;
+            _printerOchoVeinte = printerOchoVeinte;
+            _printerDosTresCuatro = printerDosTresCuatro;
         }
 
         // GET: AutoClaveA
@@ -74,19 +80,66 @@ namespace WebResumen.Controllers
         }
 
 
-        [HttpPost]
+        
         public async Task<JsonResult> Vista(int? id)
         {
-           
+            if (id == null)
+            {
+                return Json("No existe");
+            }
+
             var ciclosAutoclaves = await _context.CiclosAutoclaves
                 .FirstOrDefaultAsync(m => m.Id == id);
-          
+             int numero = int.Parse(ciclosAutoclaves.NumeroCiclo);
+
+             string ciclo = ciclosAutoclaves.IdAutoclave + string.Format("{0:00000}", numero) + ".LOG";
+           
+            string path = @"\\essaappserver01\HojaResumen\API\AutoClaveA\" + ciclo;
+
+            
+            string[] texts = System.IO.File.ReadAllLines(path, new UnicodeEncoding());
+            ViewBag.Data = texts;
+
+            if (ciclosAutoclaves == null)
+            {
+                return Json("No existe");
+            }
+
+
+            return Json( ViewBag.Data);
+        }
+
+
+
+        public async Task<JsonResult> Print(int? id)
+        {
+            if (id == null)
+            {
+                return Json("No existe");
+            }
+            var ciclosAutoclaves = await _context.CiclosAutoclaves
+               .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (ciclosAutoclaves.Programa.Trim().Equals("8") || ciclosAutoclaves.Programa.Trim().Equals("20"))
+
+            {
+                _printerOchoVeinte.printOchoVeinte(id);
+            }
+
+            if (ciclosAutoclaves.Programa.Trim().Equals("2") || ciclosAutoclaves.Programa.Trim().Equals("3") || ciclosAutoclaves.Programa.Trim().Equals("4"))
+            {
+                _printerDosTresCuatro.printDosTresCuatro(id);
+            }
+
+
+            if (ciclosAutoclaves == null)
+            {
+                return Json("No existe");
+            }
+
+
             return Json(ciclosAutoclaves);
-        } 
-
-
-
-
+        }
 
 
 
