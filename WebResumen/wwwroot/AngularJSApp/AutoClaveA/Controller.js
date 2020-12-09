@@ -1,6 +1,9 @@
 ﻿//employee controller
-myapp.controller('autoclave-controller', function ($scope, autoclaveService,$http) {
-  
+
+myapp.controller('autoclave-controller', function ($scope, autoclaveService, $window,$timeout) {
+   
+
+    
     $scope.loading = true;
     //Loads all Employee records when page loads
    
@@ -27,9 +30,12 @@ myapp.controller('autoclave-controller', function ($scope, autoclaveService,$htt
     //Vista Previa
 
     function loadPreview() {
+        
         //$scope.loading = true;
         //$scope.count = 0;
         $scope.vistaPrevia = function (empId) {
+           
+          
             //console.log(empId)
             $scope.count++;
             var AutoclavesPreview = autoclaveService.getPreview(empId);
@@ -51,12 +57,23 @@ myapp.controller('autoclave-controller', function ($scope, autoclaveService,$htt
      function loadPrint() {
        
         $scope.imprimir = function (empId) {
-           
+           // window.alert("El archivo ha sido enviado a la impresora")
+            $scope.received = false;
+            $scope.send = true;
+          
+            
             var AutoclavesPrint = autoclaveService.getPrint(empId);
             AutoclavesPrint.then(function (response) {
                 id = empId
-                $scope.loading = false;
+               
+                $scope.send = false;
+              
                 $scope.original = response.data;
+                //window.alert("El archivo ha sido impreso")
+                $scope.received = true;
+                $timeout(function () { $scope.received = false; }, 3000);
+
+               
             });
 
 
