@@ -64,6 +64,32 @@ namespace WebResumen.Controllers
             return View(query);
         }
 
+        public async Task<JsonResult> ListAutoclaveE()
+        {
+            //var result=  await _context.CiclosAutoclaves.OrderByDescending(x => x.Id).ToListAsync();
+            //return View(await _context.CiclosAutoclaves.OrderByDescending(x=>x.Id).ToListAsync());
+            List<CiclosAutoclaves> _sabiUno = await _context.CiclosAutoclaves.ToListAsync();
+            var query = from x in _sabiUno.Where(x => x.IdAutoclave == "NF1029E").OrderByDescending(X => X.Id).Take(50) select x;
+
+
+            return Json(query.ToList());
+
+
+        }
+
+        public async Task<JsonResult> ListaAutoclaveE()
+        {
+            //var result=  await _context.CiclosAutoclaves.OrderByDescending(x => x.Id).ToListAsync();
+            //return View(await _context.CiclosAutoclaves.OrderByDescending(x=>x.Id).ToListAsync());
+            List<CiclosAutoclaves> _sabiUno = await _context.CiclosAutoclaves.ToListAsync();
+            var query = from x in _sabiUno.Where(x => x.IdAutoclave == "NF1029E").OrderByDescending(X => X.Id).Take(1) select x;
+
+
+            return Json(query.ToList());
+
+
+        }
+
 
         public async Task<IActionResult> Print(int? id)
         {

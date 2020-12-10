@@ -79,8 +79,21 @@ namespace WebResumen.Controllers
 
         }
 
+        public async Task<JsonResult> ListaAutoclaveA()
+        {
+            //var result=  await _context.CiclosAutoclaves.OrderByDescending(x => x.Id).ToListAsync();
+            //return View(await _context.CiclosAutoclaves.OrderByDescending(x=>x.Id).ToListAsync());
+            List<CiclosAutoclaves> _sabiUno = await _context.CiclosAutoclaves.ToListAsync();
+            var query = from x in _sabiUno.Where(x => x.IdAutoclave == "NF8387A").OrderByDescending(X => X.Id).Take(1) select x;
 
-        
+
+            return Json(query.ToList());
+
+
+        }
+
+
+
         public async Task<JsonResult> Vista(int? id)
         {
             if (id == null)
@@ -93,10 +106,10 @@ namespace WebResumen.Controllers
              int numero = int.Parse(ciclosAutoclaves.NumeroCiclo);
 
              string ciclo = ciclosAutoclaves.IdAutoclave + string.Format("{0:00000}", numero) + ".LOG";
-           
+
             string path = @"\\essaappserver01\HojaResumen\API\AutoClaveA\" + ciclo;
 
-            
+
             string[] texts = System.IO.File.ReadAllLines(path, new UnicodeEncoding());
             ViewBag.Data = texts;
 

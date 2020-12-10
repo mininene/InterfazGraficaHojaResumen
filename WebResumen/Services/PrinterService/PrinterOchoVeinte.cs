@@ -43,7 +43,7 @@ namespace WebResumen.Services.PrinterService
 
 
 
-                _pr.PrinterSettings.PrinterName = "PDFCreator";
+                _pr.PrinterSettings.PrinterName = @"\\essafileprint01\#ADMICOPY (ESSAFILEPRINT01)";
 
                 // Console.WriteLine(_pr.PrinterSettings.PrinterName.ToString());
 
