@@ -1,6 +1,6 @@
 ﻿//employee controller
 
-myapp.controller('autoclave-controller', function ($scope, autoclaveService, $window,$timeout) {
+myapp.controller('autoclave-controller', function ($scope, autoclaveService,$timeout) {
    
 
     
@@ -71,7 +71,7 @@ myapp.controller('autoclave-controller', function ($scope, autoclaveService, $wi
                 $scope.original = response.data;
                 //window.alert("El archivo ha sido impreso")
                 $scope.received = true;
-                $timeout(function () { $scope.received = false; }, 3000);
+                $timeout(function () { $scope.received = false; }, 4000);
 
                
             });

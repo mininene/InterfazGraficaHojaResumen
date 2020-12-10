@@ -1,7 +1,6 @@
 ﻿var myapp;
 (function () {
-    myapp = angular.module('my-autoclaves');
+    myapp = angular.module('my-autoclaves', []);
     
-
 
 })();
