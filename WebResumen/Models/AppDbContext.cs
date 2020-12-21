@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
+
 namespace WebResumen.Models
 {
     public partial class AppDbContext : DbContext
@@ -692,5 +693,7 @@ namespace WebResumen.Models
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+       
     }
 }

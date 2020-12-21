@@ -6,12 +6,14 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WebResumen.Models;
+using WebResumen.Services.Authentication;
 using WebResumen.Services.Authorization;
 using WebResumen.Services.PrinterService;
 
@@ -87,8 +89,24 @@ namespace WebResumen
             services.AddScoped(typeof(IPrinterDosTresCuatro), typeof(PrinterDosTresCuatro));
             services.AddScoped(typeof(IPrinterNueveDiez), typeof(PrinterNueveDiez));
 
+         
 
-            services.AddControllersWithViews();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<TestManager>();
+            services.AddDistributedMemoryCache();
+            
+            services.AddSession(options => {
+                
+                options.IdleTimeout = TimeSpan.FromSeconds(20);//You can set Time   
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+                  
+            });
+
+
+            services.AddControllersWithViews()
+                 .AddSessionStateTempDataProvider();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -110,7 +128,7 @@ namespace WebResumen
             app.UseRouting();
 
             app.UseAuthorization();
-
+            app.UseSession(); // // IMPORTANT: This session call MUST go before UseMvc()
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

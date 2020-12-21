@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebResumen.Models;
 using WebResumen.Services.PrinterService;
-
+using Microsoft.AspNetCore.Http;
 
 namespace WebResumen.Controllers
 {
@@ -70,6 +70,7 @@ namespace WebResumen.Controllers
                                        || x.Programa.Contains(nPrograma)
                                          || x.HoraFin.Contains(fecha));  // si pongo la fecha como string si que lo coge
             }
+          
 
             return View(query);
 

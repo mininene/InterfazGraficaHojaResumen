@@ -1,191 +1,104 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.DirectoryServices.AccountManagement;
 using System.Linq;
-using System.Text.RegularExpressions;
+using System.Security.Principal;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using WebResumen.Models;
-
+using WebResumen.Models.ViewModels;
 
 namespace WebResumen.Controllers
 {
-   
-
-    [Authorize(Policy = "ADTodos")]
     public class HomeController : Controller
     {
-        private readonly AppDbContext _context;
+        //private readonly SignInManager<IdentityUser> _signInManager;
 
-      
-        public HomeController(AppDbContext context)
-        {
-            _context = context;
-        }
+        //public CuentaController(SignInManager<IdentityUser> signInManager)
+        //{
+        //    this._signInManager = signInManager;
+        //}
 
-        // GET: Inicio
-        public async Task<IActionResult> Index()
-        {
-            foreach(var n in _context.MaestroAutoclave)
-            {
-                var actual = Regex.Replace(n.UltimoCiclo, "\\d+",
-                m => (int.Parse(m.Value) - 1).ToString(new string('0', m.Value.Length)));
-              
-                List<UltimoCiclo> ultimo = new List<UltimoCiclo>();
-                UltimoCiclo ult = new UltimoCiclo
-                {
-                   
-                    ciclo = actual,
-                  
-                }; ultimo.Add(ult);
-                ViewBag.data = ultimo.ToList();
-            }
-           
-
-
-
-            return View(await _context.MaestroAutoclave.ToListAsync());
-        }
-
-        public async Task<JsonResult> ListHome()
-        {
-            var result = await _context.MaestroAutoclave.ToListAsync();
-            //return View(await _context.CiclosAutoclaves.OrderByDescending(x=>x.Id).ToListAsync());
-
-            return Json(result);
-
-
-        }
-
-
-
-
-
-        // GET: Inicio/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var maestroAutoclave = await _context.MaestroAutoclave
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (maestroAutoclave == null)
-            {
-                return NotFound();
-            }
-
-            return View(maestroAutoclave);
-        }
-
-        // GET: Inicio/Create
-        public IActionResult Create()
+        [HttpGet]
+        public IActionResult Index()
         {
             return View();
         }
 
-        // POST: Inicio/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Matricula,Nombre,Version,Ip,Seccion,Estado,UltimoCiclo,RutaSalida,RutaSalidaPdf")] MaestroAutoclave maestroAutoclave)
+        public IActionResult Index(LoginViewModel model)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(maestroAutoclave);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(maestroAutoclave);
-        }
-
-        // GET: Inicio/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var maestroAutoclave = await _context.MaestroAutoclave.FindAsync(id);
-            if (maestroAutoclave == null)
-            {
-                return NotFound();
-            }
-            return View(maestroAutoclave);
-        }
-
-        // POST: Inicio/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Matricula,Nombre,Version,Ip,Seccion,Estado,UltimoCiclo,RutaSalida,RutaSalidaPdf")] MaestroAutoclave maestroAutoclave)
-        {
-            if (id != maestroAutoclave.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
+               
+                string dominio = @"global.baxter.com";
+                using (PrincipalContext principalContext = new PrincipalContext(ContextType.Domain, dominio))
                 {
-                    _context.Update(maestroAutoclave);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!MaestroAutoclaveExists(maestroAutoclave.Id))
+                    bool userValid = principalContext.ValidateCredentials(model.Usuario, model.Contraseña);
+                    if (userValid == true)
                     {
-                        return NotFound();
+                        using (UserPrincipal user = UserPrincipal.FindByIdentity(principalContext, model.Usuario))
+                        {
+                            List<string> resultado = new List<string>();
+                            WindowsIdentity wi = new WindowsIdentity(model.Usuario);
+
+
+                            foreach (IdentityReference group in wi.Groups)
+                            {
+                                try
+                                {
+                                    resultado.Add(group.Translate(typeof(NTAccount)).ToString());
+                                }
+                                catch (Exception ex) { }
+                                resultado.Sort();
+                                var test = false;
+                                foreach (var t in resultado)
+                                {
+                                    if (t.Equals("GLOBAL\\ESSA-HojaResumen_Users") || t.Equals("GLOBAL\\ESSA-HojaResumen_Admins") || t.Equals("GLOBAL\\ESSA-HojaResumen_Supervisors"))
+                                    {
+                                        test = true;
+                                       
+                                        HttpContext.Session.SetString("SessionPass", model.Contraseña);
+                                        HttpContext.Session.SetString("SessionName", model.Usuario);
+                                       
+                                        return RedirectToAction("Index", "Homet");
+
+
+
+                                    }
+                                    if (test != true)
+                                    {
+                                        ModelState.AddModelError(string.Empty, "Intento de Login Invalido");
+                                        //return Json("Contraseña Invalida");
+                                    }
+                                }
+                            }
+                        }
                     }
-                    else
-                    {
-                        throw;
-                    }
+
                 }
-                return RedirectToAction(nameof(Index));
+               
             }
-            return View(maestroAutoclave);
+           
+            ViewBag.fail = "Autenticación Fallida";
+            return View(model);
+
+
         }
 
-        // GET: Inicio/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Logout()
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            HttpContext.Session.SetString("SessionPass", "");
+            HttpContext.Session.SetString("SessionName", "");
+           
+            return RedirectToAction("Index", "Home");
 
-            var maestroAutoclave = await _context.MaestroAutoclave
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (maestroAutoclave == null)
-            {
-                return NotFound();
-            }
-
-            return View(maestroAutoclave);
         }
 
-        // POST: Inicio/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var maestroAutoclave = await _context.MaestroAutoclave.FindAsync(id);
-            _context.MaestroAutoclave.Remove(maestroAutoclave);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
 
-        private bool MaestroAutoclaveExists(int id)
-        {
-            return _context.MaestroAutoclave.Any(e => e.Id == id);
-        }
+
+
     }
 }

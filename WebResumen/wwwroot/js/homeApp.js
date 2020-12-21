@@ -37,7 +37,7 @@ app.controller('homeCtrl', function ($scope, $http, $interval,$timeout,$q) {
 
     });
 
-    $http.get('/Home/ListHome')
+    $http.get('/Homet/ListHome')
         .then(function (response) {
             $scope.loading = false;
             $scope.myWelcome = response.data;
@@ -262,7 +262,7 @@ app.controller('homeCtrl', function ($scope, $http, $interval,$timeout,$q) {
 
 
        
-        $http.get('/Home/ListHome')
+        $http.get('/Homet/ListHome')
             .then(function (response) {
                 //$scope.loading = false;
                 $scope.myWelcome = response.data;

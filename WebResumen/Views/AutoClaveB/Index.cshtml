@@ -35,8 +35,8 @@
     <thead>
         <tr>
             @*<th>
-                @Html.DisplayNameFor(model => model.IdAutoclave)
-            </th>*@
+                    @Html.DisplayNameFor(model => model.IdAutoclave)
+                </th>*@
             @*<th>
                     @Html.DisplayNameFor(model => model.IdSeccion)
                 </th>*@
@@ -246,8 +246,8 @@
         {
             <tr>
                 @*<td>
-                    @Html.DisplayFor(modelItem => item.IdAutoclave)
-                </td>*@
+                        @Html.DisplayFor(modelItem => item.IdAutoclave)
+                    </td>*@
                 @*<td>
                         @Html.DisplayFor(modelItem => item.IdSeccion)
                     </td>
@@ -449,13 +449,13 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.FechaRegistro)
                     </td>*@
-            <td>
-                @*<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |*@
-                @*<a asp-action="Details" asp-route-id="@item.Id">Vista Previa</a> |*@
-                <a asp-action="Preview" asp-route-id="@item.Id">Vista Previa</a> |
-                <a asp-action="Print" asp-route-id="@item.Id">Print</a> |
-                @*<a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
-            </td>
+                <td>
+                    @*<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |*@
+                    @*<a asp-action="Details" asp-route-id="@item.Id">Vista Previa</a> |*@
+                    <a asp-action="Preview" asp-route-id="@item.Id">Vista Previa</a> |
+                    <a asp-action="Print" asp-route-id="@item.Id">Print</a> |
+                    @*<a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
+                </td>
             </tr>
         }
     </tbody>

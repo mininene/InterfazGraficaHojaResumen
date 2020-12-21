@@ -1,5 +1,19 @@
 ﻿@model WebResumen.Models.ViewModels.LoginViewModel
-
+<!--<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - HojaResumen</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />-->
+       <!-- Font Awesome -->
+    <!--<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">-->
+    <!-- Bootstrap core CSS -->
+    <!--<link href="~/lib/MDB/css/bootstrap.min.css" rel="stylesheet">-->
+    <!-- Material Design Bootstrap -->
+    <!--<link href="~/lib/MDB/css/mdb.min.css" rel="stylesheet">-->
+    <!-- Your custom styles (optional) -->
+    <!--<link href="~/lib/MDB/css/style.css" rel="stylesheet">
+  
+</head>-->
 
 
 @{
@@ -9,21 +23,7 @@
     ViewBag.Title = "Login de Usuario";
 
 }
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - HojaResumen</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-    <!-- Bootstrap core CSS -->
-    <link href="~/lib/MDB/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Material Design Bootstrap -->
-    <link href="~/lib/MDB/css/mdb.min.css" rel="stylesheet">
-    <!-- Your custom styles (optional) -->
-    <link href="~/lib/MDB/css/style.css" rel="stylesheet">
 
-</head>
 
 
 <div class="container justify-content-center mt-5">
@@ -48,9 +48,9 @@
     </div>
 </div>
 
-
-
 @section Scripts {
-
+    @*<script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>*@
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }
