@@ -16,12 +16,12 @@ namespace WebResumen.Controllers
    
 
     [Authorize(Policy = "ADTodos")]
-    public class HometController : Controller
+    public class InicioController : Controller
     {
         private readonly AppDbContext _context;
 
       
-        public HometController(AppDbContext context)
+        public InicioController(AppDbContext context)
         {
             _context = context;
         }

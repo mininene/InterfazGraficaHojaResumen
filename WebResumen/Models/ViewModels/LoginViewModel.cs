@@ -16,7 +16,6 @@ namespace WebResumen.Models.ViewModels
         [StringLength(10, ErrorMessage = "Debe tener entre 5 y 10 caracteres", MinimumLength = 5)]
         [DataType(DataType.Password)]
         public string Contraseña { get; set; }
-
       
     }
 }

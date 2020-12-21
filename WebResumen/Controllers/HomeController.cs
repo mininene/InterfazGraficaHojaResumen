@@ -13,13 +13,7 @@ namespace WebResumen.Controllers
 {
     public class HomeController : Controller
     {
-        //private readonly SignInManager<IdentityUser> _signInManager;
-
-        //public CuentaController(SignInManager<IdentityUser> signInManager)
-        //{
-        //    this._signInManager = signInManager;
-        //}
-
+       
         [HttpGet]
         public IActionResult Index()
         {
@@ -32,58 +26,44 @@ namespace WebResumen.Controllers
         {
             if (ModelState.IsValid)
             {
-               
+                
                 string dominio = @"global.baxter.com";
-                using (PrincipalContext principalContext = new PrincipalContext(ContextType.Domain, dominio))
+                using (PrincipalContext ctx = new PrincipalContext(ContextType.Domain, dominio, model.Usuario, model.Contraseña))
                 {
-                    bool userValid = principalContext.ValidateCredentials(model.Usuario, model.Contraseña);
-                    if (userValid == true)
+
+                   
+                    try
                     {
-                        using (UserPrincipal user = UserPrincipal.FindByIdentity(principalContext, model.Usuario))
+                        UserPrincipal user = UserPrincipal.FindByIdentity(ctx, model.Usuario);
+
+                        GroupPrincipal groupAdmins = GroupPrincipal.FindByIdentity(ctx, "GLOBAL\\ESSA-HojaResumen_Admins");
+                        GroupPrincipal groupSupervisors = GroupPrincipal.FindByIdentity(ctx, "GLOBAL\\ESSA-HojaResumen_Supervisors");
+                        GroupPrincipal groupUsers = GroupPrincipal.FindByIdentity(ctx, "GLOBAL\\ESSA-HojaResumen_Users");
+
+                        if (user != null)
                         {
-                            List<string> resultado = new List<string>();
-                            WindowsIdentity wi = new WindowsIdentity(model.Usuario);
-
-
-                            foreach (IdentityReference group in wi.Groups)
+                            if (user.IsMemberOf(groupAdmins) || user.IsMemberOf(groupSupervisors) || user.IsMemberOf(groupUsers))
                             {
-                                try
-                                {
-                                    resultado.Add(group.Translate(typeof(NTAccount)).ToString());
-                                }
-                                catch (Exception ex) { }
-                                resultado.Sort();
-                                var test = false;
-                                foreach (var t in resultado)
-                                {
-                                    if (t.Equals("GLOBAL\\ESSA-HojaResumen_Users") || t.Equals("GLOBAL\\ESSA-HojaResumen_Admins") || t.Equals("GLOBAL\\ESSA-HojaResumen_Supervisors"))
-                                    {
-                                        test = true;
-                                       
-                                        HttpContext.Session.SetString("SessionPass", model.Contraseña);
-                                        HttpContext.Session.SetString("SessionName", model.Usuario);
-                                       
-                                        return RedirectToAction("Index", "Homet");
-
-
-
-                                    }
-                                    if (test != true)
-                                    {
-                                        ModelState.AddModelError(string.Empty, "Intento de Login Invalido");
-                                        //return Json("Contraseña Invalida");
-                                    }
-                                }
+                                HttpContext.Session.SetString("SessionPass", model.Contraseña);
+                                HttpContext.Session.SetString("SessionName", model.Usuario);
+                                return RedirectToAction("Index", "Inicio");
+                            }
+                            else
+                            {
+                                return RedirectToAction("Index", "Home");
+                               
                             }
                         }
-                    }
 
-                }
-               
+                       
+                    }
+                    catch
+                    { return RedirectToAction("Index", "Home"); }
+                 }
             }
-           
+
             ViewBag.fail = "Autenticación Fallida";
-            return View(model);
+            return View();
 
 
         }

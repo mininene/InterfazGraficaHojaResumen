@@ -97,7 +97,7 @@ namespace WebResumen
             
             services.AddSession(options => {
                 
-                options.IdleTimeout = TimeSpan.FromSeconds(20);//You can set Time   
+                options.IdleTimeout = TimeSpan.FromMinutes(10);//You can set Time   
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
                   

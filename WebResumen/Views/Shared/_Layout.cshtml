@@ -39,7 +39,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Homet" asp-action="Index">
+                <a class="navbar-brand" asp-area="" asp-controller="Inicio" asp-action="Index">
                     <img src="~/img/Baxter.png" width="150" height="30" class="d-inline-block align-top" alt="">
                 </a>
 
@@ -76,10 +76,11 @@
         </li>*@
                         else
                         {
+
                             @if ((await AuthorizationService.AuthorizeAsync(User, "ADAS")).Succeeded)
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Homet" asp-action="Index">Inicio</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Inicio" asp-action="Index">Inicio</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="CiclosAutoClaveAgua" asp-action="Index">DatosExplotacionAgua</a>
