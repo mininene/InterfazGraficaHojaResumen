@@ -1,7 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using WebResumen.Models;
 
+#nullable disable
 
 namespace WebResumen.Models
 {
@@ -26,7 +28,7 @@ namespace WebResumen.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseSqlServer("Data Source=ESSAAPPSERVER01;Initial Catalog=CiclosAutoclaves;Integrated Security=True");
             }
         }
@@ -35,7 +37,7 @@ namespace WebResumen.Models
         {
             modelBuilder.Entity<AudiTrail>(entity =>
             {
-                entity.HasNoKey();
+                entity.ToTable("AudiTrail");
 
                 entity.Property(e => e.Comentario)
                     .HasMaxLength(100)
@@ -243,113 +245,113 @@ namespace WebResumen.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.Tff13)
-                    .HasColumnName("TFF13")
                     .HasMaxLength(100)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasColumnName("TFF13");
 
                 entity.Property(e => e.Tff5)
-                    .HasColumnName("TFF5")
                     .HasMaxLength(100)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasColumnName("TFF5");
 
                 entity.Property(e => e.Tff6)
-                    .HasColumnName("TFF6")
                     .HasMaxLength(100)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasColumnName("TFF6");
 
                 entity.Property(e => e.Tff8)
-                    .HasColumnName("TFF8")
                     .HasMaxLength(100)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasColumnName("TFF8");
 
                 entity.Property(e => e.Tff9)
-                    .HasColumnName("TFF9")
                     .HasMaxLength(100)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasColumnName("TFF9");
 
                 entity.Property(e => e.TfsubF13)
-                    .HasColumnName("TFSubF13")
                     .HasMaxLength(100)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasColumnName("TFSubF13");
 
                 entity.Property(e => e.TfsubF5)
-                    .HasColumnName("TFSubF5")
                     .HasMaxLength(100)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasColumnName("TFSubF5");
 
                 entity.Property(e => e.TfsubF6)
-                    .HasColumnName("TFSubF6")
                     .HasMaxLength(100)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasColumnName("TFSubF6");
 
                 entity.Property(e => e.TiempoCiclo)
                     .HasMaxLength(100)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Tif5)
-                    .HasColumnName("TIF5")
                     .HasMaxLength(100)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasColumnName("TIF5");
 
                 entity.Property(e => e.Tif6)
-                    .HasColumnName("TIF6")
                     .HasMaxLength(100)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasColumnName("TIF6");
 
                 entity.Property(e => e.Tif7)
-                    .HasColumnName("TIF7")
                     .HasMaxLength(100)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasColumnName("TIF7");
 
                 entity.Property(e => e.Tif8)
-                    .HasColumnName("TIF8")
                     .HasMaxLength(100)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasColumnName("TIF8");
 
                 entity.Property(e => e.Tif9)
-                    .HasColumnName("TIF9")
                     .HasMaxLength(100)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasColumnName("TIF9");
 
                 entity.Property(e => e.Tinicio)
-                    .HasColumnName("TInicio")
                     .HasMaxLength(100)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasColumnName("TInicio");
 
                 entity.Property(e => e.TisubF5)
-                    .HasColumnName("TISubF5")
                     .HasMaxLength(100)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasColumnName("TISubF5");
 
                 entity.Property(e => e.TisubF6)
-                    .HasColumnName("TISubF6")
                     .HasMaxLength(100)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasColumnName("TISubF6");
 
                 entity.Property(e => e.TisubF7)
-                    .HasColumnName("TISubF7")
                     .HasMaxLength(100)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasColumnName("TISubF7");
 
                 entity.Property(e => e.TisubF8)
-                    .HasColumnName("TISubF8")
                     .HasMaxLength(100)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasColumnName("TISubF8");
 
                 entity.Property(e => e.TisubF9)
-                    .HasColumnName("TISubF9")
                     .HasMaxLength(100)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasColumnName("TISubF9");
 
                 entity.Property(e => e.Tmaxima)
-                    .HasColumnName("TMaxima")
                     .HasMaxLength(100)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasColumnName("TMaxima");
 
                 entity.Property(e => e.Tminima)
-                    .HasColumnName("TMinima")
                     .HasMaxLength(100)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasColumnName("TMinima");
             });
 
             modelBuilder.Entity<CiclosSabiDos>(entity =>
@@ -403,24 +405,24 @@ namespace WebResumen.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.DuracionTotalF7a)
-                    .HasColumnName("DuracionTotalF7A")
                     .HasMaxLength(100)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasColumnName("DuracionTotalF7A");
 
                 entity.Property(e => e.DuracionTotalF7b)
-                    .HasColumnName("DuracionTotalF7B")
                     .HasMaxLength(100)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasColumnName("DuracionTotalF7B");
 
                 entity.Property(e => e.DuracionTotalF8a)
-                    .HasColumnName("DuracionTotalF8A")
                     .HasMaxLength(100)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasColumnName("DuracionTotalF8A");
 
                 entity.Property(e => e.DuracionTotalF8b)
-                    .HasColumnName("DuracionTotalF8B")
                     .HasMaxLength(100)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasColumnName("DuracionTotalF8B");
 
                 entity.Property(e => e.DuracionTotalF9)
                     .HasMaxLength(100)
@@ -547,106 +549,108 @@ namespace WebResumen.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.Tff2)
-                    .HasColumnName("TFF2")
                     .HasMaxLength(100)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasColumnName("TFF2");
 
                 entity.Property(e => e.Tff3)
-                    .HasColumnName("TFF3")
                     .HasMaxLength(100)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasColumnName("TFF3");
 
                 entity.Property(e => e.Tff9)
-                    .HasColumnName("TFF9")
                     .HasMaxLength(100)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasColumnName("TFF9");
 
                 entity.Property(e => e.TfsubF2)
-                    .HasColumnName("TFSubF2")
                     .HasMaxLength(100)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasColumnName("TFSubF2");
 
                 entity.Property(e => e.TfsubF3)
-                    .HasColumnName("TFSubF3")
                     .HasMaxLength(100)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasColumnName("TFSubF3");
 
                 entity.Property(e => e.TiempoCiclo)
                     .HasMaxLength(100)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Tif12)
-                    .HasColumnName("TIF12")
                     .HasMaxLength(100)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasColumnName("TIF12");
 
                 entity.Property(e => e.Tif2)
-                    .HasColumnName("TIF2")
                     .HasMaxLength(100)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasColumnName("TIF2");
 
                 entity.Property(e => e.Tif3)
-                    .HasColumnName("TIF3")
                     .HasMaxLength(100)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasColumnName("TIF3");
 
                 entity.Property(e => e.Tif4)
-                    .HasColumnName("TIF4")
                     .HasMaxLength(100)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasColumnName("TIF4");
 
                 entity.Property(e => e.Tif9)
-                    .HasColumnName("TIF9")
                     .HasMaxLength(100)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasColumnName("TIF9");
 
                 entity.Property(e => e.Tinicio)
-                    .HasColumnName("TInicio")
                     .HasMaxLength(100)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasColumnName("TInicio");
 
                 entity.Property(e => e.TisubF12)
-                    .HasColumnName("TISubF12")
                     .HasMaxLength(100)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasColumnName("TISubF12");
 
                 entity.Property(e => e.TisubF2)
-                    .HasColumnName("TISubF2")
                     .HasMaxLength(100)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasColumnName("TISubF2");
 
                 entity.Property(e => e.TisubF3)
-                    .HasColumnName("TISubF3")
                     .HasMaxLength(100)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasColumnName("TISubF3");
 
                 entity.Property(e => e.TisubF4)
-                    .HasColumnName("TISubF4")
                     .HasMaxLength(100)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasColumnName("TISubF4");
 
                 entity.Property(e => e.TisubF9)
-                    .HasColumnName("TISubF9")
                     .HasMaxLength(100)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasColumnName("TISubF9");
 
                 entity.Property(e => e.Tmaxima)
-                    .HasColumnName("TMaxima")
                     .HasMaxLength(100)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasColumnName("TMaxima");
 
                 entity.Property(e => e.Tminima)
-                    .HasColumnName("TMinima")
                     .HasMaxLength(100)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasColumnName("TMinima");
             });
 
             modelBuilder.Entity<MaestroAutoclave>(entity =>
             {
+                entity.ToTable("MaestroAutoclave");
+
                 entity.Property(e => e.Ip)
-                    .HasColumnName("IP")
                     .HasMaxLength(50)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasColumnName("IP");
 
                 entity.Property(e => e.Matricula)
                     .HasMaxLength(50)
@@ -661,9 +665,9 @@ namespace WebResumen.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.RutaSalidaPdf)
-                    .HasColumnName("RutaSalidaPDF")
                     .HasMaxLength(300)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasColumnName("RutaSalidaPDF");
 
                 entity.Property(e => e.Seccion)
                     .HasMaxLength(50)
@@ -693,7 +697,5 @@ namespace WebResumen.Models
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
-
-       
     }
 }
