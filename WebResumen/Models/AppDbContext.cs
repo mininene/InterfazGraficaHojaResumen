@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -26,7 +27,8 @@ namespace WebResumen.Models
         public virtual DbSet<MaestroAutoclave> MaestroAutoclave { get; set; }
         public virtual DbSet<Parametros> Parametros { get; set; }
 
-//AudiTrail
+        //AudiTrail
+        
         public override int SaveChanges()
         {
             ChangeTracker.Entries().Where(p => p.State == EntityState.Modified).ToList().ForEach(entry =>
@@ -41,6 +43,8 @@ namespace WebResumen.Models
 
         private void Audit(EntityEntry entry)
         {
+            IHttpContextAccessor _httpContextAccessor = new HttpContextAccessor();
+
             foreach (var property in entry.Properties)
             {
                 //if (!property.IsModified)
@@ -51,7 +55,8 @@ namespace WebResumen.Models
 
                     var auditEntry = new AudiTrail
                     {
-                        Usuario = entry.Entity.GetType().Name,
+                        Usuario = _httpContextAccessor.HttpContext.Session.GetString("SessionName"),
+                        //Usuario = entry.Entity.GetType().Name,
                         Evento = Evento.Update.ToString(),
                         Comentario = property.Metadata.Name,
                         Valor = property.OriginalValue.ToString(),
