@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata;
-using WebResumen.Models;
 
 #nullable disable
 
@@ -27,8 +26,10 @@ namespace WebResumen.Models
         public virtual DbSet<MaestroAutoclave> MaestroAutoclave { get; set; }
         public virtual DbSet<Parametros> Parametros { get; set; }
 
+
+
         //AudiTrail
-        
+
         public override int SaveChanges()
         {
             ChangeTracker.Entries().Where(p => p.State == EntityState.Modified).ToList().ForEach(entry =>
@@ -51,26 +52,37 @@ namespace WebResumen.Models
                 //    continue;
                 if (property.IsModified)
                 {
-
+                    //var tiempoF = TimeSpan.Parse(DateTime.Now);
+                    //var tiempoI = TimeSpan.Parse(_httpContextAccessor.HttpContext.Session.GetString("SessionTiempo"));
+                   // var tiempoFx =  DateTime.Now.Subtract(Convert.ToDateTime(_httpContextAccessor.HttpContext.Session.GetString("SessionTiempo")));
+                    //var difT = tiempoF - tiempoI;
+                    //var dur = difT.TotalMinutes.ToString();
+                    
 
                     var auditEntry = new AudiTrail
                     {
                         Usuario = _httpContextAccessor.HttpContext.Session.GetString("SessionName"),
-                        //Usuario = entry.Entity.GetType().Name,
+                        Tabla = entry.Entity.GetType().Name,
                         Evento = Evento.Update.ToString(),
-                        Comentario = property.Metadata.Name,
+                        Campo = property.Metadata.Name,
                         Valor = property.OriginalValue.ToString(),
                         ValorActualizado = property.CurrentValue.ToString(),
-                        FechaHora = DateTime.Now
+                        FechaHora = DateTime.Now,
+                        Comentario = "",
+                        Tiempo = Convert.ToDateTime(_httpContextAccessor.HttpContext.Session.GetString("SessionTiempo"))
+
+
+
                     };
 
                     this.AudiTrail.Add(auditEntry);
-                }  
-                
+                }
+
             }
         }
 
         //AudiTrail
+
 
 
 
@@ -90,6 +102,10 @@ namespace WebResumen.Models
             {
                 entity.ToTable("AudiTrail");
 
+                entity.Property(e => e.Campo)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.Comentario)
                     .HasMaxLength(100)
                     .IsUnicode(false);
@@ -99,6 +115,12 @@ namespace WebResumen.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.FechaHora).HasColumnType("datetime");
+
+                entity.Property(e => e.Tabla)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Tiempo).HasColumnType("datetime");
 
                 entity.Property(e => e.Usuario)
                     .HasMaxLength(100)

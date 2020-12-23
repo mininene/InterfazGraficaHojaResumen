@@ -21,7 +21,7 @@ namespace WebResumen.Controllers
         // GET: AudiTrail
         public async Task<IActionResult> Index()
         {
-            var result = from s in _context.AudiTrail.OrderByDescending(s => s.Id) select s;
+            var result = from q in _context.AudiTrail.OrderByDescending(q => q.Id) select q;
             return View(await result.ToListAsync());
         }
 
@@ -54,7 +54,7 @@ namespace WebResumen.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Usuario,FechaHora,Evento,Valor,ValorActualizado,Comentario")] AudiTrail audiTrail)
+        public async Task<IActionResult> Create([Bind("Id,Usuario,Tabla,FechaHora,Evento,Campo,Valor,ValorActualizado,Comentario,Tiempo")] AudiTrail audiTrail)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace WebResumen.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Usuario,FechaHora,Evento,Valor,ValorActualizado,Comentario")] AudiTrail audiTrail)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Usuario,Tabla,FechaHora,Evento,Campo,Valor,ValorActualizado,Comentario,Tiempo")] AudiTrail audiTrail)
         {
             if (id != audiTrail.Id)
             {

@@ -46,6 +46,7 @@ namespace WebResumen.Controllers
                             {
                                 HttpContext.Session.SetString("SessionPass", model.Contraseña);
                                 HttpContext.Session.SetString("SessionName", model.Usuario);
+                                HttpContext.Session.SetString("SessionTiempo", DateTime.Now.ToString("HH:mm:ss"));
                                 return RedirectToAction("Index", "Inicio");
                             }
                             else

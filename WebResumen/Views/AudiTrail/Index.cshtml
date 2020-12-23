@@ -14,10 +14,16 @@
                 @Html.DisplayNameFor(model => model.Usuario)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Tabla)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.FechaHora)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Evento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Campo)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Valor)
@@ -27,6 +33,9 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Comentario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tiempo)
             </th>
             <th></th>
         </tr>
@@ -38,10 +47,16 @@
                 @Html.DisplayFor(modelItem => item.Usuario)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.Tabla)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.FechaHora)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Evento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Campo)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Valor)
@@ -52,11 +67,10 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Comentario)
             </td>
-            @*<td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Tiempo)
+            </td>
+           
         </tr>
 }
     </tbody>

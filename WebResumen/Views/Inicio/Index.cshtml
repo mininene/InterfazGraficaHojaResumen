@@ -84,7 +84,7 @@
                 <thead class="thead-dark">
                     <tr>
                         <th scope="col">Nombre</th>
-                        <th scope="col">Estado</th>
+                        <th scope="col">EstadoServicio</th>
                         <th scope="col">Ciclo</th>
                         <th scope="col">FechaHora</th>
                         <th scope="col">Acciones</th>
@@ -94,7 +94,8 @@
                     <tr>
 
                         <td>{{na}}</td>
-                        <td><i class="fa fa-2x" ng-class="ea ? 'fa fa-cog fa-spin fa-2x fa-fw text-success' : 'fa fa-cog fa-2x text-danger'">{{ea ? '' : ''}}</i></td>
+                        <td><h5 class="" ng-class="ea ? ' text-success' : ' text-danger'">{{ea ? 'Activo' : 'Inactivo'}}</h5></td>
+                        @*<td><i class="fa fa-2x" ng-class="ea ? 'fa fa-cog fa-spin fa-2x fa-fw text-success' : 'fa fa-cog fa-2x text-danger'">{{ea ? '' : ''}}</i></td>*@
                         <td>{{a}}</td>
                         <td><div class="spinner-border text-primary" role="status" ng-show="loadinga"><span class="sr-only">Loading...</span></div>{{horaA}}</td>
                         <td><a type="button" class="btn btn-info btn-sm" href="{{na}}"> Ver  </a></td>
@@ -103,7 +104,8 @@
                     <tr>
 
                         <td>{{nb}}</td>
-                        <td><i class="fa fa-2x" ng-class="eb ? 'fa fa-cog fa-spin fa-2x fa-fw text-success' : 'fa fa-cog fa-2x text-danger'">{{eb ? '' : ''}}</i></td>
+                        <td><h5 class="" ng-class="eb ? ' text-success' : ' text-danger'">{{eb ? 'Activo' : 'Inactivo'}}</h5></td>
+                        @*<td><i class="fa fa-2x" ng-class="eb ? 'fa fa-cog fa-spin fa-2x fa-fw text-success' : 'fa fa-cog fa-2x text-danger'">{{eb ? '' : ''}}</i></td>*@
                         <td>{{b}}</td>
                         <td><div class="spinner-border text-primary" role="status" ng-show="loadingb"><span class="sr-only">Loading...</span></div>{{horaB}}</td>
                         <td><a type="button" class="btn btn-info btn-sm" href="{{nb}}"> Ver  </a></td>
@@ -113,7 +115,8 @@
                     <tr>
 
                         <td>{{nc}}</td>
-                        <td><i class="fa fa-2x" ng-class="ec ? 'fa fa-cog fa-spin fa-2x fa-fw text-success' : 'fa fa-cog fa-2x text-danger'">{{ec ? '' : ''}}</i></td>
+                        <td><h5 class="" ng-class="ec ? ' text-success' : ' text-danger'">{{ec ? 'Activo' : 'Inactivo'}}</h5></td>
+                        @*<td><i class="fa fa-2x" ng-class="ec ? 'fa fa-cog fa-spin fa-2x fa-fw text-success' : 'fa fa-cog fa-2x text-danger'">{{ec ? '' : ''}}</i></td>*@
                         <td>{{c}}</td>
                         <td><div class="spinner-border text-primary" role="status" ng-show="loadingc"><span class="sr-only">Loading...</span></div>{{horaC}}</td>
                         <td><a type="button" class="btn btn-info btn-sm" href="{{nc}}"> Ver  </a></td>
@@ -123,7 +126,8 @@
                     <tr>
 
                         <td>{{nd}}</td>
-                        <td><i class="fa fa-2x" ng-class="ed ? 'fa fa-cog fa-spin fa-2x fa-fw text-success' : 'fa fa-cog fa-2x text-danger'">{{ed ? '' : ''}}</i></td>
+                        <td><h5 class="" ng-class="ed ? ' text-success' : ' text-danger'">{{ed ? 'Activo' : 'Inactivo'}}</h5></td>
+                        @*<td><i class="fa fa-2x" ng-class="ed ? 'fa fa-cog fa-spin fa-2x fa-fw text-success' : 'fa fa-cog fa-2x text-danger'">{{ed ? '' : ''}}</i></td>*@
                         <td>{{d}}</td>
                         <td><div class="spinner-border text-primary" role="status" ng-show="loadingd"><span class="sr-only">Loading...</span></div>{{horaD}}</td>
                         <td><a type="button" class="btn btn-info btn-sm" href="{{nd}}"> Ver  </a></td>
@@ -133,7 +137,8 @@
                     <tr>
 
                         <td>{{ne}}</td>
-                        <td><i class="fa fa-2x" ng-class="ee ? 'fa fa-cog fa-spin fa-2x fa-fw text-success' : 'fa fa-cog fa-2x text-danger'">{{ee ? '' : ''}}</i></td>
+                        <td><h5 class="" ng-class="ee ? ' text-success' : ' text-danger'">{{ee ? 'Activo' : 'Inactivo'}}</h5></td>
+                        @*<td><i class="fa fa-2x" ng-class="ee ? 'fa fa-cog fa-spin fa-2x fa-fw text-success' : 'fa fa-cog fa-2x text-danger'">{{ee ? '' : ''}}</i></td>*@
                         <td>{{e}}</td>
                         <td><div class="spinner-border text-primary" role="status" ng-show="loadinge"><span class="sr-only">Loading...</span></div>{{horaE}}</td>
                         <td><a type="button" class="btn btn-info btn-sm" href="{{ne}}"> Ver  </a></td>
@@ -143,7 +148,8 @@
                     <tr>
 
                         <td>{{nf}}</td>
-                        <td><i class="fa fa-2x" ng-class="ef ? 'fa fa-cog fa-spin fa-2x fa-fw text-success' : 'fa fa-cog fa-2x text-danger'">{{ef ? '' : ''}}</i></td>
+                        <td><h5 class="" ng-class="ef ? ' text-success' : ' text-danger'">{{ef ? 'Activo' : 'Inactivo'}}</h5></td>
+                        @*<td><i class="fa fa-2x" ng-class="ef ? 'fa fa-cog fa-spin fa-2x fa-fw text-success' : 'fa fa-cog fa-2x text-danger'">{{ef ? '' : ''}}</i></td>*@
                         <td>{{f}}</td>
                         <td><div class="spinner-border text-primary" role="status" ng-show="loadingf"><span class="sr-only">Loading...</span></div>{{horaF}}</td>
                         <td><a type="button" class="btn btn-info btn-sm" href="{{nf}}"> Ver  </a></td>
@@ -153,7 +159,8 @@
                     <tr>
 
                         <td>{{ng}}</td>
-                        <td><i class="fa fa-2x" ng-class="eg ? 'fa fa-cog fa-spin fa-2x fa-fw text-success' : 'fa fa-cog fa-2x text-danger'">{{eg ? '' : ''}}</i></td>
+                        <td><h5 class="" ng-class="eg ? ' text-success' : ' text-danger'">{{eg ? 'Activo' : 'Inactivo'}}</h5></td>
+                        @*<td><i class="fa fa-2x" ng-class="eg ? 'fa fa-cog fa-spin fa-2x fa-fw text-success' : 'fa fa-cog fa-2x text-danger'">{{eg ? '' : ''}}</i></td>*@
                         <td>{{g}}</td>
                         <td><div class="spinner-border text-primary" role="status" ng-show="loadingg"><span class="sr-only">Loading...</span></div>{{horaG}}</td>
                         <td><a type="button" class="btn btn-info btn-sm" href="{{ng}}"> Ver  </a></td>
@@ -162,7 +169,8 @@
                     <tr>
 
                         <td>{{nh}}</td>
-                        <td><i class="fa fa-2x" ng-class="eh ? 'fa fa-cog fa-spin fa-2x fa-fw text-success' : 'fa fa-cog fa-2x text-danger'">{{eh ? '' : ''}}</i></td>
+                        <td><h5 class="" ng-class="eh ? ' text-success' : ' text-danger'">{{eh ? 'Activo' : 'Inactivo'}}</h5></td>
+                        @*<td><i class="fa fa-2x" ng-class="eh ? 'fa fa-cog fa-spin fa-2x fa-fw text-success' : 'fa fa-cog fa-2x text-danger'">{{eh ? '' : ''}}</i></td>*@
                         <td>{{h}}</td>
                         <td><div class="spinner-border text-primary" role="status" ng-show="loadingh"><span class="sr-only">Loading...</span></div>{{horaH}}</td>
                         <td><a type="button" class="btn btn-info btn-sm" href="{{nh}}"> Ver  </a></td>
@@ -172,7 +180,8 @@
                     <tr>
 
                         <td>{{ni}}</td>
-                        <td><i class="fa fa-2x" ng-class="ei ? 'fa fa-cog fa-spin fa-2x fa-fw text-success' : 'fa fa-cog fa-2x text-danger'">{{ei ? '' : ''}}</i></td>
+                        <td><h5 class="" ng-class="ei ? ' text-success' : ' text-danger'">{{ei ? 'Activo' : 'Inactivo'}}</h5></td>
+                        @*<td><i class="fa fa-2x" ng-class="ei ? 'fa fa-cog fa-spin fa-2x fa-fw text-success' : 'fa fa-cog fa-2x text-danger'">{{ei ? '' : ''}}</i></td>*@
                         <td>{{i}}</td>
                         <td><div class="spinner-border text-primary" role="status" ng-show="loadingi"><span class="sr-only">Loading...</span></div>{{horaI}}</td>
                         <td><a type="button" class="btn btn-info btn-sm" href="{{ni}}"> Ver  </a></td>
@@ -182,7 +191,8 @@
                     <tr>
 
                         <td>{{nm}}</td>
-                        <td><i class="fa fa-2x" ng-class="em ? 'fa fa-cog fa-spin fa-2x fa-fw text-success' : 'fa fa-cog fa-2x text-danger'">{{em ? '' : ''}}</i></td>
+                        <td><h5 class="" ng-class="em ? ' text-success' : ' text-danger'">{{em ? 'Activo' : 'Inactivo'}}</h5></td>
+                        @*<td><i class="fa fa-2x" ng-class="em ? 'fa fa-cog fa-spin fa-2x fa-fw text-success' : 'fa fa-cog fa-2x text-danger'">{{em ? '' : ''}}</i></td>*@
                         <td>{{m}}</td>
                         <td><div class="spinner-border text-primary" role="status" ng-show="loadingm"><span class="sr-only">Loading...</span></div>{{horaM}}</td>
                         <td><a type="button" class="btn btn-info btn-sm" href="{{nm}}"> Ver  </a></td>
@@ -200,7 +210,7 @@
                 <thead class="thead-dark">
                     <tr>
                         <th scope="col">Nombre</th>
-                        <th scope="col">Estado</th>
+                        <th scope="col">EstadoServicio</th>
                         <th scope="col">Ciclo</th>
                         <th scope="col">FechaHora</th>
                         <th scope="col">Acciones</th>
@@ -210,7 +220,8 @@
                     <tr>
 
                         <td>{{nj}}</td>
-                        <td><i class="fa fa-2x" ng-class="ej ? 'fa fa-cog fa-spin fa-2x fa-fw text-success' : 'fa fa-cog fa-2x text-danger'">{{ej ? '' : ''}}</i></td>
+                        <td><h5 class="" ng-class="ej ? ' text-success' : ' text-danger'">{{ej ? 'Activo' : 'Inactivo'}}</h5></td>
+                        @*<td><i class="fa fa-2x" ng-class="ej ? 'fa fa-cog fa-spin fa-2x fa-fw text-success' : 'fa fa-cog fa-2x text-danger'">{{ej ? '' : ''}}</i></td>*@
                         <td>{{j}}</td>
                         <td>{{horaJ}}</td>
                         <td><a type="button" class="btn btn-info btn-sm" href="{{nj}}"> Ver  </a></td>
@@ -220,7 +231,8 @@
                     <tr>
 
                         <td>{{nk}}</td>
-                        <td><i class="fa fa-2x" ng-class="ek ? 'fa fa-cog fa-spin fa-2x fa-fw text-success' : 'fa fa-cog fa-2x text-danger'">{{ek ? '' : ''}}</i></td>
+                        <td><h5 class="" ng-class="ek ? ' text-success' : ' text-danger'">{{ek ? 'Activo' : 'Inactivo'}}</h5></td>
+                        @*<td><i class="fa fa-2x" ng-class="ek ? 'fa fa-cog fa-spin fa-2x fa-fw text-success' : 'fa fa-cog fa-2x text-danger'">{{ek ? '' : ''}}</i></td>*@
                         <td>{{k}}</td>
                         <td>{{horaK}}</td>
                         <td><a type="button" class="btn btn-info btn-sm" href="{{nk}}"> Ver  </a></td>
@@ -231,7 +243,8 @@
                     <tr>
 
                         <td>{{nl}}</td>
-                        <td><i class="fa fa-2x" ng-class="el ? 'fa fa-cog fa-spin fa-2x fa-fw text-success' : 'fa fa-cog fa-2x text-danger'">{{el ? '' : ''}}</i></td>
+                        <td><h5 class="" ng-class="el ? ' text-success' : ' text-danger'">{{el ? 'Activo' : 'Inactivo'}}</h5></td>
+                        @*<td><i class="fa fa-2x" ng-class="el ? 'fa fa-cog fa-spin fa-2x fa-fw text-success' : 'fa fa-cog fa-2x text-danger'">{{el ? '' : ''}}</i></td>*@
                         <td>{{l}}</td>
                         <td>{{horaL}}</td>
                         <td><a type="button" class="btn btn-info btn-sm" href="{{nl}}"> Ver  </a></td>

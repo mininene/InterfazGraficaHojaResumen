@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebResumen.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
 
 namespace WebResumen.Services.PrinterService
 {
@@ -43,17 +44,18 @@ namespace WebResumen.Services.PrinterService
 
 
 
-                _pr.PrinterSettings.PrinterName = @"\\essafileprint01\#ADMICOPY (ESSAFILEPRINT01)";
+            _pr.PrinterSettings.PrinterName = @"\\essafileprint01\#ADMICOPY (ESSAFILEPRINT01)";
 
-                // Console.WriteLine(_pr.PrinterSettings.PrinterName.ToString());
 
-                //System.Threading.Thread.Sleep(2000);
-                _pr.PrintController = _controller;
+            // Console.WriteLine(_pr.PrinterSettings.PrinterName.ToString());
+
+            //System.Threading.Thread.Sleep(2000);
+            _pr.PrintController = _controller;
                 _pr.Print(); //start the print
                 _pr.Dispose();
 
                 void printDoc_PrintPage(object sender, PrintPageEventArgs e)
-                {
+                { IHttpContextAccessor _httpContextAccessor = new HttpContextAccessor();
                     Graphics graph = e.Graphics;
                
                     graph.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
@@ -62,7 +64,7 @@ namespace WebResumen.Services.PrinterService
                     graph.DrawString("N.PROGRESIVO:" + "  " + q.NumeroCiclo, _font, _solid, new RectangleF(190, 5, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
                     graph.DrawString("Informe de ciclo de esterilización", _font, _solid, new RectangleF(360, 5, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
                     graph.DrawString("Impreso: " + DateTime.Now, _font, _solid, new RectangleF(580, 5, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
-                    graph.DrawString("Impreso por: Web ", _font, _solid, new RectangleF(580, 20, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
+                    graph.DrawString("Impreso por: "+ _httpContextAccessor.HttpContext.Session.GetString("SessionName"), _font, _solid, new RectangleF(580, 20, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
 
                     graph.DrawString("PROGRAMA:", _font, _solid, new RectangleF(20, 30, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
                     graph.DrawString(q.Programa + " " + "<--[  ]", _negrita, _solid, new RectangleF(180, 30, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
