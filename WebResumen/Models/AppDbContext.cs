@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata;
 using WebResumen.Models;
 
@@ -23,6 +25,50 @@ namespace WebResumen.Models
         public virtual DbSet<CiclosSabiDos> CiclosSabiDos { get; set; }
         public virtual DbSet<MaestroAutoclave> MaestroAutoclave { get; set; }
         public virtual DbSet<Parametros> Parametros { get; set; }
+
+//AudiTrail
+        public override int SaveChanges()
+        {
+            ChangeTracker.Entries().Where(p => p.State == EntityState.Modified).ToList().ForEach(entry =>
+            {
+                Audit(entry);
+            });
+
+            return base.SaveChanges();
+        }
+
+
+
+        private void Audit(EntityEntry entry)
+        {
+            foreach (var property in entry.Properties)
+            {
+                //if (!property.IsModified)
+                //    continue;
+                if (property.IsModified)
+                {
+
+
+                    var auditEntry = new AudiTrail
+                    {
+                        Usuario = entry.Entity.GetType().Name,
+                        Evento = Evento.Update.ToString(),
+                        Comentario = property.Metadata.Name,
+                        Valor = property.OriginalValue.ToString(),
+                        ValorActualizado = property.CurrentValue.ToString(),
+                        FechaHora = DateTime.Now
+                    };
+
+                    this.AudiTrail.Add(auditEntry);
+                }  
+                
+            }
+        }
+
+        //AudiTrail
+
+
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

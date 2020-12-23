@@ -21,7 +21,8 @@ namespace WebResumen.Controllers
         // GET: AudiTrail
         public async Task<IActionResult> Index()
         {
-            return View(await _context.AudiTrail.ToListAsync());
+            var result = from s in _context.AudiTrail.OrderByDescending(s => s.Id) select s;
+            return View(await result.ToListAsync());
         }
 
         // GET: AudiTrail/Details/5

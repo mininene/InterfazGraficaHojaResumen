@@ -98,8 +98,20 @@ namespace WebResumen.Controllers
             {
                 try
                 {
-                    _context.Update(parametros);
-                    await _context.SaveChangesAsync();
+                    //_context.Update(parametros);
+                    //await _context.SaveChangesAsync();
+                    // Attach the object to the graph
+                    var entry = _context.Parametros.Attach(parametros);
+                    // Backup updated values
+                    var updated = entry.CurrentValues.Clone();
+                    // Reload entity from database, to track the original values
+                    entry.Reload();
+                    // Set the current values updated
+                    entry.CurrentValues.SetValues(updated);
+                    // Mark the entity as modified
+                    entry.State = EntityState.Modified;
+
+                    _context.SaveChanges();
                 }
                 catch (DbUpdateConcurrencyException)
                 {

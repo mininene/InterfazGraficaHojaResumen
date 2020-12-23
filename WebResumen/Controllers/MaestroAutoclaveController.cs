@@ -107,8 +107,19 @@ namespace WebResumen.Controllers
             {
                 try
                 {
-                    _context.Update(maestroAutoclave);
-                    await _context.SaveChangesAsync();
+                    //_context.Update(maestroAutoclave);
+                    //await _context.SaveChangesAsync();
+                    var entry = _context.MaestroAutoclave.Attach(maestroAutoclave);
+                    // Backup updated values
+                    var updated = entry.CurrentValues.Clone();
+                    // Reload entity from database, to track the original values
+                    entry.Reload();
+                    // Set the current values updated
+                    entry.CurrentValues.SetValues(updated);
+                    // Mark the entity as modified
+                    entry.State = EntityState.Modified;
+
+                    _context.SaveChanges();
                 }
                 catch (DbUpdateConcurrencyException)
                 {

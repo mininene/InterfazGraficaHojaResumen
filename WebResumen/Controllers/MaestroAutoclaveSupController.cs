@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebResumen.Models;
 
+
 namespace WebResumen.Controllers
 {
     [Authorize(Policy = "ADAS")]
@@ -73,7 +74,7 @@ namespace WebResumen.Controllers
             {
                 return NotFound();
             }
-
+          
             var maestroAutoclave = await _context.MaestroAutoclave.FindAsync(id);
             if (maestroAutoclave == null)
             {
@@ -98,8 +99,25 @@ namespace WebResumen.Controllers
             {
                 try
                 {
-                    _context.Update(maestroAutoclave);
-                    await _context.SaveChangesAsync();
+
+                    //_context.Update(maestroAutoclave);
+                    //await _context.SaveChangesAsync();//Guardo el cambio realizado por mi persona
+
+                 
+                    // Attach the object to the graph
+                    var entry = _context.MaestroAutoclave.Attach(maestroAutoclave);
+                    // Backup updated values
+                    var updated = entry.CurrentValues.Clone();
+                    // Reload entity from database, to track the original values
+                    entry.Reload();
+                    // Set the current values updated
+                    entry.CurrentValues.SetValues(updated);
+                    // Mark the entity as modified
+                    entry.State = EntityState.Modified;
+                 
+                    _context.SaveChanges();
+                
+                   
                 }
                 catch (DbUpdateConcurrencyException)
                 {
