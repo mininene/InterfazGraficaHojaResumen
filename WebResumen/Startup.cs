@@ -15,6 +15,7 @@ using Microsoft.Extensions.Hosting;
 using WebResumen.Models;
 using WebResumen.Services.Authentication;
 using WebResumen.Services.Authorization;
+using WebResumen.Services.LogRecord;
 using WebResumen.Services.PrinterService;
 
 namespace WebResumen
@@ -35,7 +36,7 @@ namespace WebResumen
             .UseSqlServer(Configuration
             .GetConnectionString("DefaultConnection")));
 
-           
+            
 
             // Add all of your handlers to DI.
 
@@ -88,8 +89,9 @@ namespace WebResumen
             services.AddScoped(typeof(IPrinterOchoVeinte), typeof(PrinterOchoVeinte));
             services.AddScoped(typeof(IPrinterDosTresCuatro), typeof(PrinterDosTresCuatro));
             services.AddScoped(typeof(IPrinterNueveDiez), typeof(PrinterNueveDiez));
+          
 
-         
+
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<TestManager>();
@@ -103,6 +105,8 @@ namespace WebResumen
                   
             });
 
+
+            services.AddScoped(typeof(ILogRecord), typeof(LogRecord));
 
             services.AddControllersWithViews()
                  .AddSessionStateTempDataProvider();

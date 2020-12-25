@@ -111,7 +111,7 @@ namespace WebResumen.Controllers
                     // Mark the entity as modified
                     entry.State = EntityState.Modified;
 
-                    _context.SaveChanges();
+                    await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {

@@ -8,12 +8,20 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using WebResumen.Models.ViewModels;
+using WebResumen.Services.LogRecord;
 
 namespace WebResumen.Controllers
 {
     public class HomeController : Controller
     {
-       
+        private readonly  ILogRecord _log;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public HomeController(ILogRecord log, IHttpContextAccessor httpContextAccessor)
+        {
+            _log = log;
+            _httpContextAccessor = httpContextAccessor;
+
+        }
         [HttpGet]
         public IActionResult Index()
         {
@@ -21,9 +29,10 @@ namespace WebResumen.Controllers
         }
 
 
-        [HttpPost]
+        
         public IActionResult Index(LoginViewModel model)
         {
+           
             if (ModelState.IsValid)
             {
                 
@@ -47,6 +56,10 @@ namespace WebResumen.Controllers
                                 HttpContext.Session.SetString("SessionPass", model.Contraseña);
                                 HttpContext.Session.SetString("SessionName", model.Usuario);
                                 HttpContext.Session.SetString("SessionTiempo", DateTime.Now.ToString("HH:mm:ss"));
+                                string EventoI = "Inicio de sesión";
+                                string ComentarioI = "ha iniciado sesión";
+                                _log.Write(model.Usuario, DateTime.Now, EventoI, ComentarioI);
+
                                 return RedirectToAction("Index", "Inicio");
                             }
                             else
@@ -72,9 +85,20 @@ namespace WebResumen.Controllers
 
         public IActionResult Logout()
         {
+           
+            try
+            {
+                string EventoI = "Cierre de sesión";
+                string ComentarioI = "ha Cerrado sesión";
+                string usuario = _httpContextAccessor.HttpContext.Session.GetString("SessionName");
+                _log.Write(usuario, DateTime.Now, EventoI, ComentarioI);
+            }
+            catch { }
+      
             HttpContext.Session.SetString("SessionPass", "");
             HttpContext.Session.SetString("SessionName", "");
-           
+
+
             return RedirectToAction("Index", "Home");
 
         }

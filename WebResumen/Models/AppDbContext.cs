@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -30,14 +32,14 @@ namespace WebResumen.Models
 
         //AudiTrail
 
-        public override int SaveChanges()
+
+        public async override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
             ChangeTracker.Entries().Where(p => p.State == EntityState.Modified).ToList().ForEach(entry =>
             {
                 Audit(entry);
             });
-
-            return base.SaveChanges();
+            return await base.SaveChangesAsync(cancellationToken);
         }
 
 

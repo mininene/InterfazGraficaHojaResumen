@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebResumen.Models;
-
+using WebResumen.Services.LogRecord;
 
 namespace WebResumen.Controllers
 {
@@ -19,12 +19,15 @@ namespace WebResumen.Controllers
     public class InicioController : Controller
     {
         private readonly AppDbContext _context;
+        private readonly ILogRecord _log;
+       
 
-      
-        public InicioController(AppDbContext context)
+
+        public InicioController(AppDbContext context, ILogRecord log)
         {
             _context = context;
-        }
+            _log = log;
+         }
 
         // GET: Inicio
         public async Task<IActionResult> Index()
@@ -54,7 +57,7 @@ namespace WebResumen.Controllers
         {
             var result = await _context.MaestroAutoclave.ToListAsync();
             //return View(await _context.CiclosAutoclaves.OrderByDescending(x=>x.Id).ToListAsync());
-                      
+             
            
             return Json(result, ViewBag.Message);
 

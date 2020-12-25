@@ -114,8 +114,9 @@ namespace WebResumen.Controllers
                     entry.CurrentValues.SetValues(updated);
                     // Mark the entity as modified
                     entry.State = EntityState.Modified;
-                 
-                    _context.SaveChanges();
+
+                    await _context.SaveChangesAsync();
+                   
                 
                    
                 }
