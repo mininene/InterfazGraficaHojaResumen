@@ -69,6 +69,7 @@ namespace WebResumen.Controllers
 
         }
 
+
         public IActionResult Logout()
         {
             HttpContext.Session.SetString("SessionPass", "");
@@ -77,6 +78,10 @@ namespace WebResumen.Controllers
             return RedirectToAction("Index", "Home");
 
         }
+
+
+
+       
 
 
 

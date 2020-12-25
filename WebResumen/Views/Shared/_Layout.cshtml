@@ -124,7 +124,7 @@
                 <li class="nav-item">
                     @*<p class="float-right navbar-text navbar-right text-danger">Hola, <strong>@User.Identity.Name.Replace("GLOBAL\\", "")!</strong> </p>*@
                                      
-                    @using Microsoft.AspNetCore.Http
+                   
                     @inject IHttpContextAccessor httpContextAccessor
                     <p class=" navbar-text text-danger">Hola, <strong> @httpContextAccessor.HttpContext.Session.GetString("SessionName")!</strong> </p>
                 </li>

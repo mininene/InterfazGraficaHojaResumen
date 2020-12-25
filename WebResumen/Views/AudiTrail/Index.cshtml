@@ -26,7 +26,7 @@
                 @Html.DisplayNameFor(model => model.Campo)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Valor)
+                   ValorAntiguo
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ValorActualizado)
@@ -34,9 +34,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Comentario)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Tiempo)
-            </th>
+            @*<th>
+            @Html.DisplayNameFor(model => model.Tiempo)
+        </th>*@
             <th></th>
         </tr>
     </thead>
@@ -67,9 +67,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Comentario)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.Tiempo)
-            </td>
+            </td>*@
            
         </tr>
 }

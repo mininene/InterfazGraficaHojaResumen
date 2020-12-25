@@ -16,6 +16,8 @@ using Microsoft.EntityFrameworkCore;
 using WebResumen.Models;
 using WebResumen.Services.PrinterService;
 using Microsoft.AspNetCore.Http;
+using WebResumen.Models.ViewModels;
+using System.DirectoryServices.AccountManagement;
 
 namespace WebResumen.Controllers
 {
@@ -128,9 +130,9 @@ namespace WebResumen.Controllers
             {
                 return NotFound();
             }
-           
 
-            return View(ciclosAutoclaves);
+            return RedirectToAction("Index", "AutoClaveB");
+            //return View(ciclosAutoclaves);
 
             //Document doc = new Document(PageSize.Letter);
             //FileStream file = new FileStream("hola_Mundo.pdf", FileMode.Create);
@@ -152,7 +154,7 @@ namespace WebResumen.Controllers
             //return File(pdf, "application/pdf");
 
 
-            
+
         }
 
         public async Task<IActionResult> Preview(int? id)
@@ -186,6 +188,88 @@ namespace WebResumen.Controllers
 
 
 
+///////////////////////////////////////////////////////////////
+        [HttpGet]
+        public async Task<IActionResult> Login(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var ciclosAutoclaves = await _context.CiclosAutoclaves
+                .FirstOrDefaultAsync(m => m.Id == id);
+           
+            
+            if (ciclosAutoclaves == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.datos = ciclosAutoclaves.Id;
+            
+
+
+            return View("Login");
+            
+        }
+
+        [HttpPost]
+        public IActionResult Login(DoubleLoginViewModel model, int? id)
+        {
+            var ciclosAutoclaves =  _context.CiclosAutoclaves
+               .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (ModelState.IsValid)
+            {
+
+                string dominio = @"global.baxter.com";
+                using (PrincipalContext ctx = new PrincipalContext(ContextType.Domain, dominio, model.Usuario, model.Contraseña))
+                {
+
+
+                    try
+                    {
+                        UserPrincipal user = UserPrincipal.FindByIdentity(ctx, model.Usuario);
+
+                        GroupPrincipal groupAdmins = GroupPrincipal.FindByIdentity(ctx, "GLOBAL\\ESSA-HojaResumen_Admins");
+                        GroupPrincipal groupSupervisors = GroupPrincipal.FindByIdentity(ctx, "GLOBAL\\ESSA-HojaResumen_Supervisors");
+                        GroupPrincipal groupUsers = GroupPrincipal.FindByIdentity(ctx, "GLOBAL\\ESSA-HojaResumen_Users");
+
+                        if (user != null)
+                        {
+                            if (user.IsMemberOf(groupAdmins) || user.IsMemberOf(groupSupervisors) || user.IsMemberOf(groupUsers))
+                            {
+                                HttpContext.Session.SetString("SessionPassA", model.Contraseña);
+                                HttpContext.Session.SetString("SessionNameA", model.Usuario);
+                                HttpContext.Session.SetString("SessionComentarioA", model.Comentario);
+                                HttpContext.Session.SetString("SessionDatosA", model.Dato);
+                                HttpContext.Session.SetString("SessionTiempoA", DateTime.Now.ToString("HH:mm:ss"));
+                                return View("Print");
+
+                            }
+                            else
+                            {
+                                return RedirectToAction("Index", "Home");
+
+                            }
+                        }
+
+
+                    }
+                    catch
+                    { return RedirectToAction("Index", "Home"); }
+                }
+            }
+
+            ViewBag.fail = "Autenticación Fallida";
+            return View();
+
+
+        }
+
+
+        /////////////////////////////////////////////////////
 
         // GET: AutoClaveB/Details/5
         public async Task<IActionResult> Details(int? id)
