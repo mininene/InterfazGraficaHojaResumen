@@ -13,7 +13,7 @@
 
     @using Microsoft.AspNetCore.Http
     @inject IHttpContextAccessor httpContextAccessor
-    <h1>@httpContextAccessor.HttpContext.Session.GetString("SessionDatosA")</h1>
+    @*<h1>@httpContextAccessor.HttpContext.Session.GetString("SessionDatosA")</h1>*@
 
 
     <a type="button" class="btn btn-info" asp-action="Print" asp-route-id="@httpContextAccessor.HttpContext.Session.GetString("SessionDatosA")">Imprimir</a>

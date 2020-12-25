@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
 using System.Linq;
 using System.Security.Principal;
@@ -37,6 +38,7 @@ namespace WebResumen.Controllers
             {
                 
                 string dominio = @"global.baxter.com";
+                string path = @"LDAP://global.baxter.com";
                 using (PrincipalContext ctx = new PrincipalContext(ContextType.Domain, dominio, model.Usuario, model.Contraseña))
                 {
 
@@ -53,13 +55,23 @@ namespace WebResumen.Controllers
                         {
                             if (user.IsMemberOf(groupAdmins) || user.IsMemberOf(groupSupervisors) || user.IsMemberOf(groupUsers))
                             {
+                                ///////////////////////////////////////////////////////////////////////
+                                using (var searcher = new DirectorySearcher(new DirectoryEntry(path)))
+                                {
+                                    string fullName = string.Empty;
+                                    DirectoryEntry de = (user.GetUnderlyingObject() as DirectoryEntry);
+                                    if (de != null)
+                                    { fullName = de.Properties["displayName"][0].ToString(); }
+
+                                    ////////////////////////////////////////////////////////////
+                                HttpContext.Session.SetString("SessionUser", model.Usuario);
                                 HttpContext.Session.SetString("SessionPass", model.Contraseña);
-                                HttpContext.Session.SetString("SessionName", model.Usuario);
+                                HttpContext.Session.SetString("SessionName", fullName);
                                 HttpContext.Session.SetString("SessionTiempo", DateTime.Now.ToString("HH:mm:ss"));
                                 string EventoI = "Inicio de sesión";
-                                string ComentarioI = "ha iniciado sesión";
-                                _log.Write(model.Usuario, DateTime.Now, EventoI, ComentarioI);
-
+                                string ComentarioI = "Ha iniciado sesión";
+                                _log.Write(fullName, DateTime.Now, EventoI, ComentarioI);
+                                }
                                 return RedirectToAction("Index", "Inicio");
                             }
                             else
@@ -89,14 +101,18 @@ namespace WebResumen.Controllers
             try
             {
                 string EventoI = "Cierre de sesión";
-                string ComentarioI = "ha Cerrado sesión";
+                string ComentarioI = "Ha Cerrado sesión";
                 string usuario = _httpContextAccessor.HttpContext.Session.GetString("SessionName");
                 _log.Write(usuario, DateTime.Now, EventoI, ComentarioI);
             }
             catch { }
       
             HttpContext.Session.SetString("SessionPass", "");
-            HttpContext.Session.SetString("SessionName", "");
+            HttpContext.Session.SetString("SessionUser", "");
+            HttpContext.Session.Clear();
+            HttpContext.Session.Remove(".AspNetCore.Session");
+           
+
 
 
             return RedirectToAction("Index", "Home");

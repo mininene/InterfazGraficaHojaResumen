@@ -18,6 +18,8 @@ using WebResumen.Services.PrinterService;
 using Microsoft.AspNetCore.Http;
 using WebResumen.Models.ViewModels;
 using System.DirectoryServices.AccountManagement;
+using WebResumen.Services.LogRecord;
+using System.DirectoryServices;
 
 namespace WebResumen.Controllers
 {
@@ -30,14 +32,16 @@ namespace WebResumen.Controllers
         private readonly AppDbContext _context;
         private readonly IPrinterOchoVeinte _printerOchoVeinte;
         private readonly IPrinterDosTresCuatro _printerDosTresCuatro;
+        private readonly ILogRecord _log;
 
-        public AutoClaveBController(AppDbContext context, IPrinterOchoVeinte printerOchoVeinte, IPrinterDosTresCuatro printerDosTresCuatro)
+        public AutoClaveBController(AppDbContext context, IPrinterOchoVeinte printerOchoVeinte, IPrinterDosTresCuatro printerDosTresCuatro, ILogRecord log)
         {
             _context = context;
             _printerOchoVeinte = printerOchoVeinte;
             _printerDosTresCuatro = printerDosTresCuatro;
+            _log = log;
 
-    }
+        }
 
     // GET: AutoClaveB
     public async Task<IActionResult> Index(string nCiclo, string nPrograma, string fecha)
@@ -224,6 +228,7 @@ namespace WebResumen.Controllers
             {
 
                 string dominio = @"global.baxter.com";
+                string path = @"LDAP://global.baxter.com";
                 using (PrincipalContext ctx = new PrincipalContext(ContextType.Domain, dominio, model.Usuario, model.Contraseña))
                 {
 
@@ -240,17 +245,27 @@ namespace WebResumen.Controllers
                         {
                             if (user.IsMemberOf(groupAdmins) || user.IsMemberOf(groupSupervisors) || user.IsMemberOf(groupUsers))
                             {
-                                HttpContext.Session.SetString("SessionPassA", model.Contraseña);
-                                HttpContext.Session.SetString("SessionNameA", model.Usuario);
-                                HttpContext.Session.SetString("SessionComentarioA", model.Comentario);
-                                HttpContext.Session.SetString("SessionDatosA", model.Dato);
-                                HttpContext.Session.SetString("SessionTiempoA", DateTime.Now.ToString("HH:mm:ss"));
-                                return View("Print");
+                                using (var searcher = new DirectorySearcher(new DirectoryEntry(path)))
+                                {
+                                    string fullName = string.Empty;
+                                    DirectoryEntry de = (user.GetUnderlyingObject() as DirectoryEntry);
+                                    if (de != null)
+                                    { fullName = de.Properties["displayName"][0].ToString(); }
+
+                                    HttpContext.Session.SetString("SessionPassA", model.Contraseña);
+                                    HttpContext.Session.SetString("SessionNameA", model.Usuario);
+                                    HttpContext.Session.SetString("SessionComentarioA", model.Comentario);
+                                    HttpContext.Session.SetString("SessionDatosA", model.Dato);
+                                    HttpContext.Session.SetString("SessionTiempoA", DateTime.Now.ToString("HH:mm:ss"));
+                                    string EventoB = "Re-Impresión";
+                                    _log.Write(fullName, DateTime.Now, EventoB, model.Comentario);
+                                    return View("Print");
+                                }
 
                             }
                             else
                             {
-                                return RedirectToAction("Index", "Home");
+                                return RedirectToAction("Logout", "Home");
 
                             }
                         }
@@ -258,7 +273,7 @@ namespace WebResumen.Controllers
 
                     }
                     catch
-                    { return RedirectToAction("Index", "Home"); }
+                    { return RedirectToAction("Logout", "Home"); }
                 }
             }
 

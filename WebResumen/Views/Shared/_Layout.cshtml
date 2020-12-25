@@ -53,7 +53,7 @@
 
                         @using Microsoft.AspNetCore.Http
                         @inject IHttpContextAccessor httpContextAccessor
-                        @if (string.IsNullOrEmpty(@httpContextAccessor.HttpContext.Session.GetString("SessionName")))
+                        @if (string.IsNullOrEmpty(@httpContextAccessor.HttpContext.Session.GetString("SessionUser")))
                         {
                             Context.Response.Redirect("/Home");
                         }
@@ -126,7 +126,7 @@
                                      
                    
                     @inject IHttpContextAccessor httpContextAccessor
-                    <p class=" navbar-text text-danger">Hola, <strong> @httpContextAccessor.HttpContext.Session.GetString("SessionName")!</strong> </p>
+                    <p class=" navbar-text text-danger">Hola, <strong> @httpContextAccessor.HttpContext.Session.GetString("SessionUser")!</strong> </p>
                 </li>
             </ul>
         </nav>
