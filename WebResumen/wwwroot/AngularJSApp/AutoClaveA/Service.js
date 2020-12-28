@@ -31,6 +31,18 @@ myapp.service('autoclaveService', function ($http) {
         });
     }
 
+    //Re-Login
+    this.getLogin = function (empId) {
+
+        return $http({
+            method: 'Get',
+            url: '/AutoClaveA/Login',
+            params: {
+                id: empId
+            },
+        });
+    }
+
    
 
 

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebResumen.Models;
+using WebResumen.Models.ViewModels;
 using WebResumen.Services.LogRecord;
 
 namespace WebResumen.Controllers
@@ -32,34 +33,37 @@ namespace WebResumen.Controllers
         // GET: Inicio
         public async Task<IActionResult> Index()
         {
-            foreach(var n in _context.MaestroAutoclave)
-            {
-                var actual = Regex.Replace(n.UltimoCiclo, "\\d+",
-                m => (int.Parse(m.Value) - 1).ToString(new string('0', m.Value.Length)));
-              
-                List<UltimoCiclo> ultimo = new List<UltimoCiclo>();
-                UltimoCiclo ult = new UltimoCiclo
-                {
-                   
-                    ciclo = actual,
-                  
-                }; ultimo.Add(ult);
-                ViewBag.data = ultimo.ToList();
-            }
-           
-
-
-
             return View(await _context.MaestroAutoclave.ToListAsync());
         }
 
         public async Task<JsonResult> ListHome()
         {
-            var result = await _context.MaestroAutoclave.ToListAsync();
-            //return View(await _context.CiclosAutoclaves.OrderByDescending(x=>x.Id).ToListAsync());
-             
+            
+            var result = await _context.MaestroAutoclave.OrderByDescending(x=>x.Id).ToListAsync();
+            var sabiUno = await _context.CiclosAutoclaves.OrderByDescending(x => x.Id).ToListAsync();
+            var sabiDos = await _context.CiclosSabiDos.OrderByDescending(x => x.Id).ToListAsync();
+                       
+            
+           var multiple = from t1 in result                           
+                           join t2 in sabiUno on (Convert.ToInt32(t1.UltimoCiclo)-1).ToString().Trim() equals t2.NumeroCiclo.Trim() into table1
+                           from t2 in table1.DefaultIfEmpty()
+                           join t3 in sabiDos on (Convert.ToInt32(t1.UltimoCiclo)-1).ToString().Trim() equals t3.NumeroCiclo.Trim() into table2
+                           from t3 in table2.DefaultIfEmpty()
+                           select new JoinViewModel
+
+                           {
+                               MaestroList = t1,
+                               SabiUnoList = t2,
+                               SabiDosList = t3,
+
+                           };
+            var multipleOrder = multiple.OrderBy(x => x.MaestroList.Id);
+            
+
            
-            return Json(result, ViewBag.Message);
+            return Json( multipleOrder, ViewBag.Message);
+
+            // return Json(result, ViewBag.Message);
 
 
         }

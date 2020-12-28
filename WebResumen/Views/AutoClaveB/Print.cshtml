@@ -5,7 +5,7 @@
 }
 
 @{
-    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
@@ -13,10 +13,10 @@
 
     @using Microsoft.AspNetCore.Http
     @inject IHttpContextAccessor httpContextAccessor
-    @*<h1>@httpContextAccessor.HttpContext.Session.GetString("SessionDatosA")</h1>*@
+    <h1>@httpContextAccessor.HttpContext.Session.GetString("SessionDatosB")</h1>
 
 
-    <a type="button" class="btn btn-info" asp-action="Print" asp-route-id="@httpContextAccessor.HttpContext.Session.GetString("SessionDatosA")">Imprimir</a>
+    <a type="button" class="btn btn-info" asp-action="Print" asp-route-id="@httpContextAccessor.HttpContext.Session.GetString("SessionDatosB")">Imprimir</a>
 
 
 </tbody>

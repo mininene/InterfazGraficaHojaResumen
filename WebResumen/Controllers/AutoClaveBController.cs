@@ -185,7 +185,7 @@ namespace WebResumen.Controllers
             ViewBag.Data = texts;
 
 
-
+           
             return View(ciclosAutoclaves);
 
         }
@@ -252,11 +252,11 @@ namespace WebResumen.Controllers
                                     if (de != null)
                                     { fullName = de.Properties["displayName"][0].ToString(); }
 
-                                    HttpContext.Session.SetString("SessionPassA", model.Contraseña);
-                                    HttpContext.Session.SetString("SessionNameA", model.Usuario);
-                                    HttpContext.Session.SetString("SessionComentarioA", model.Comentario);
-                                    HttpContext.Session.SetString("SessionDatosA", model.Dato);
-                                    HttpContext.Session.SetString("SessionTiempoA", DateTime.Now.ToString("HH:mm:ss"));
+                                    HttpContext.Session.SetString("SessionPassB", model.Contraseña);
+                                    HttpContext.Session.SetString("SessionNameB", model.Usuario);
+                                    HttpContext.Session.SetString("SessionComentarioB", model.Comentario);
+                                    HttpContext.Session.SetString("SessionDatosB", model.Dato);
+                                    HttpContext.Session.SetString("SessionTiempoB", DateTime.Now.ToString("HH:mm:ss"));
                                     string EventoB = "Re-Impresión";
                                     _log.Write(fullName, DateTime.Now, EventoB, model.Comentario);
                                     return View("Print");
