@@ -1,12 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.DirectoryServices;
+using System.DirectoryServices.AccountManagement;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using WebResumen.Models;
+using WebResumen.Models.ViewModels;
+using WebResumen.Services.LogRecord;
 
 namespace WebResumen.Controllers
 {
@@ -14,10 +20,12 @@ namespace WebResumen.Controllers
     public class ParametroController : Controller
     {
         private readonly AppDbContext _context;
+        private readonly ILogRecord _log;
 
-        public ParametroController(AppDbContext context)
+        public ParametroController(AppDbContext context, ILogRecord log)
         {
             _context = context;
+            _log = log;
         }
 
         // GET: Parametro
@@ -98,21 +106,43 @@ namespace WebResumen.Controllers
             {
                 try
                 {
-                    //_context.Update(parametros);
-                    //await _context.SaveChangesAsync();
-                    // Attach the object to the graph
-                    var entry = _context.Parametros.Attach(parametros);
-                    // Backup updated values
-                    var updated = entry.CurrentValues.Clone();
-                    // Reload entity from database, to track the original values
-                    entry.Reload();
-                    // Set the current values updated
-                    entry.CurrentValues.SetValues(updated);
-                    // Mark the entity as modified
-                    entry.State = EntityState.Modified;
+                    var parametrosToUpdate = await _context.Parametros
+                    .FirstOrDefaultAsync(c => c.Id == id);
 
-                    await _context.SaveChangesAsync();
-                }
+                    if (await TryUpdateModelAsync<Parametros>(parametrosToUpdate,
+                        "",
+                        c => c.Id, c => c.ImpresoraSabiUno, c => c.ImpresoraSabiDos, c => c.RutaLog, c => c.Tiempo, c => c.Reinicio))
+                    {
+                        try
+                        {
+                            await _context.SaveChangesAsync();
+                        }
+                        catch (DbUpdateException /* ex */)
+                        {
+                            //Log the error (uncomment ex variable name and write a log.)
+                            ModelState.AddModelError("", "Unable to save changes. " +
+                                "Try again, and if the problem persists, " +
+                                "see your system administrator.");
+                        }
+                    }
+
+                        //_context.Update(parametros);
+                        //await _context.SaveChangesAsync();
+                        // Attach the object to the graph
+                        //id = parametros.Id;
+
+                        //var entry = _context.Parametros.Attach(parametros);
+                        //// Backup updated values
+                        //var updated = entry.CurrentValues.Clone();
+                        //// Reload entity from database, to track the original values
+                        //entry.Reload();
+                        //// Set the current values updated
+                        //entry.CurrentValues.SetValues(updated);
+                        //// Mark the entity as modified
+                        //entry.State = EntityState.Modified;
+
+                        //await _context.SaveChangesAsync();
+                    }
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!ParametrosExists(parametros.Id))
@@ -128,6 +158,124 @@ namespace WebResumen.Controllers
             }
             return View(parametros);
         }
+
+
+        ///////////////////////////////////////////////////////////////
+        [HttpGet]
+        public async Task<IActionResult> Login(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var parametros = await _context.Parametros
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+
+            if (parametros == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.datos = parametros;
+
+
+
+            return View("Login");
+
+        }
+
+        [HttpPost]
+        public IActionResult Login(DoubleLoginParametrosViewModel model, int? id)
+        {
+            //var parametros = _context.Parametros
+            //   .FirstOrDefaultAsync(m => m.Id == id);
+            var parametros =  _context.Parametros.FindAsync(id);
+
+            if (ModelState.IsValid)
+            {
+
+                string dominio = @"global.baxter.com";
+                string path = @"LDAP://global.baxter.com";
+                using (PrincipalContext ctx = new PrincipalContext(ContextType.Domain, dominio, model.Usuario, model.Contraseña))
+                {
+
+
+                    try
+                    {
+                        UserPrincipal user = UserPrincipal.FindByIdentity(ctx, model.Usuario);
+
+                        GroupPrincipal groupAdmins = GroupPrincipal.FindByIdentity(ctx, "GLOBAL\\ESSA-HojaResumen_Admins");
+                        GroupPrincipal groupSupervisors = GroupPrincipal.FindByIdentity(ctx, "GLOBAL\\ESSA-HojaResumen_Supervisors");
+                        GroupPrincipal groupUsers = GroupPrincipal.FindByIdentity(ctx, "GLOBAL\\ESSA-HojaResumen_Users");
+
+                        if (user != null)
+                        {
+                            if (user.IsMemberOf(groupAdmins) || user.IsMemberOf(groupSupervisors) || user.IsMemberOf(groupUsers))
+                            {
+                                using (var searcher = new DirectorySearcher(new DirectoryEntry(path)))
+                                {
+                                    string fullName = string.Empty;
+                                    DirectoryEntry de = (user.GetUnderlyingObject() as DirectoryEntry);
+                                    if (de != null)
+                                    { fullName = de.Properties["displayName"][0].ToString(); }
+
+                                    HttpContext.Session.SetString("SessionPassP", model.Contraseña);
+                                    HttpContext.Session.SetString("SessionNameP", model.Usuario);
+                                    HttpContext.Session.SetString("SessionComentario", model.Comentario);
+
+                                    HttpContext.Session.SetString("SessionDatosP", model.Id);
+                                    HttpContext.Session.SetString("SessionImpresoraSabiUno", model.ImpresoraSabiUno);
+                                    HttpContext.Session.SetString("SessionImpresoraSabiDos", model.ImpresoraSabiDos);
+                                    HttpContext.Session.SetString("SessionRutaLog", model.RutaLog);
+                                    HttpContext.Session.SetInt32("Tiempo", model.Tiempo);
+                                    HttpContext.Session.SetString("Reinicio", model.Reinicio.ToString());
+
+                                    HttpContext.Session.SetString("SessionTiempoP", DateTime.Now.ToString("HH:mm:ss"));
+                                    return View("Edit");
+                                    //return View("Edit" ,model.Dato);
+                                }
+
+                            }
+                            else
+                            {
+                                return RedirectToAction("Logout", "Home");
+
+                            }
+                        }
+
+
+                    }
+                    catch
+                    { return RedirectToAction("Logout", "Home"); }
+                }
+            }
+
+            ViewBag.fail = "Autenticación Fallida";
+            return View();
+
+
+        }
+
+
+        /////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         // GET: Parametro/Delete/5
         public async Task<IActionResult> Delete(int? id)

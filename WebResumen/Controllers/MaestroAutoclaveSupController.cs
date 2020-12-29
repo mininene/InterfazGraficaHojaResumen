@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.DirectoryServices;
+using System.DirectoryServices.AccountManagement;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebResumen.Models;
-
+using WebResumen.Models.ViewModels;
 
 namespace WebResumen.Controllers
 {
@@ -100,25 +103,47 @@ namespace WebResumen.Controllers
                 try
                 {
 
+                    var maestroAutoclaveToUpdate = await _context.MaestroAutoclave
+                   .FirstOrDefaultAsync(c => c.Id == id);
+
+                    if (await TryUpdateModelAsync<MaestroAutoclave>(maestroAutoclaveToUpdate,
+                        "",
+                        c => c.Id, c => c.Matricula, c => c.Nombre, c => c.Version, c => c.Ip, c => c.Seccion, c => c.Estado, c => c.UltimoCiclo
+                        , c => c.RutaSalida, c => c.RutaSalidaPdf))
+                    {
+                        try
+                        {
+                            await _context.SaveChangesAsync();
+                        }
+                        catch (DbUpdateException /* ex */)
+                        {
+                            //Log the error (uncomment ex variable name and write a log.)
+                            ModelState.AddModelError("", "Unable to save changes. " +
+                                "Try again, and if the problem persists, " +
+                                "see your system administrator.");
+                        }
+                    }
+
+
                     //_context.Update(maestroAutoclave);
                     //await _context.SaveChangesAsync();//Guardo el cambio realizado por mi persona
 
-                 
-                    // Attach the object to the graph
-                    var entry = _context.MaestroAutoclave.Attach(maestroAutoclave);
-                    // Backup updated values
-                    var updated = entry.CurrentValues.Clone();
-                    // Reload entity from database, to track the original values
-                    entry.Reload();
-                    // Set the current values updated
-                    entry.CurrentValues.SetValues(updated);
-                    // Mark the entity as modified
-                    entry.State = EntityState.Modified;
 
-                    await _context.SaveChangesAsync();
-                   
-                
-                   
+                    //// Attach the object to the graph
+                    //var entry = _context.MaestroAutoclave.Attach(maestroAutoclave);
+                    //// Backup updated values
+                    //var updated = entry.CurrentValues.Clone();
+                    //// Reload entity from database, to track the original values
+                    //entry.Reload();
+                    //// Set the current values updated
+                    //entry.CurrentValues.SetValues(updated);
+                    //// Mark the entity as modified
+                    //entry.State = EntityState.Modified;
+
+                    //await _context.SaveChangesAsync();
+
+
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -135,6 +160,123 @@ namespace WebResumen.Controllers
             }
             return View(maestroAutoclave);
         }
+
+
+        ///////////////////////////////////////////////////////////////
+        [HttpGet]
+        public async Task<IActionResult> Login(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var maestroAutoclave = await _context.MaestroAutoclave
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+
+            if (maestroAutoclave == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.maestro = maestroAutoclave;
+           
+
+
+            return View("Login");
+
+        }
+
+        [HttpPost]
+        public IActionResult Login(DoubleLoginMaestroViewModel model, int? id)
+        {
+            //var parametros = _context.Parametros
+            //   .FirstOrDefaultAsync(m => m.Id == id);
+            var parametros = _context.Parametros.FindAsync(id);
+
+            if (ModelState.IsValid)
+            {
+
+                string dominio = @"global.baxter.com";
+                string path = @"LDAP://global.baxter.com";
+                using (PrincipalContext ctx = new PrincipalContext(ContextType.Domain, dominio, model.Usuario, model.Contraseña))
+                {
+
+
+                    try
+                    {
+                        UserPrincipal user = UserPrincipal.FindByIdentity(ctx, model.Usuario);
+
+                        GroupPrincipal groupAdmins = GroupPrincipal.FindByIdentity(ctx, "GLOBAL\\ESSA-HojaResumen_Admins");
+                        GroupPrincipal groupSupervisors = GroupPrincipal.FindByIdentity(ctx, "GLOBAL\\ESSA-HojaResumen_Supervisors");
+                        GroupPrincipal groupUsers = GroupPrincipal.FindByIdentity(ctx, "GLOBAL\\ESSA-HojaResumen_Users");
+
+                        if (user != null)
+                        {
+                            if (user.IsMemberOf(groupAdmins) || user.IsMemberOf(groupSupervisors) || user.IsMemberOf(groupUsers))
+                            {
+                                using (var searcher = new DirectorySearcher(new DirectoryEntry(path)))
+                                {
+                                    string fullName = string.Empty;
+                                    DirectoryEntry de = (user.GetUnderlyingObject() as DirectoryEntry);
+                                    if (de != null)
+                                    { fullName = de.Properties["displayName"][0].ToString(); }
+
+                                    HttpContext.Session.SetString("SessionPassMS", model.Contraseña);
+                                    HttpContext.Session.SetString("SessionNameMS", model.Usuario);
+                                    HttpContext.Session.SetString("SessionComentario", model.Comentario);
+
+                                    HttpContext.Session.SetString("SessionDatosMS", model.Id);
+                                    HttpContext.Session.SetString("SessionMatriculaMS", model.Matricula);
+                                    HttpContext.Session.SetString("SessionNombreMS", model.Nombre);
+                                    HttpContext.Session.SetString("SessionVersionMS", model.Version);
+                                    HttpContext.Session.SetString("SessionIpMS", model.Ip);
+                                    HttpContext.Session.SetString("SessionSeccionMS", model.Seccion);
+                                    HttpContext.Session.SetString("SessionEstadoMS", model.Estado.ToString());
+                                    HttpContext.Session.SetString("SessionUltimoCicloMS", model.UltimoCiclo);
+                                    HttpContext.Session.SetString("SessionRutaSalidaMS", model.RutaSalida);
+                                    HttpContext.Session.SetString("SessionRutaSalidaPDFMS", model.RutaSalidaPDF);
+                       
+                                    HttpContext.Session.SetString("SessionTiempoP", DateTime.Now.ToString("HH:mm:ss"));
+                                    return View("Edit");
+                                   
+                                }
+
+                            }
+                            else
+                            {
+                                return RedirectToAction("Logout", "Home");
+
+                            }
+                        }
+
+
+                    }
+                    catch
+                    { return RedirectToAction("Logout", "Home"); }
+                }
+            }
+
+            ViewBag.fail = "Autenticación Fallida";
+            return View();
+
+
+        }
+
+
+        /////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
 
         // GET: MaestroAutoclavesSup/Delete/5
         public async Task<IActionResult> Delete(int? id)

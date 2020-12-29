@@ -24,13 +24,15 @@ namespace WebResumen.Controllers
         private readonly IPrinterOchoVeinte _printerOchoVeinte;
         private readonly IPrinterDosTresCuatro _printerDosTresCuatro;
         private readonly ILogRecord _log;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AutoClaveAController(AppDbContext context, IPrinterOchoVeinte printerOchoVeinte, IPrinterDosTresCuatro printerDosTresCuatro, ILogRecord log)
+        public AutoClaveAController(AppDbContext context, IPrinterOchoVeinte printerOchoVeinte, IPrinterDosTresCuatro printerDosTresCuatro, ILogRecord log, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
             _printerOchoVeinte = printerOchoVeinte;
             _printerDosTresCuatro = printerDosTresCuatro;
             _log= log;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         // GET: AutoClaveA
@@ -221,6 +223,7 @@ namespace WebResumen.Controllers
                                     if (de != null)
                                     { fullName = de.Properties["displayName"][0].ToString(); }
 
+                                    HttpContext.Session.SetString("SessionFullName",fullName);
                                     HttpContext.Session.SetString("SessionPassA", model.Contraseña);
                                     HttpContext.Session.SetString("SessionNameA", model.Usuario);
                                     HttpContext.Session.SetString("SessionComentarioA", model.Comentario);
@@ -234,7 +237,8 @@ namespace WebResumen.Controllers
                             }
                             else
                             {
-                                return RedirectToAction("Logout", "Home");
+                               
+                                 return RedirectToAction("Logout", "Home");
 
                             }
                         }
@@ -242,7 +246,10 @@ namespace WebResumen.Controllers
 
                     }
                     catch
-                    { return RedirectToAction("Logout", "Home"); }
+                    {
+                        
+                        
+                          return RedirectToAction("Logout", "Home"); }
                 }
             }
 

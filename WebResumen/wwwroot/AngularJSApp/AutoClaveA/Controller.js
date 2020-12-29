@@ -61,20 +61,20 @@ myapp.controller('autoclave-controller', function ($scope, autoclaveService,$tim
      function loadPrint() {
        
         $scope.imprimir = function (empId) {
-           // window.alert("El archivo ha sido enviado a la impresora")
-            $scope.received = false;
-            $scope.send = true;
+            window.alert("El archivo ha sido enviado a la impresora")
+            //$scope.received = false;
+            //$scope.send = true;
           
             
             var AutoclavesPrint = autoclaveService.getPrint(empId);
             AutoclavesPrint.then(function (response) {
                 id = empId
-               
-                $scope.send = false;
+                $scope.loading = false;
+                //$scope.send = false;
               
                 $scope.original = response.data;
-                //window.alert("El archivo ha sido impreso")
-                $scope.received = true;
+                window.alert("El archivo ha sido impreso")
+                //$scope.received = true;
                 $timeout(function () { $scope.received = false; }, 3000);
                 $window.location.href = '/AutoClaveA' 
 

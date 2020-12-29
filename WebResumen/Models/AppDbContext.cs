@@ -70,7 +70,7 @@ namespace WebResumen.Models
                         Valor = property.OriginalValue.ToString(),
                         ValorActualizado = property.CurrentValue.ToString(),
                         FechaHora = DateTime.Now,
-                        Comentario = "",
+                        Comentario = _httpContextAccessor.HttpContext.Session.GetString("SessionComentario"),
                         Tiempo = Convert.ToDateTime(_httpContextAccessor.HttpContext.Session.GetString("SessionTiempo"))
 
 
