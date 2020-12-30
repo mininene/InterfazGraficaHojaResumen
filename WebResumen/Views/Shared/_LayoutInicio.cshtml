@@ -9,7 +9,7 @@
 
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/css/examplec.css" />
-    <link rel="stylesheet" href="~/css/tablap.css" />
+ 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <!-- Bootstrap core CSS -->
@@ -18,7 +18,7 @@
     <link href="~/lib/MDB/css/mdb.min.css" rel="stylesheet">
     <!-- Your custom styles (optional) -->
     <link href="~/lib/MDB/css/style.css" rel="stylesheet">
-    <link href="~/css/toaster.css" rel="stylesheet">
+  
 
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css">
 
@@ -72,8 +72,8 @@
 
 
                             @*<li class="nav-item">
-             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-            </li>*@
+                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                                </li>*@
                             else
                             {
 
@@ -123,8 +123,8 @@
                 </li>
                 <li class="nav-item">
                     @*<p class="float-right navbar-text navbar-right text-danger">Hola, <strong>@User.Identity.Name.Replace("GLOBAL\\", "")!</strong> </p>*@
-                                     
-                   
+
+
                     @inject IHttpContextAccessor httpContextAccessor
                     <p class=" navbar-text text-danger">Hola, <strong> @httpContextAccessor.HttpContext.Session.GetString("SessionUser")!</strong> </p>
                 </li>
@@ -135,7 +135,7 @@
     </header>
     <div class="container-fluid">
         <main role="main" class="pb-3">
-           
+
             @RenderBody()
 
 
@@ -157,8 +157,6 @@
 
 
 
-    <!--</footer>-->
-
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
@@ -173,21 +171,11 @@
 
     <script type="text/javascript" src="~/lib/MDB/js/addons/datatables.min.js"></script>
     <script type="text/javascript" src="~/lib/DataTables/datatables.min.js"></script>
+    <!-- Angular -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-    @*<script type="text/javascript" src="~/lib/AngularJS/angular.min.js"></script>
-        <script type="text/javascript" src="~/lib/AngularJS/angular-animate.min.js"></script>
-        <script type="text/javascript" src="~/lib/AngularJS/angular-sanitize.min.js"></script>
-        <script type="text/javascript" src="~/lib/AngularJS/toaster.min.js"></script>*@
 
-
-
-
-
-
-
+    <!-- Datatable -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-datatables/0.6.4/angular-datatables.js"></script>
-
-
     <script src="https://cdn.datatables.net/buttons/1.2.4/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.colVis.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.flash.min.js"></script>
@@ -195,43 +183,24 @@
     <script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.print.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-datatables/0.6.4/plugins/buttons/angular-datatables.buttons.min.js"></script>
 
-
-
-
-    @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>*@
+    <!-- Excel-PDF-Copy -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.18/pdfmake.min.js"></script>
     <script src="https://cdn.datatables.net/colreorder/1.5.3/js/dataTables.colReorder.min.js"></script>
 
 
-    <!-- Toaster -->
-
-
-
-
-
-
-
-
-
-
+    <!-- Interno -->
 
     <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="~/js/example.js" asp-append-version="true"></script>
-    @*<script src="~/js/Agua.js" asp-append-version="true"></script>*@
-    @*<script src="~/js/ajax.js" asp-append-version="true"></script>*@
     <script src="~/js/homeApp.js" asp-append-version="true"></script>
     <script src="~/js/vaporApp.js" asp-append-version="true"></script>
     <script src="~/js/aguaApp.js" asp-append-version="true"></script>
-    <script src="~/js/maestroApp.js" asp-append-version="true"></script>
-    <script src="~/js/pruebaApp.js" asp-append-version="true"></script>
-
-    <script src="~/AngularJSApp/AutoClaveA/Module.js" asp-append-version="true"></script>
-    <script src="~/AngularJSApp/AutoClaveA/Controller.js" asp-append-version="true"></script>
-    <script src="~/AngularJSApp/AutoClaveA/Service.js" asp-append-version="true"></script>
+   
 
 
+    <script src="~/js/AngularJSApp/AutoClaveA/Module.js" asp-append-version="true"></script>
+    <script src="~/js/AngularJSApp/AutoClaveA/Controller.js" asp-append-version="true"></script>
+    <script src="~/js/AngularJSApp/AutoClaveA/Service.js" asp-append-version="true"></script>
 
 
 

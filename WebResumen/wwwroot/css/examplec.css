@@ -1,14 +1,69 @@
-﻿.dtHorizontalVerticalExampleWrapper {
+﻿.fullscreen-spinner {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100000;
+    background: #FFFFFF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+table, th, td {
+    border: 1px solid grey;
+    border-collapse: collapse;
+    padding: 5px;
+}
+
+    table tr:nth-child(odd) {
+        background-color: #f1f1f1;
+    }
+
+    table tr:nth-child(even) {
+        background-color: #ffffff;
+    }
+
+
+
+
+    /*
+.wrap {
+    width: 352px;
+}
+
+    .wrap table {
+        width: 300px;
+        table-layout: fixed;
+    }
+
+table tr td {
+    padding: 5px;
+    border: 1px solid #eee;
+    width: 100px;
+    word-wrap: break-word;
+}
+
+table.head tr td {
+    background: #eee;
+}
+
+.inner_table {
+    height: 100px;
+    overflow-y: auto;
+}*/
+    /*.dtHorizontalVerticalExampleWrapper {
     max-width: 500px;
     margin: 0 auto;
 }
 
 #dtHorizontalVerticalExample th, td {
-    white-space: nowrap;
-
-}
-
-/*table.dataTable thead .sorting:after,
+    max-height: 300px;
+}*/
+    /*table.dataTable thead .sorting:after,
 table.dataTable thead .sorting:before,
 table.dataTable thead .sorting_asc:after,
 table.dataTable thead .sorting_asc:before,

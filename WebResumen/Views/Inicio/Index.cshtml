@@ -2,7 +2,7 @@
 
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Ciclos AutoClaves";
 }
 
 @{
@@ -13,66 +13,13 @@
 <div class="text-center">
     <h1 class="">Autoclaves Baxter</h1>
 
-    @*<p> <a href="">Ciclos de Esterilización Completada</a>.</p>*@
+   
 </div>
 
 
 
-<style>
-    .fullscreen-spinner {
-        width: 100vw;
-        height: 100vh;
-        position: fixed;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        z-index: 100000;
-        background: #FFFFFF;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    table, th, td {
-        border: 1px solid grey;
-        border-collapse: collapse;
-        padding: 5px;
-    }
-
-        table tr:nth-child(odd) {
-            background-color: #f1f1f1;
-        }
-
-        table tr:nth-child(even) {
-            background-color: #ffffff;
-        }
-
-    /*.left {
-        display: inline-block;
-    }
-
-    .right {
-        display: inline*/ -block;
-    }
-    /*    .sky {
-        background-image: url(https://i.ibb.co/cgQC1bW/Autoclave.jpg);
-        height: 355px;
-        width: auto;
-    }
-
-    .tomato {
-        background-image: linear-gradient( rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5) ), url(https://i.ibb.co/cgQC1bW/Autoclave.jpg);
-        height: 355px;
-        width: auto;
-    }*/
-
-</style>
 
 
-
-
-@*<div id="load" class="spinner-border text-primary" role="status" ng-show="loading"></div>*@
 <div class="fullscreen-spinner" ng-show="loading">
     <img src="~/img/spinner.gif" alt="spinner logo" />
 </div>

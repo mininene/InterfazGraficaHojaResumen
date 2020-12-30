@@ -1,6 +1,6 @@
 ﻿(function (angular) {
     'use strict';
-    angular.module('datatablesVaporApp', ['datatables', 'datatables.buttons']).
+    angular.module('datatablesVaporApp', ['datatables', 'datatables.buttons', 'datatables.colvis']).
         controller('vaporCtrl', function ($scope, $http, $q, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder, DTDefaultOptions) {
             DTDefaultOptions.setLoadingTemplate('<div class="spinner-border text-primary" role="status"></div >' +'  ' + '<span class="sr - only">Cargando...</span>') //spinner carga
 
@@ -16,6 +16,13 @@
 
                    
                 })
+
+                // Active ColVis plugin
+                .withColVis()
+                // Add a state change function
+                .withColVisStateChange(stateChange)
+
+
                 .withLanguage({
                     "sEmptyTable": "Ningún dato disponible en esta tabla",
                     "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
@@ -51,17 +58,26 @@
 
                         extend: 'excel',
                         text: '<i class="fa fa-file-text-o"></i> Excel',
-                        titleAttr: 'Excel'
+                        titleAttr: 'Excel',
+                        exportOptions: {
+                            columns: ':visible'
+                        },
                     },
-                    //{
-                    //    extend: 'print',
-                    //    text: '<i class="fa fa-print" aria-hidden="true"></i> Print',
-                    //    titleAttr: 'Print'
-                    //},
+                    {
+                        extend: 'print',
+                        text: '<i class="fa fa-print" aria-hidden="true"></i> Print',
+                        titleAttr: 'Print',
+                        exportOptions: {
+                            columns: ':visible'
+                        },
+                    },
                     {
                         extend: 'copy',
                         text: '<i class="fa fa-files-o"></i> Copy',
-                        titleAttr: 'Copy'
+                        titleAttr: 'Copy',
+                        exportOptions: {
+                            columns: ':visible'
+                        },
 
                     }
                 ]
@@ -170,7 +186,9 @@
                 }),
                 DTColumnBuilder.newColumn('difMaxMin').withTitle('FoMax-FoMin'),
             ]
-
+            function stateChange(iColumn, bVisible) {
+                console.log('The column', iColumn, ' has changed its status to', bVisible);
+            }
 
 
 

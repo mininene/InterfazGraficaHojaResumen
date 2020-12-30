@@ -1,6 +1,6 @@
 ﻿(function (angular) {
     'use strict';
-    angular.module('datatablesAguaApp', ['datatables', 'datatables.buttons']).
+    angular.module('datatablesAguaApp', ['datatables', 'datatables.buttons', 'datatables.colvis']).
         controller('aguaCtrl', function ($scope, $http, $q, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder, DTDefaultOptions, $filter) {
             DTDefaultOptions.setLoadingTemplate('<div class="spinner-border text-primary" role="status"></div >' + '  ' + '<span class="sr - only">Cargando...</span>') //spinner carga
 
@@ -25,6 +25,11 @@
 
                 })
                 //.withOption('searching', false)
+
+                // Active ColVis plugin
+                .withColVis()
+                // Add a state change function
+                .withColVisStateChange(stateChange)
     
               
                 .withLanguage({
@@ -57,17 +62,26 @@
                         
                         extend: 'excel',
                         text: '<i class="fa fa-file-text-o"></i> Excel',
-                        titleAttr: 'Excel'
+                        titleAttr: 'Excel',
+                        exportOptions: {
+                            columns: ':visible'
+                        },
                     },
-                    //{
-                    //    extend: 'print',
-                    //    text: '<i class="fa fa-print" aria-hidden="true"></i> Print',
-                    //    titleAttr: 'Print'
-                    //},
+                    {
+                        extend: 'print',
+                        text: '<i class="fa fa-print" aria-hidden="true"></i> Print',
+                        titleAttr: 'Print',
+                        exportOptions: {
+                            columns: ':visible'
+                        },
+                    },
                     {
                         extend: 'copy',
                         text: '<i class="fa fa-files-o"></i> Copy',
-                        titleAttr: 'Copy'
+                        titleAttr: 'Copy',
+                        exportOptions: {
+                            columns: ':visible'
+                        },
                         
                     },
                      
@@ -186,6 +200,10 @@
                 }),
                 DTColumnBuilder.newColumn('difMaxMin').withTitle('FoMax-FoMin'),
             ]
+
+            function stateChange(iColumn, bVisible) {
+                console.log('The column', iColumn, ' has changed its status to', bVisible);
+            }
 
             $scope.dtInstance = {};
             $scope.dtInstance1 = {};

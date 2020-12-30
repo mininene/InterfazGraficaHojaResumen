@@ -41,17 +41,13 @@
            ng-model="searchText"
            ng-change="searchTable()" />*@
 
-    <table id="example" datatable class="cell-border thead-dark table table-striped table-bordered "
+    <table id="example" datatable class=" table table-striped table-bordered table-sm"
            dt-options="dtOptions"
            dt-columns="dtColumns"
            dt-instance="dtInstance">
-        <tfoot>
-            <tr>
-                <th>id</th>
-                <th>N.Carro</th>
-                <th>N.Progresivo</th>
-            </tr>
-        </tfoot>
+        <thead class="thead-dark">
+        </thead>
+
     </table>
 
 
