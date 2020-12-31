@@ -8,8 +8,9 @@
     Layout = "~/Views/Shared/_LayoutLogin.cshtml";
 }
 
-
-
+<h1>
+    @ViewBag.fail
+</h1>
 
 <div class="container justify-content-center mt-5">
     <h5 class="justify-content-center">Login de Usuario</h5>
@@ -44,4 +45,8 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
 

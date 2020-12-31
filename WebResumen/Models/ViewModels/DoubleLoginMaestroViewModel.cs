@@ -17,6 +17,7 @@ namespace WebResumen.Models.ViewModels
         [DataType(DataType.Password)]
         public string Contraseña { get; set; }
 
+        [Required(ErrorMessage = "Motivo es requerido")]
         [StringLength(30, ErrorMessage = "Debe tener entre 5 y 30 caracteres", MinimumLength = 5)]
         public string Comentario { get; set; }
 

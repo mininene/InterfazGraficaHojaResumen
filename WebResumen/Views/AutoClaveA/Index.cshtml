@@ -15,16 +15,23 @@
     </div>
 
     @*<div class="alert alert-warning alert-dismissable" role="alert" ng-if="send"
-         dismiss-on-timeout="1000">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        El archivo ha sido enviado a la impresora!
-    </div>
-    <div class="alert alert-success alert-dismissable" role="alert" ng-if="received">
-        <button type="button" dismiss-on-timeout='1000' class="close" data-dismiss="alert">&times;</button>
-        El archivo ha sido impreso!
-    </div>*@
+             dismiss-on-timeout="1000">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            El archivo ha sido enviado a la impresora!
+        </div>
+        <div class="alert alert-success alert-dismissable" role="alert" ng-if="received">
+            <button type="button" dismiss-on-timeout='1000' class="close" data-dismiss="alert">&times;</button>
+            El archivo ha sido impreso!
+        </div>*@
+<!--<div>
 
-  
+    Programa : <input ng-model="programa" /><br /><br />
+     NªCiclo : <input ng-model="numeroCiclo" /><br /><br />-->
+    @*<input type="button" value="Send" ng-click="postdata(programa, numeroCiclo)" /> <br /><br />*@
+    <!--<button href="#" type="button" value="Send" ng-click="postdata(programa, numeroCiclo)" class="btn btn-success ">Buscar</button>
+
+</div>-->
+
 
 
     <!-- Modal -->
@@ -55,42 +62,42 @@
 
     <label>Buscar por N.Ciclo <input ng-model="search.numeroCiclo"></label>    <label>Buscar por N.Progama <input ng-model="search.programa"></label>
 
-
-    <table class="table table-bordered ">
-        <thead style="background-color:lightblue;">
-            <tr>
-                <th> N.Programa</th>
-                <th> N.Ciclo</th>
-                <th>Hora Inicio</th>
-                <th>Hora Fin</th>
-                <th>Acciones</th>
-
-
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="emp in Autoclaves | filter:search">
-
-                <td> {{emp.numeroCiclo}}</td>
-                <td> {{emp.programa}}</td>
-                <td>{{emp.horaInicio}}</td>
-                <td>{{emp.horaFin}}</td>
+    <div class="mt-4" style="height: 500px; overflow: auto;">
+        <table class="table table-responsive-sm ">
+            <thead class="thead-dark">
+                <tr>
+                    <th> N.Programa</th>
+                    <th> N.Ciclo</th>
+                    <th>Hora Inicio</th>
+                    <th>Hora Fin</th>
+                    <th>Acciones</th>
 
 
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="emp in Autoclaves | filter:search">
 
-                <td style="width:200px;">
-
-                    <button href="#" type="button" data-toggle="modal" data-target="#exampleModal" value="submit" class="btn btn-info" ng-click="vistaPrevia(emp.id)">Ver</button>
-                    <button href="#" type="button" value="submit" class="btn btn-success" ng-click="login(emp.id)">Imprimir</button> |
-                    @*<button href="#" type="button" value="submit" class="btn btn-success" ng-click="imprimir(emp.id)">Imprimir</button> |*@
-                   
+                    <td> {{emp.numeroCiclo}}</td>
+                    <td> {{emp.programa}}</td>
+                    <td>{{emp.horaInicio}}</td>
+                    <td>{{emp.horaFin}}</td>
 
 
-                </td>
-            </tr>
-        </tbody>
-    </table>
 
+                    <td>
+
+                        <button href="#" type="button" data-toggle="modal" data-target="#exampleModal" value="submit" class="btn btn-info " ng-click="vistaPrevia(emp.id)">Ver</button>
+                        <button href="#" type="button" value="submit" class="btn btn-success " ng-click="login(emp.id)">Imprimir</button>
+                        @*<button href="#" type="button" value="submit" class="btn btn-success" ng-click="imprimir(emp.id)">Imprimir</button> |*@
+
+
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </body>
 
 

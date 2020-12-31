@@ -75,14 +75,72 @@ namespace WebResumen.Controllers
                 return View(query);
         }
 
+
+
         public async Task<JsonResult> ListAutoclaveA()
         {
-            //var result=  await _context.CiclosAutoclaves.OrderByDescending(x => x.Id).ToListAsync();
-            //return View(await _context.CiclosAutoclaves.OrderByDescending(x=>x.Id).ToListAsync());
+
             List<CiclosAutoclaves> _sabiUno = await _context.CiclosAutoclaves.ToListAsync();
             var query = from x in _sabiUno.Where(x => x.IdAutoclave == "NF8387A").OrderByDescending(X => X.Id).Take(50) select x;
 
 
+            return Json(query.ToList());
+
+
+
+
+        }
+
+
+        public class PostModel
+        {
+            public string nCiclo { get; set; }
+            public string nPrograma { get; set; }
+            public string fecha { get; set; }
+        }
+
+
+        [HttpPost]
+      
+        public async Task<JsonResult> ListAutoclaveA([FromBody]  PostModel model)
+        {
+            //var result=  await _context.CiclosAutoclaves.OrderByDescending(x => x.Id).ToListAsync();
+            //return View(await _context.CiclosAutoclaves.OrderByDescending(x=>x.Id).ToListAsync());
+            //List<CiclosAutoclaves> _sabiUno = await _context.CiclosAutoclaves.ToListAsync();
+            //var query = from x in _sabiUno.Where(x => x.IdAutoclave == "NF8387A").OrderByDescending(X => X.Id).Take(50) select x;
+            string vb = model.nCiclo;
+            string hf = model.nPrograma;
+
+            //return Json( query.ToList());
+            List<ViewModelAutoClaveJ> _autoJ = new List<ViewModelAutoClaveJ>();
+            List<CiclosAutoclaves> _sabiUno = await _context.CiclosAutoclaves.ToListAsync();
+            var query = from x in _sabiUno.Where(x => x.IdAutoclave == "NF8387A").OrderByDescending(X => X.Id).Take(50) select x;
+
+            if (!String.IsNullOrEmpty(model.nCiclo))
+            {
+                query = query.Where(x => x.NumeroCiclo.Contains(model.nCiclo));
+
+            }
+
+            if (!String.IsNullOrEmpty(model.nPrograma))
+            {
+                query = query.Where(x => x.Programa.Contains(model.nPrograma));
+            }
+
+
+
+            if (!String.IsNullOrEmpty(model.fecha))
+            {
+                query = query.Where(x => x.HoraFin.Contains(model.fecha));
+
+            }
+
+            if (!String.IsNullOrEmpty(model.nCiclo) && !String.IsNullOrEmpty(model.nPrograma) && !String.IsNullOrEmpty(model.fecha))
+            {
+                query = query.Where(x => x.NumeroCiclo.Contains(model.nCiclo)
+                                       || x.Programa.Contains(model.nPrograma)
+                                         || x.HoraFin.Contains(model.fecha));  // si pongo la fecha como string si que lo coge
+            }
             return Json( query.ToList());
 
 

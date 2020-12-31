@@ -42,6 +42,7 @@ namespace WebResumen.Services.PrinterService
 
 
             _pr.PrinterSettings.PrinterName = @"\\essafileprint01\#ADMICOLOR (ESSAFILEPRINT01)";
+            //_pr.PrinterSettings.PrinterName = "PDFCreator";
             _pr.PrintController = _controller;
             _pr.Print(); //start the print
             _pr.Dispose();

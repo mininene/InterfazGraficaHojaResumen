@@ -42,6 +42,7 @@ namespace WebResumen.Services.PrinterService
 
 
             _pr.PrinterSettings.PrinterName = @"\\essafileprint01\#ADMICOPY (ESSAFILEPRINT01)";
+            //_pr.PrinterSettings.PrinterName = "PDFCreator";
             _pr.PrintController = _controller;
             _pr.Print(); //start the print
             _pr.Dispose();
@@ -142,8 +143,8 @@ namespace WebResumen.Services.PrinterService
                 graph.DrawString("<--[  ]", _negrita, _solid, new RectangleF(495, 425, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
                 graph.DrawString("TIEMPO TP  TE2  TE3  TE4  TE9 TE10", _font, _solid, new RectangleF(20, 445, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
                 graph.DrawString(q.Tif7.Substring(0, 6), _font, _solid, new RectangleF(300, 445, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
-                graph.DrawString(q.Tif7.Substring(6, 6), _negrita, _solid, new RectangleF(345, 445, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
-                graph.DrawString(q.Tif7.Substring(12), _font, _solid, new RectangleF(395, 445, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
+                graph.DrawString(q.Tif7.Substring(6, 6).Trim(), _negrita, _solid, new RectangleF(345, 445, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
+                graph.DrawString(q.Tif7.Substring(12), _font, _solid, new RectangleF(370, 445, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
                 graph.DrawString(q.TisubF7, _font, _solid, new RectangleF(600, 445, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
 
 

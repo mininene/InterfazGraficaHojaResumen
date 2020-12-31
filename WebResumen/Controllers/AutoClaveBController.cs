@@ -247,25 +247,30 @@ namespace WebResumen.Controllers
                             {
                                 using (var searcher = new DirectorySearcher(new DirectoryEntry(path)))
                                 {
-                                    string fullName = string.Empty;
-                                    DirectoryEntry de = (user.GetUnderlyingObject() as DirectoryEntry);
-                                    if (de != null)
-                                    { fullName = de.Properties["displayName"][0].ToString(); }
+                                    if (model.Usuario!="" && model.Contraseña!="" && model.Comentario!="")
+                                    {
+                                        string fullName = string.Empty;
+                                        DirectoryEntry de = (user.GetUnderlyingObject() as DirectoryEntry);
+                                        if (de != null)
+                                        { fullName = de.Properties["displayName"][0].ToString(); }
 
-                                    HttpContext.Session.SetString("SessionPassB", model.Contraseña);
-                                    HttpContext.Session.SetString("SessionNameB", model.Usuario);
-                                    HttpContext.Session.SetString("SessionComentarioB", model.Comentario);
-                                    HttpContext.Session.SetString("SessionDatosB", model.Dato);
-                                    HttpContext.Session.SetString("SessionTiempoB", DateTime.Now.ToString("HH:mm:ss"));
-                                    string EventoB = "Re-Impresión";
-                                    _log.Write(fullName, DateTime.Now, EventoB, model.Comentario);
-                                    return View("Print");
+                                        HttpContext.Session.SetString("SessionPassB", model.Contraseña);
+                                        HttpContext.Session.SetString("SessionNameB", model.Usuario);
+                                        HttpContext.Session.SetString("SessionComentarioB", model.Comentario);
+                                        HttpContext.Session.SetString("SessionDatosB", model.Dato);
+                                        HttpContext.Session.SetString("SessionTiempoB", DateTime.Now.ToString("HH:mm:ss"));
+                                        string EventoB = "Re-Impresión";
+                                        _log.Write(fullName, DateTime.Now, EventoB, model.Comentario);
+                                        return View("Print");
+                                    }
                                 }
 
                             }
                             else
                             {
-                                return RedirectToAction("Logout", "Home");
+                                //return RedirectToAction("Logout", "Home");
+                                ViewBag.fail = "Autenticación Fallida";
+                                return View();
 
                             }
                         }

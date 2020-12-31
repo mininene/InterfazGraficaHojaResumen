@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.DirectoryServices;
+using System.DirectoryServices.AccountManagement;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebResumen.Models;
+using WebResumen.Services.LogRecord;
 using WebResumen.Services.PrinterService;
+using WebResumen.Models.ViewModels;
 
 namespace WebResumen.Controllers
 {
@@ -19,11 +24,13 @@ namespace WebResumen.Controllers
     {
         private readonly AppDbContext _context;
         private readonly IPrinterNueveDiez _printerNueveDiez;
+        private readonly ILogRecord _log;
 
-        public AutoClaveJController(AppDbContext context, IPrinterNueveDiez printerNueveDiez)
+        public AutoClaveJController(AppDbContext context, IPrinterNueveDiez printerNueveDiez, ILogRecord log)
         {
             _context = context;
             _printerNueveDiez = printerNueveDiez;
+            _log = log;
         }
 
         // GET: AutoClaveJJ
@@ -112,8 +119,8 @@ namespace WebResumen.Controllers
                 return NotFound();
             }
 
-
-            return View(ciclosAutoclaves);
+            return RedirectToAction("Index", "AutoClaveJ");
+            //return View(ciclosAutoclaves);
         }
 
         public async Task<IActionResult> Preview(int? id)
@@ -144,6 +151,101 @@ namespace WebResumen.Controllers
             return View(ciclosAutoclaves);
 
         }
+
+
+        ///////////////////////////////////////////////////////////////
+        [HttpGet]
+        public async Task<IActionResult> Login(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var ciclosAutoclaves = await _context.CiclosSabiDos
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+
+            if (ciclosAutoclaves == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.datos = ciclosAutoclaves.Id;
+
+
+
+            return View("Login");
+
+        }
+        ///////////////////////////////////////////////////////////////
+        [HttpPost]
+        public IActionResult Login(DoubleLoginViewModel model, int? id)
+        {
+            var ciclosAutoclaves = _context.CiclosSabiDos
+               .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (ModelState.IsValid)
+            {
+
+                string dominio = @"global.baxter.com";
+                string path = @"LDAP://global.baxter.com";
+                using (PrincipalContext ctx = new PrincipalContext(ContextType.Domain, dominio, model.Usuario, model.Contraseña))
+                {
+
+
+                    try
+                    {
+                        UserPrincipal user = UserPrincipal.FindByIdentity(ctx, model.Usuario);
+
+                        GroupPrincipal groupAdmins = GroupPrincipal.FindByIdentity(ctx, "GLOBAL\\ESSA-HojaResumen_Admins");
+                        GroupPrincipal groupSupervisors = GroupPrincipal.FindByIdentity(ctx, "GLOBAL\\ESSA-HojaResumen_Supervisors");
+                        GroupPrincipal groupUsers = GroupPrincipal.FindByIdentity(ctx, "GLOBAL\\ESSA-HojaResumen_Users");
+
+                        if (user != null)
+                        {
+                            if (user.IsMemberOf(groupAdmins) || user.IsMemberOf(groupSupervisors) || user.IsMemberOf(groupUsers))
+                            {
+                                using (var searcher = new DirectorySearcher(new DirectoryEntry(path)))
+                                {
+                                    string fullName = string.Empty;
+                                    DirectoryEntry de = (user.GetUnderlyingObject() as DirectoryEntry);
+                                    if (de != null)
+                                    { fullName = de.Properties["displayName"][0].ToString(); }
+
+                                    HttpContext.Session.SetString("SessionPassJ", model.Contraseña);
+                                    HttpContext.Session.SetString("SessionNameJ", model.Usuario);
+                                    HttpContext.Session.SetString("SessionComentarioJ", model.Comentario);
+                                    HttpContext.Session.SetString("SessionDatosJ", model.Dato);
+                                    HttpContext.Session.SetString("SessionTiempoJ", DateTime.Now.ToString("HH:mm:ss"));
+                                    string EventoJ = "Re-Impresión";
+                                    _log.Write(fullName, DateTime.Now, EventoJ, model.Comentario);
+                                    return View("Print");
+                                }
+
+                            }
+                            else
+                            {
+                                return RedirectToAction("Logout", "Home");
+
+                            }
+                        }
+
+
+                    }
+                    catch
+                    { return RedirectToAction("Logout", "Home"); }
+                }
+            }
+
+            ViewBag.fail = "Autenticación Fallida";
+            return View();
+
+
+        }
+
+
+        /////////////////////////////////////////////////////
 
 
 

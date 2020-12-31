@@ -40,7 +40,7 @@
                     <input asp-for="Nombre" class="form-control" value="@ViewBag.maestro.Nombre" type="hidden" />
                     <input asp-for="Version" class="form-control" value="@ViewBag.maestro.Version" type="hidden" />
                     <input asp-for="Ip" class="form-control" value="@ViewBag.maestro.Ip" type="hidden" />
-                     <input asp-for="Seccion" class="form-control" value="@ViewBag.maestro.Seccion" type="hidden" />
+                    <input asp-for="Seccion" class="form-control" value="@ViewBag.maestro.Seccion" type="hidden" />
                     <input asp-for="Estado" class="form-control" value="@ViewBag.maestro.Estado" type="hidden" />
                     <input asp-for="UltimoCiclo" class="form-control" value="@ViewBag.maestro.UltimoCiclo" type="hidden" />
                     <input asp-for="RutaSalida" class="form-control" value="@ViewBag.maestro.RutaSalida" type="hidden" />
@@ -55,3 +55,6 @@
     </div>
 </div>
 
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

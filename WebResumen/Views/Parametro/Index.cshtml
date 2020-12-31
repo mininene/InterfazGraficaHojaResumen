@@ -9,56 +9,59 @@
 @*<p>
     <a asp-action="Create">Create New</a>
 </p>*@
-<table class="table table-sm">
-    <thead class="thead-dark">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ImpresoraSabiUno)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ImpresoraSabiDos)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RutaLog)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Tiempo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Reinicio)
-            </th>
-            <th>
-                Acciones
-            </th>
-            
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ImpresoraSabiUno)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ImpresoraSabiDos)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RutaLog)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Tiempo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Reinicio)
-            </td>
-            <td>
-                @*<a class="btn btn-success btn-sm text-white" asp-action="Edit" asp-route-id="@item.Id">Editar</a>*@
-                <a type="button" class="btn btn-success btn-sm" asp-action="Login" asp-route-id="@item.Id">Edit</a>
-                @*<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="mt-4">
+    <table class="table table-sm">
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ImpresoraSabiUno)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ImpresoraSabiDos)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RutaLog)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Tiempo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Reinicio)
+                </th>
+                <th>
+                    Acciones
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ImpresoraSabiUno)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ImpresoraSabiDos)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RutaLog)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Tiempo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Reinicio)
+                    </td>
+                    <td>
+                        @*<a class="btn btn-success btn-sm text-white" asp-action="Edit" asp-route-id="@item.Id">Editar</a>*@
+                        <a type="button" class="btn btn-success btn-sm" asp-action="Login" asp-route-id="@item.Id">Edit</a>
+                        @*<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    </div>
