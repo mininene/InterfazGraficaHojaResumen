@@ -24,6 +24,7 @@ namespace WebResumen.Controllers
         private readonly IPrinterOchoVeinte _printerOchoVeinte;
         private readonly IPrinterDosTresCuatro _printerDosTresCuatro;
         private readonly ILogRecord _log;
+       
         public AutoClaveFController(AppDbContext context, IPrinterOchoVeinte printerOchoVeinte, IPrinterDosTresCuatro printerDosTresCuatro, ILogRecord log)
         {
             _context = context;
@@ -177,7 +178,8 @@ namespace WebResumen.Controllers
                 return NotFound();
             }
 
-            ViewBag.datos = ciclosAutoclaves.Id;
+            HttpContext.Session.SetString("SessionDatosF", ciclosAutoclaves.Id.ToString());
+            //ViewBag.datos = ciclosAutoclaves.Id;
 
 
 
@@ -222,7 +224,7 @@ namespace WebResumen.Controllers
                                     HttpContext.Session.SetString("SessionPassF", model.Contraseña);
                                     HttpContext.Session.SetString("SessionNameF", model.Usuario);
                                     HttpContext.Session.SetString("SessionComentarioF", model.Comentario);
-                                    HttpContext.Session.SetString("SessionDatosF", model.Dato);
+                                    //HttpContext.Session.SetString("SessionDatosF", model.Dato);
                                     HttpContext.Session.SetString("SessionTiempoF", DateTime.Now.ToString("HH:mm:ss"));
                                     string EventoF = "Re-Impresión";
                                     _log.Write(fullName, DateTime.Now, EventoF, model.Comentario);
@@ -240,11 +242,14 @@ namespace WebResumen.Controllers
 
                     }
                     catch
-                    { return RedirectToAction("Logout", "Home"); }
+                    {
+                        TempData["Fail"] = "Login Fallido. Usuario o Contraseña Incorrecta";
+                        return View("Login");
+                    }
                 }
             }
 
-            ViewBag.fail = "Autenticación Fallida";
+          
             return View();
 
 

@@ -25,6 +25,7 @@ namespace WebResumen.Controllers
         private readonly IPrinterDosTresCuatro _printerDosTresCuatro;
         private readonly ILogRecord _log;
 
+
         public AutoClaveCController(AppDbContext context, IPrinterOchoVeinte printerOchoVeinte, IPrinterDosTresCuatro printerDosTresCuatro, ILogRecord log)
         {
             _context = context;
@@ -180,8 +181,8 @@ namespace WebResumen.Controllers
             {
                 return NotFound();
             }
-
-            ViewBag.datos = ciclosAutoclaves.Id;
+            HttpContext.Session.SetString("SessionDatosC", ciclosAutoclaves.Id.ToString());
+           // ViewBag.datos = ciclosAutoclaves.Id;
 
 
 
@@ -226,7 +227,7 @@ namespace WebResumen.Controllers
                                     HttpContext.Session.SetString("SessionPassC", model.Contraseña);
                                     HttpContext.Session.SetString("SessionNameC", model.Usuario);
                                     HttpContext.Session.SetString("SessionComentarioC", model.Comentario);
-                                    HttpContext.Session.SetString("SessionDatosC", model.Dato);
+                                    //HttpContext.Session.SetString("SessionDatosC", model.Dato);
                                     HttpContext.Session.SetString("SessionTiempoC", DateTime.Now.ToString("HH:mm:ss"));
                                     string EventoC = "Re-Impresión";
                                     _log.Write(fullName, DateTime.Now, EventoC, model.Comentario);
@@ -244,11 +245,14 @@ namespace WebResumen.Controllers
 
                     }
                     catch
-                    { return RedirectToAction("Logout", "Home"); }
+                    {
+                        TempData["Fail"] = "Login Fallido. Usuario o Contraseña Incorrecta";
+                        return View("Login");
+                    }
                 }
             }
 
-            ViewBag.fail = "Autenticación Fallida";
+           
             return View();
 
 

@@ -180,7 +180,16 @@ namespace WebResumen.Controllers
                 return NotFound();
             }
 
-            ViewBag.maestro = maestroAutoclave;
+            HttpContext.Session.SetString("SessionDatosM", maestroAutoclave.Id.ToString());
+            HttpContext.Session.SetString("SessionMatriculaM", maestroAutoclave.Matricula.ToString());
+            HttpContext.Session.SetString("SessionNombreM", maestroAutoclave.Nombre.ToString());
+            HttpContext.Session.SetString("SessionVersionM", maestroAutoclave.Version.ToString());
+            HttpContext.Session.SetString("SessionIpM", maestroAutoclave.Ip.ToString());
+            HttpContext.Session.SetString("SessionSeccionM", maestroAutoclave.Seccion.ToString());
+            HttpContext.Session.SetString("SessionEstadoM", maestroAutoclave.Estado.ToString());
+            HttpContext.Session.SetString("SessionUltimoCicloM", maestroAutoclave.UltimoCiclo.ToString());
+            HttpContext.Session.SetString("SessionRutaSalidaM", maestroAutoclave.RutaSalida.ToString());
+            HttpContext.Session.SetString("SessionRutaSalidaPDFM", maestroAutoclave.RutaSalidaPdf.ToString());
 
 
 
@@ -227,16 +236,16 @@ namespace WebResumen.Controllers
                                     HttpContext.Session.SetString("SessionNameM", model.Usuario);
                                     HttpContext.Session.SetString("SessionComentario", model.Comentario);
 
-                                    HttpContext.Session.SetString("SessionDatosM", model.Id);
-                                    HttpContext.Session.SetString("SessionMatriculaM", model.Matricula);
-                                    HttpContext.Session.SetString("SessionNombreM", model.Nombre);
-                                    HttpContext.Session.SetString("SessionVersionM", model.Version);
-                                    HttpContext.Session.SetString("SessionIpM", model.Ip);
-                                    HttpContext.Session.SetString("SessionSeccionM", model.Seccion);
-                                    HttpContext.Session.SetString("SessionEstadoM", model.Estado.ToString());
-                                    HttpContext.Session.SetString("SessionUltimoCicloM", model.UltimoCiclo);
-                                    HttpContext.Session.SetString("SessionRutaSalidaM", model.RutaSalida);
-                                    HttpContext.Session.SetString("SessionRutaSalidaPDFM", model.RutaSalidaPDF);
+                                    //HttpContext.Session.SetString("SessionDatosM", model.Id);
+                                    //HttpContext.Session.SetString("SessionMatriculaM", model.Matricula);
+                                    //HttpContext.Session.SetString("SessionNombreM", model.Nombre);
+                                    //HttpContext.Session.SetString("SessionVersionM", model.Version);
+                                    //HttpContext.Session.SetString("SessionIpM", model.Ip);
+                                    //HttpContext.Session.SetString("SessionSeccionM", model.Seccion);
+                                    //HttpContext.Session.SetString("SessionEstadoM", model.Estado.ToString());
+                                    //HttpContext.Session.SetString("SessionUltimoCicloM", model.UltimoCiclo);
+                                    //HttpContext.Session.SetString("SessionRutaSalidaM", model.RutaSalida);
+                                    //HttpContext.Session.SetString("SessionRutaSalidaPDFM", model.RutaSalidaPDF);
 
                                     HttpContext.Session.SetString("SessionTiempoP", DateTime.Now.ToString("HH:mm:ss"));
                                     return View("Edit");
@@ -254,11 +263,14 @@ namespace WebResumen.Controllers
 
                     }
                     catch
-                    { return RedirectToAction("Logout", "Home"); }
+                    {
+                        TempData["Fail"] = "Login Fallido. Usuario o Contraseña Incorrecta";
+                        return View("Login");
+                    }
                 }
             }
 
-            ViewBag.fail = "Autenticación Fallida";
+         
             return View();
 
 

@@ -178,7 +178,15 @@ namespace WebResumen.Controllers
                 return NotFound();
             }
 
-            ViewBag.datos = parametros;
+            HttpContext.Session.SetString("SessionDatosP", parametros.Id.ToString());
+            HttpContext.Session.SetString("SessionImpresoraSabiUno", parametros.ImpresoraSabiUno.ToString());
+            HttpContext.Session.SetString("SessionImpresoraSabiDos", parametros.ImpresoraSabiDos.ToString());
+            HttpContext.Session.SetString("SessionRutaLog", parametros.RutaLog.ToString());
+            HttpContext.Session.SetInt32("Tiempo", parametros.Tiempo);
+            HttpContext.Session.SetString("Reinicio", parametros.Reinicio.ToString());
+
+            @ViewBag.datos = parametros;
+
 
 
 
@@ -225,12 +233,12 @@ namespace WebResumen.Controllers
                                     HttpContext.Session.SetString("SessionNameP", model.Usuario);
                                     HttpContext.Session.SetString("SessionComentario", model.Comentario);
 
-                                    HttpContext.Session.SetString("SessionDatosP", model.Id);
-                                    HttpContext.Session.SetString("SessionImpresoraSabiUno", model.ImpresoraSabiUno);
-                                    HttpContext.Session.SetString("SessionImpresoraSabiDos", model.ImpresoraSabiDos);
-                                    HttpContext.Session.SetString("SessionRutaLog", model.RutaLog);
-                                    HttpContext.Session.SetInt32("Tiempo", model.Tiempo);
-                                    HttpContext.Session.SetString("Reinicio", model.Reinicio.ToString());
+                                    //HttpContext.Session.SetString("SessionDatosP", model.Id);
+                                    //HttpContext.Session.SetString("SessionImpresoraSabiUno", model.ImpresoraSabiUno);
+                                    //HttpContext.Session.SetString("SessionImpresoraSabiDos", model.ImpresoraSabiDos);
+                                    //HttpContext.Session.SetString("SessionRutaLog", model.RutaLog);
+                                    //HttpContext.Session.SetInt32("Tiempo", model.Tiempo);
+                                    //HttpContext.Session.SetString("Reinicio", model.Reinicio.ToString());
 
                                     HttpContext.Session.SetString("SessionTiempoP", DateTime.Now.ToString("HH:mm:ss"));
                                     return View("Edit");
@@ -248,7 +256,10 @@ namespace WebResumen.Controllers
 
                     }
                     catch
-                    { return RedirectToAction("Logout", "Home"); }
+                    {
+                        TempData["Fail"] = "Login Fallido. Usuario o Contraseña Incorrecta";
+                        return View("Login");
+                    }
                 }
             }
 

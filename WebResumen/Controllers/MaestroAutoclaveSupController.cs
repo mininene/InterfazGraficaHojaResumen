@@ -179,9 +179,18 @@ namespace WebResumen.Controllers
             {
                 return NotFound();
             }
+          
+            HttpContext.Session.SetString("SessionDatosMS", maestroAutoclave.Id.ToString());
+            HttpContext.Session.SetString("SessionMatriculaMS", maestroAutoclave.Matricula.ToString());
+            HttpContext.Session.SetString("SessionNombreMS", maestroAutoclave.Nombre.ToString());
+            HttpContext.Session.SetString("SessionVersionMS", maestroAutoclave.Version.ToString());
+            HttpContext.Session.SetString("SessionIpMS", maestroAutoclave.Ip.ToString());
+            HttpContext.Session.SetString("SessionSeccionMS", maestroAutoclave.Seccion.ToString());
+            HttpContext.Session.SetString("SessionEstadoMS", maestroAutoclave.Estado.ToString());
+            HttpContext.Session.SetString("SessionUltimoCicloMS", maestroAutoclave.UltimoCiclo.ToString());
+            HttpContext.Session.SetString("SessionRutaSalidaMS", maestroAutoclave.RutaSalida.ToString());
+            HttpContext.Session.SetString("SessionRutaSalidaPDFMS", maestroAutoclave.RutaSalidaPdf.ToString());
 
-            ViewBag.maestro = maestroAutoclave;
-           
 
 
             return View("Login");
@@ -227,16 +236,16 @@ namespace WebResumen.Controllers
                                     HttpContext.Session.SetString("SessionNameMS", model.Usuario);
                                     HttpContext.Session.SetString("SessionComentario", model.Comentario);
 
-                                    HttpContext.Session.SetString("SessionDatosMS", model.Id);
-                                    HttpContext.Session.SetString("SessionMatriculaMS", model.Matricula);
-                                    HttpContext.Session.SetString("SessionNombreMS", model.Nombre);
-                                    HttpContext.Session.SetString("SessionVersionMS", model.Version);
-                                    HttpContext.Session.SetString("SessionIpMS", model.Ip);
-                                    HttpContext.Session.SetString("SessionSeccionMS", model.Seccion);
-                                    HttpContext.Session.SetString("SessionEstadoMS", model.Estado.ToString());
-                                    HttpContext.Session.SetString("SessionUltimoCicloMS", model.UltimoCiclo);
-                                    HttpContext.Session.SetString("SessionRutaSalidaMS", model.RutaSalida);
-                                    HttpContext.Session.SetString("SessionRutaSalidaPDFMS", model.RutaSalidaPDF);
+                                    //HttpContext.Session.SetString("SessionDatosMS", model.Id);
+                                    //HttpContext.Session.SetString("SessionMatriculaMS", model.Matricula);
+                                    //HttpContext.Session.SetString("SessionNombreMS", model.Nombre);
+                                    //HttpContext.Session.SetString("SessionVersionMS", model.Version);
+                                    //HttpContext.Session.SetString("SessionIpMS", model.Ip);
+                                    //HttpContext.Session.SetString("SessionSeccionMS", model.Seccion);
+                                    //HttpContext.Session.SetString("SessionEstadoMS", model.Estado.ToString());
+                                    //HttpContext.Session.SetString("SessionUltimoCicloMS", model.UltimoCiclo);
+                                    //HttpContext.Session.SetString("SessionRutaSalidaMS", model.RutaSalida);
+                                    //HttpContext.Session.SetString("SessionRutaSalidaPDFMS", model.RutaSalidaPDF);
                        
                                     HttpContext.Session.SetString("SessionTiempoP", DateTime.Now.ToString("HH:mm:ss"));
                                     return View("Edit");
@@ -254,11 +263,14 @@ namespace WebResumen.Controllers
 
                     }
                     catch
-                    { return RedirectToAction("Logout", "Home"); }
+                    {
+                        TempData["Fail"] = "Login Fallido. Usuario o Contraseña Incorrecta";
+                        return View("Login");
+                    }
                 }
             }
 
-            ViewBag.fail = "Autenticación Fallida";
+            
             return View();
 
 

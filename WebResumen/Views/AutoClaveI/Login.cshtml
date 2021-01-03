@@ -8,7 +8,19 @@
     Layout = "~/Views/Shared/_LayoutLogin.cshtml";
 }
 
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor httpContextAccessor
+@if (TempData["Fail"] != null)
+{
 
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>@TempData["Fail"].ToString()!</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+}
 
 
 <div class="container justify-content-center mt-5">
@@ -35,7 +47,9 @@
                 </div>
                 <div class="form-group">
 
-                    <input asp-for="Dato" class="form-control" value="@ViewBag.datos" type="hidden" />
+                    @*<input asp-for="Dato" class="form-control" value="@ViewBag.datos" type="hidden" />*@
+                    <input asp-for="Dato" class="form-control" value="@httpContextAccessor.HttpContext.Session.GetString("SessionDatosI")" type="hidden" />
+
 
                 </div>
                 <button type="submit" class="btn btn-primary">Login</button>

@@ -19,6 +19,7 @@ namespace WebResumen.Services.PrinterService
         public void printDosTresCuatro(int? id)
         {
             var q = _context.CiclosAutoclaves.FirstOrDefault(m => m.Id == id);
+            var impresora = _context.Parametros.Select(t => t.ImpresoraSabiUno).FirstOrDefault();
 
             PrintDocument _pr = new PrintDocument();
             PrintController _controller = new StandardPrintController();
@@ -41,8 +42,9 @@ namespace WebResumen.Services.PrinterService
 
 
 
-            _pr.PrinterSettings.PrinterName = @"\\essafileprint01\#ADMICOPY (ESSAFILEPRINT01)";
-            //_pr.PrinterSettings.PrinterName = "PDFCreator";
+            //_pr.PrinterSettings.PrinterName = @"\\essafileprint01\#ADMICOPY (ESSAFILEPRINT01)";
+           // _pr.PrinterSettings.PrinterName = "PDFCreator";
+            _pr.PrinterSettings.PrinterName = impresora.ToString();
             _pr.PrintController = _controller;
             _pr.Print(); //start the print
             _pr.Dispose();
@@ -224,6 +226,7 @@ namespace WebResumen.Services.PrinterService
                 graph.DrawString(q.AperturaPuerta, _font, _solid, new RectangleF(20, 920, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
                 graph.DrawString("FIRMA OPERADOR        _______________________ ", _font, _solid, new RectangleF(20, 960, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
                 graph.DrawString("FIRMA GAR.DE CALID.   _______________________ ", _font, _solid, new RectangleF(20, 1020, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
+               graph.DrawString("Pág 1 de 1  ", _font, _solid, new RectangleF(640, 1120, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
 
                 if (q.ErrorCiclo == "")
                 {

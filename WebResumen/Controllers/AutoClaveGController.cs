@@ -176,8 +176,8 @@ namespace WebResumen.Controllers
                 return NotFound();
             }
 
-            ViewBag.datos = ciclosAutoclaves.Id;
-
+           // ViewBag.datos = ciclosAutoclaves.Id;
+            HttpContext.Session.SetString("SessionDatosG", ciclosAutoclaves.Id.ToString());
 
 
             return View("Login");
@@ -222,7 +222,7 @@ namespace WebResumen.Controllers
                                     HttpContext.Session.SetString("SessionPassG", model.Contraseña);
                                     HttpContext.Session.SetString("SessionNameG", model.Usuario);
                                     HttpContext.Session.SetString("SessionComentarioG", model.Comentario);
-                                    HttpContext.Session.SetString("SessionDatosG", model.Dato);
+                                   // HttpContext.Session.SetString("SessionDatosG", model.Dato);
                                     HttpContext.Session.SetString("SessionTiempoG", DateTime.Now.ToString("HH:mm:ss"));
                                     string EventoG = "Re-Impresión";
                                     _log.Write(fullName, DateTime.Now, EventoG, model.Comentario);
@@ -240,11 +240,14 @@ namespace WebResumen.Controllers
 
                     }
                     catch
-                    { return RedirectToAction("Logout", "Home"); }
+                    {
+                        TempData["Fail"] = "Login Fallido. Usuario o Contraseña Incorrecta";
+                        return View("Login");
+                    }
                 }
             }
 
-            ViewBag.fail = "Autenticación Fallida";
+           
             return View();
 
 

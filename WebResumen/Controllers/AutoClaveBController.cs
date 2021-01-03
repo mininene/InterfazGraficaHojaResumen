@@ -33,13 +33,15 @@ namespace WebResumen.Controllers
         private readonly IPrinterOchoVeinte _printerOchoVeinte;
         private readonly IPrinterDosTresCuatro _printerDosTresCuatro;
         private readonly ILogRecord _log;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AutoClaveBController(AppDbContext context, IPrinterOchoVeinte printerOchoVeinte, IPrinterDosTresCuatro printerDosTresCuatro, ILogRecord log)
+        public AutoClaveBController(AppDbContext context, IPrinterOchoVeinte printerOchoVeinte, IPrinterDosTresCuatro printerDosTresCuatro, ILogRecord log, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
             _printerOchoVeinte = printerOchoVeinte;
             _printerDosTresCuatro = printerDosTresCuatro;
             _log = log;
+            _httpContextAccessor = httpContextAccessor;
 
         }
 
@@ -210,7 +212,8 @@ namespace WebResumen.Controllers
                 return NotFound();
             }
 
-            ViewBag.datos = ciclosAutoclaves.Id;
+            HttpContext.Session.SetString("SessionDatosB", ciclosAutoclaves.Id.ToString());
+            //ViewBag.datos = ciclosAutoclaves.Id;
             
 
 
@@ -257,7 +260,7 @@ namespace WebResumen.Controllers
                                         HttpContext.Session.SetString("SessionPassB", model.Contraseña);
                                         HttpContext.Session.SetString("SessionNameB", model.Usuario);
                                         HttpContext.Session.SetString("SessionComentarioB", model.Comentario);
-                                        HttpContext.Session.SetString("SessionDatosB", model.Dato);
+                                        //HttpContext.Session.SetString("SessionDatosB", model.Dato);
                                         HttpContext.Session.SetString("SessionTiempoB", DateTime.Now.ToString("HH:mm:ss"));
                                         string EventoB = "Re-Impresión";
                                         _log.Write(fullName, DateTime.Now, EventoB, model.Comentario);
@@ -269,20 +272,24 @@ namespace WebResumen.Controllers
                             else
                             {
                                 //return RedirectToAction("Logout", "Home");
-                                ViewBag.fail = "Autenticación Fallida";
-                                return View();
 
+                                return RedirectToAction("Logout", "Home");
                             }
                         }
 
 
                     }
                     catch
-                    { return RedirectToAction("Logout", "Home"); }
+                    {
+
+                        TempData["Fail"] = "Login Fallido. Usuario o Contraseña Incorrecta";
+                        return View("Login");
+                        //return RedirectToAction("Logout", "Home");
+                    }
                 }
             }
 
-            ViewBag.fail = "Autenticación Fallida";
+            
             return View();
 
 

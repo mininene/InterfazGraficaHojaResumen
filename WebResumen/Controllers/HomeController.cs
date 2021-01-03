@@ -26,17 +26,19 @@ namespace WebResumen.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+
             return View();
         }
 
 
-        
+
         public IActionResult Index(LoginViewModel model)
         {
            
             if (ModelState.IsValid)
             {
-                
+               
+               
                 string dominio = @"global.baxter.com";
                 string path = @"LDAP://global.baxter.com";
                 using (PrincipalContext ctx = new PrincipalContext(ContextType.Domain, dominio, model.Usuario, model.Contraseña))
@@ -76,6 +78,8 @@ namespace WebResumen.Controllers
                             }
                             else
                             {
+                                TempData["Grupo"] = "No pertenece a al grupo";
+                                //return View();
                                 return RedirectToAction("Index", "Home");
                                
                             }
@@ -84,11 +88,14 @@ namespace WebResumen.Controllers
                        
                     }
                     catch
-                    { return RedirectToAction("Index", "Home"); }
+                    {
+                        TempData["Fail"] = "Login Fallido. Usuario o Contraseña Incorrecta";
+                        return View();
+                    }
                  }
             }
 
-            ViewBag.fail = "Autenticación Fallida";
+           // TempData["Fail"] = "Login Fallido. Usuario o Contraseña Incorrecta";
             return View();
 
 

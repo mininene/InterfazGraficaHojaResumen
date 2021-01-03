@@ -3,6 +3,10 @@
 @{
     ViewData["Title"] = "Edit";
 }
+
+@{
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
 @using Microsoft.AspNetCore.Http
 @inject IHttpContextAccessor httpContextAccessor
 <h1>Edit</h1>
@@ -21,23 +25,23 @@
             </div>
             <div class="form-group">
                 <label asp-for="ImpresoraSabiDos" class="control-label"></label>
-                <input asp-for="ImpresoraSabiDos" class="form-control" value="@httpContextAccessor.HttpContext.Session.GetString("SessionImpresoraSabiDos")"/>
+                <input asp-for="ImpresoraSabiDos" class="form-control" value="@httpContextAccessor.HttpContext.Session.GetString("SessionImpresoraSabiDos")" />
                 <span asp-validation-for="ImpresoraSabiDos" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="RutaLog" class="control-label"></label>
-                <input asp-for="RutaLog" class="form-control"value="@httpContextAccessor.HttpContext.Session.GetString("SessionRutaLog")" />
+                <input asp-for="RutaLog" class="form-control" value="@httpContextAccessor.HttpContext.Session.GetString("SessionRutaLog")" />
                 <span asp-validation-for="RutaLog" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Tiempo" class="control-label"></label>
-                <input asp-for="Tiempo" class="form-control"value="@httpContextAccessor.HttpContext.Session.GetInt32("SessionTiempo")" />
+                <input asp-for="Tiempo" class="form-control" value="@httpContextAccessor.HttpContext.Session.GetInt32("Tiempo")" />
                 <span asp-validation-for="Tiempo" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Reinicio" class="control-label"></label>
-                <input asp-for="Reinicio" class="form-control"value=true />
-                <span asp-validation-for="Reinicio" class="text-danger"></span>
+                @*<label asp-for="Reinicio" class="control-label"></label>*@
+                <input asp-for="Reinicio" class="form-control" value=true type="hidden" />
+                @*<span asp-validation-for="Reinicio" class="text-danger"></span>*@
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
@@ -47,8 +51,8 @@
 </div>
 
 @*<div>
-    <a asp-action="Index">Back to List</a>
-</div>*@
+        <a asp-action="Index">Back to List</a>
+    </div>*@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
