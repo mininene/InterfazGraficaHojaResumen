@@ -25,9 +25,9 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Tiempo)
                 </th>
-                <th>
+                @*<th>
                     @Html.DisplayNameFor(model => model.Reinicio)
-                </th>
+                </th>*@
                 <th>
                     Acciones
                 </th>
@@ -50,9 +50,9 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Tiempo)
                     </td>
-                    <td>
+                    @*<td>
                         @Html.DisplayFor(modelItem => item.Reinicio)
-                    </td>
+                    </td>*@
                     <td>
                         @*<a class="btn btn-success btn-sm text-white" asp-action="Edit" asp-route-id="@item.Id">Editar</a>*@
                         <a type="button" class="btn btn-success btn-sm" asp-action="Login" asp-route-id="@item.Id">Edit</a>

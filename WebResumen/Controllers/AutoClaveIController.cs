@@ -127,6 +127,9 @@ namespace WebResumen.Controllers
                 return NotFound();
             }
             TempData["Print"] = "El Archivo ha sido Impreso";
+            string EventoI = "Re-Impresión";
+            _log.Write(_httpContextAccessor.HttpContext.Session.GetString("SessionFullName"), DateTime.Now, EventoI + " " + _httpContextAccessor.HttpContext.Session.GetString("AutoclaveNumeroI"), _httpContextAccessor.HttpContext.Session.GetString("SessionComentarioI"));
+
             return RedirectToAction("Index", "AutoClaveI");
             //return View(ciclosAutoclaves);
         }
@@ -180,6 +183,8 @@ namespace WebResumen.Controllers
 
           //  ViewBag.datos = ciclosAutoclaves.Id;
             HttpContext.Session.SetString("SessionDatosI", ciclosAutoclaves.Id.ToString());
+            HttpContext.Session.SetString("AutoclaveNumeroI", ("AutoClaveI" + " " + "N°Ciclo:" + ciclosAutoclaves.NumeroCiclo).ToString());
+
 
 
             return View("Login");
@@ -220,15 +225,13 @@ namespace WebResumen.Controllers
                                     if (de != null)
                                     { fullName = de.Properties["displayName"][0].ToString(); }
 
+                                    HttpContext.Session.SetString("SessionFullName", fullName);
                                     HttpContext.Session.SetString("SessionPassI", model.Contraseña);
                                     HttpContext.Session.SetString("SessionNameI", model.Usuario);
                                     HttpContext.Session.SetString("SessionComentarioI", model.Comentario);
                                    // HttpContext.Session.SetString("SessionDatosI", model.Dato);
                                     HttpContext.Session.SetString("SessionTiempoI", DateTime.Now.ToString("HH:mm:ss"));
-                                    string EventoI = "Re-Impresión";
-                                  
-                                    _log.Write(fullName, DateTime.Now, EventoI + " " + _httpContextAccessor.HttpContext.Session.GetString("AutoclaveNumeroI"), model.Comentario);
-
+                                   
                                     return View("Print");
                                 }
 

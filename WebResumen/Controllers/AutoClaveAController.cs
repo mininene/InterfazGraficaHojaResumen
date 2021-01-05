@@ -213,8 +213,10 @@ namespace WebResumen.Controllers
             {
                 return NotFound();
             }
-
+            string EventoA = "Re-Impresión";
             TempData["Print"] = "El Archivo ha sido Impreso";
+            _log.Write(_httpContextAccessor.HttpContext.Session.GetString("SessionFullName"), DateTime.Now, EventoA + " " + _httpContextAccessor.HttpContext.Session.GetString("AutoclaveNumeroA"), _httpContextAccessor.HttpContext.Session.GetString("SessionComentarioA"));
+
             return RedirectToAction("Index", "AutoClaveA");
 
 
@@ -352,8 +354,8 @@ namespace WebResumen.Controllers
                                     HttpContext.Session.SetString("SessionComentarioA", model.Comentario);
                                    // HttpContext.Session.SetString("SessionDatosA", model.Dato);
                                     HttpContext.Session.SetString("SessionTiempoA", DateTime.Now.ToString("HH:mm:ss"));
-                                    string EventoA = "Re-Impresión";
-                                    _log.Write(fullName, DateTime.Now, EventoA+" "+_httpContextAccessor.HttpContext.Session.GetString("AutoclaveNumeroA"), model.Comentario);
+                                   // string EventoA = "Re-Impresión";
+                                   // _log.Write(fullName, DateTime.Now, EventoA+" "+_httpContextAccessor.HttpContext.Session.GetString("AutoclaveNumeroA"), model.Comentario);
                                     return View("Print");
                                 }
 

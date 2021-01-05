@@ -126,7 +126,7 @@ namespace WebResumen.Controllers
 
 
                     //_context.Update(maestroAutoclave);
-                    //await _context.SaveChangesAsync();//Guardo el cambio realizado por mi persona
+                    //await _context.SaveChangesAsync();//Guardo el cambio realizado por mi persona N s eve valor antiguo y actual
 
 
                     //// Attach the object to the graph
@@ -140,7 +140,7 @@ namespace WebResumen.Controllers
                     //// Mark the entity as modified
                     //entry.State = EntityState.Modified;
 
-                    //await _context.SaveChangesAsync();
+                    //await _context.SaveChangesAsync();  // se ve valor antiguo y actual
 
 
 
@@ -179,7 +179,8 @@ namespace WebResumen.Controllers
             {
                 return NotFound();
             }
-          
+
+            HttpContext.Session.SetString("SessionNombreM", "");
             HttpContext.Session.SetString("SessionDatosMS", maestroAutoclave.Id.ToString());
             HttpContext.Session.SetString("SessionMatriculaMS", maestroAutoclave.Matricula.ToString());
             HttpContext.Session.SetString("SessionNombreMS", maestroAutoclave.Nombre.ToString());

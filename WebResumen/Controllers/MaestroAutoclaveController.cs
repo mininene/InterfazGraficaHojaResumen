@@ -180,6 +180,7 @@ namespace WebResumen.Controllers
                 return NotFound();
             }
 
+            HttpContext.Session.SetString("SessionNombreMS", "");
             HttpContext.Session.SetString("SessionDatosM", maestroAutoclave.Id.ToString());
             HttpContext.Session.SetString("SessionMatriculaM", maestroAutoclave.Matricula.ToString());
             HttpContext.Session.SetString("SessionNombreM", maestroAutoclave.Nombre.ToString());

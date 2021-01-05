@@ -177,7 +177,8 @@ namespace WebResumen.Controllers
             {
                 return NotFound();
             }
-
+            HttpContext.Session.SetString("SessionNombreM", "");
+            HttpContext.Session.SetString("SessionNombreMS", "");
             HttpContext.Session.SetString("SessionDatosP", parametros.Id.ToString());
             HttpContext.Session.SetString("SessionImpresoraSabiUno", parametros.ImpresoraSabiUno.ToString());
             HttpContext.Session.SetString("SessionImpresoraSabiDos", parametros.ImpresoraSabiDos.ToString());

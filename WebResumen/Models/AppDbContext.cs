@@ -65,7 +65,7 @@ namespace WebResumen.Models
                     {
                         Usuario = _httpContextAccessor.HttpContext.Session.GetString("SessionName"),
                         Tabla = entry.Entity.GetType().Name,
-                        Evento = Evento.Update.ToString(),
+                        Evento = Evento.Update.ToString()+" "+ _httpContextAccessor.HttpContext.Session.GetString("SessionNombreMS")+" " + _httpContextAccessor.HttpContext.Session.GetString("SessionNombreM"),
                         Campo = property.Metadata.Name,
                         Valor = property.OriginalValue.ToString(),
                         ValorActualizado = property.CurrentValue.ToString(),

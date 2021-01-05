@@ -119,6 +119,9 @@ namespace WebResumen.Controllers
                 return NotFound();
             }
             TempData["Print"] = "El Archivo ha sido Impreso";
+            string EventoL = "Re-Impresión";
+            _log.Write(_httpContextAccessor.HttpContext.Session.GetString("SessionFullName"), DateTime.Now, EventoL + " " + _httpContextAccessor.HttpContext.Session.GetString("AutoclaveNumeroL"), _httpContextAccessor.HttpContext.Session.GetString("SessionComentarioL"));
+
             return RedirectToAction("Index", "AutoClaveJ");
            // return View(ciclosAutoclaves);
         }
@@ -216,15 +219,13 @@ namespace WebResumen.Controllers
                                     if (de != null)
                                     { fullName = de.Properties["displayName"][0].ToString(); }
 
+                                    HttpContext.Session.SetString("SessionFullName", fullName);
                                     HttpContext.Session.SetString("SessionPassL", model.Contraseña);
                                     HttpContext.Session.SetString("SessionNameL", model.Usuario);
                                     HttpContext.Session.SetString("SessionComentarioL", model.Comentario);
                                     //HttpContext.Session.SetString("SessionDatosL", model.Dato);
                                     HttpContext.Session.SetString("SessionTiempoL", DateTime.Now.ToString("HH:mm:ss"));
-                                    string EventoL = "Re-Impresión";
                                    
-                                    _log.Write(fullName, DateTime.Now, EventoL + " " + _httpContextAccessor.HttpContext.Session.GetString("AutoclaveNumeroL"), model.Comentario);
-
                                     return View("Print");
                                 }
 

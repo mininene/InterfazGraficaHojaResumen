@@ -136,8 +136,10 @@ namespace WebResumen.Controllers
             {
                 return NotFound();
             }
-
+            string EventoB = "Re-Impresión";
             TempData["Print"] = "El Archivo ha sido Impreso";
+            _log.Write(_httpContextAccessor.HttpContext.Session.GetString("SessionFullName"), DateTime.Now, EventoB + " " + _httpContextAccessor.HttpContext.Session.GetString("AutoclaveNumeroB"), _httpContextAccessor.HttpContext.Session.GetString("SessionComentarioB"));
+
             return RedirectToAction("Index", "AutoClaveB");
            
 
@@ -241,14 +243,15 @@ namespace WebResumen.Controllers
                                         if (de != null)
                                         { fullName = de.Properties["displayName"][0].ToString(); }
 
+                                        HttpContext.Session.SetString("SessionFullName", fullName);
                                         HttpContext.Session.SetString("SessionPassB", model.Contraseña);
                                         HttpContext.Session.SetString("SessionNameB", model.Usuario);
                                         HttpContext.Session.SetString("SessionComentarioB", model.Comentario);
                                         //HttpContext.Session.SetString("SessionDatosB", model.Dato);
                                         HttpContext.Session.SetString("SessionTiempoB", DateTime.Now.ToString("HH:mm:ss"));
-                                        string EventoB = "Re-Impresión";
+                                        //string EventoB = "Re-Impresión";
                                       
-                                        _log.Write(fullName, DateTime.Now, EventoB + " " + _httpContextAccessor.HttpContext.Session.GetString("AutoclaveNumeroB"), model.Comentario);
+                                        //_log.Write(fullName, DateTime.Now, EventoB + " " + _httpContextAccessor.HttpContext.Session.GetString("AutoclaveNumeroB"), model.Comentario);
 
                                         return View("Print");
                                     }
