@@ -24,14 +24,17 @@ namespace WebResumen.Controllers
         private readonly IPrinterOchoVeinte _printerOchoVeinte;
         private readonly IPrinterDosTresCuatro _printerDosTresCuatro;
         private readonly ILogRecord _log;
-        
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AutoClaveDController(AppDbContext context, IPrinterOchoVeinte printerOchoVeinte, IPrinterDosTresCuatro printerDosTresCuatro, ILogRecord log)
+
+
+        public AutoClaveDController(AppDbContext context, IPrinterOchoVeinte printerOchoVeinte, IPrinterDosTresCuatro printerDosTresCuatro, ILogRecord log, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
             _printerOchoVeinte = printerOchoVeinte;
             _printerDosTresCuatro = printerDosTresCuatro;
             _log = log;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         // GET: AutoClaveD
@@ -124,6 +127,7 @@ namespace WebResumen.Controllers
                 return NotFound();
             }
 
+            TempData["Print"] = "El Archivo ha sido Impreso";
             return RedirectToAction("Index", "AutoClaveD");
             //return View(ciclosAutoclaves);
         }
@@ -176,7 +180,9 @@ namespace WebResumen.Controllers
                 return NotFound();
             }
             HttpContext.Session.SetString("SessionDatosD", ciclosAutoclaves.Id.ToString());
-           // ViewBag.datos = ciclosAutoclaves.Id;
+            HttpContext.Session.SetString("AutoclaveNumeroD", ("AutoClaveD" + " " + "N°Ciclo:" + ciclosAutoclaves.NumeroCiclo).ToString());
+
+            // ViewBag.datos = ciclosAutoclaves.Id;
 
 
 
@@ -224,7 +230,9 @@ namespace WebResumen.Controllers
                                     //HttpContext.Session.SetString("SessionDatosD", model.Dato);
                                     HttpContext.Session.SetString("SessionTiempoD", DateTime.Now.ToString("HH:mm:ss"));
                                     string EventoD = "Re-Impresión";
-                                    _log.Write(fullName, DateTime.Now, EventoD, model.Comentario);
+                                   
+                                    _log.Write(fullName, DateTime.Now, EventoD + " " + _httpContextAccessor.HttpContext.Session.GetString("AutoclaveNumeroD"), model.Comentario);
+
                                     return View("Print");
                                 }
 

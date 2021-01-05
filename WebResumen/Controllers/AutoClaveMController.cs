@@ -25,14 +25,16 @@ namespace WebResumen.Controllers
         private readonly IPrinterOchoVeinte _printerOchoVeinte;
         private readonly IPrinterDosTresCuatro _printerDosTresCuatro;
         private readonly ILogRecord _log;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
 
-        public AutoClaveMController(AppDbContext context, IPrinterOchoVeinte printerOchoVeinte, IPrinterDosTresCuatro printerDosTresCuatro, ILogRecord log)
+        public AutoClaveMController(AppDbContext context, IPrinterOchoVeinte printerOchoVeinte, IPrinterDosTresCuatro printerDosTresCuatro, ILogRecord log, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
             _printerOchoVeinte = printerOchoVeinte;
             _printerDosTresCuatro = printerDosTresCuatro;
             _log = log;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         // GET: AutoClaveM
@@ -124,7 +126,7 @@ namespace WebResumen.Controllers
             {
                 return NotFound();
             }
-
+            TempData["Print"] = "El Archivo ha sido Impreso";
             return RedirectToAction("Index", "AutoClaveM");
             //return View(ciclosAutoclaves);
         }
@@ -225,7 +227,9 @@ namespace WebResumen.Controllers
                                    // HttpContext.Session.SetString("SessionDatosM", model.Dato);
                                     HttpContext.Session.SetString("SessionTiempoM", DateTime.Now.ToString("HH:mm:ss"));
                                     string EventoM = "Re-Impresión";
-                                    _log.Write(fullName, DateTime.Now, EventoM, model.Comentario);
+                                   
+                                    _log.Write(fullName, DateTime.Now, EventoM + " " + _httpContextAccessor.HttpContext.Session.GetString("AutoclaveNumeroM"), model.Comentario);
+
                                     return View("Print");
                                 }
 

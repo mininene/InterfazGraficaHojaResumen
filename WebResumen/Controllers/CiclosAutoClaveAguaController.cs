@@ -31,21 +31,65 @@ namespace WebResumen.Controllers
 
         }
         // GET: CiclosAutoclaveAgua
-        public  async Task<JsonResult> ListAgua(string nCiclo)
+        public  async Task<JsonResult> ListAgua()
         {
             //var result=  await _context.CiclosAutoclaves.OrderByDescending(x => x.Id).ToListAsync();
             //return View(await _context.CiclosAutoclaves.OrderByDescending(x=>x.Id).ToListAsync());
 
             var result = from s in _context.CiclosAutoclaves.OrderByDescending(x => x.Id)
                            select s;
-            if (!String.IsNullOrEmpty(nCiclo))
-            {
-                result = result.Where(s => s.IdAutoclave.Contains(nCiclo));
-
-            }
+           
 
             return Json(await  result.ToListAsync());
            
+
+        }
+
+        public class PostModel
+        {
+            public string nCiclo { get; set; }
+            public string nPrograma { get; set; }
+            public string fecha { get; set; }
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> ListAgua([FromBody] PostModel model)
+        {
+            //var result=  await _context.CiclosAutoclaves.OrderByDescending(x => x.Id).ToListAsync();
+            //return View(await _context.CiclosAutoclaves.OrderByDescending(x=>x.Id).ToListAsync());
+           
+            var result = from s in _context.CiclosAutoclaves.OrderByDescending(x => x.Id)
+                         select s;
+           
+
+            if (!String.IsNullOrEmpty(model.nCiclo))
+            {
+                result = result.Where(x => x.NumeroCiclo.Contains(model.nCiclo));
+
+            }
+
+            if (!String.IsNullOrEmpty(model.nPrograma))
+            {
+                result = result.Where(x => x.Programa.Contains(model.nPrograma));
+            }
+
+
+
+            if (!String.IsNullOrEmpty(model.fecha))
+            {
+                result = result.Where(x => x.HoraFin.Contains(model.fecha));
+
+            }
+
+            if (!String.IsNullOrEmpty(model.nCiclo) && !String.IsNullOrEmpty(model.nPrograma) && !String.IsNullOrEmpty(model.fecha))
+            {
+                result = result.Where(x => x.NumeroCiclo.Contains(model.nCiclo)
+                                       || x.Programa.Contains(model.nPrograma)
+                                         || x.HoraFin.Contains(model.fecha));  // si pongo la fecha como string si que lo coge
+            }
+
+            return Json(await result.ToListAsync());
+
 
         }
 

@@ -159,43 +159,40 @@ namespace WebResumen.Controllers
 
         }
 
-
-
-        public async Task<JsonResult> Vista(int? id)
+        public async Task<IActionResult> Preview(int? id)
         {
             if (id == null)
             {
-                return Json("No existe");
+                return NotFound();
             }
 
             var ciclosAutoclaves = await _context.CiclosAutoclaves
                 .FirstOrDefaultAsync(m => m.Id == id);
-             int numero = int.Parse(ciclosAutoclaves.NumeroCiclo);
+            if (ciclosAutoclaves == null)
+            {
+                return NotFound();
+            }
 
-             string ciclo = ciclosAutoclaves.IdAutoclave + string.Format("{0:00000}", numero) + ".LOG";
+            int numero = int.Parse(ciclosAutoclaves.NumeroCiclo);
 
+            string ciclo = ciclosAutoclaves.IdAutoclave + string.Format("{0:00000}", numero) + ".LOG";
             string path = @"\\essaappserver01\HojaResumen\API\AutoClaveA\" + ciclo;
 
 
             string[] texts = System.IO.File.ReadAllLines(path, new UnicodeEncoding());
             ViewBag.Data = texts;
 
-            if (ciclosAutoclaves == null)
-            {
-                return Json("No existe");
-            }
 
 
-            return Json( ViewBag.Data);
+            return View(ciclosAutoclaves);
+
         }
 
-
-
-        public async Task<JsonResult> Print(int? id)
+        public async Task<IActionResult> Print(int? id)
         {
             if (id == null)
             {
-                return Json("No existe");
+                return NotFound();
             }
             var ciclosAutoclaves = await _context.CiclosAutoclaves
                .FirstOrDefaultAsync(m => m.Id == id);
@@ -214,12 +211,79 @@ namespace WebResumen.Controllers
 
             if (ciclosAutoclaves == null)
             {
-                return Json("No existe");
+                return NotFound();
             }
 
+            TempData["Print"] = "El Archivo ha sido Impreso";
+            return RedirectToAction("Index", "AutoClaveA");
 
-            return Json(ciclosAutoclaves);
+
+
+
         }
+
+
+        //JSON/////////////////////////////////////////////////////////////////////////
+        //public async Task<JsonResult> Vista(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return Json("No existe");
+        //    }
+
+        //    var ciclosAutoclaves = await _context.CiclosAutoclaves
+        //        .FirstOrDefaultAsync(m => m.Id == id);
+        //     int numero = int.Parse(ciclosAutoclaves.NumeroCiclo);
+
+        //     string ciclo = ciclosAutoclaves.IdAutoclave + string.Format("{0:00000}", numero) + ".LOG";
+
+        //    string path = @"\\essaappserver01\HojaResumen\API\AutoClaveA\" + ciclo;
+
+
+        //    string[] texts = System.IO.File.ReadAllLines(path, new UnicodeEncoding());
+        //    ViewBag.Data = texts;
+
+        //    if (ciclosAutoclaves == null)
+        //    {
+        //        return Json("No existe");
+        //    }
+
+
+        //    return Json( ViewBag.Data);
+        //}
+
+
+
+        //public async Task<JsonResult> Print(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return Json("No existe");
+        //    }
+        //    var ciclosAutoclaves = await _context.CiclosAutoclaves
+        //       .FirstOrDefaultAsync(m => m.Id == id);
+
+        //    if (ciclosAutoclaves.Programa.Trim().Equals("8") || ciclosAutoclaves.Programa.Trim().Equals("20"))
+
+        //    {
+        //        _printerOchoVeinte.printOchoVeinte(id);
+        //    }
+
+        //    if (ciclosAutoclaves.Programa.Trim().Equals("2") || ciclosAutoclaves.Programa.Trim().Equals("3") || ciclosAutoclaves.Programa.Trim().Equals("4"))
+        //    {
+        //        _printerDosTresCuatro.printDosTresCuatro(id);
+        //    }
+
+
+        //    if (ciclosAutoclaves == null)
+        //    {
+        //        return Json("No existe");
+        //    }
+
+
+        //    return Json(ciclosAutoclaves);
+        //}
+ ////////////// JSON/////////////////////////////////////////////////////////
 
 // /////////////////////////////////////////////////////////////////////////////////
         [HttpGet]
@@ -241,6 +305,7 @@ namespace WebResumen.Controllers
 
             //ViewBag.datos = ciclosAutoclaves.Id;
             HttpContext.Session.SetString("SessionDatosA", ciclosAutoclaves.Id.ToString());
+            HttpContext.Session.SetString("AutoclaveNumeroA", ("AutoClaveA"+" "+"N°Ciclo:"+ciclosAutoclaves.NumeroCiclo).ToString());
 
 
             return View("Login");
@@ -288,7 +353,7 @@ namespace WebResumen.Controllers
                                    // HttpContext.Session.SetString("SessionDatosA", model.Dato);
                                     HttpContext.Session.SetString("SessionTiempoA", DateTime.Now.ToString("HH:mm:ss"));
                                     string EventoA = "Re-Impresión";
-                                    _log.Write(fullName, DateTime.Now, EventoA, model.Comentario);
+                                    _log.Write(fullName, DateTime.Now, EventoA+" "+_httpContextAccessor.HttpContext.Session.GetString("AutoclaveNumeroA"), model.Comentario);
                                     return View("Print");
                                 }
 

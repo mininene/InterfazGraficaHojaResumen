@@ -25,12 +25,14 @@ namespace WebResumen.Controllers
         private readonly AppDbContext _context;
         private readonly IPrinterNueveDiez _printerNueveDiez;
         private readonly ILogRecord _log;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AutoClaveKController(AppDbContext context, IPrinterNueveDiez printerNueveDiez, ILogRecord log)
+        public AutoClaveKController(AppDbContext context, IPrinterNueveDiez printerNueveDiez, ILogRecord log, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
             _printerNueveDiez = printerNueveDiez;
             _log=log;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         // GET: AutoClaveK
@@ -119,7 +121,7 @@ namespace WebResumen.Controllers
             {
                 return NotFound();
             }
-
+            TempData["Print"] = "El Archivo ha sido Impreso";
             return RedirectToAction("Index", "AutoClaveK");
             //return View(ciclosAutoclaves);
         }
@@ -173,6 +175,8 @@ namespace WebResumen.Controllers
 
             //ViewBag.datos = ciclosAutoclaves.Id;
             HttpContext.Session.SetString("SessionDatosK", ciclosAutoclaves.Id.ToString());
+            HttpContext.Session.SetString("AutoclaveNumeroK", ("AutoClaveK" + " " + "N°Ciclo:" + ciclosAutoclaves.NumeroCiclo).ToString());
+
 
 
             return View("Login");
@@ -220,7 +224,9 @@ namespace WebResumen.Controllers
                                     //HttpContext.Session.SetString("SessionDatosK", model.Dato);
                                     HttpContext.Session.SetString("SessionTiempoK", DateTime.Now.ToString("HH:mm:ss"));
                                     string EventoK = "Re-Impresión";
-                                    _log.Write(fullName, DateTime.Now, EventoK, model.Comentario);
+                                   
+                                    _log.Write(fullName, DateTime.Now, EventoK + " " + _httpContextAccessor.HttpContext.Session.GetString("AutoclaveNumeroK"), model.Comentario);
+
                                     return View("Print");
                                 }
 

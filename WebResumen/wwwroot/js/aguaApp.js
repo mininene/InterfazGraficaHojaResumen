@@ -4,6 +4,54 @@
         controller('aguaCtrl', function ($scope, $http, $q, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder, DTDefaultOptions, $filter) {
             DTDefaultOptions.setLoadingTemplate('<div class="spinner-border text-primary" role="status"></div >' + '  ' + '<span class="sr - only">Cargando...</span>') //spinner carga
 
+            $scope.programa = null;
+            $scope.numeroCiclo = null;
+            $scope.postdata = function (programa, numeroCiclo) {
+
+                var data = {
+                    nCiclo: numeroCiclo,
+                    nPrograma: programa
+                };
+                console.log(data);
+                $scope.dtOptions = DTOptionsBuilder
+                    .fromFnPromise(function () {
+                        var defer = $q.defer();
+                $http({
+                    method: 'POST',
+                    url: '/CiclosAutoClaveAgua/ListAgua',
+                    data: data,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(function (response) {
+                    if (response.data)
+                        console.log(response.data);
+                    $scope.msg = "Post Data Submitted Successfully!";
+                    console.log($scope.msg);
+                    $scope.searchid = response.data
+                    defer.resolve(response.data);
+
+                }, function (response) {
+
+                    $scope.msg = "Service not Exists";
+
+                   
+
+                });
+
+                        return defer.promise;
+                    })
+
+                    .withColVis()
+                    // Add a state change function
+                    .withColVisStateChange(stateChange)
+
+
+
+
+            }
+
+
 
 
             $scope.dtOptions = DTOptionsBuilder
@@ -13,7 +61,7 @@
                         defer.resolve(result.data);
                         $scope.searchid = result.data
                         
-                       // console.log(result.data)
+                        console.log(result.data)
 
                            
                     });

@@ -25,12 +25,14 @@ namespace WebResumen.Controllers
         private readonly AppDbContext _context;
         private readonly IPrinterNueveDiez _printerNueveDiez;
         private readonly ILogRecord _log;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AutoClaveJController(AppDbContext context, IPrinterNueveDiez printerNueveDiez, ILogRecord log)
+        public AutoClaveJController(AppDbContext context, IPrinterNueveDiez printerNueveDiez, ILogRecord log, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
             _printerNueveDiez = printerNueveDiez;
             _log = log;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         // GET: AutoClaveJJ
@@ -118,7 +120,7 @@ namespace WebResumen.Controllers
             {
                 return NotFound();
             }
-
+            TempData["Print"] = "El Archivo ha sido Impreso";
             return RedirectToAction("Index", "AutoClaveJ");
             //return View(ciclosAutoclaves);
         }
@@ -173,6 +175,8 @@ namespace WebResumen.Controllers
 
            // ViewBag.datos = ciclosAutoclaves.Id;
             HttpContext.Session.SetString("SessionDatosJ", ciclosAutoclaves.Id.ToString());
+            HttpContext.Session.SetString("AutoclaveNumeroJ", ("AutoClaveJ" + " " + "N°Ciclo:" + ciclosAutoclaves.NumeroCiclo).ToString());
+
 
 
             return View("Login");
@@ -219,7 +223,9 @@ namespace WebResumen.Controllers
                                     //HttpContext.Session.SetString("SessionDatosJ", model.Dato);
                                     HttpContext.Session.SetString("SessionTiempoJ", DateTime.Now.ToString("HH:mm:ss"));
                                     string EventoJ = "Re-Impresión";
-                                    _log.Write(fullName, DateTime.Now, EventoJ, model.Comentario);
+                                   
+                                    _log.Write(fullName, DateTime.Now, EventoJ + " " + _httpContextAccessor.HttpContext.Session.GetString("AutoclaveNumeroJ"), model.Comentario);
+
                                     return View("Print");
                                 }
 

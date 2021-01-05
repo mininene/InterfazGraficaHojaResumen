@@ -7,7 +7,9 @@ myapp.service('autoclaveService', function ($http) {
         return $http({
             method: 'Get',
             url: '/AutoClaveA/ListAutoclaveA',
-            headers: { 'Accept': 'application/json' }
+            headers: {
+                'Accept': 'application/json'
+            }
            
         });
     }

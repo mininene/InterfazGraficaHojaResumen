@@ -133,13 +133,25 @@ myapp.controller('autoclave-controller', function ($scope, autoclaveService, $ti
 
 
                 //Call the services
-
-                //$http.post('/AutoClaveA/ListAutoclaveA', JSON.stringify(data)).then(function (response) {
-               $http.post('/AutoClaveA/ListAutoclaveA', JSON.stringify(data)).then(function (response) {
+                $http({
+                    method: 'POST',
+                    url: '/AutoClaveA/ListAutoclaveA',
+                    data: data,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(function (response) {
                     if (response.data)
                         console.log(response.data);
                         $scope.msg = "Post Data Submitted Successfully!";
                     console.log($scope.msg);
+                    $scope.Autoclaves = response.data;
+                //$http.post('/AutoClaveA/ListAutoclaveA', JSON.stringify(data)).then(function (response) {
+               //$http.post('/AutoClaveA/ListAutoclaveA', JSON.stringify(data)).then(function (response) {
+               //     if (response.data)
+               //         console.log(response.data);
+               //         $scope.msg = "Post Data Submitted Successfully!";
+               //     console.log($scope.msg);
 
                 }, function (response) {
 

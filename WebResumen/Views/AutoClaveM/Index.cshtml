@@ -11,11 +11,21 @@
 <p>
     @*<a asp-action="Create">Create New</a>*@
 </p>
+@if (TempData["Print"] != null)
+{
 
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>@TempData["Print"].ToString()!</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+}
 @using (Html.BeginForm())
 {
     <p>
-          <form>
+        <form>
             Buscar por Nº Ciclo: @Html.TextBox("nCiclo")
             Buscar por Nº Programa: @Html.TextBox("nPrograma")
             @*Buscar por Fecha:@Html.TextBox("fecha")*@
