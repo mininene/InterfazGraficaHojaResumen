@@ -5,435 +5,91 @@
 }
 
 
-<body ng-app="datatablesVaporApp" ng-controller="vaporCtrl">
-    <table datatable class=" table table-striped table-bordered table-sm"
-           dt-options="dtOptions"
-           dt-columns="dtColumns">
-        <thead class="thead-dark">
-        </thead>
-    </table>
-</body>
+<body ng-app="datatablesVaporApp" ng-controller="vaporCtrl as tagapp">
 
-@*<p>
-        <a asp-action="Create">Create New</a>
-    </p>*@
-@*<table class="table">
+
+    <table cellpadding="3" cellspacing="0" border="0" style="width: 67%; margin: 0 auto 2em auto;">
         <thead>
             <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.IdAutoclave)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.IdSeccion)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Tinicio)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.NumeroCiclo)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Programa)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Modelo)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Programador)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Operador)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CodigoProducto)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Lote)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Notas)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.IdUsuario)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Fase1)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.DuracionTotalF1)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Fase2)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.DuracionTotalF2)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Tif2)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.TisubF2)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Tff2)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.TfsubF2)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Fase3)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.DuracionTotalF3)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Tif3)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.TisubF3)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Tff3)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.TfsubF3)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Fase4)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.DuracionTotalF4)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Tif4)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.TisubF4)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Fase5)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.DuracionTotalF5)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Fase6)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.DuracionTotalF6)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Fase7A)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.DuracionTotalF7a)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Fase8A)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.DuracionTotalF8a)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Fase7B)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.DuracionTotalF7b)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Fase8B)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.DuracionTotalF8b)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Fase9)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.DuracionTotalF9)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Tif9)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.TisubF9)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Tff9)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Fase10)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.DuracionTotalF10)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Fase11)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.DuracionTotalF11)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Fase12)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Tif12)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.TisubF12)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.HoraInicio)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.HoraFin)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.EsterilizacionN)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Tminima)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Tmaxima)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.DuracionTotal)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.FtzMin)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.FtzMax)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.DifMaxMin)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.AperturaPuerta)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.TiempoCiclo)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ErrorCiclo)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.FechaRegistro)
-                </th>
-                <th></th>
+                <th>Target</th>
+                <th>Buscar</th>
+                <th>Treat as regex</th>
+                <th>Use smart search</th>
             </tr>
         </thead>
         <tbody>
-    @foreach (var item in Model) {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdAutoclave)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdSeccion)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Tinicio)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NumeroCiclo)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Programa)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Modelo)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Programador)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Operador)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CodigoProducto)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Lote)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Notas)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdUsuario)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Fase1)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DuracionTotalF1)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Fase2)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DuracionTotalF2)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Tif2)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TisubF2)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Tff2)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TfsubF2)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Fase3)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DuracionTotalF3)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Tif3)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TisubF3)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Tff3)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TfsubF3)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Fase4)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DuracionTotalF4)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Tif4)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TisubF4)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Fase5)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DuracionTotalF5)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Fase6)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DuracionTotalF6)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Fase7A)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DuracionTotalF7a)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Fase8A)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DuracionTotalF8a)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Fase7B)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DuracionTotalF7b)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Fase8B)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DuracionTotalF8b)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Fase9)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DuracionTotalF9)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Tif9)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TisubF9)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Tff9)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Fase10)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DuracionTotalF10)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Fase11)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DuracionTotalF11)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Fase12)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Tif12)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TisubF12)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.HoraInicio)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.HoraFin)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EsterilizacionN)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Tminima)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Tmaxima)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DuracionTotal)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FtzMin)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FtzMax)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DifMaxMin)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AperturaPuerta)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TiempoCiclo)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ErrorCiclo)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FechaRegistro)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
+            <tr id="filter_global">
+                <td>Busqueda Global</td>
+                <td align="center"><input type="text" class="global_filter" id="global_filter"></td>
+                <td align="center"><input type="checkbox" class="global_filter" id="global_regex"></td>
+                <td align="center"><input type="checkbox" class="global_filter" id="global_smart" checked="checked"></td>
             </tr>
-    }
+            @*<tr id="filter_col1" data-column="0">
+                    <td>Column - Id</td>
+                    <td align="center"><input type="text" class="column_filter" id="col0_filter"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col0_regex"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col0_smart" checked="checked"></td>
+                </tr>*@
+            <tr id="filter_col2" data-column="1">
+                <td>IdAutoclave </td>
+                <td align="center"><input type="text" class="column_filter" id="col1_filter"></td>
+                <td align="center"><input type="checkbox" class="column_filter" id="col1_regex"></td>
+                <td align="center"><input type="checkbox" class="column_filter" id="col1_smart" checked="checked"></td>
+            </tr>
+            @*<tr id="filter_col3" data-column="2">
+                    <td>Carro</td>
+                    <td align="center"><input type="text" class="column_filter" id="col2_filter"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col2_regex"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col2_smart" checked="checked"></td>
+                </tr>*@
+            <tr id="filter_col4" data-column="3">
+                <td>N Progresivo</td>
+                <td align="center"><input type="text" class="column_filter" id="col3_filter"></td>
+                <td align="center"><input type="checkbox" class="column_filter" id="col3_regex"></td>
+                <td align="center"><input type="checkbox" class="column_filter" id="col3_smart" checked="checked"></td>
+            </tr>
+            <tr id="filter_col5" data-column="4">
+                <td>Programa</td>
+                <td align="center"><input type="text" class="column_filter" id="col4_filter"></td>
+                <td align="center"><input type="checkbox" class="column_filter" id="col4_regex"></td>
+                <td align="center"><input type="checkbox" class="column_filter" id="col4_smart" checked="checked"></td>
+            </tr>
+            @*<tr id="filter_col6" data-column="5">
+                    <td>Cod.Producto</td>
+                    <td align="center"><input type="text" class="column_filter" id="col5_filter"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col5_regex"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col5_smart" checked="checked"></td>
+                </tr>*@
+            <tr id="filter_col8" data-column="7">
+                <td>Hora Inicio</td>
+                <td align="center"><input type="text" class="column_filter" id="col7_filter"></td>
+                <td align="center"><input type="checkbox" class="column_filter" id="col7_regex"></td>
+                <td align="center"><input type="checkbox" class="column_filter" id="col7_smart" checked="checked"></td>
+            </tr>
+            <tr id="filter_col9" data-column="8">
+                <td>Hora Fin</td>
+                <td align="center"><input type="datetime" class="column_filter" id="col8_filter"></td>
+                <td align="center"><input type="checkbox" class="column_filter" id="col8_regex"></td>
+                <td align="center"><input type="checkbox" class="column_filter" id="col8_smart" checked="checked"></td>
+            </tr>
         </tbody>
-    </table>*@
+    </table>
+
+    <table id="example" datatable class=" table table-striped table-bordered table-sm"
+           dt-options="dtOptions"
+           dt-columns="dtColumns"
+           dt-instance="dtInstance">
+        <thead class="thead-dark">
+        </thead>
+        @*<tfoot>
+                <tr>
+                    <th>#</th>
+                    <th>idAutoclave</th>
+                    <th>N.Carro</th>
+                    <th>N.Progresivo</th>
+                </tr>
+            </tfoot>*@
+
+    </table>
+
+</body>

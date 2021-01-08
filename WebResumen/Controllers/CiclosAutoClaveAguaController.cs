@@ -57,7 +57,9 @@ namespace WebResumen.Controllers
         {
             //var result=  await _context.CiclosAutoclaves.OrderByDescending(x => x.Id).ToListAsync();
             //return View(await _context.CiclosAutoclaves.OrderByDescending(x=>x.Id).ToListAsync());
-           
+            
+            var Lo = model.nCiclo;
+            var li = model.nPrograma;
             var result = from s in _context.CiclosAutoclaves.OrderByDescending(x => x.Id)
                          select s;
            

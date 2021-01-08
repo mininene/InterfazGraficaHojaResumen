@@ -1,26 +1,95 @@
 ﻿(function (angular) {
+
     'use strict';
     angular.module('datatablesVaporApp', ['datatables', 'datatables.buttons', 'datatables.colvis']).
-        controller('vaporCtrl', function ($scope, $http, $q, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder, DTDefaultOptions) {
-            DTDefaultOptions.setLoadingTemplate('<div class="spinner-border text-primary" role="status"></div >' +'  ' + '<span class="sr - only">Cargando...</span>') //spinner carga
+        controller('vaporCtrl', function ($scope, $http, $q, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder, DTDefaultOptions, $filter, $interval) {
+            DTDefaultOptions.setLoadingTemplate('<div class="spinner-border text-primary" role="status"></div >' + '  ' + '<span class="sr - only">Cargando...</span>') //spinner carga
 
-            $scope.dtOptions = DTOptionsBuilder
-                .fromFnPromise(function () {
-                    var defer = $q.defer();
-                    $http.get('/CiclosAutoClaveVapor/ListVapor').then(function (result) {
-                        defer.resolve(result.data);
-                        
+
+            $scope.dtOptions = DTOptionsBuilder.newOptions()
+                .withOption('serverSide', false)
+                .withOption('processing', false)
+                .withOption('ajax', function (data, callback, settings) {
+
+
+                    $http({
+                        method: 'GET',
+                        url: '/CiclosAutoClaveVapor/ListVapor',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    }).then(function (result) {
+                        $scope.searchid = result.data;
+                        console.log(result.data)
+                        callback({
+
+                            infox: result.data
+
+                        });
                     });
-                   
-                    return defer.promise;
-
-                   
                 })
+
+                .withDataProp('infox')
+
+                //$scope.dtOptions = DTOptionsBuilder
+                //    .fromFnPromise(function () {
+                //        var defer = $q.defer();
+                //      $http.get('/CiclosAutoClaveAgua/ListAgua').then(function (result) {
+
+                //            $scope.searchid = result.data
+
+                //          defer.resolve(result.data);
+                //            console.log(result.data)
+                //            console.log(DTOptionsBuilder)
+
+                //        });
+
+
+                //        return defer.promise;
+                //    })
+
+
+
+
+                // .withOption('searching', false)
 
                 // Active ColVis plugin
                 .withColVis()
                 // Add a state change function
                 .withColVisStateChange(stateChange)
+
+                .withOption('initComplete', function () {
+
+                    // $(document).ready(function () { var table = $('#example').DataTable(); $("#example tfoot th").each(function (i) { var select = $('<select><option value=""></option></select>').appendTo($(this).empty()).on('change', function () { var val = $(this).val(); table.column(i).search(val ? '^' + $(this).val() + '$' : val, true, false).draw(); }); table.column(i).data().unique().sort().each(function (d, j) { select.append('<option value="' + d + '">' + d + '</option>') }); }); });
+                    // $(document).ready(function () {  $('#example tfoot th').each( function () { var title = $('#example thead th').eq( $(this).index() ).text(); $(this).html( '<input type="text" placeholder="Search '+title+'" />' ); } );   var table = $('#example').DataTable();  table.columns().eq( 0 ).each( function ( colIdx ) { $( 'input', table.column( colIdx ).footer() ).on( 'keyup change', function () { table .column( colIdx ) .search( this.value ) .draw(); } ); } ); } )
+
+                    //$(document).ready(function () {
+                    //    // Setup - add a text input to each footer cell
+                    //    $('#example thead tr').clone(true).appendTo('#example thead');
+                    //    $('#example thead tr:eq(1) th').each(function (i) {
+                    //        var title = $(this).text();
+                    //        $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+
+                    //        $('input', this).on('keyup change', function () {
+                    //            if (table.column(i).search() !== this.value) {
+                    //                table
+                    //                    .column(i)
+                    //                    .search(this.value)
+                    //                    .draw();
+                    //            }
+                    //        });
+                    //    });
+
+                    //    var table = $('#example').DataTable({
+                    //        orderCellsTop: true,
+                    //        fixedHeader: true
+                    //    });
+                    //})  
+
+                })
+
+
+
 
 
                 .withLanguage({
@@ -29,10 +98,9 @@
                     "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
                     "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
                     "sInfoPostFix": "",
-                    
                     "sInfoThousands": ",",
                     "sLengthMenu": "Mostrar   _MENU_   registros",
-                    "sloadingRecords": '<div class="spinner-border text-primary" role="status">< span class= "sr-only" > Loading...</span></div >',
+                    "sLoadingRecords": "Cargando...",
                     "sProcessing": "procesando...",
                     "sSearch": "Buscar:",
                     "sZeroRecords": "No hay registros encontrados",
@@ -45,12 +113,8 @@
                     "oAria": {
                         "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
                         "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                    },
-                     "oLanguage": {
-                        "sProcessing": "loading data...",
-                    }  
+                    }
                 })
-           
 
 
                 .withButtons([
@@ -79,21 +143,35 @@
                             columns: ':visible'
                         },
 
-                    }
+                    },
+                    //{
+                    //    extend: 'columnsToggle',
+                    //    text: '<i class="fa fa-files-o"></i> Copy',
+                    //    titleAttr: 'Copy',
+                    //    exportOptions: {
+                    //        columns: ':visible'
+                    //    },
+
+                    //},
+
                 ]
                 )
+
                 .withOption('scrollX', 'true')
                 .withOption('scrollY', '380px')
                 .withOption('lengthMenu', [[10, 50, 100, -1], [10, 50, 100, 'All']]);
 
+
+
+
             $scope.dtColumns = [
                 DTColumnBuilder.newColumn(null).withTitle('#').renderWith(function (data, type, full, meta) {
-                    //console.log(x);
+
                     return meta.row + 1
 
                 }),
 
-
+                //DTColumnBuilder.newColumn('id').withTitle('id'),             
                 DTColumnBuilder.newColumn('idAutoclave').withTitle('idAutoclave'),
                 DTColumnBuilder.newColumn('notas').withTitle('N.Carro'),
                 DTColumnBuilder.newColumn('numeroCiclo').withTitle('N.Progresivo'),
@@ -111,7 +189,7 @@
                     return x
                 }),
 
-                 DTColumnBuilder.newColumn('tif3').withTitle('TE2 IF3').renderWith(function (data, type, full, meta) {
+                DTColumnBuilder.newColumn('tif3').withTitle('TE2 IF3').renderWith(function (data, type, full, meta) {
                     var x = data.substring(14, 21)
                     return x
                 }),
@@ -166,12 +244,12 @@
                 DTColumnBuilder.newColumn('duracionTotalF9').withTitle('Duración F9'),
                 DTColumnBuilder.newColumn('duracionTotalF10').withTitle('Duración F10'),
                 DTColumnBuilder.newColumn('duracionTotalF11').withTitle('Duración F11'),
-               
+
                 DTColumnBuilder.newColumn('tif12').withTitle('T.TOTAL').renderWith(function (data, type, full, meta) {
                     var x = data.substring(0, 7)
                     return x
                 }),
-               
+
                 DTColumnBuilder.newColumn('tisubF12').withTitle('FoTE2 FF12').renderWith(function (data, type, full, meta) {
                     var x = data.substring(2, 9)
                     return x
@@ -185,13 +263,59 @@
                     return x
                 }),
                 DTColumnBuilder.newColumn('difMaxMin').withTitle('FoMax-FoMin'),
-            ]
+            ];
+
+
+
+
+
             function stateChange(iColumn, bVisible) {
                 console.log('The column', iColumn, ' has changed its status to', bVisible);
             }
+
+            function filterGlobal() {
+                $('#example').DataTable().search(
+                    $('#global_filter').val(),
+                    $('#global_regex').prop('checked'),
+                    $('#global_smart').prop('checked')
+                ).draw();
+            }
+
+            function filterColumn(i) {
+                $('#example').DataTable().column(i).search(
+                    $('#col' + i + '_filter').val(),
+                    $('#col' + i + '_regex').prop('checked'),
+                    $('#col' + i + '_smart').prop('checked')
+                ).draw();
+            }
+
+            $(document).ready(function () {
+                $('#example').DataTable();
+
+                $('input.global_filter').on('keyup click', function () {
+                    filterGlobal();
+                });
+
+                $('input.column_filter').on('keyup click', function () {
+                    filterColumn($(this).parents('tr').attr('data-column'));
+                });
+            });
+
+
+
+
+
 
 
 
         })
 
+
+
+
+
+
+
 })(angular);
+
+
