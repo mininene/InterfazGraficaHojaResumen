@@ -5,6 +5,7 @@
             controller('aguaCtrl', function ($scope, $http, $q, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder, DTDefaultOptions, $filter, $interval) {
                 DTDefaultOptions.setLoadingTemplate('<div class="spinner-border text-primary" role="status"></div >' + '  ' + '<span class="sr - only">Cargando...</span>') //spinner carga
 
+              
                 
                 $scope.dtOptions = DTOptionsBuilder.newOptions()
                     .withOption('serverSide', false)
@@ -58,10 +59,13 @@
                     // Add a state change function
                     .withColVisStateChange(stateChange)
 
-                    .withOption('initComplete', function () {
 
-                        // $(document).ready(function () { var table = $('#example').DataTable(); $("#example tfoot th").each(function (i) { var select = $('<select><option value=""></option></select>').appendTo($(this).empty()).on('change', function () { var val = $(this).val(); table.column(i).search(val ? '^' + $(this).val() + '$' : val, true, false).draw(); }); table.column(i).data().unique().sort().each(function (d, j) { select.append('<option value="' + d + '">' + d + '</option>') }); }); });
-                        // $(document).ready(function () {  $('#example tfoot th').each( function () { var title = $('#example thead th').eq( $(this).index() ).text(); $(this).html( '<input type="text" placeholder="Search '+title+'" />' ); } );   var table = $('#example').DataTable();  table.columns().eq( 0 ).each( function ( colIdx ) { $( 'input', table.column( colIdx ).footer() ).on( 'keyup change', function () { table .column( colIdx ) .search( this.value ) .draw(); } ); } ); } )
+
+                    .withOption('initComplete', function () {
+                        /* Custom filtering function which will search data in column four between two values */
+                       
+                       //  $(document).ready(function () { var table = $('#example').DataTable(); $("#example tfoot th").each(function (i) { var select = $('<select><option value=""></option></select>').appendTo($(this).empty()).on('change', function () { var val = $(this).val(); table.column(i).search(val ? '^' + $(this).val() + '$' : val, true, false).draw(); }); table.column(i).data().unique().sort().each(function (d, j) { select.append('<option value="' + d + '">' + d + '</option>') }); }); });
+                      //   $(document).ready(function () {  $('#example tfoot th').each( function () { var title = $('#example thead th').eq( $(this).index() ).text(); $(this).html( '<input type="text" placeholder="Search '+title+'" />' ); } );   var table = $('#example').DataTable();  table.columns().eq( 0 ).each( function ( colIdx ) { $( 'input', table.column( colIdx ).footer() ).on( 'keyup change', function () { table .column( colIdx ) .search( this.value ) .draw(); } ); } ); } )
 
                         //$(document).ready(function () {
                         //    // Setup - add a text input to each footer cell
@@ -85,6 +89,32 @@
                         //        fixedHeader: true
                         //    });
                         //})  
+
+                        //$.fn.dataTable.ext.search.push(
+                        //    function (settings, data, dataIndex) {
+                        //        var min = $('#min').datepicker({ dateFormat: "dd-mm-yy" }).val()
+                        //        console.log(min)
+                        //        var max = $('#max').datepicker("getDate");
+                        //        var startDate = new Date(data[4]);
+
+                        //        if (min == null && max == null) { return true; }
+                        //        if (min == null && startDate <= max) { return true; }
+                        //        if (max == null && startDate >= min) { return true; }
+                        //        if (startDate <= max && startDate >= min) { return true; }
+                        //        return false;
+                        //    }
+                        //);
+
+
+                        //$("#min").datepicker({ onSelect: function () { table.draw(); }, changeMonth: true, changeYear: true });
+                        //$("#max").datepicker({ onSelect: function () { table.draw(); }, changeMonth: true, changeYear: true });
+                        //var table = $('#example').DataTable();
+
+                        //// Event listener to the two range filtering inputs to redraw on input
+                        //$('#min, #max').change(function () {
+                        //    table.draw();
+
+                        //});
 
                     })
 
@@ -267,15 +297,25 @@
                         return x
                     }),
                     DTColumnBuilder.newColumn('difMaxMin').withTitle('FoMax-FoMin'),
+
+                    //DTColumnBuilder.newColumn('fechaRegistro').withTitle('Registro').renderWith(function (data, type, full, meta) {
+                    //    var x = data.substring(4, 10).split("-").reverse().join("-").replace("-", "/").replace("-", "/") + data.substring(4, 2).split("-").reverse().join("-").replace("-", "/").replace("-", "/") 
+                    //    return x
+                    //}),
+                   
                 ];
 
 
-
+               
 
 
                 function stateChange(iColumn, bVisible) {
                     console.log('The column', iColumn, ' has changed its status to', bVisible);
                 }
+
+
+
+               
 
                 function filterGlobal() {
                     $('#example').DataTable().search(
@@ -287,10 +327,11 @@
 
                 function filterColumn(i) {
                     $('#example').DataTable().column(i).search(
-                        $('#col' + i + '_filter').val(),
+                        $('#col' + i + '_filter').val().split("-").reverse().join("-").replace("-", "/").replace("-", "/").substring(0, 6) + $('#col' + i + '_filter').val().split("-").reverse().join("-").replace("-", "/").replace("-", "/").substring(8, 10), // agregado
                         $('#col' + i + '_regex').prop('checked'),
                         $('#col' + i + '_smart').prop('checked')
                     ).draw();
+                    console.log($('#col' + i + '_filter').val().split("-").reverse().join("-").replace("-", "/").replace("-", "/").substring(0, 6) + $('#col' + i + '_filter').val().split("-").reverse().join("-").replace("-", "/").replace("-", "/").substring(8,10));
                 }
 
                 $(document).ready(function () {
@@ -305,12 +346,76 @@
                     });
                 });
 
+
+             
+                //$(document).ready(function () {
+                //    // Create DataTable
+                //    var table = $('#example').DataTable({
+                //        retrieve: true,
+                //        paging: false,
+                //        dom: 'Pfrtip',
+                //    });
+
+                //    // Create the chart with initial data
+                //    var container = $(' <div/>').insertBefore(table.table().container());
+
+                //    var chart = Highcharts.chart(container[0], {
+                //        chart: {
+                //            spacingBottom: 15,
+                //            spacingTop: 10,
+                //            spacingLeft: 10,
+                //            spacingRight: 10,
+                //            // Explicitly tell the width and height of a chart
+                //            width: null,
+                //            height: null,
+                           
+                //            type: 'pie',
+
+                //        },
+                //        title: {
+                //            text: 'Contador de Registros por Autoclaves',
+                //        },
+                //        series: [
+                //            {
+                //                data: chartData(table),
+                //            },
+                //        ],
+                //    });
+
+                //    // On each draw, update the data in the chart
+                //    table.on('draw', function () {
+                //        chart.series[0].setData(chartData(table));
+                //    });
+                //});
+
+                //function chartData(table) {
+                //    var counts = {};
+
+                //    // Count the number of entries for each position
+                //    table
+                //        .column(1, { search: 'applied' })
+                //        .data()
+                //        .each(function (val) {
+                //            if (counts[val]) {
+                //                counts[val] += 1;
+                //            } else {
+                //                counts[val] = 1;
+                //            }
+                //        });
+
+                //    // And map it to the format highcharts uses
+                //    return $.map(counts, function (val, key) {
+                //        return {
+                //            name: key,
+                //            y: val,
+                //        };
+                //    });
+                //}
+
              
 
-
-
-
                
+
 
             })
 

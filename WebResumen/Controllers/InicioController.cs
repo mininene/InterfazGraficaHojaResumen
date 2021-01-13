@@ -39,15 +39,59 @@ namespace WebResumen.Controllers
         public async Task<JsonResult> ListHome()
         {
             
-            var result = await _context.MaestroAutoclave.OrderByDescending(x=>x.Id).ToListAsync();
+            var result = await _context.MaestroAutoclave.OrderBy(x=>x.Id).ToListAsync();
+            //var multipleOrder = from t1 in result
+            //                    from t2 in sabiUno
+            //                    where (Convert.ToInt32(t1.UltimoCiclo) - 1).ToString() == t2.NumeroCiclo
+            //                    where (t1.Matricula == t2.IdAutoclave)
+            //                    select new
+            //                    {
+            //                        t1.Nombre,
+            //                        t1.Estado,
+            //                        t1.Matricula,
+            //                        t2.NumeroCiclo,
+            //                        t2.HoraFin,                                                                 
+
+            //                    };
+
+            //var multipleOrder2 = from t1 in result
+            //                    from t3 in sabiDos
+            //                    where (Convert.ToInt32(t1.UltimoCiclo) - 1).ToString() == t3.NumeroCiclo
+            //                    where (t1.Matricula == t3.IdAutoclave)
+            //                    select new
+            //                    {
+            //                        t1.Nombre,
+            //                        t1.Estado,
+            //                        t1.Matricula,
+            //                        t3.NumeroCiclo,
+            //                        t3.HoraFin,
+
+
+            //                    };
+
+            //var pc = multipleOrder.Union(multipleOrder2);
+
+            return Json(result, ViewBag.Message);
+
+
+        }
+
+
+        public async Task<JsonResult> ListHomex()
+        {
+
+            //var result = await _context.MaestroAutoclave.OrderBy(x => x.Id).ToListAsync();
+            var result = await _context.MaestroAutoclave.OrderBy(x => x.Id).ToListAsync();
             var sabiUno = await _context.CiclosAutoclaves.OrderByDescending(x => x.Id).ToListAsync();
             var sabiDos = await _context.CiclosSabiDos.OrderByDescending(x => x.Id).ToListAsync();
-                       
+
             
-           var multiple = from t1 in result                           
-                           join t2 in sabiUno on (Convert.ToInt32(t1.UltimoCiclo)-1).ToString().Trim() equals t2.NumeroCiclo.Trim() into table1
+
+
+            var multiple = from t1 in result
+                           join t2 in sabiUno on (Convert.ToInt32(t1.UltimoCiclo) - 1).ToString().Trim() equals t2.NumeroCiclo.Trim() into table1
                            from t2 in table1.DefaultIfEmpty()
-                           join t3 in sabiDos on (Convert.ToInt32(t1.UltimoCiclo)-1).ToString().Trim() equals t3.NumeroCiclo.Trim() into table2
+                           join t3 in sabiDos on (Convert.ToInt32(t1.UltimoCiclo) - 1).ToString().Trim() equals t3.NumeroCiclo.Trim() into table2
                            from t3 in table2.DefaultIfEmpty()
                            select new JoinViewModel
 
@@ -58,12 +102,12 @@ namespace WebResumen.Controllers
 
                            };
             var multipleOrder = multiple.OrderBy(x => x.MaestroList.Id);
-            
 
-           
+
+
             return Json( multipleOrder, ViewBag.Message);
 
-            // return Json(result, ViewBag.Message);
+           
 
 
         }

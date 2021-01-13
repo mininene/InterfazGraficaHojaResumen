@@ -27,7 +27,9 @@ table, th, td {
         background-color: #ffffff;
     }
 
-
+.container1 {
+    float: left;
+}
 
 
     /*

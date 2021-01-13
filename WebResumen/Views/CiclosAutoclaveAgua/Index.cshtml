@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<WebResumen.Models.CiclosAutoclaves>
 
+
 @{
     ViewData["Title"] = "AutoClaves de Agua";
 }
@@ -29,10 +30,20 @@
     </div>*@
 
 
-
+@*<tbody>
+    <tr>
+        <td>Minimum Date:</td>
+        <td><input name="min" id="min" type="text"></td>
+    </tr>
+    <tr>
+        <td>Maximum Date:</td>
+        <td><input name="max" id="max" type="text"></td>
+    </tr>
+</tbody>*@
 
 <body ng-app="datatablesAguaApp" ng-controller="aguaCtrl as tagapp">
-   
+
+
 
     <table cellpadding="3" cellspacing="0" border="0" style="width: 67%; margin: 0 auto 2em auto;">
         <thead>
@@ -51,11 +62,11 @@
                 <td align="center"><input type="checkbox" class="global_filter" id="global_smart" checked="checked"></td>
             </tr>
             @*<tr id="filter_col1" data-column="0">
-            <td>Column - Id</td>
-            <td align="center"><input type="text" class="column_filter" id="col0_filter"></td>
-            <td align="center"><input type="checkbox" class="column_filter" id="col0_regex"></td>
-            <td align="center"><input type="checkbox" class="column_filter" id="col0_smart" checked="checked"></td>
-        </tr>*@
+                    <td>Column - Id</td>
+                    <td align="center"><input type="text" class="column_filter" id="col0_filter"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col0_regex"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col0_smart" checked="checked"></td>
+                </tr>*@
             <tr id="filter_col2" data-column="1">
                 <td>IdAutoclave </td>
                 <td align="center"><input type="text" class="column_filter" id="col1_filter"></td>
@@ -63,11 +74,11 @@
                 <td align="center"><input type="checkbox" class="column_filter" id="col1_smart" checked="checked"></td>
             </tr>
             @*<tr id="filter_col3" data-column="2">
-            <td>Carro</td>
-            <td align="center"><input type="text" class="column_filter" id="col2_filter"></td>
-            <td align="center"><input type="checkbox" class="column_filter" id="col2_regex"></td>
-            <td align="center"><input type="checkbox" class="column_filter" id="col2_smart" checked="checked"></td>
-        </tr>*@
+                    <td>Carro</td>
+                    <td align="center"><input type="text" class="column_filter" id="col2_filter"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col2_regex"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col2_smart" checked="checked"></td>
+                </tr>*@
             <tr id="filter_col4" data-column="3">
                 <td>N Progresivo</td>
                 <td align="center"><input type="text" class="column_filter" id="col3_filter"></td>
@@ -81,23 +92,39 @@
                 <td align="center"><input type="checkbox" class="column_filter" id="col4_smart" checked="checked"></td>
             </tr>
             @*<tr id="filter_col6" data-column="5">
-                <td>Cod.Producto</td>
-                <td align="center"><input type="text" class="column_filter" id="col5_filter"></td>
-                <td align="center"><input type="checkbox" class="column_filter" id="col5_regex"></td>
-                <td align="center"><input type="checkbox" class="column_filter" id="col5_smart" checked="checked"></td>
-            </tr>*@
+                    <td>Cod.Producto</td>
+                    <td align="center"><input type="text" class="column_filter" id="col5_filter"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col5_regex"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col5_smart" checked="checked"></td>
+                </tr>*@
             <tr id="filter_col8" data-column="7">
                 <td>Hora Inicio</td>
-                <td align="center"><input type="text" class="column_filter" id="col7_filter"></td>
+                <td align="center">
+                    <input type="text" class="column_filter" id="col7_filter">
+
+                    @*<div class="input-group input-daterange">
+                        <input type="date" class="form-control column_filter" id="col7_filter">
+                        <div class="input-group-addon">to</div>
+                        <input type="date" class="form-control column_filter" id="col7_filter">
+                    </div>*@
+
+
+                </td>
                 <td align="center"><input type="checkbox" class="column_filter" id="col7_regex"></td>
                 <td align="center"><input type="checkbox" class="column_filter" id="col7_smart" checked="checked"></td>
             </tr>
             <tr id="filter_col9" data-column="8">
                 <td>Hora Fin</td>
-                <td align="center"><input type="datetime" class="column_filter" id="col8_filter"></td>
+                <td align="center"><input type="text" class="column_filter" id="col8_filter"></td>
                 <td align="center"><input type="checkbox" class="column_filter" id="col8_regex"></td>
                 <td align="center"><input type="checkbox" class="column_filter" id="col8_smart" checked="checked"></td>
             </tr>
+            @*<tr id="filter_col43" data-column="42">
+                    <td>registro</td>
+                    <td align="center"><input type="date" class="column_filter" id="col42_filter"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col42_regex"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col42_smart" checked="checked"></td>
+                </tr>*@
         </tbody>
     </table>
 
@@ -108,13 +135,13 @@
         <thead class="thead-dark">
         </thead>
         @*<tfoot>
-            <tr>
-                <th>#</th>
-                <th>idAutoclave</th>
-                <th>N.Carro</th>
-                <th>N.Progresivo</th>
-            </tr>
-        </tfoot>*@
+                <tr>
+                    <th>#</th>
+                    <th>idAutoclave</th>
+                    <th>N.Carro</th>
+                    <th>N.Progresivo</th>
+                </tr>
+            </tfoot>*@
 
     </table>
 
