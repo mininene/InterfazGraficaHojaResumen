@@ -18,6 +18,7 @@ using WebResumen.Services.Authorization;
 using WebResumen.Services.LogRecord;
 using WebResumen.Services.PrinterService;
 
+
 namespace WebResumen
 {
     public class Startup
@@ -36,8 +37,9 @@ namespace WebResumen
             .UseSqlServer(Configuration
             .GetConnectionString("DefaultConnection")));
 
-            
 
+
+           
             // Add all of your handlers to DI.
 
 
@@ -58,6 +60,16 @@ namespace WebResumen
                 policy.Requirements.Add(new ADGroupAdminsRequirement("GLOBAL\\ESSA-HojaResumen_Admins")));
 
 
+                //options.AddPolicy("ADTodos", policy =>
+                //policy.Requirements.Add(new ADGroupAllRequirement("ESSA-HojaResumen_Users", "ESSA-HojaResumen_Admins", "ESSA-HojaResumen_Supervisors")));
+
+                //options.AddPolicy("ADAS", policy =>
+                //policy.Requirements.Add(new ADGroupASRequirement("ESSA-HojaResumen_Admins", "ESSA-HojaResumen_Supervisors")));
+
+                //options.AddPolicy("Admins", policy =>
+                //policy.Requirements.Add(new ADGroupAdminsRequirement("ESSA-HojaResumen_Admins")));
+
+
                 //Para control de vistas
                 options.AddPolicy("ADUsers", policy =>
                    policy.RequireRole(Configuration["SecuritySettings:ADGroupUsers"]));  //verifica el grupo desde el json
@@ -65,8 +77,8 @@ namespace WebResumen
                 options.AddPolicy("ADAdmins", policy =>
                    policy.RequireRole(Configuration["SecuritySettings:ADGroupAdmins"]));
 
-                options.AddPolicy("ADSupervisors", policy =>
-                   policy.RequireRole(Configuration["SecuritySettings:ADGroupSupervisors"]));
+                //options.AddPolicy("ADSupervisors", policy =>
+                //   policy.RequireRole(Configuration["SecuritySettings:ADGroupSupervisors"]));
 
                 //options.AddPolicy("ADTodos", policy =>
                 //  policy.RequireRole("ADUsers", "ADAdmins","ADSupervisors"));
@@ -96,13 +108,13 @@ namespace WebResumen
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<TestManager>();
             services.AddDistributedMemoryCache();
-            
+           
             services.AddSession(options => {
-                
+
                 options.IdleTimeout = TimeSpan.FromMinutes(10);//You can set Time   
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
-                  
+
             });
 
 

@@ -180,9 +180,34 @@
                 DTColumnBuilder.newColumn('lote').withTitle('Lote'),
                 DTColumnBuilder.newColumn('horaInicio').withTitle('Hora Inicio'),
                 DTColumnBuilder.newColumn('horaFin').withTitle('Hora Fin'),
-                DTColumnBuilder.newColumn('duracionTotalF1').withTitle('Duración F1'),
-                DTColumnBuilder.newColumn('duracionTotalF2').withTitle('Duración F2'),
-                DTColumnBuilder.newColumn('duracionTotalF3').withTitle('Duración F3'),
+               // DTColumnBuilder.newColumn('duracionTotalF1').withTitle('Duración F1'),
+                DTColumnBuilder.newColumn('duracionTotalF1').withTitle('Duración F1').renderWith(function (data, type, full, meta) {
+                    var x = data.split(':');
+                    console.log(x)
+                    var min = parseInt(x[0].trim());
+                    console.log(min +"min")
+                    var sec = (parseInt(x[1].trim())/60);
+                    console.log(sec+"sec")
+                    var s = (min + sec).toFixed(2);
+                    return s
+                }),
+              //  DTColumnBuilder.newColumn('duracionTotalF2').withTitle('Duración F2'),
+                DTColumnBuilder.newColumn('duracionTotalF2').withTitle('Duración F2').renderWith(function (data, type, full, meta) {
+                    var x = data.split(':');
+                    var min = parseInt(x[0].trim());
+                    var sec = (parseInt(x[1].trim()) / 60);
+                    var s = (min + sec).toFixed(2);
+                    return s
+                }),
+          
+               // DTColumnBuilder.newColumn('duracionTotalF3').withTitle('Duración F3'),
+                DTColumnBuilder.newColumn('duracionTotalF3').withTitle('Duración F3').renderWith(function (data, type, full, meta) {
+                    var x = data.split(':');
+                    var min = parseInt(x[0].trim());
+                    var sec = (parseInt(x[1].trim()) / 60);
+                    var s = (min + sec).toFixed(2);
+                    return s
+                }),
 
                 DTColumnBuilder.newColumn('tif3').withTitle('P.INICIAL F3').renderWith(function (data, type, full, meta) {
                     var x = data.substring(5, 14)
@@ -234,20 +259,99 @@
                 DTColumnBuilder.newColumn('tminima').withTitle('TMinina Estr.'),
                 DTColumnBuilder.newColumn('tmaxima').withTitle('TMaximaa Estr.'),
 
-                DTColumnBuilder.newColumn('duracionTotalF4').withTitle('Duración F4'),
-                DTColumnBuilder.newColumn('duracionTotalF5').withTitle('Duración F5'),
-                DTColumnBuilder.newColumn('duracionTotalF6').withTitle('Duración F6'),
-                DTColumnBuilder.newColumn('duracionTotalF7a').withTitle('Duración F7A'),
-                DTColumnBuilder.newColumn('duracionTotalF8a').withTitle('Duración F8A'),
-                DTColumnBuilder.newColumn('duracionTotalF7b').withTitle('Duración F7B'),
-                DTColumnBuilder.newColumn('duracionTotalF8b').withTitle('Duración F8B'),
-                DTColumnBuilder.newColumn('duracionTotalF9').withTitle('Duración F9'),
-                DTColumnBuilder.newColumn('duracionTotalF10').withTitle('Duración F10'),
-                DTColumnBuilder.newColumn('duracionTotalF11').withTitle('Duración F11'),
+               // DTColumnBuilder.newColumn('duracionTotalF4').withTitle('Duración F4'),
+                DTColumnBuilder.newColumn('duracionTotalF4').withTitle('Duración F4').renderWith(function (data, type, full, meta) {
+                    var x = data.split(':');
+                    var min = parseInt(x[0].trim());
+                    var sec = (parseInt(x[1].trim()) / 60);
+                    var s = (min + sec).toFixed(2);
+                    return s
+                }),
+               // DTColumnBuilder.newColumn('duracionTotalF5').withTitle('Duración F5'),
+                DTColumnBuilder.newColumn('duracionTotalF5').withTitle('Duración F5').renderWith(function (data, type, full, meta) {
+                    var x = data.split(':');
+                    var min = parseInt(x[0].trim());
+                    var sec = (parseInt(x[1].trim()) / 60);
+                    var s = (min + sec).toFixed(2);
+                    return s
+                }),
+               // DTColumnBuilder.newColumn('duracionTotalF6').withTitle('Duración F6'),
+                DTColumnBuilder.newColumn('duracionTotalF6').withTitle('Duración F6').renderWith(function (data, type, full, meta) {
+                    var x = data.split(':');
+                    var min = parseInt(x[0].trim());
+                    var sec = (parseInt(x[1].trim()) / 60);
+                    var s = (min + sec).toFixed(2);
+                    return s
+                }),
+               // DTColumnBuilder.newColumn('duracionTotalF7a').withTitle('Duración F7A'),
+                DTColumnBuilder.newColumn('duracionTotalF7a').withTitle('Duración F7A').renderWith(function (data, type, full, meta) {
+                    var x = data.split(':');
+                    var min = parseInt(x[0].trim());
+                    var sec = (parseInt(x[1].trim()) / 60);
+                    var s = (min + sec).toFixed(2);
+                    return s
+                }),
+               // DTColumnBuilder.newColumn('duracionTotalF8a').withTitle('Duración F8A'),
+                DTColumnBuilder.newColumn('duracionTotalF8a').withTitle('Duración F8A').renderWith(function (data, type, full, meta) {
+                    var x = data.split(':');
+                    var min = parseInt(x[0].trim());
+                    var sec = (parseInt(x[1].trim()) / 60);
+                    var s = (min + sec).toFixed(2);
+                    return s
+                }),
+               // DTColumnBuilder.newColumn('duracionTotalF7b').withTitle('Duración F7B'),
+                DTColumnBuilder.newColumn('duracionTotalF7b').withTitle('Duración F7B').renderWith(function (data, type, full, meta) {
+                    var x = data.split(':');
+                    var min = parseInt(x[0].trim());
+                    var sec = (parseInt(x[1].trim()) / 60);
+                    var s = (min + sec).toFixed(2);
+                    return s
+                }),
+               // DTColumnBuilder.newColumn('duracionTotalF8b').withTitle('Duración F8B'),
+                DTColumnBuilder.newColumn('duracionTotalF8b').withTitle('Duración F8B').renderWith(function (data, type, full, meta) {
+                    var x = data.split(':');
+                    var min = parseInt(x[0].trim());
+                    var sec = (parseInt(x[1].trim()) / 60);
+                    var s = (min + sec).toFixed(2);
+                    return s
+                }),
+               // DTColumnBuilder.newColumn('duracionTotalF9').withTitle('Duración F9'),
+                DTColumnBuilder.newColumn('duracionTotalF9').withTitle('Duración F9').renderWith(function (data, type, full, meta) {
+                    var x = data.split(':');
+                    var min = parseInt(x[0].trim());
+                    var sec = (parseInt(x[1].trim()) / 60);
+                    var s = (min + sec).toFixed(2);
+                    return s
+                }),
+               // DTColumnBuilder.newColumn('duracionTotalF10').withTitle('Duración F10'),
+                DTColumnBuilder.newColumn('duracionTotalF10').withTitle('Duración F10').renderWith(function (data, type, full, meta) {
+                    var x = data.split(':');
+                    var min = parseInt(x[0].trim());
+                    var sec = (parseInt(x[1].trim()) / 60);
+                    var s = (min + sec).toFixed(2);
+                    return s
+                }),
+               // DTColumnBuilder.newColumn('duracionTotalF11').withTitle('Duración F11'),
+                DTColumnBuilder.newColumn('duracionTotalF11').withTitle('Duración F11').renderWith(function (data, type, full, meta) {
+                    var x = data.split(':');
+                    var min = parseInt(x[0].trim());
+                    var sec = (parseInt(x[1].trim()) / 60);
+                    var s = (min + sec).toFixed(2);
+                    return s
+                }),
+
+                //DTColumnBuilder.newColumn('tif12').withTitle('T.TOTAL').renderWith(function (data, type, full, meta) {
+                //    var x = data.substring(0, 7)
+                //    return x
+                //}),
 
                 DTColumnBuilder.newColumn('tif12').withTitle('T.TOTAL').renderWith(function (data, type, full, meta) {
-                    var x = data.substring(0, 7)
-                    return x
+                    var Y = data.substring(0, 7)
+                    var x = Y.split(':');
+                    var min = parseInt(x[0].trim());
+                    var sec = (parseInt(x[1].trim()) / 60);
+                    var s = (min + sec).toFixed(2);
+                    return s
                 }),
 
                 DTColumnBuilder.newColumn('tisubF12').withTitle('FoTE2 FF12').renderWith(function (data, type, full, meta) {

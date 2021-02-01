@@ -27,13 +27,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\lib\AngularJS\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="wwwroot\js\AngularJSApp\AutoClaveA\Controller.js" />
     <None Include="wwwroot\js\AngularJSApp\AutoClaveA\Module.js" />
     <None Include="wwwroot\js\AngularJSApp\AutoClaveA\Service.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\css\Datatable\" />
+    <Folder Include="wwwroot\lib\libraries\DatePicker\" />
   </ItemGroup>
 
 </Project>

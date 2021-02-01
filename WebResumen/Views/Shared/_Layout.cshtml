@@ -20,16 +20,15 @@
     <link href="~/lib/MDB/css/style.css" rel="stylesheet">
 
 
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css">
+    <!-- Datatable -->
+    <link rel="stylesheet" href="~/css/Datatable/buttons.dataTables.min.css" />
+    <link rel="stylesheet" href="~/css/Datatable/dataTables.colVis.css" />
+    <link rel="stylesheet" href="~/css/Datatable/searchBuilder.dataTables.min.css" />
+    <link rel="stylesheet" href="~/css/Datatable/bootstrap-datepicker3.css" />
+
 
     <!-- Colvis -->
     @*<link  rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.9.4/css/jquery.dataTables.css" />*@
-
-    <link rel="stylesheet" href="https://rawgithub.com/DataTables/ColVis/master/css/dataTables.colVis.css">
-
-    <link rel="stylesheet" href="https://cdn.datatables.net/searchbuilder/1.0.1/css/searchBuilder.dataTables.min.css">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" />
 
 
 
@@ -155,9 +154,6 @@
         </div>
         <!-- Copyright -->
     </footer>
-    <!--<footer class="border-top footer text-muted footer-copyright text-center py-3 ">-->
-    @*&copy; 2020 - WebResumen - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>*@
-    @*&copy; 2020 Copyright - <a asp-area="" asp-controller="Home" asp-action="Privacy">Baxter</a>*@
 
 
 
@@ -165,49 +161,50 @@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
-
-
-
+    <script src="~/lib/libraries/jquery.dataTables.js"></script>
 
     <!-- Bootstrap core JavaScript -->
     <script type="text/javascript" src="/lib/MDB/js/bootstrap.min.js"></script>
+
     <!-- MDB core JavaScript -->
     <script type="text/javascript" src="/lib/MDB/js/mdb.min.js"></script>
-
     <script type="text/javascript" src="~/lib/MDB/js/addons/datatables.min.js"></script>
     <script type="text/javascript" src="~/lib/DataTables/datatables.min.js"></script>
+
     <!-- Angular -->
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="~/lib/libraries/AnguLib/angular.min.js"></script>
+
 
     <!-- Datatable -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-datatables/0.6.4/angular-datatables.js"></script>
+    <script src="~/lib/libraries/DataTable/angular-datatables.js"></script>
+    <script src="~/lib/libraries/DataTable/dataTables.buttons.min.js"></script>
 
-
-    <script src="https://cdn.datatables.net/buttons/1.2.4/js/dataTables.buttons.min.js"></script>
     <!-- Colvis -->
-    <script src="https://rawgithub.com/DataTables/ColVis/master/js/dataTables.colVis.js"></script>
-    <script src="https://rawgithub.com/l-lin/angular-datatables/v0.6.2/dist/plugins/colvis/angular-datatables.colvis.js"></script>
-    @*<script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.colVis.min.js"></script>*@
-    <script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.colVis.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.flash.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.print.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-datatables/0.6.4/plugins/buttons/angular-datatables.buttons.min.js"></script>
+    <script src="~/lib/libraries/DataTable/dataTables.colVis.js"></script>
+    <script src="~/lib/libraries/DataTable/angular-datatables.colvis.js"></script>
 
-    <script src="https://cdn.datatables.net/searchpanes/1.2.1/js/dataTables.searchPanes.min.js"></script>
-    <script src="https://cdn.datatables.net/plug-ins/preview/searchPane/dataTables.searchPane.min.js"></script>
-    <script src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js"></script>
-    <script src="https://code.highcharts.com/highcharts.js"></script>"
+
+    <script src="~/lib/libraries/DataTable/buttons.flash.min.js"></script>
+    <script src="~/lib/libraries/DataTable/buttons.html5.min.js"></script>
+    <script src="~/lib/libraries/DataTable/buttons.print.min.js"></script>
+    <script src="~/lib/libraries/DataTable/angular-datatables.buttons.min.js"></script>
+
+    <!-- Datatable -->
+    <!-- SearchPanel -->
+    <script src="~/lib/libraries/DataTable/SearchPanel/dataTables.searchPanes.min.js"></script>
+    <script src="~/lib/libraries/DataTable/SearchPanel/dataTables.searchPane.min.js"></script>
+    <script src="~/lib/libraries/DataTable/SearchPanel/dataTables.select.min.js"></script>
+    <script src="~/lib/libraries/DataTable/SearchPanel/highcharts.js"></script>
+
 
     <!-- Bootstrap Date-Picker Plugin -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
-   
+    <script src="~/lib/libraries/DatePicker/bootstrap-datepicker.min.js"></script>
+
 
     <!-- Excel-PDF-Copy -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.18/pdfmake.min.js"></script>
-    <script src="https://cdn.datatables.net/colreorder/1.5.3/js/dataTables.colReorder.min.js"></script>
+    <script src="~/lib/libraries/ExcLib/jszip.min.js"></script>
+    <script src="~/lib/libraries/ExcLib/pdfmake.min.js"></script>
+    <script src="~/lib/libraries/ExcLib/dataTables.colReorder.min.js"></script>
 
 
     <!-- Interno -->
@@ -223,13 +220,6 @@
     @*<script src="~/js/AngularJSApp/AutoClaveA/Module.js" asp-append-version="true"></script>
         <script src="~/js/AngularJSApp/AutoClaveA/Controller.js" asp-append-version="true"></script>
         <script src="~/js/AngularJSApp/AutoClaveA/Service.js" asp-append-version="true"></script>*@
-
-
-
-
-
-
-
 
 
 

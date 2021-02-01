@@ -2,140 +2,142 @@
 app.controller('homeCtrl', function ($scope, $http, $interval,$timeout,$q) {
     $scope.loading = true;
     $q.all([
-        $http.get('/Inicio/ListHomex'),
+        //$http.get('/Inicio/ListHomex'),
         $http.get('/Inicio/ListHome'),
-        //$http.get('/AutoClaveA/ListaAutoclaveA'),
-        //$http.get('/AutoClaveB/ListaAutoclaveB'),
-        //$http.get('/AutoClaveC/ListaAutoclaveC'),
-        //$http.get('/AutoClaveD/ListaAutoclaveD'),
-        //$http.get('/AutoClaveE/ListaAutoclaveE'),
-        //$http.get('/AutoClaveF/ListaAutoclaveF'),
-        //$http.get('/AutoClaveG/ListaAutoclaveG'),
-        //$http.get('/AutoClaveH/ListaAutoclaveH'),
-        //$http.get('/AutoClaveI/ListaAutoclaveI'),
-        //$http.get('/AutoClaveM/ListaAutoclaveM'),
-        //$http.get('/AutoClaveJ/ListaAutoclaveJ'),
-        //$http.get('/AutoClaveK/ListaAutoclaveK'),
-        //$http.get('/AutoClaveL/ListaAutoclaveL')
+        $http.get('/AutoClaveA/ListaAutoclaveA'),
+        $http.get('/AutoClaveB/ListaAutoclaveB'),
+        $http.get('/AutoClaveC/ListaAutoclaveC'),
+        $http.get('/AutoClaveD/ListaAutoclaveD'),
+        $http.get('/AutoClaveE/ListaAutoclaveE'),
+        $http.get('/AutoClaveF/ListaAutoclaveF'),
+        $http.get('/AutoClaveG/ListaAutoclaveG'),
+        $http.get('/AutoClaveH/ListaAutoclaveH'),
+        $http.get('/AutoClaveI/ListaAutoclaveI'),
+        $http.get('/AutoClaveM/ListaAutoclaveM'),
+        $http.get('/AutoClaveJ/ListaAutoclaveJ'),
+        $http.get('/AutoClaveK/ListaAutoclaveK'),
+        $http.get('/AutoClaveL/ListaAutoclaveL')
 
     ]).then(function (response) {
         /* enter your logic here */
         //console.log(response[0].data);
-        //console.log(response[1].data);
+        //console.log(response[2].data);
         $scope.loading = false;
-        //$scope.horaA = results[0].data[0].horaFin;
-        //$scope.horaB = results[1].data[0].horaFin;
-        //$scope.horaC = results[2].data[0].horaFin;
-        //$scope.horaD = results[3].data[0].horaFin;
-        //$scope.horaE = results[4].data[0].horaFin;
-        //$scope.horaF = results[5].data[0].horaFin;
-        //$scope.horaG = results[6].data[0].horaFin;
-        //$scope.horaH = results[7].data[0].horaFin;
-        //$scope.horaI = results[8].data[0].horaFin;
-        //$scope.horaM = results[9].data[0].horaFin;
-        //$scope.horaJ = results[10].data[0].horaFin;
-        //$scope.horaK = results[11].data[0].horaFin;
-        //$scope.horaL = results[12].data[0].horaFin;
-
-        $scope.na = response[1].data[0].nombre;
-        $scope.nb = response[1].data[1].nombre;
-        $scope.nc = response[1].data[2].nombre;
-        $scope.nd = response[1].data[3].nombre;
-        $scope.ne = response[1].data[4].nombre;
-        $scope.nf = response[1].data[5].nombre;
-        $scope.ng = response[1].data[6].nombre;
-        $scope.nh = response[1].data[7].nombre;
-        $scope.ni = response[1].data[8].nombre;
-        $scope.nm = response[1].data[12].nombre;
-        $scope.nj = response[1].data[9].nombre;
-        $scope.nk = response[1].data[10].nombre;
-        $scope.nl = response[1].data[11].nombre;
-
-        $scope.ea = response[1].data[0].estado;
-        $scope.eb = response[1].data[1].estado;
-        $scope.ec = response[1].data[2].estado;
-        $scope.ed = response[1].data[3].estado;
-        $scope.ee = response[1].data[4].estado;
-        $scope.ef = response[1].data[5].estado;
-        $scope.eg = response[1].data[6].estado;
-        $scope.eh = response[1].data[7].estado;
-        $scope.ei = response[1].data[8].estado;
-        $scope.em = response[1].data[12].estado;
-        $scope.ej = response[1].data[9].estado;
-        $scope.ek = response[1].data[10].estado;
-        $scope.el = response[1].data[11].estado;
-
-        $scope.a = parseInt(response[1].data[0].ultimoCiclo) - 1
-        $scope.b = parseInt(response[1].data[1].ultimoCiclo) - 1
-        $scope.c = parseInt(response[1].data[2].ultimoCiclo) - 1
-        $scope.d = parseInt(response[1].data[3].ultimoCiclo) - 1
-        $scope.e = parseInt(response[1].data[4].ultimoCiclo) - 1
-        $scope.f = parseInt(response[1].data[5].ultimoCiclo) - 1
-        $scope.g = parseInt(response[1].data[6].ultimoCiclo) - 1
-        $scope.h = parseInt(response[1].data[7].ultimoCiclo) - 1
-        $scope.i = parseInt(response[1].data[8].ultimoCiclo) - 1
-        $scope.m = parseInt(response[1].data[12].ultimoCiclo) - 1
-        $scope.j = parseInt(response[1].data[9].ultimoCiclo) - 1
-        $scope.k = parseInt(response[1].data[10].ultimoCiclo) - 1
-        $scope.l = parseInt(response[1].data[11].ultimoCiclo) - 1
+        $scope.horaA = response[1].data[0].horaFin;
+        $scope.horaB = response[2].data[0].horaFin;
+        $scope.horaC = response[3].data[0].horaFin;
+        $scope.horaD = response[4].data[0].horaFin;
+        $scope.horaE = response[5].data[0].horaFin;
+        $scope.horaF = response[6].data[0].horaFin;
+        $scope.horaG = response[7].data[0].horaFin;
+        $scope.horaH = response[8].data[0].horaFin;
+        $scope.horaI = response[9].data[0].horaFin;
+        $scope.horaM = response[10].data[0].horaFin;
+        $scope.horaJ = response[11].data[0].horaFin;
+        $scope.horaK = response[12].data[0].horaFin;
+        $scope.horaL = response[13].data[0].horaFin;
 
 
+       
+        $scope.na = response[0].data[0].nombre;
+        $scope.nb = response[0].data[1].nombre;
+        $scope.nc = response[0].data[2].nombre;
+        $scope.nd = response[0].data[3].nombre;
+        $scope.ne = response[0].data[4].nombre;
+        $scope.nf = response[0].data[5].nombre;
+        $scope.ng = response[0].data[6].nombre;
+        $scope.nh = response[0].data[7].nombre;
+        $scope.ni = response[0].data[8].nombre;
+        $scope.nm = response[0].data[12].nombre;
+        $scope.nj = response[0].data[9].nombre;
+        $scope.nk = response[0].data[10].nombre;
+        $scope.nl = response[0].data[11].nombre;
+
+        $scope.ea = response[0].data[0].estado;
+        $scope.eb = response[0].data[1].estado;
+        $scope.ec = response[0].data[2].estado;
+        $scope.ed = response[0].data[3].estado;
+        $scope.ee = response[0].data[4].estado;
+        $scope.ef = response[0].data[5].estado;
+        $scope.eg = response[0].data[6].estado;
+        $scope.eh = response[0].data[7].estado;
+        $scope.ei = response[0].data[8].estado;
+        $scope.em = response[0].data[12].estado;
+        $scope.ej = response[0].data[9].estado;
+        $scope.ek = response[0].data[10].estado;
+        $scope.el = response[0].data[11].estado;
+
+        $scope.a = parseInt(response[0].data[0].ultimoCiclo) - 1
+        $scope.b = parseInt(response[0].data[1].ultimoCiclo) - 1
+        $scope.c = parseInt(response[0].data[2].ultimoCiclo) - 1
+        $scope.d = parseInt(response[0].data[3].ultimoCiclo) - 1
+        $scope.e = parseInt(response[0].data[4].ultimoCiclo) - 1
+        $scope.f = parseInt(response[0].data[5].ultimoCiclo) - 1
+        $scope.g = parseInt(response[0].data[6].ultimoCiclo) - 1
+        $scope.h = parseInt(response[0].data[7].ultimoCiclo) - 1
+        $scope.i = parseInt(response[0].data[8].ultimoCiclo) - 1
+        $scope.m = parseInt(response[0].data[12].ultimoCiclo) - 1
+        $scope.j = parseInt(response[0].data[9].ultimoCiclo) - 1
+        $scope.k = parseInt(response[0].data[10].ultimoCiclo) - 1
+        $scope.l = parseInt(response[0].data[11].ultimoCiclo) - 1
 
 
-          if (response[0].data[0].sabiUnoList != null) {
-                $scope.horaA = response[0].data[0].sabiUnoList.horaFin;
-            } else { $scope.horaA = "Desconocido"; }
-
-            if (response[0].data[1].sabiUnoList != null) {
-                $scope.horaB = response[0].data[1].sabiUnoList.horaFin;
-            } else { $scope.horaB = "Desconocido"; }
-
-            if (response[0].data[2].sabiUnoList != null) {
-                $scope.horaC = response[0].data[2].sabiUnoList.horaFin;
-            } else { $scope.horaC = "Desconocido"; }
-
-            if (response[0].data[3].sabiUnoList != null) {
-                $scope.horaD = response[0].data[3].sabiUnoList.horaFin;
-            } else { $scope.horaD = "Desconocido"; }
-
-            if (response[0].data[4].sabiUnoList != null) {
-                $scope.horaE = response[0].data[4].sabiUnoList.horaFin;
-            } else { $scope.horaE = "Desconocido"; }
-
-            if (response[0].data[5].sabiUnoList != null) {
-                $scope.horaF = response[0].data[5].sabiUnoList.horaFin;
-            } else { $scope.horaF = "Desconocido"; }
-
-            if (response[0].data[6].sabiUnoList != null) {
-                $scope.horaG = response[0].data[6].sabiUnoList.horaFin;
-            } else { $scope.horaG = "Desconocido"; }
-
-            if (response[0].data[8].sabiUnoList != null) {                //  response.data[8] BEFORE
-                $scope.horaH = response[0].data[8].sabiUnoList.horaFin;
-            } else { $scope.horaH = "Desconocido"; }
-
-            if (response[0].data[9].sabiUnoList != null) {
-                $scope.horaI = response[0].data[9].sabiUnoList.horaFin;        //  response.data[9] BEFORE
-            } else { $scope.horaI = "Desconocido"; }
-
-            if (response[0].data[13].sabiUnoList != null) {
-                $scope.horaM = response[0].data[13].sabiUnoList.horaFin;        //  response.data[13] BEFORE
-            } else { $scope.horaM = "Desconocido"; }
 
 
-            if (response[0].data[10].sabiDosList != null) {
-                $scope.horaJ = response[0].data[10].sabiDosList.horaFin;     //  response.data[10] BEFORE
-            } else { $scope.horaJ = "Desconocido"; }
+          //if (response[0].data[0].sabiUnoList != null) {
+          //      $scope.horaA = response[0].data[0].sabiUnoList.horaFin;
+          //  } else { $scope.horaA = "Desconocido"; }
+
+          //  if (response[0].data[1].sabiUnoList != null) {
+          //      $scope.horaB = response[0].data[1].sabiUnoList.horaFin;
+          //  } else { $scope.horaB = "Desconocido"; }
+
+          //  if (response[0].data[2].sabiUnoList != null) {
+          //      $scope.horaC = response[0].data[2].sabiUnoList.horaFin;
+          //  } else { $scope.horaC = "Desconocido"; }
+
+          //  if (response[0].data[3].sabiUnoList != null) {
+          //      $scope.horaD = response[0].data[3].sabiUnoList.horaFin;
+          //  } else { $scope.horaD = "Desconocido"; }
+
+          //  if (response[0].data[4].sabiUnoList != null) {
+          //      $scope.horaE = response[0].data[4].sabiUnoList.horaFin;
+          //  } else { $scope.horaE = "Desconocido"; }
+
+          //  if (response[0].data[5].sabiUnoList != null) {
+          //      $scope.horaF = response[0].data[5].sabiUnoList.horaFin;
+          //  } else { $scope.horaF = "Desconocido"; }
+
+          //  if (response[0].data[6].sabiUnoList != null) {
+          //      $scope.horaG = response[0].data[6].sabiUnoList.horaFin;
+          //  } else { $scope.horaG = "Desconocido"; }
+
+          //  if (response[0].data[8].sabiUnoList != null) {                //  response.data[8] BEFORE
+          //      $scope.horaH = response[0].data[8].sabiUnoList.horaFin;
+          //  } else { $scope.horaH = "Desconocido"; }
+
+          //  if (response[0].data[9].sabiUnoList != null) {
+          //      $scope.horaI = response[0].data[9].sabiUnoList.horaFin;        //  response.data[9] BEFORE
+          //  } else { $scope.horaI = "Desconocido"; }
+
+          //  if (response[0].data[13].sabiUnoList != null) {
+          //      $scope.horaM = response[0].data[13].sabiUnoList.horaFin;        //  response.data[13] BEFORE
+          //  } else { $scope.horaM = "Desconocido"; }
 
 
-            if (response[0].data[11].sabiDosList != null) {
-                $scope.horaK = response[0].data[11].sabiDosList.horaFin;
-            } else { $scope.horaK = "Desconocido"; }
+          //  if (response[0].data[10].sabiDosList != null) {
+          //      $scope.horaJ = response[0].data[10].sabiDosList.horaFin;     //  response.data[10] BEFORE
+          //  } else { $scope.horaJ = "Desconocido"; }
 
 
-            if (response[0].data[12].sabiDosList != null) {
-                $scope.horaL = response[0].data[12].sabiDosList.horaFin;
-            } else { $scope.horaL = "Desconocido"; }
+          //  if (response[0].data[11].sabiDosList != null) {
+          //      $scope.horaK = response[0].data[11].sabiDosList.horaFin;
+          //  } else { $scope.horaK = "Desconocido"; }
+
+
+          //  if (response[0].data[12].sabiDosList != null) {
+          //      $scope.horaL = response[0].data[12].sabiDosList.horaFin;
+          //  } else { $scope.horaL = "Desconocido"; }
 
        
 
@@ -411,122 +413,137 @@ app.controller('homeCtrl', function ($scope, $http, $interval,$timeout,$q) {
        
        
         $q.all([
-              $http.get('/Inicio/ListHomex'),
+              //$http.get('/Inicio/ListHomex'),
               $http.get('/Inicio/ListHome'),
-        //    $http.get('/AutoClaveA/ListaAutoclaveA'),
-        //    $http.get('/AutoClaveB/ListaAutoclaveB'),
-        //    $http.get('/AutoClaveC/ListaAutoclaveC'),
-        //    $http.get('/AutoClaveD/ListaAutoclaveD'),
-        //    $http.get('/AutoClaveE/ListaAutoclaveE'),
-        //    $http.get('/AutoClaveF/ListaAutoclaveF'),
-        //    $http.get('/AutoClaveG/ListaAutoclaveG'),
-        //    $http.get('/AutoClaveH/ListaAutoclaveH'),
-        //    $http.get('/AutoClaveI/ListaAutoclaveI'),
-        //    $http.get('/AutoClaveM/ListaAutoclaveM'),
-        //    $http.get('/AutoClaveJ/ListaAutoclaveJ'),
-        //    $http.get('/AutoClaveK/ListaAutoclaveK'),
-        //    $http.get('/AutoClaveL/ListaAutoclaveL')
+            $http.get('/AutoClaveA/ListaAutoclaveA'),
+            $http.get('/AutoClaveB/ListaAutoclaveB'),
+            $http.get('/AutoClaveC/ListaAutoclaveC'),
+            $http.get('/AutoClaveD/ListaAutoclaveD'),
+            $http.get('/AutoClaveE/ListaAutoclaveE'),
+            $http.get('/AutoClaveF/ListaAutoclaveF'),
+            $http.get('/AutoClaveG/ListaAutoclaveG'),
+            $http.get('/AutoClaveH/ListaAutoclaveH'),
+            $http.get('/AutoClaveI/ListaAutoclaveI'),
+            $http.get('/AutoClaveM/ListaAutoclaveM'),
+            $http.get('/AutoClaveJ/ListaAutoclaveJ'),
+            $http.get('/AutoClaveK/ListaAutoclaveK'),
+            $http.get('/AutoClaveL/ListaAutoclaveL')
            
         ]).then(function (response) {
-            $scope.na = response[1].data[0].nombre;
-            $scope.nb = response[1].data[1].nombre;
-            $scope.nc = response[1].data[2].nombre;
-            $scope.nd = response[1].data[3].nombre;
-            $scope.ne = response[1].data[4].nombre;
-            $scope.nf = response[1].data[5].nombre;
-            $scope.ng = response[1].data[6].nombre;
-            $scope.nh = response[1].data[7].nombre;
-            $scope.ni = response[1].data[8].nombre;
-            $scope.nm = response[1].data[12].nombre;
-            $scope.nj = response[1].data[9].nombre;
-            $scope.nk = response[1].data[10].nombre;
-            $scope.nl = response[1].data[11].nombre;
-
-            $scope.ea = response[1].data[0].estado;
-            $scope.eb = response[1].data[1].estado;
-            $scope.ec = response[1].data[2].estado;
-            $scope.ed = response[1].data[3].estado;
-            $scope.ee = response[1].data[4].estado;
-            $scope.ef = response[1].data[5].estado;
-            $scope.eg = response[1].data[6].estado;
-            $scope.eh = response[1].data[7].estado;
-            $scope.ei = response[1].data[8].estado;
-            $scope.em = response[1].data[12].estado;
-            $scope.ej = response[1].data[9].estado;
-            $scope.ek = response[1].data[10].estado;
-            $scope.el = response[1].data[11].estado;
-
-            $scope.a = parseInt(response[1].data[0].ultimoCiclo) - 1
-            $scope.b = parseInt(response[1].data[1].ultimoCiclo) - 1
-            $scope.c = parseInt(response[1].data[2].ultimoCiclo) - 1
-            $scope.d = parseInt(response[1].data[3].ultimoCiclo) - 1
-            $scope.e = parseInt(response[1].data[4].ultimoCiclo) - 1
-            $scope.f = parseInt(response[1].data[5].ultimoCiclo) - 1
-            $scope.g = parseInt(response[1].data[6].ultimoCiclo) - 1
-            $scope.h = parseInt(response[1].data[7].ultimoCiclo) - 1
-            $scope.i = parseInt(response[1].data[8].ultimoCiclo) - 1
-            $scope.m = parseInt(response[1].data[12].ultimoCiclo) - 1
-            $scope.j = parseInt(response[1].data[9].ultimoCiclo) - 1
-            $scope.k = parseInt(response[1].data[10].ultimoCiclo) - 1
-            $scope.l = parseInt(response[1].data[11].ultimoCiclo) - 1
+            $scope.horaA = response[1].data[0].horaFin;
+            $scope.horaB = response[2].data[0].horaFin;
+            $scope.horaC = response[3].data[0].horaFin;
+            $scope.horaD = response[4].data[0].horaFin;
+            $scope.horaE = response[5].data[0].horaFin;
+            $scope.horaF = response[6].data[0].horaFin;
+            $scope.horaG = response[7].data[0].horaFin;
+            $scope.horaH = response[8].data[0].horaFin;
+            $scope.horaI = response[9].data[0].horaFin;
+            $scope.horaM = response[10].data[0].horaFin;
+            $scope.horaJ = response[11].data[0].horaFin;
+            $scope.horaK = response[12].data[0].horaFin;
+            $scope.horaL = response[13].data[0].horaFin;
 
 
 
+            $scope.na = response[0].data[0].nombre;
+            $scope.nb = response[0].data[1].nombre;
+            $scope.nc = response[0].data[2].nombre;
+            $scope.nd = response[0].data[3].nombre;
+            $scope.ne = response[0].data[4].nombre;
+            $scope.nf = response[0].data[5].nombre;
+            $scope.ng = response[0].data[6].nombre;
+            $scope.nh = response[0].data[7].nombre;
+            $scope.ni = response[0].data[8].nombre;
+            $scope.nm = response[0].data[12].nombre;
+            $scope.nj = response[0].data[9].nombre;
+            $scope.nk = response[0].data[10].nombre;
+            $scope.nl = response[0].data[11].nombre;
 
-            if (response[0].data[0].sabiUnoList != null) {
-                $scope.horaA = response[0].data[0].sabiUnoList.horaFin;
-            } else { $scope.horaA = "Desconocido"; }
+            $scope.ea = response[0].data[0].estado;
+            $scope.eb = response[0].data[1].estado;
+            $scope.ec = response[0].data[2].estado;
+            $scope.ed = response[0].data[3].estado;
+            $scope.ee = response[0].data[4].estado;
+            $scope.ef = response[0].data[5].estado;
+            $scope.eg = response[0].data[6].estado;
+            $scope.eh = response[0].data[7].estado;
+            $scope.ei = response[0].data[8].estado;
+            $scope.em = response[0].data[12].estado;
+            $scope.ej = response[0].data[9].estado;
+            $scope.ek = response[0].data[10].estado;
+            $scope.el = response[0].data[11].estado;
 
-            if (response[0].data[1].sabiUnoList != null) {
-                $scope.horaB = response[0].data[1].sabiUnoList.horaFin;
-            } else { $scope.horaB = "Desconocido"; }
-
-            if (response[0].data[2].sabiUnoList != null) {
-                $scope.horaC = response[0].data[2].sabiUnoList.horaFin;
-            } else { $scope.horaC = "Desconocido"; }
-
-            if (response[0].data[3].sabiUnoList != null) {
-                $scope.horaD = response[0].data[3].sabiUnoList.horaFin;
-            } else { $scope.horaD = "Desconocido"; }
-
-            if (response[0].data[4].sabiUnoList != null) {
-                $scope.horaE = response[0].data[4].sabiUnoList.horaFin;
-            } else { $scope.horaE = "Desconocido"; }
-
-            if (response[0].data[5].sabiUnoList != null) {
-                $scope.horaF = response[0].data[5].sabiUnoList.horaFin;
-            } else { $scope.horaF = "Desconocido"; }
-
-            if (response[0].data[6].sabiUnoList != null) {
-                $scope.horaG = response[0].data[6].sabiUnoList.horaFin;
-            } else { $scope.horaG = "Desconocido"; }
-
-            if (response[0].data[8].sabiUnoList != null) {                //  response.data[8] BEFORE
-                $scope.horaH = response[0].data[8].sabiUnoList.horaFin;
-            } else { $scope.horaH = "Desconocido"; }
-
-            if (response[0].data[9].sabiUnoList != null) {
-                $scope.horaI = response[0].data[9].sabiUnoList.horaFin;        //  response.data[9] BEFORE
-            } else { $scope.horaI = "Desconocido"; }
-
-            if (response[0].data[13].sabiUnoList != null) {
-                $scope.horaM = response[0].data[13].sabiUnoList.horaFin;        //  response.data[13] BEFORE
-            } else { $scope.horaM = "Desconocido"; }
-
-
-            if (response[0].data[10].sabiDosList != null) {
-                $scope.horaJ = response[0].data[10].sabiDosList.horaFin;     //  response.data[10] BEFORE
-            } else { $scope.horaJ = "Desconocido"; }
+            $scope.a = parseInt(response[0].data[0].ultimoCiclo) - 1
+            $scope.b = parseInt(response[0].data[1].ultimoCiclo) - 1
+            $scope.c = parseInt(response[0].data[2].ultimoCiclo) - 1
+            $scope.d = parseInt(response[0].data[3].ultimoCiclo) - 1
+            $scope.e = parseInt(response[0].data[4].ultimoCiclo) - 1
+            $scope.f = parseInt(response[0].data[5].ultimoCiclo) - 1
+            $scope.g = parseInt(response[0].data[6].ultimoCiclo) - 1
+            $scope.h = parseInt(response[0].data[7].ultimoCiclo) - 1
+            $scope.i = parseInt(response[0].data[8].ultimoCiclo) - 1
+            $scope.m = parseInt(response[0].data[12].ultimoCiclo) - 1
+            $scope.j = parseInt(response[0].data[9].ultimoCiclo) - 1
+            $scope.k = parseInt(response[0].data[10].ultimoCiclo) - 1
+            $scope.l = parseInt(response[0].data[11].ultimoCiclo) - 1
 
 
-            if (response[0].data[11].sabiDosList != null) {
-                $scope.horaK = response[0].data[11].sabiDosList.horaFin;
-            } else { $scope.horaK = "Desconocido"; }
+
+            //if (response[0].data[0].sabiUnoList != null) {
+            //    $scope.horaA = response[0].data[0].sabiUnoList.horaFin;
+            //} else { $scope.horaA = "Desconocido"; }
+
+            //if (response[0].data[1].sabiUnoList != null) {
+            //    $scope.horaB = response[0].data[1].sabiUnoList.horaFin;
+            //} else { $scope.horaB = "Desconocido"; }
+
+            //if (response[0].data[2].sabiUnoList != null) {
+            //    $scope.horaC = response[0].data[2].sabiUnoList.horaFin;
+            //} else { $scope.horaC = "Desconocido"; }
+
+            //if (response[0].data[3].sabiUnoList != null) {
+            //    $scope.horaD = response[0].data[3].sabiUnoList.horaFin;
+            //} else { $scope.horaD = "Desconocido"; }
+
+            //if (response[0].data[4].sabiUnoList != null) {
+            //    $scope.horaE = response[0].data[4].sabiUnoList.horaFin;
+            //} else { $scope.horaE = "Desconocido"; }
+
+            //if (response[0].data[5].sabiUnoList != null) {
+            //    $scope.horaF = response[0].data[5].sabiUnoList.horaFin;
+            //} else { $scope.horaF = "Desconocido"; }
+
+            //if (response[0].data[6].sabiUnoList != null) {
+            //    $scope.horaG = response[0].data[6].sabiUnoList.horaFin;
+            //} else { $scope.horaG = "Desconocido"; }
+
+            //if (response[0].data[8].sabiUnoList != null) {                //  response.data[8] BEFORE
+            //    $scope.horaH = response[0].data[8].sabiUnoList.horaFin;
+            //} else { $scope.horaH = "Desconocido"; }
+
+            //if (response[0].data[9].sabiUnoList != null) {
+            //    $scope.horaI = response[0].data[9].sabiUnoList.horaFin;        //  response.data[9] BEFORE
+            //} else { $scope.horaI = "Desconocido"; }
+
+            //if (response[0].data[13].sabiUnoList != null) {
+            //    $scope.horaM = response[0].data[13].sabiUnoList.horaFin;        //  response.data[13] BEFORE
+            //} else { $scope.horaM = "Desconocido"; }
 
 
-            if (response[0].data[12].sabiDosList != null) {
-                $scope.horaL = response[0].data[12].sabiDosList.horaFin;
-            } else { $scope.horaL = "Desconocido"; }
+            //if (response[0].data[10].sabiDosList != null) {
+            //    $scope.horaJ = response[0].data[10].sabiDosList.horaFin;     //  response.data[10] BEFORE
+            //} else { $scope.horaJ = "Desconocido"; }
+
+
+            //if (response[0].data[11].sabiDosList != null) {
+            //    $scope.horaK = response[0].data[11].sabiDosList.horaFin;
+            //} else { $scope.horaK = "Desconocido"; }
+
+
+            //if (response[0].data[12].sabiDosList != null) {
+            //    $scope.horaL = response[0].data[12].sabiDosList.horaFin;
+            //} else { $scope.horaL = "Desconocido"; }
 
         //    /* enter your logic here */
         //    //console.log(results[0].data[0]);
