@@ -55,6 +55,13 @@ namespace WebResumen.Controllers
 
                         if (user != null)
                         {
+                            if (user.IsAccountLockedOut())
+                            {
+                                TempData["Bloqueo"] = "Cuenta Bloqueada";
+                                //return View();
+                                return RedirectToAction("Index", "Home");
+
+                            }
                             if (user.IsMemberOf(groupAdmins) || user.IsMemberOf(groupSupervisors) || user.IsMemberOf(groupUsers))
                             {
                                 ///////////////////////////////////////////////////////////////////////
@@ -69,7 +76,7 @@ namespace WebResumen.Controllers
                                 HttpContext.Session.SetString("SessionUser", model.Usuario);
                                 HttpContext.Session.SetString("SessionPass", model.Contraseña);
                                 HttpContext.Session.SetString("SessionName", fullName);
-                                HttpContext.Session.SetString("SessionTiempo", DateTime.Now.ToString("HH:mm:ss"));
+                                HttpContext.Session.SetString("SessionTiempo", DateTime.Now.AddMinutes(10).ToString("HH:mm:ss"));
                                 string EventoI = "Inicio de sesión";
                                 string ComentarioI = "Ha iniciado sesión";
                                 _log.Write(fullName, DateTime.Now, EventoI, ComentarioI);
@@ -107,6 +114,7 @@ namespace WebResumen.Controllers
            
             try
             {
+               
                 string EventoI = "Cierre de sesión";
                 string ComentarioI = "Ha Cerrado sesión";
                 string usuario = _httpContextAccessor.HttpContext.Session.GetString("SessionName");

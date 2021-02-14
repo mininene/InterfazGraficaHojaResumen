@@ -21,7 +21,8 @@ namespace WebResumen.Controllers
     {
         private readonly AppDbContext _context;
         private readonly ILogRecord _log;
-       
+        IHttpContextAccessor _httpContextAccessor = new HttpContextAccessor();
+
 
 
         public InicioController(AppDbContext context, ILogRecord log)
@@ -70,6 +71,8 @@ namespace WebResumen.Controllers
             //                    };
 
             //var pc = multipleOrder.Union(multipleOrder2);
+           
+        
 
             return Json(result, ViewBag.Message);
 

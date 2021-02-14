@@ -30,7 +30,9 @@ namespace WebResumen.Controllers
 
         // GET: Parametro
         public async Task<IActionResult> Index()
+
         {
+
             return View(await _context.Parametros.ToListAsync());
         }
 

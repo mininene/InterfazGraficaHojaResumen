@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -17,7 +18,7 @@ using WebResumen.Services.Authentication;
 using WebResumen.Services.Authorization;
 using WebResumen.Services.LogRecord;
 using WebResumen.Services.PrinterService;
-
+using WebResumen.Services.printerServiceAS;
 
 namespace WebResumen
 {
@@ -101,7 +102,7 @@ namespace WebResumen
             services.AddScoped(typeof(IPrinterOchoVeinte), typeof(PrinterOchoVeinte));
             services.AddScoped(typeof(IPrinterDosTresCuatro), typeof(PrinterDosTresCuatro));
             services.AddScoped(typeof(IPrinterNueveDiez), typeof(PrinterNueveDiez));
-          
+            services.AddScoped(typeof(IPrinterOchoVeinteAS), typeof(PrinterOchoVeinteAS));
 
 
 
@@ -111,11 +112,18 @@ namespace WebResumen
            
             services.AddSession(options => {
 
-                options.IdleTimeout = TimeSpan.FromMinutes(10);//You can set Time   
+                
+                options.IdleTimeout = TimeSpan.FromMinutes(30);//You can set Time   
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
 
             });
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.Cookie.Expiration = TimeSpan.FromMinutes(10);
+                });
 
 
             services.AddScoped(typeof(ILogRecord), typeof(LogRecord));

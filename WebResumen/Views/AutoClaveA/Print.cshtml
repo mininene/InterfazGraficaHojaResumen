@@ -11,13 +11,31 @@
 
     @using Microsoft.AspNetCore.Http
     @inject IHttpContextAccessor httpContextAccessor
-  
 
+    @using Microsoft.AspNetCore.Authorization
+    @inject IAuthorizationService AuthorizationService
+    @if ((await AuthorizationService.AuthorizeAsync(User, "ADUsers")).Succeeded)
+    {
+        <a type="button" class="btn btn-success" asp-action="Print" asp-route-id="@httpContextAccessor.HttpContext.Session.GetString("SessionDatosA")">Imprimir</a>
+    }
+    else
+    {
+<div class="form-group">
 
-    <a type="button" class="btn btn-success" asp-action="Print" asp-route-id="@httpContextAccessor.HttpContext.Session.GetString("SessionDatosA")">Imprimir</a>
+    @Html.DropDownList("ImpresoraNombre", new SelectList(ViewBag.impresoras, "--seleccionar--"))
+    <a type="submit" class="btn btn-success" asp-action="PrintAS" asp-route-id="@httpContextAccessor.HttpContext.Session.GetString("SessionDatosA")">ImprimirAS</a>
 
+</div>
+            @*@foreach (var person in ViewBag.impresoras)
+                {
 
-</tbody>
+                    <h1>@person</h1>
+
+                }*@
+
+            }
+
+    </tbody>
 
 
 

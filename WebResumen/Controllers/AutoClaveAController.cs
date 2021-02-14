@@ -14,6 +14,7 @@ using WebResumen.Models;
 using WebResumen.Models.ViewModels;
 using WebResumen.Services.LogRecord;
 using WebResumen.Services.PrinterService;
+using WebResumen.Services.printerServiceAS;
 
 namespace WebResumen.Controllers
 {
@@ -22,17 +23,19 @@ namespace WebResumen.Controllers
     {
         private readonly AppDbContext _context;
         private readonly IPrinterOchoVeinte _printerOchoVeinte;
+        private readonly IPrinterOchoVeinteAS _printerOchoVeinteAS;
         private readonly IPrinterDosTresCuatro _printerDosTresCuatro;
         private readonly ILogRecord _log;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AutoClaveAController(AppDbContext context, IPrinterOchoVeinte printerOchoVeinte, IPrinterDosTresCuatro printerDosTresCuatro, ILogRecord log, IHttpContextAccessor httpContextAccessor)
+        public AutoClaveAController(AppDbContext context, IPrinterOchoVeinte printerOchoVeinte, IPrinterDosTresCuatro printerDosTresCuatro, ILogRecord log, IHttpContextAccessor httpContextAccessor, IPrinterOchoVeinteAS printerOchoVeinteAS)
         {
             _context = context;
             _printerOchoVeinte = printerOchoVeinte;
             _printerDosTresCuatro = printerDosTresCuatro;
             _log= log;
             _httpContextAccessor = httpContextAccessor;
+            _printerOchoVeinteAS = printerOchoVeinteAS;
         }
 
         // GET: AutoClaveA
@@ -70,8 +73,16 @@ namespace WebResumen.Controllers
                                        || x.Programa.Contains(nPrograma)
                                          || x.HoraFin.Contains(fecha));  // si pongo la fecha como string si que lo coge
             }
-
-
+            DateTime expiry = Convert.ToDateTime(_httpContextAccessor.HttpContext.Session.GetString("SessionTiempo"));
+            ViewBag.expiry = expiry;
+            if (expiry <= DateTime.Now)
+            {
+                string EventoI = "Cierre de sesión";
+                string ComentarioI = "Ha Cerrado sesión";
+                string usuario = _httpContextAccessor.HttpContext.Session.GetString("SessionName");
+                _log.Write(usuario, DateTime.Now, EventoI, ComentarioI);
+                return RedirectToAction("Logout", "Home");
+            }
                 return View(query);
         }
 
@@ -223,6 +234,47 @@ namespace WebResumen.Controllers
 
 
         }
+       
+
+        public async Task<IActionResult> PrintAS(int? id)
+        {
+           
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var ciclosAutoclaves = await _context.CiclosAutoclaves
+               .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (ciclosAutoclaves.Programa.Trim().Equals("8") || ciclosAutoclaves.Programa.Trim().Equals("20"))
+
+            {
+                _printerOchoVeinteAS.printOchoVeinteAS(id);
+            }
+
+            if (ciclosAutoclaves.Programa.Trim().Equals("2") || ciclosAutoclaves.Programa.Trim().Equals("3") || ciclosAutoclaves.Programa.Trim().Equals("4"))
+            {
+                _printerDosTresCuatro.printDosTresCuatro(id);
+            }
+
+
+            if (ciclosAutoclaves == null)
+            {
+                return NotFound();
+            }
+            string EventoA = "Re-Impresión";
+            TempData["Print"] = "El Archivo ha sido Impreso";
+            _log.Write(_httpContextAccessor.HttpContext.Session.GetString("SessionFullName"), DateTime.Now, EventoA + " " + _httpContextAccessor.HttpContext.Session.GetString("AutoclaveNumeroA"), _httpContextAccessor.HttpContext.Session.GetString("SessionComentarioA"));
+
+            return RedirectToAction("Index", "AutoClaveA");
+
+
+
+
+        }
+
+ 
+
 
 
         //JSON/////////////////////////////////////////////////////////////////////////
@@ -285,9 +337,9 @@ namespace WebResumen.Controllers
 
         //    return Json(ciclosAutoclaves);
         //}
- ////////////// JSON/////////////////////////////////////////////////////////
+        ////////////// JSON/////////////////////////////////////////////////////////
 
-// /////////////////////////////////////////////////////////////////////////////////
+        // /////////////////////////////////////////////////////////////////////////////////
         [HttpGet]
         public async Task<IActionResult> Login(int? id)
         {
@@ -354,8 +406,18 @@ namespace WebResumen.Controllers
                                     HttpContext.Session.SetString("SessionComentarioA", model.Comentario);
                                    // HttpContext.Session.SetString("SessionDatosA", model.Dato);
                                     HttpContext.Session.SetString("SessionTiempoA", DateTime.Now.ToString("HH:mm:ss"));
-                                   // string EventoA = "Re-Impresión";
-                                   // _log.Write(fullName, DateTime.Now, EventoA+" "+_httpContextAccessor.HttpContext.Session.GetString("AutoclaveNumeroA"), model.Comentario);
+                                    // string EventoA = "Re-Impresión";
+                                    // _log.Write(fullName, DateTime.Now, EventoA+" "+_httpContextAccessor.HttpContext.Session.GetString("AutoclaveNumeroA"), model.Comentario);
+                                    List<string> lista = new List<string>();
+                                    foreach (String printer in System.Drawing.Printing.PrinterSettings.InstalledPrinters)
+                                    {
+
+                                       lista.Add(printer);
+                                      
+
+                                    }
+                                    ViewBag.impresoras = lista.ToList();
+
                                     return View("Print");
                                 }
 

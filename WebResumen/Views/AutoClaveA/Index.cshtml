@@ -6,7 +6,7 @@
 
 <h1>NF8387A </h1>
 
-
+@*<h1>@ViewBag.expiry</h1>*@
 
 @if (TempData["Print"] != null)
 {
@@ -464,10 +464,23 @@
                             <td>
                                 @Html.DisplayFor(modelItem => item.FechaRegistro)
                             </td>*@
-                        <td>
+                    <td>
+                        @using Microsoft.AspNetCore.Authorization
+                        @inject IAuthorizationService AuthorizationService
+                        @if ((await AuthorizationService.AuthorizeAsync(User, "ADUsers")).Succeeded)
+                        {
                             <a type="button" class="btn btn-info " asp-action="Preview" asp-route-id="@item.Id">Vista</a>
                             <a type="button" class="btn btn-success " asp-action="Login" asp-route-id="@item.Id">Print</a>
-                        </td>
+                        }
+                        else
+                        {
+                            <a type="button" class="btn btn-info " asp-action="Preview" asp-route-id="@item.Id">Vista</a>
+                            <a type="button" class="btn btn-success " asp-action="Login" asp-route-id="@item.Id">PrintS</a>
+                        }
+
+
+
+                    </td>
                     </tr>
                 }
             </tbody>
