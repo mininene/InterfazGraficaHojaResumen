@@ -103,6 +103,8 @@ namespace WebResumen
             services.AddScoped(typeof(IPrinterDosTresCuatro), typeof(PrinterDosTresCuatro));
             services.AddScoped(typeof(IPrinterNueveDiez), typeof(PrinterNueveDiez));
             services.AddScoped(typeof(IPrinterOchoVeinteAS), typeof(PrinterOchoVeinteAS));
+            services.AddScoped(typeof(IPrinterDosTresCuatroAS), typeof(PrinterDosTresCuatroAS));
+            services.AddScoped(typeof(IPrinterNueveDiezAS), typeof(PrinterNueveDiezAS));
 
 
 

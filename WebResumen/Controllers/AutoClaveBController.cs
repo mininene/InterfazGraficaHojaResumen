@@ -20,6 +20,7 @@ using WebResumen.Models.ViewModels;
 using System.DirectoryServices.AccountManagement;
 using WebResumen.Services.LogRecord;
 using System.DirectoryServices;
+using WebResumen.Services.printerServiceAS;
 
 namespace WebResumen.Controllers
 {
@@ -34,14 +35,18 @@ namespace WebResumen.Controllers
         private readonly IPrinterDosTresCuatro _printerDosTresCuatro;
         private readonly ILogRecord _log;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IPrinterOchoVeinteAS _printerOchoVeinteAS;
+        private readonly IPrinterDosTresCuatroAS _printerDosTresCuatroAS;
 
-        public AutoClaveBController(AppDbContext context, IPrinterOchoVeinte printerOchoVeinte, IPrinterDosTresCuatro printerDosTresCuatro, ILogRecord log, IHttpContextAccessor httpContextAccessor)
+        public AutoClaveBController(AppDbContext context, IPrinterOchoVeinte printerOchoVeinte, IPrinterDosTresCuatro printerDosTresCuatro, ILogRecord log, IHttpContextAccessor httpContextAccessor, IPrinterOchoVeinteAS printerOchoVeinteAS, IPrinterDosTresCuatroAS printerDosTresCuatroAS)
         {
             _context = context;
             _printerOchoVeinte = printerOchoVeinte;
             _printerDosTresCuatro = printerDosTresCuatro;
             _log = log;
             _httpContextAccessor = httpContextAccessor;
+            _printerOchoVeinteAS = printerOchoVeinteAS;
+            _printerDosTresCuatroAS = printerDosTresCuatroAS;
 
         }
 
@@ -146,6 +151,57 @@ namespace WebResumen.Controllers
 
 
         }
+
+        public async Task<IActionResult> PrintAS(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var ciclosAutoclaves = await _context.CiclosAutoclaves
+               .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (ciclosAutoclaves.Programa.Trim().Equals("8") || ciclosAutoclaves.Programa.Trim().Equals("20"))
+
+            {
+                _printerOchoVeinteAS.printOchoVeinteAS(id);
+            }
+
+            if (ciclosAutoclaves.Programa.Trim().Equals("2") || ciclosAutoclaves.Programa.Trim().Equals("3") || ciclosAutoclaves.Programa.Trim().Equals("4"))
+            {
+                _printerDosTresCuatroAS.printDosTresCuatroAS(id);
+            }
+
+
+            if (ciclosAutoclaves == null)
+            {
+                return NotFound();
+            }
+            TempData["Print"] = "El Archivo ha sido Impreso";
+            return View("Printing");
+
+
+
+
+        }
+
+        public async Task<IActionResult> WritePrint()
+        {
+            string ReportURL = @"\\essaappserver01\HojaResumen\old\archivo1.pdf";
+            byte[] FileBytes = System.IO.File.ReadAllBytes(ReportURL);
+            string EventoB = "Re-Impresión";
+            TempData["Print"] = "El Archivo ha sido Impreso";
+            _log.Write(_httpContextAccessor.HttpContext.Session.GetString("SessionFullName"), DateTime.Now, EventoB + " " + _httpContextAccessor.HttpContext.Session.GetString("AutoclaveNumeroB"), _httpContextAccessor.HttpContext.Session.GetString("SessionComentarioB"));
+            return File(FileBytes, "application/pdf");
+            //return File(new FileStream(@"\\essaappserver01\HojaResumen\old\archivo1.pdf", FileMode.Open, FileAccess.Read), "application/pdf");
+
+
+
+        }
+
+
+
+
 
         public async Task<IActionResult> Preview(int? id)
         {

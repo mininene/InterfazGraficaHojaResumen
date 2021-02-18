@@ -13,10 +13,25 @@
 
     @using Microsoft.AspNetCore.Http
     @inject IHttpContextAccessor httpContextAccessor
-    @*<h1>@httpContextAccessor.HttpContext.Session.GetString("SessionDatosC")</h1>*@
+    @using Microsoft.AspNetCore.Authorization
+    @inject IAuthorizationService AuthorizationService
+    @*<a type="button" class="btn btn-success" asp-action="Print" asp-route-id="@httpContextAccessor.HttpContext.Session.GetString("SessionDatosK")">Imprimir</a>*@
+
+    @if ((await AuthorizationService.AuthorizeAsync(User, "ADUsers")).Succeeded)
+    {
+
+        <a type="button" class="btn btn-success" asp-action="Print" asp-route-id="@httpContextAccessor.HttpContext.Session.GetString("SessionDatosK")">Imprimir</a>
 
 
-    <a type="button" class="btn btn-success" asp-action="Print" asp-route-id="@httpContextAccessor.HttpContext.Session.GetString("SessionDatosK")">Imprimir</a>
+    }
+    else
+    {
+
+        <a type="button" class="btn btn-success" asp-action="PrintAS" asp-route-id="@httpContextAccessor.HttpContext.Session.GetString("SessionDatosK")">ImprimirAS</a>
+
+
+    }
+
 
 
 </tbody>

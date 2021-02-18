@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -25,10 +28,11 @@ namespace WebResumen.Controllers
         private readonly IPrinterOchoVeinte _printerOchoVeinte;
         private readonly IPrinterOchoVeinteAS _printerOchoVeinteAS;
         private readonly IPrinterDosTresCuatro _printerDosTresCuatro;
+        private readonly IPrinterDosTresCuatroAS _printerDosTresCuatroAS;
         private readonly ILogRecord _log;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AutoClaveAController(AppDbContext context, IPrinterOchoVeinte printerOchoVeinte, IPrinterDosTresCuatro printerDosTresCuatro, ILogRecord log, IHttpContextAccessor httpContextAccessor, IPrinterOchoVeinteAS printerOchoVeinteAS)
+        public AutoClaveAController(AppDbContext context, IPrinterOchoVeinte printerOchoVeinte, IPrinterDosTresCuatro printerDosTresCuatro, ILogRecord log, IHttpContextAccessor httpContextAccessor, IPrinterOchoVeinteAS printerOchoVeinteAS, IPrinterDosTresCuatroAS printerDosTresCuatroAS)
         {
             _context = context;
             _printerOchoVeinte = printerOchoVeinte;
@@ -36,6 +40,7 @@ namespace WebResumen.Controllers
             _log= log;
             _httpContextAccessor = httpContextAccessor;
             _printerOchoVeinteAS = printerOchoVeinteAS;
+            _printerDosTresCuatroAS = printerDosTresCuatroAS;
         }
 
         // GET: AutoClaveA
@@ -238,7 +243,8 @@ namespace WebResumen.Controllers
 
         public async Task<IActionResult> PrintAS(int? id)
         {
-           
+            
+
             if (id == null)
             {
                 return NotFound();
@@ -250,11 +256,29 @@ namespace WebResumen.Controllers
 
             {
                 _printerOchoVeinteAS.printOchoVeinteAS(id);
+               
+                //return File(new FileStream(@"\\essaappserver01\HojaResumen\old\archivo1.pdf", FileMode.Open, FileAccess.Read), "application/pdf");
+                // return File(System.IO.File.ReadAllBytes("archivo.pdf"), "application/pdf");
+
+                //MemoryStream ms = new MemoryStream();
+                //Document document = new Document(iTextSharp.text.PageSize.Letter, 0, 0, 0, 0);
+                //PdfWriter pw = PdfWriter.GetInstance(document, ms);
+                //document.Open();
+                //document.Add(new Paragraph("Hola Mundo"));
+                //document.Close();
+                //byte[] bytesStream = ms.ToArray();
+
+                //ms = new MemoryStream();
+                //ms.Write(bytesStream, 0, bytesStream.Length);
+                //ms.Position = 0;
+                //return new FileStreamResult(ms, "application/pdf");
+           
+
             }
 
             if (ciclosAutoclaves.Programa.Trim().Equals("2") || ciclosAutoclaves.Programa.Trim().Equals("3") || ciclosAutoclaves.Programa.Trim().Equals("4"))
             {
-                _printerDosTresCuatro.printDosTresCuatro(id);
+                _printerDosTresCuatroAS.printDosTresCuatroAS(id);
             }
 
 
@@ -262,18 +286,31 @@ namespace WebResumen.Controllers
             {
                 return NotFound();
             }
-            string EventoA = "Re-Impresión";
-            TempData["Print"] = "El Archivo ha sido Impreso";
-            _log.Write(_httpContextAccessor.HttpContext.Session.GetString("SessionFullName"), DateTime.Now, EventoA + " " + _httpContextAccessor.HttpContext.Session.GetString("AutoclaveNumeroA"), _httpContextAccessor.HttpContext.Session.GetString("SessionComentarioA"));
+            //string EventoA = "Re-Impresión";
+            TempData["Print"] = "El Archivo ha sido Generado";
+            //_log.Write(_httpContextAccessor.HttpContext.Session.GetString("SessionFullName"), DateTime.Now, EventoA + " " + _httpContextAccessor.HttpContext.Session.GetString("AutoclaveNumeroA"), _httpContextAccessor.HttpContext.Session.GetString("SessionComentarioA"));
 
-            return RedirectToAction("Index", "AutoClaveA");
-
+            return View("Printing");
 
 
 
         }
+        public async Task<IActionResult> WritePrint()
+        {
+            string ReportURL = @"\\essaappserver01\HojaResumen\old\archivo1.pdf";
+            byte[] FileBytes = System.IO.File.ReadAllBytes(ReportURL);
+            string EventoA = "Re-Impresión";
+            _log.Write(_httpContextAccessor.HttpContext.Session.GetString("SessionFullName"), DateTime.Now, EventoA + " " + _httpContextAccessor.HttpContext.Session.GetString("AutoclaveNumeroA"), _httpContextAccessor.HttpContext.Session.GetString("SessionComentarioA"));
+            TempData["Print"] = "El Archivo ha sido Generado";
+            return File(FileBytes, "application/pdf");
+            //return File(new FileStream(@"\\essaappserver01\HojaResumen\old\archivo1.pdf", FileMode.Open, FileAccess.Read), "application/pdf");
 
- 
+        
+
+        }
+
+
+
 
 
 

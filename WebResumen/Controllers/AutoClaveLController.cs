@@ -14,6 +14,7 @@ using WebResumen.Models;
 using WebResumen.Models.ViewModels;
 using WebResumen.Services.LogRecord;
 using WebResumen.Services.PrinterService;
+using WebResumen.Services.printerServiceAS;
 
 namespace WebResumen.Controllers
 {
@@ -24,14 +25,17 @@ namespace WebResumen.Controllers
         private readonly IPrinterNueveDiez _printerNueveDiez;
         private readonly ILogRecord _log;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IPrinterNueveDiezAS _printerNueveDiezAS;
 
-        public AutoClaveLController(AppDbContext context, IPrinterNueveDiez printerNueveDiez, ILogRecord log, IHttpContextAccessor httpContextAccessor)
+        public AutoClaveLController(AppDbContext context, IPrinterNueveDiez printerNueveDiez, ILogRecord log, IHttpContextAccessor httpContextAccessor, IPrinterNueveDiezAS printerNueveDiezAS)
         {
             _context = context;
             _printerNueveDiez = printerNueveDiez;
             _log = log;
             _httpContextAccessor = httpContextAccessor;
+            _printerNueveDiezAS = printerNueveDiezAS;
         }
+    
 
         // GET: AutoClaveL
         public async Task<IActionResult> Index(string nCiclo, string nPrograma, string fecha)
@@ -125,6 +129,45 @@ namespace WebResumen.Controllers
             return RedirectToAction("Index", "AutoClaveJ");
            // return View(ciclosAutoclaves);
         }
+
+        public async Task<IActionResult> PrintAS(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var ciclosAutoclaves = await _context.CiclosSabiDos
+               .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (ciclosAutoclaves.Programa.Trim().Equals("9") || ciclosAutoclaves.Programa.Trim().Equals("10"))
+
+            {
+                _printerNueveDiezAS.printNueveDiezAS(id);
+            }
+
+
+            if (ciclosAutoclaves == null)
+            {
+                return NotFound();
+            }
+            TempData["Print"] = "El Archivo ha sido Impreso";
+            return View("Printing");
+            // return View(ciclosAutoclaves);
+        }
+        public async Task<IActionResult> WritePrint()
+        {
+            string ReportURL = @"\\essaappserver01\HojaResumen\old\archivo1.pdf";
+            byte[] FileBytes = System.IO.File.ReadAllBytes(ReportURL);
+            TempData["Print"] = "El Archivo ha sido Impreso";
+            string EventoL = "Re-Impresión";
+            _log.Write(_httpContextAccessor.HttpContext.Session.GetString("SessionFullName"), DateTime.Now, EventoL + " " + _httpContextAccessor.HttpContext.Session.GetString("AutoclaveNumeroL"), _httpContextAccessor.HttpContext.Session.GetString("SessionComentarioL"));
+            return File(FileBytes, "application/pdf");
+            //return File(new FileStream(@"\\essaappserver01\HojaResumen\old\archivo1.pdf", FileMode.Open, FileAccess.Read), "application/pdf");
+
+
+
+        }
+
 
         public async Task<IActionResult> Preview(int? id)
         {
