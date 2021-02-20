@@ -78,17 +78,30 @@ namespace WebResumen.Controllers
                                        || x.Programa.Contains(nPrograma)
                                          || x.HoraFin.Contains(fecha));  // si pongo la fecha como string si que lo coge
             }
-            DateTime expiry = Convert.ToDateTime(_httpContextAccessor.HttpContext.Session.GetString("SessionTiempo"));
-            ViewBag.expiry = expiry;
-            if (expiry <= DateTime.Now)
-            {
-                string EventoI = "Cierre de sesión";
-                string ComentarioI = "Ha Cerrado sesión";
-                string usuario = _httpContextAccessor.HttpContext.Session.GetString("SessionName");
-                _log.Write(usuario, DateTime.Now, EventoI, ComentarioI);
-                return RedirectToAction("Logout", "Home");
-            }
-                return View(query);
+            //DateTime tiempo = Convert.ToDateTime(_httpContextAccessor.HttpContext.Session.GetString("SessionTiempo"));
+            //DateTime inactividad= Convert.ToDateTime(_httpContextAccessor.HttpContext.Session.GetString("TiempoInactivo"));
+
+            //TimeSpan inac = inactividad.TimeOfDay;
+            //TimeSpan vida = DateTime.Now -tiempo;
+
+            //ViewBag.vida = vida;
+            //ViewBag.tiempo = tiempo;
+            //ViewBag.inac = inac;
+            ////if (expiry <= DateTime.Now)
+            //if (vida > inac)
+            //{
+            //    string EventoI = "Cierre de sesión";
+            //    string ComentarioI = "Ha Cerrado sesión";
+            //    string usuario = _httpContextAccessor.HttpContext.Session.GetString("SessionName");
+            //    _log.Write(usuario, DateTime.Now, EventoI, ComentarioI);
+            //    return RedirectToAction("Logout", "Home");
+            //}
+            //else
+            //{
+            //    HttpContext.Session.SetString("SessionTiempo", DateTime.Now.ToString("HH:mm:ss"));
+
+            //}
+            return View(query);
         }
 
 

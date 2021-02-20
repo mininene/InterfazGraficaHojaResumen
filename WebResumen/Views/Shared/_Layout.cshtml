@@ -71,12 +71,14 @@
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
                                 </li>
+
+
                             }
 
 
                             @*<li class="nav-item">
-                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                                </li>*@
+             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </li>*@
                             else
                             {
 
@@ -113,6 +115,10 @@
                                     }
                                 }
                             }
+                    <li class="nav-item">
+                        <a ><mark><span id="SecondsUntilExpire"></span></mark></a>
+                        
+                    </li>
                         }
 
                     </ul>
@@ -121,17 +127,21 @@
 
 
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">Logout</a>
-                </li>
-                <li class="nav-item">
-                    @*<p class="float-right navbar-text navbar-right text-danger">Hola, <strong>@User.Identity.Name.Replace("GLOBAL\\", "")!</strong> </p>*@
+                
+               
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">Logout</a>
+                    </li>
+                    <li class="nav-item">
+                        @*<p class="float-right navbar-text navbar-right text-danger">Hola, <strong>@User.Identity.Name.Replace("GLOBAL\\", "")!</strong> </p>*@
 
 
-                    @inject IHttpContextAccessor httpContextAccessor
-                    <p class=" navbar-text text-danger">Hola, <strong> @httpContextAccessor.HttpContext.Session.GetString("SessionUser")!</strong> </p>
-                </li>
-            </ul>
+                        @inject IHttpContextAccessor httpContextAccessor
+
+                            <p class=" navbar-text text-danger">Hola, <strong> @httpContextAccessor.HttpContext.Session.GetString("SessionUser")!</strong> </p>
+
+                        </li>
+</ul>
         </nav>
 
 
@@ -216,6 +226,7 @@
     <script src="~/js/AudiTrailApp.js" asp-append-version="true"></script>
 
     <script src="~/js/print.min.js" asp-append-version="true"></script>
+    <script src="~/js/TimeOut/TimeOut.js"></script>
 
 
 

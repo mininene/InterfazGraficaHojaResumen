@@ -6,23 +6,12 @@
 
 <h1>NF8387A </h1>
 
-@*<h1>@ViewBag.expiry</h1>*@
 
 @if (TempData["Print"] != null)
 {
 
 
 
-    @*<button type="button" onclick="printJS({printable:'docs/archivo.pdf', type:'pdf', showModal:true})">
-            Imprima aquí!
-        </button>*@
-
-    @*<body onload=" printJS({printable:'docs/archivo.pdf', type:'pdf', showModal:true})">
-
-        </body>*@
-
-
-    @*<script src="~/js/printActive.js" asp-append-version="true"></script>*@
 
     <div class="alert alert-success alert-dismissible fade show" role="alert">
         <strong>@TempData["Print"].ToString()!</strong>
@@ -35,7 +24,12 @@
 
 }
 
+@*You will be auto logged out in <span id="SecondsUntilExpire"></span> seconds.
+<h1>Vida : @ViewBag.vida</h1>
 
+<h1>Tiempo Actual: @ViewBag.tiempo</h1>
+
+<h1>Tiempo Inactividad: @ViewBag.inac</h1>*@
 
 <p>
     @*<a asp-action="Create">Create New</a>*@
