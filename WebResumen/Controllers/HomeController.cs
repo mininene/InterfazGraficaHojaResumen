@@ -139,7 +139,7 @@ namespace WebResumen.Controllers
 
         public IActionResult Tiempo()
         {
-            var query = _context.Parametros.FirstOrDefault();
+            var query = _context.Parametros.FirstOrDefault() ;
             int? data = query.Tsesion;
 
 
