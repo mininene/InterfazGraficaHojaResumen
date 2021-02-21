@@ -16,7 +16,7 @@ myapp.controller('autoclave-controller', function ($scope, autoclaveService, $ti
 
 
 
-    //listar
+    //listara
     function loadAutoclaves() {
         var AutoclavesRecords = autoclaveService.getAllAutoclaves();
         AutoclavesRecords.then(function (d) {
