@@ -19,6 +19,10 @@ namespace WebResumen.Models
         [Required(ErrorMessage = "Tiempo es requerido")]
         [RegularExpression("^[0-9]*$", ErrorMessage = "Valor entre 1 y 10")]
         public int Tiempo { get; set; }
+
+        [Required(ErrorMessage = "Tiempo es requerido")]
+        [RegularExpression("^[0-9]*$", ErrorMessage = "Valor entre 1 y 10")]
+        public int? Tsesion { get; set; } //NUEVO
         public bool? Reinicio { get; set; }
     }
 }

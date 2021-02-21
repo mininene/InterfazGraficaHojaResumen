@@ -39,6 +39,12 @@ table, th, td {
     }
 }
 
+.lol {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
 
     /*
 .wrap {

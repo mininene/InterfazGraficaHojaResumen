@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using WebResumen.Models;
 using WebResumen.Models.ViewModels;
 using WebResumen.Services.LogRecord;
 
@@ -15,13 +16,14 @@ namespace WebResumen.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly AppDbContext _context;
         private readonly  ILogRecord _log;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public HomeController(ILogRecord log, IHttpContextAccessor httpContextAccessor)
+        public HomeController(AppDbContext context,ILogRecord log, IHttpContextAccessor httpContextAccessor)
         {
             _log = log;
             _httpContextAccessor = httpContextAccessor;
-
+            _context = context;
         }
         [HttpGet]
         public IActionResult Index()
@@ -135,8 +137,16 @@ namespace WebResumen.Controllers
         }
 
 
+        public IActionResult Tiempo()
+        {
+            var query = _context.Parametros.FirstOrDefault();
+            int? data = query.Tsesion;
 
-       
+
+            return Json(data);
+
+        }
+
 
 
 

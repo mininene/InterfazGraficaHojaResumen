@@ -65,7 +65,7 @@ namespace WebResumen.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ImpresoraSabiUno,ImpresoraSabiDos,RutaLog,Tiempo,Reinicio")] Parametros parametros)
+        public async Task<IActionResult> Create([Bind("Id,ImpresoraSabiUno,ImpresoraSabiDos,RutaLog,Tiempo,Tsesion,Reinicio")] Parametros parametros)
         {
             if (ModelState.IsValid)
             {
@@ -97,7 +97,7 @@ namespace WebResumen.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ImpresoraSabiUno,ImpresoraSabiDos,RutaLog,Tiempo,Reinicio")] Parametros parametros)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,ImpresoraSabiUno,ImpresoraSabiDos,RutaLog,Tiempo,Tsesion,Reinicio")] Parametros parametros)
         {
             if (id != parametros.Id)
             {
@@ -113,7 +113,7 @@ namespace WebResumen.Controllers
 
                     if (await TryUpdateModelAsync<Parametros>(parametrosToUpdate,
                         "",
-                        c => c.Id, c => c.ImpresoraSabiUno, c => c.ImpresoraSabiDos, c => c.RutaLog, c => c.Tiempo, c => c.Reinicio))
+                        c => c.Id, c => c.ImpresoraSabiUno, c => c.ImpresoraSabiDos, c => c.RutaLog, c => c.Tiempo, c =>c.Tsesion, c => c.Reinicio))
                     {
                         try
                         {
@@ -186,6 +186,7 @@ namespace WebResumen.Controllers
             HttpContext.Session.SetString("SessionImpresoraSabiDos", parametros.ImpresoraSabiDos.ToString());
             HttpContext.Session.SetString("SessionRutaLog", parametros.RutaLog.ToString());
             HttpContext.Session.SetInt32("Tiempo", parametros.Tiempo);
+            HttpContext.Session.SetInt32("TiempoS", Convert.ToInt32(parametros.Tsesion));
             HttpContext.Session.SetString("Reinicio", parametros.Reinicio.ToString());
 
             @ViewBag.datos = parametros;

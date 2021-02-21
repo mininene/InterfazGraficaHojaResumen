@@ -766,6 +766,7 @@ namespace WebResumen.Models
                 entity.Property(e => e.RutaLog)
                     .HasMaxLength(300)
                     .IsUnicode(false);
+                entity.Property(e => e.Tsesion).HasColumnName("TSesion"); //NUEVO
             });
 
             OnModelCreatingPartial(modelBuilder);

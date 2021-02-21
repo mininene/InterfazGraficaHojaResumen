@@ -75,8 +75,8 @@
 
 
                             @*<li class="nav-item">
-                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                                </li>*@
+                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>*@
                             else
                             {
 
@@ -120,24 +120,39 @@
             </div>
 
 
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">Logout</a>
-                </li>
-                <li class="nav-item">
-                    @*<p class="float-right navbar-text navbar-right text-danger">Hola, <strong>@User.Identity.Name.Replace("GLOBAL\\", "")!</strong> </p>*@
+
+            <div class="panel panel-default">
+                <div style="color:white" class="panel-heading">ghfdhgfdgh</div>
+                <div class="panel-body">
+                  <span style="color:black;background:yellow;font-weight:bold" id="SecondsUntilExpire"></span>
+                </div>
+                </div>
 
 
-                    @inject IHttpContextAccessor httpContextAccessor
-                    <p class=" navbar-text text-danger">Hola, <strong> @httpContextAccessor.HttpContext.Session.GetString("SessionUser")!</strong> </p>
-                </li>
-            </ul>
+
+
+
+                <ul class="navbar-nav ml-auto">
+
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">Logout</a>
+                    </li>
+                    <li class="nav-item">
+                        @*<p class="float-right navbar-text navbar-right text-danger">Hola, <strong>@User.Identity.Name.Replace("GLOBAL\\", "")!</strong> </p>*@
+
+
+                        @inject IHttpContextAccessor httpContextAccessor
+                        <p class=" navbar-text text-danger">Hola, <strong> @httpContextAccessor.HttpContext.Session.GetString("SessionUser")!</strong> </p>
+                    </li>
+
+                </ul>
         </nav>
 
 
     </header>
     <div class="container-fluid">
         <main role="main" class="pb-3">
+        
             <a class="float-right mr-5" asp-area="" asp-controller="Inicio" asp-action="Index"><i class="fa fa-chevron-circle-left" style="font-size:48px;color:darkblue"></i></a>
 
             @RenderBody()
@@ -162,6 +177,7 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/libraries/jquery.dataTables.js"></script>
+    <script src="~/js/TimeOut/TimeOut.js"></script>
 
     <!-- Bootstrap core JavaScript -->
     <script type="text/javascript" src="/lib/MDB/js/bootstrap.min.js"></script>
