@@ -3,7 +3,7 @@
     var second = secondt * 60;
 
     localStorage.setItem("Inactividad", second);
-    var valor = localStorage.getItem("Inactividad");
+    var valor = localStorage.getItem("Inactividad") ;
 
 
 
