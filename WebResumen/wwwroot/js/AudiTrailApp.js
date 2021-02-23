@@ -13,7 +13,7 @@
                         defer.resolve(result.data);
                         $scope.searchid = result.data
                         
-                        console.log(result.data)
+                        //console.log(result.data)
 
                            
                     });
@@ -153,7 +153,7 @@
                
             ]
             function stateChange(iColumn, bVisible) {
-                console.log('The column', iColumn, ' has changed its status to', bVisible);
+               // console.log('The column', iColumn, ' has changed its status to', bVisible);
             }
          
         }) 

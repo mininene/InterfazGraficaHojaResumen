@@ -20,7 +20,7 @@
                         }
                     }).then(function (result) {
                         $scope.searchid = result.data;
-                        console.log(result.data)
+                        //console.log(result.data)
                         callback({
 
                             infox: result.data
@@ -183,11 +183,11 @@
                // DTColumnBuilder.newColumn('duracionTotalF1').withTitle('Duración F1'),
                 DTColumnBuilder.newColumn('duracionTotalF1').withTitle('Duración F1').renderWith(function (data, type, full, meta) {
                     var x = data.split(':');
-                    console.log(x)
+                   // console.log(x)
                     var min = parseInt(x[0].trim());
-                    console.log(min +"min")
+                  //  console.log(min +"min")
                     var sec = (parseInt(x[1].trim())/60);
-                    console.log(sec+"sec")
+                  //  console.log(sec+"sec")
                     var s = (min + sec).toFixed(2);
                     return s
                 }),
@@ -374,7 +374,7 @@
 
 
             function stateChange(iColumn, bVisible) {
-                console.log('The column', iColumn, ' has changed its status to', bVisible);
+               // console.log('The column', iColumn, ' has changed its status to', bVisible);
             }
 
             function filterGlobal() {

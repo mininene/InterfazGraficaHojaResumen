@@ -21,7 +21,7 @@
                             }
                         }).then(function (response) {
                             $scope.searchid = response.data;
-                            console.log(response.data)
+                            //console.log(response.data)
                             callback({
 
                                 info: response.data
@@ -422,7 +422,7 @@
 
 
                 function stateChange(iColumn, bVisible) {
-                    console.log('The column', iColumn, ' has changed its status to', bVisible);
+                   // console.log('The column', iColumn, ' has changed its status to', bVisible);
                 }
 
 
@@ -443,7 +443,7 @@
                         $('#col' + i + '_regex').prop('checked'),
                         $('#col' + i + '_smart').prop('checked')
                     ).draw();
-                    console.log($('#col' + i + '_filter').val().split("-").reverse().join("-").replace("-", "/").replace("-", "/").substring(0, 6) + $('#col' + i + '_filter').val().split("-").reverse().join("-").replace("-", "/").replace("-", "/").substring(8,10));
+                   // console.log($('#col' + i + '_filter').val().split("-").reverse().join("-").replace("-", "/").replace("-", "/").substring(0, 6) + $('#col' + i + '_filter').val().split("-").reverse().join("-").replace("-", "/").replace("-", "/").substring(8,10));
                 }
 
                 $(document).ready(function () {

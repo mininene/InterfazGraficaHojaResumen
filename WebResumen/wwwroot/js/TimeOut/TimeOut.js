@@ -11,7 +11,7 @@
     var IDLE_TIMEOUT = valor; //seconds
     var _idleSecondsTimer = null;
     var _idleSecondsCounter = 0;
-    console.log(IDLE_TIMEOUT);
+    //console.log(IDLE_TIMEOUT);
     document.onclick = function () {
         _idleSecondsCounter = 0;
     };
@@ -32,7 +32,7 @@
         if (oPanel)
             // oPanel.innerHTML = (IDLE_TIMEOUT - _idleSecondsCounter) + "";
             var seconds = IDLE_TIMEOUT - _idleSecondsCounter;
-        console.log(seconds);
+       // console.log(seconds);
 
         var hour = Math.floor(seconds / 3600);
         hour = (hour < 10) ? '0' + hour : hour;
@@ -41,7 +41,7 @@
         var seconds = seconds % 60;
         seconds = (seconds < 10) ? '0' + seconds : seconds;
         // return hour + ':' + minute + ':' + second;
-        console.log(hour + ':' + minute + ':' + seconds);
+       // console.log(hour + ':' + minute + ':' + seconds);
         oPanel.innerHTML = (hour + ':' + minute + ':' + seconds) + "";
 
 
