@@ -19,7 +19,7 @@ using WebResumen.Services.printerServiceAS;
 
 namespace WebResumen.Controllers
 {
-    [Authorize(Policy = "ADTodos")]
+    //[Authorize(Policy = "ADTodos")]
     public class AutoClaveMController : Controller
     {
         private readonly AppDbContext _context;

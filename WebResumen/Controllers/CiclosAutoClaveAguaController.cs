@@ -12,7 +12,7 @@ using WebResumen.Models;
 namespace WebResumen.Controllers
 {
 
-    [Authorize(Policy = "ADAS")]
+   // [Authorize(Policy = "ADAS")]
     //[Authorize(Policy = "readOnly")]
 
     public class CiclosAutoclaveAguaController : Controller

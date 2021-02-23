@@ -5,39 +5,51 @@ app.controller('homeCtrl', function ($scope, $http, $interval,$timeout,$q) {
         //$http.get('/Inicio/ListHomex'),
         $http.get('/Inicio/ListHome'),
         $http.get('/AutoClaveA/ListaAutoclaveA'),
-        $http.get('/AutoClaveB/ListaAutoclaveB'),
-        $http.get('/AutoClaveC/ListaAutoclaveC'),
-        $http.get('/AutoClaveD/ListaAutoclaveD'),
-        $http.get('/AutoClaveE/ListaAutoclaveE'),
-        $http.get('/AutoClaveF/ListaAutoclaveF'),
-        $http.get('/AutoClaveG/ListaAutoclaveG'),
-        $http.get('/AutoClaveH/ListaAutoclaveH'),
-        $http.get('/AutoClaveI/ListaAutoclaveI'),
-        $http.get('/AutoClaveM/ListaAutoclaveM'),
-        $http.get('/AutoClaveJ/ListaAutoclaveJ'),
-        $http.get('/AutoClaveK/ListaAutoclaveK'),
-        $http.get('/AutoClaveL/ListaAutoclaveL')
+        //$http.get('/AutoClaveB/ListaAutoclaveB'),
+        //$http.get('/AutoClaveC/ListaAutoclaveC'),
+        //$http.get('/AutoClaveD/ListaAutoclaveD'),
+        //$http.get('/AutoClaveE/ListaAutoclaveE'),
+        //$http.get('/AutoClaveF/ListaAutoclaveF'),
+        //$http.get('/AutoClaveG/ListaAutoclaveG'),
+        //$http.get('/AutoClaveH/ListaAutoclaveH'),
+        //$http.get('/AutoClaveI/ListaAutoclaveI'),
+        //$http.get('/AutoClaveM/ListaAutoclaveM'),
+        $http.get('/AutoClaveJ/ListaAutoclaveJ')
+        //$http.get('/AutoClaveK/ListaAutoclaveK'),
+        //$http.get('/AutoClaveL/ListaAutoclaveL')
 
     ]).then(function (response) {
         /* enter your logic here */
         //console.log(response[0].data);
         //console.log(response[2].data);
         $scope.loading = false;
+        //$scope.horaA = response[1].data[0].horaFin;
+        //$scope.horaB = response[2].data[0].horaFin;
+        //$scope.horaC = response[3].data[0].horaFin;
+        //$scope.horaD = response[4].data[0].horaFin;
+        //$scope.horaE = response[5].data[0].horaFin;
+        //$scope.horaF = response[6].data[0].horaFin;
+        //$scope.horaG = response[7].data[0].horaFin;
+        //$scope.horaH = response[8].data[0].horaFin;
+        //$scope.horaI = response[9].data[0].horaFin;
+        //$scope.horaM = response[10].data[0].horaFin;
+        //$scope.horaJ = response[11].data[0].horaFin;
+        //$scope.horaK = response[12].data[0].horaFin;
+        //$scope.horaL = response[13].data[0].horaFin;
+
         $scope.horaA = response[1].data[0].horaFin;
-        $scope.horaB = response[2].data[0].horaFin;
-        $scope.horaC = response[3].data[0].horaFin;
-        $scope.horaD = response[4].data[0].horaFin;
-        $scope.horaE = response[5].data[0].horaFin;
-        $scope.horaF = response[6].data[0].horaFin;
-        $scope.horaG = response[7].data[0].horaFin;
-        $scope.horaH = response[8].data[0].horaFin;
-        $scope.horaI = response[9].data[0].horaFin;
-        $scope.horaM = response[10].data[0].horaFin;
-        $scope.horaJ = response[11].data[0].horaFin;
-        $scope.horaK = response[12].data[0].horaFin;
-        $scope.horaL = response[13].data[0].horaFin;
-
-
+        $scope.horaB = response[1].data[1].horaFin;
+        $scope.horaC = response[1].data[2].horaFin;
+        $scope.horaD = response[1].data[3].horaFin;
+        $scope.horaE = response[1].data[4].horaFin;
+        $scope.horaF = response[1].data[5].horaFin;
+        $scope.horaG = response[1].data[6].horaFin;
+        $scope.horaH = response[1].data[7].horaFin;
+        $scope.horaI = response[1].data[8].horaFin;
+        $scope.horaM = response[1].data[9].horaFin;
+        $scope.horaJ = response[2].data[0].horaFin;
+        $scope.horaK = response[2].data[1].horaFin;
+        $scope.horaL = response[2].data[2].horaFin;
        
         $scope.na = response[0].data[0].nombre;
         $scope.nb = response[0].data[1].nombre;
@@ -416,34 +428,47 @@ app.controller('homeCtrl', function ($scope, $http, $interval,$timeout,$q) {
               //$http.get('/Inicio/ListHomex'),
               $http.get('/Inicio/ListHome'),
             $http.get('/AutoClaveA/ListaAutoclaveA'),
-            $http.get('/AutoClaveB/ListaAutoclaveB'),
-            $http.get('/AutoClaveC/ListaAutoclaveC'),
-            $http.get('/AutoClaveD/ListaAutoclaveD'),
-            $http.get('/AutoClaveE/ListaAutoclaveE'),
-            $http.get('/AutoClaveF/ListaAutoclaveF'),
-            $http.get('/AutoClaveG/ListaAutoclaveG'),
-            $http.get('/AutoClaveH/ListaAutoclaveH'),
-            $http.get('/AutoClaveI/ListaAutoclaveI'),
-            $http.get('/AutoClaveM/ListaAutoclaveM'),
-            $http.get('/AutoClaveJ/ListaAutoclaveJ'),
-            $http.get('/AutoClaveK/ListaAutoclaveK'),
-            $http.get('/AutoClaveL/ListaAutoclaveL')
+            //$http.get('/AutoClaveB/ListaAutoclaveB'),
+            //$http.get('/AutoClaveC/ListaAutoclaveC'),
+            //$http.get('/AutoClaveD/ListaAutoclaveD'),
+            //$http.get('/AutoClaveE/ListaAutoclaveE'),
+            //$http.get('/AutoClaveF/ListaAutoclaveF'),
+            //$http.get('/AutoClaveG/ListaAutoclaveG'),
+            //$http.get('/AutoClaveH/ListaAutoclaveH'),
+            //$http.get('/AutoClaveI/ListaAutoclaveI'),
+            //$http.get('/AutoClaveM/ListaAutoclaveM'),
+            $http.get('/AutoClaveJ/ListaAutoclaveJ')
+            //$http.get('/AutoClaveK/ListaAutoclaveK'),
+            //$http.get('/AutoClaveL/ListaAutoclaveL')
            
         ]).then(function (response) {
-            $scope.horaA = response[1].data[0].horaFin;
-            $scope.horaB = response[2].data[0].horaFin;
-            $scope.horaC = response[3].data[0].horaFin;
-            $scope.horaD = response[4].data[0].horaFin;
-            $scope.horaE = response[5].data[0].horaFin;
-            $scope.horaF = response[6].data[0].horaFin;
-            $scope.horaG = response[7].data[0].horaFin;
-            $scope.horaH = response[8].data[0].horaFin;
-            $scope.horaI = response[9].data[0].horaFin;
-            $scope.horaM = response[10].data[0].horaFin;
-            $scope.horaJ = response[11].data[0].horaFin;
-            $scope.horaK = response[12].data[0].horaFin;
-            $scope.horaL = response[13].data[0].horaFin;
+            //$scope.horaA = response[1].data[0].horaFin;
+            //$scope.horaB = response[2].data[0].horaFin;
+            //$scope.horaC = response[3].data[0].horaFin;
+            //$scope.horaD = response[4].data[0].horaFin;
+            //$scope.horaE = response[5].data[0].horaFin;
+            //$scope.horaF = response[6].data[0].horaFin;
+            //$scope.horaG = response[7].data[0].horaFin;
+            //$scope.horaH = response[8].data[0].horaFin;
+            //$scope.horaI = response[9].data[0].horaFin;
+            //$scope.horaM = response[10].data[0].horaFin;
+            //$scope.horaJ = response[11].data[0].horaFin;
+            //$scope.horaK = response[12].data[0].horaFin;
+            //$scope.horaL = response[13].data[0].horaFin;
 
+            $scope.horaA = response[1].data[0].horaFin;
+            $scope.horaB = response[1].data[1].horaFin;
+            $scope.horaC = response[1].data[2].horaFin;
+            $scope.horaD = response[1].data[3].horaFin;
+            $scope.horaE = response[1].data[4].horaFin;
+            $scope.horaF = response[1].data[5].horaFin;
+            $scope.horaG = response[1].data[6].horaFin;
+            $scope.horaH = response[1].data[7].horaFin;
+            $scope.horaI = response[1].data[8].horaFin;
+            $scope.horaM = response[1].data[9].horaFin;
+            $scope.horaJ = response[2].data[0].horaFin;
+            $scope.horaK = response[2].data[1].horaFin;
+            $scope.horaL = response[2].data[2].horaFin;
 
 
             $scope.na = response[0].data[0].nombre;
@@ -790,7 +815,7 @@ app.controller('homeCtrl', function ($scope, $http, $interval,$timeout,$q) {
 
 
 
-    $interval($scope.LoadData, 12000);
+    $interval($scope.LoadData, 120000);
     
     
 });

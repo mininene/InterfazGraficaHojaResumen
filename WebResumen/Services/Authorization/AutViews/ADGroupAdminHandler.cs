@@ -10,11 +10,14 @@ using System.Threading.Tasks;
 
 namespace WebResumen.Services.Authorization
 {
-    public class ADGroupASHandler : AuthorizationHandler<ADGroupASRequirement>
+    public class ADGroupAdminHandler : AuthorizationHandler<ADGroupRequirement>
     {
-        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, ADGroupASRequirement requirement)
+        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, ADGroupRequirement requirement)
         {
+
             IHttpContextAccessor _httpContextAccessor = new HttpContextAccessor();
+            var group = new List<string>();//save all your groups' name
+          
             string dominio = @"global.baxter.com";
             var result = new List<string>();
             string userName = _httpContextAccessor.HttpContext.Session.GetString("SessionUser");
@@ -34,13 +37,20 @@ namespace WebResumen.Services.Authorization
                 foreach (var t in result)
                 {
                     Console.WriteLine(t);
-                    if (t.Contains(requirement.supervisorsGroupName) || t.Contains(requirement.adminsGroupName))//do the check//do the check
+                    if (t.Contains(requirement.GroupName))//do the check
                     {
                         context.Succeed(requirement);
                     }
                 }
             }
+
             return Task.CompletedTask;
+
+
+
+
+
+            //var isAuthorized = context.User.IsInRole(requirement.GroupName);
             //IHttpContextAccessor _httpContextAccessor = new HttpContextAccessor();
             //var group = new List<string>();//save all your groups' name
             //var wi = (WindowsIdentity)context.User.Identity;
@@ -59,12 +69,12 @@ namespace WebResumen.Services.Authorization
             //        try
             //        {
             //            Console.WriteLine(g.Name);
-            //            if (g.Name.Contains(requirement.supervisorsGroupName) || g.Name.Contains(requirement.adminsGroupName))//do the check
-            //            {
-            //                context.Succeed(requirement);
-            //            }
+            //        if (g.Name.Contains(requirement.GroupName))//do the check
+            //        {
+            //            context.Succeed(requirement);
+            //        }
 
-            //            // group.Add(group.ToString());
+            //           // group.Add(group.ToString());
             //        }
             //        catch (Exception e)
             //        {
@@ -72,10 +82,11 @@ namespace WebResumen.Services.Authorization
             //        }
             //    }
 
-
+            //    //if (group.Contains(requirement.GroupName))//do the check
+            //    //{
+            //    //    context.Succeed(requirement);
+            //    //}
             //}
-            //var groups = new List<string>();//save all your groups' name
-            //var wi = (WindowsIdentity)context.User.Identity;
             //if (wi.Groups != null)
             //{
             //    foreach (var group in wi.Groups)
@@ -89,7 +100,7 @@ namespace WebResumen.Services.Authorization
             //            // ignored
             //        }
             //    }
-            //    if (groups.Contains(requirement.supervisorsGroupName) || groups.Contains(requirement.adminsGroupName))//do the check
+            //    if (groups.Contains(requirement.GroupName))//do the check
             //    {
             //        context.Succeed(requirement);
             //    }
@@ -98,6 +109,4 @@ namespace WebResumen.Services.Authorization
             //return Task.CompletedTask;
         }
     }
-    
-
 }

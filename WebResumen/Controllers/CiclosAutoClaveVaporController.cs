@@ -10,7 +10,7 @@ using WebResumen.Models;
 
 namespace WebResumen.Controllers
 {
-    [Authorize(Policy = "ADAS")]
+    //[Authorize(Policy = "ADAS")]
     public class CiclosAutoClaveVaporController : Controller
     {
         private readonly AppDbContext _context;

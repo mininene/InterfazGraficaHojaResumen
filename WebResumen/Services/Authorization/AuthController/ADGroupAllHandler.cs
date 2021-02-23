@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
 using System.Linq;
 using System.Security.Principal;
@@ -13,6 +14,11 @@ namespace WebResumen.Services.Authorization
     {
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, ADGroupAllRequirement requirement)
         {
+
+
+
+
+
             var groups = new List<string>();//save all your groups' name
             var wi = (WindowsIdentity)context.User.Identity;
             if (wi.Groups != null)
@@ -33,6 +39,7 @@ namespace WebResumen.Services.Authorization
                     context.Succeed(requirement);
                 }
             }
+            return Task.CompletedTask;
 
             // IHttpContextAccessor _httpContextAccessor = new HttpContextAccessor();
             //// List<string> group = new List<string>();//save all your groups' name
@@ -68,9 +75,9 @@ namespace WebResumen.Services.Authorization
             //     } 
 
 
-        //}
-          
-            return Task.CompletedTask;
+            //}
+
+            // return Task.CompletedTask;
         }
     }
     

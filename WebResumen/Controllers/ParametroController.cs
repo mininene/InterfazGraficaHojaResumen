@@ -16,7 +16,8 @@ using WebResumen.Services.LogRecord;
 
 namespace WebResumen.Controllers
 {
-    [Authorize(Policy = "Admins")]
+   
+    [Authorize(Policy = "ADMIN")]
     public class ParametroController : Controller
     {
         private readonly AppDbContext _context;

@@ -14,7 +14,7 @@ using WebResumen.Models.ViewModels;
 
 namespace WebResumen.Controllers
 {
-    [Authorize(Policy = "ADAS")]
+    [Authorize(Policy = "ADMIN")]
     public class MaestroAutoclaveController : Controller
     {
         private readonly AppDbContext _context;

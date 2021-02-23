@@ -16,7 +16,7 @@ namespace WebResumen.Controllers
 {
    
 
-    [Authorize(Policy = "ADTodos")]
+   // [Authorize(Policy = "ADTodos")]
     public class InicioController : Controller
     {
         private readonly AppDbContext _context;
@@ -39,8 +39,11 @@ namespace WebResumen.Controllers
 
         public async Task<JsonResult> ListHome()
         {
-            
+            List<CiclosAutoclaves> _sabiUno = await _context.CiclosAutoclaves.ToListAsync();
+            List<CiclosSabiDos> _sabiDos = await _context.CiclosSabiDos.ToListAsync();
+           
             var result = await _context.MaestroAutoclave.OrderBy(x=>x.Id).ToListAsync();
+           
             //var multipleOrder = from t1 in result
             //                    from t2 in sabiUno
             //                    where (Convert.ToInt32(t1.UltimoCiclo) - 1).ToString() == t2.NumeroCiclo
@@ -70,9 +73,9 @@ namespace WebResumen.Controllers
 
             //                    };
 
-            //var pc = multipleOrder.Union(multipleOrder2);
-           
-        
+          
+
+
 
             return Json(result, ViewBag.Message);
 

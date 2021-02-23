@@ -18,7 +18,7 @@ using WebResumen.Services.printerServiceAS;
 
 namespace WebResumen.Controllers
 {
-    [Authorize(Policy = "ADTodos")]
+   // [Authorize(Policy = "ADTodos")]
 
    
     public class AutoClaveJController : Controller
@@ -95,10 +95,14 @@ namespace WebResumen.Controllers
             //var result=  await _context.CiclosAutoclaves.OrderByDescending(x => x.Id).ToListAsync();
             //return View(await _context.CiclosAutoclaves.OrderByDescending(x=>x.Id).ToListAsync());
             List<CiclosSabiDos> _sabiDos = await _context.CiclosSabiDos.ToListAsync();
-            var query = from x in _sabiDos.Where(x => x.IdAutoclave == "0827J").OrderByDescending(X => X.Id).Take(50) select x;
+            //var query = from x in _sabiDos.Where(x => x.IdAutoclave == "0827J").OrderByDescending(X => X.Id).Take(1) select x;
+            var queryj = from x in _sabiDos.Where(x => x.IdAutoclave == "0827J").OrderByDescending(x => x.Id).Take(1) select x;
+            var queryk = from x in _sabiDos.Where(x => x.IdAutoclave == "0828K").OrderByDescending(x => x.Id).Take(1) select x;
+            var queryl = from x in _sabiDos.Where(x => x.IdAutoclave == "1167L").OrderByDescending(x => x.Id).Take(1) select x;
+            var pc = queryj.Union(queryk).Union(queryl);
 
-
-            return Json(query.ToList());
+            //return Json(query.ToList());
+            return Json(pc);
 
 
         }

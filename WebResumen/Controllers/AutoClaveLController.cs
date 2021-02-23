@@ -18,7 +18,7 @@ using WebResumen.Services.printerServiceAS;
 
 namespace WebResumen.Controllers
 {
-    [Authorize(Policy = "ADTodos")]
+   // [Authorize(Policy = "ADTodos")]
     public class AutoClaveLController : Controller
     {
         private readonly AppDbContext _context;
@@ -93,7 +93,7 @@ namespace WebResumen.Controllers
             //var result=  await _context.CiclosAutoclaves.OrderByDescending(x => x.Id).ToListAsync();
             //return View(await _context.CiclosAutoclaves.OrderByDescending(x=>x.Id).ToListAsync());
             List<CiclosSabiDos> _sabiDos = await _context.CiclosSabiDos.ToListAsync();
-            var query = from x in _sabiDos.Where(x => x.IdAutoclave == "1167L").OrderByDescending(X => X.Id).Take(50) select x;
+            var query = from x in _sabiDos.Where(x => x.IdAutoclave == "1167L").OrderByDescending(X => X.Id).Take(1) select x;
 
 
             return Json(query.ToList());

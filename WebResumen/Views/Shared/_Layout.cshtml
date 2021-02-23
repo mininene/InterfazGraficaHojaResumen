@@ -65,22 +65,22 @@
 
                             @using Microsoft.AspNetCore.Authorization
                             @inject IAuthorizationService AuthorizationService
-                            @if ((await AuthorizationService.AuthorizeAsync(User, "ADUsers")).Succeeded)
+                            @if ((await AuthorizationService.AuthorizeAsync(User, "Users")).Succeeded)
                             {
 
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Inicio" asp-action="Index">Inicio</a>
                                 </li>
                             }
 
 
                             @*<li class="nav-item">
-                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>*@
+             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </li>*@
                             else
                             {
 
-                                @if ((await AuthorizationService.AuthorizeAsync(User, "ADAS")).Succeeded)
+                                @if ((await AuthorizationService.AuthorizeAsync(User, "AdminSupervisor")).Succeeded)
                                 {
                                     <li class="nav-item">
                                         <a class="nav-link text-dark" asp-area="" asp-controller="Inicio" asp-action="Index">Inicio</a>
@@ -94,9 +94,12 @@
                                     <li class="nav-item">
                                         <a class="nav-link text-dark" asp-area="" asp-controller="MaestroAutoclaveSup" asp-action="Index">Control Estado</a>
                                     </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="AudiTrail" asp-action="Index">AudiTrail</a>
+                                    </li>
 
 
-                                    @if ((await AuthorizationService.AuthorizeAsync(User, "ADAdmins")).Succeeded)
+                                    @if ((await AuthorizationService.AuthorizeAsync(User, "Admins")).Succeeded)
                                     {
 
                                         <li class="nav-item">
@@ -105,9 +108,7 @@
                                         <li class="nav-item">
                                             <a class="nav-link text-dark" asp-area="" asp-controller="Parametro" asp-action="Index">Configuración</a>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link text-dark" asp-area="" asp-controller="AudiTrail" asp-action="Index">AudiTrail</a>
-                                        </li>
+                                       
 
 
                                     }

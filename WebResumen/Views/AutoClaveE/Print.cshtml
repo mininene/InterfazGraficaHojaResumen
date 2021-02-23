@@ -19,7 +19,7 @@
     @*<a type="button" class="btn btn-success" asp-action="Print" asp-route-id="@httpContextAccessor.HttpContext.Session.GetString("SessionDatosE")">Imprimir</a>*@
 
 
-    @if ((await AuthorizationService.AuthorizeAsync(User, "ADUsers")).Succeeded)
+    @if ((await AuthorizationService.AuthorizeAsync(User, "Users")).Succeeded)
     {
         <a type="button" class="btn btn-success" asp-action="Print" asp-route-id="@httpContextAccessor.HttpContext.Session.GetString("SessionDatosE")">Imprimir</a>
 

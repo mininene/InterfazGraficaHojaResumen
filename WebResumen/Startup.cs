@@ -41,42 +41,40 @@ namespace WebResumen
 
 
            
-            // Add all of your handlers to DI.
-
-
-            // services.AddTransient<IClaimsTransformation, ClaimsTransformer>();
-            // services.AddTransient<IClaimsTransformation, ClaimsTransformer>();
-
+           
             // Configure your policies
             services.AddAuthorization(options =>                        
             {
                 //Para controladores
-                options.AddPolicy("ADTodos", policy =>
-                policy.Requirements.Add(new ADGroupAllRequirement("GLOBAL\\ESSA-HojaResumen_Users", "GLOBAL\\ESSA-HojaResumen_Admins", "GLOBAL\\ESSA-HojaResumen_Supervisors")));
+                //options.AddPolicy("ADTodos", policy =>
+                //policy.Requirements.Add(new ADGroupAllRequirement("GLOBAL\\ESSA-HojaResumen_Users", "GLOBAL\\ESSA-HojaResumen_Admins", "GLOBAL\\ESSA-HojaResumen_Supervisors")));
+                               
 
-                options.AddPolicy("ADAS", policy =>
-                policy.Requirements.Add(new ADGroupASRequirement("GLOBAL\\ESSA-HojaResumen_Admins", "GLOBAL\\ESSA-HojaResumen_Supervisors")));
+                options.AddPolicy("ADMIN", policy =>
+                policy.Requirements.Add(new ADGroupAdminsRequirement("GLOBAL\\ESSA-HojaResumen_Admins"))); // controller con NT
+
+                //VISTAS
+                options.AddPolicy("AdminSupervisor", policy =>
+                policy.Requirements.Add(new ADGroupASRequirement("ESSA-HojaResumen_Admins", "ESSA-HojaResumen_Supervisors"))); //vista con AD
 
                 options.AddPolicy("Admins", policy =>
-                policy.Requirements.Add(new ADGroupAdminsRequirement("GLOBAL\\ESSA-HojaResumen_Admins")));
+                policy.Requirements.Add(new ADGroupRequirement("ESSA-HojaResumen_Admins")));  //vista con AD
+            
+                options.AddPolicy("Users", policy =>
+                policy.Requirements.Add(new ADGroupRequirement("ESSA-HojaResumen_Users")));  //vista con AD
 
+                //options.AddPolicy("SUP", policy =>
+                //   policy.Requirements.Add(new ADGroupRequirement("ESSA-HojaResumen_Supervisors")));
 
-                //options.AddPolicy("ADTodos", policy =>
-                //policy.Requirements.Add(new ADGroupAllRequirement("ESSA-HojaResumen_Users", "ESSA-HojaResumen_Admins", "ESSA-HojaResumen_Supervisors")));
-
-                //options.AddPolicy("ADAS", policy =>
-                //policy.Requirements.Add(new ADGroupASRequirement("ESSA-HojaResumen_Admins", "ESSA-HojaResumen_Supervisors")));
-
-                //options.AddPolicy("Admins", policy =>
-                //policy.Requirements.Add(new ADGroupAdminsRequirement("ESSA-HojaResumen_Admins")));
-
+                //  options.AddPolicy("JustAdmin", policy =>
+                //policy.Requirements.Add(new ADGroupRequirement("ESSA-HojaResumen_Admins")));
 
                 //Para control de vistas
-                options.AddPolicy("ADUsers", policy =>
-                   policy.RequireRole(Configuration["SecuritySettings:ADGroupUsers"]));  //verifica el grupo desde el json
+                //options.AddPolicy("ADUsers", policy =>
+                //   policy.RequireRole(Configuration["SecuritySettings:ADGroupUsers"]));  //verifica el grupo desde el json
 
-                options.AddPolicy("ADAdmins", policy =>
-                   policy.RequireRole(Configuration["SecuritySettings:ADGroupAdmins"]));
+                //options.AddPolicy("ADMIN", policy =>
+                //   policy.RequireRole(Configuration["SecuritySettings:ADGroupAdmins"]));
 
                 //options.AddPolicy("ADSupervisors", policy =>
                 //   policy.RequireRole(Configuration["SecuritySettings:ADGroupSupervisors"]));
@@ -91,11 +89,13 @@ namespace WebResumen
                 //options.AddPolicy("Write", policy =>
                 //        policy.RequireClaim("permission", "write"));
 
+
             });
-            //services.AddSingleton<IAuthorizationHandler, ADGroupUsersHandler>();
+            services.AddSingleton<IAuthorizationHandler, ADGroupUsersHandler>(); // con esta llamada muevo las tres vistas
             //services.AddSingleton<IAuthorizationHandler, ADGroupAdminsHandler>();
             //services.AddSingleton<IAuthorizationHandler, ADGroupSupervisorsHandler>();
-            services.AddSingleton<IAuthorizationHandler, ADGroupAllHandler>();
+
+            //services.AddSingleton<IAuthorizationHandler, ADGroupAllHandler>();
             services.AddSingleton<IAuthorizationHandler, ADGroupASHandler>();
             services.AddSingleton<IAuthorizationHandler, ADGroupAdminsHandler>();
 
@@ -113,8 +113,7 @@ namespace WebResumen
             services.AddDistributedMemoryCache();
            
             services.AddSession(options => {
-
-                
+                                
                 options.IdleTimeout = TimeSpan.FromMinutes(30);//You can set Time   
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
@@ -122,10 +121,10 @@ namespace WebResumen
             });
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(options =>
-                {
-                    options.Cookie.Expiration = TimeSpan.FromMinutes(10);
-                });
+               .AddCookie(options =>
+               {
+                   options.Cookie.Expiration = TimeSpan.FromMinutes(30);
+               });
 
 
             services.AddScoped(typeof(ILogRecord), typeof(LogRecord));
@@ -155,6 +154,7 @@ namespace WebResumen
 
             app.UseAuthorization();
             app.UseSession(); // // IMPORTANT: This session call MUST go before UseMvc()
+        
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

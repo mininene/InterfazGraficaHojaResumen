@@ -21,7 +21,7 @@ using WebResumen.Services.printerServiceAS;
 
 namespace WebResumen.Controllers
 {
-    [Authorize(Policy = "ADTodos")]
+   // [Authorize(Policy = "ADTodos")]
     public class AutoClaveAController : Controller
     {
         private readonly AppDbContext _context;
@@ -167,10 +167,25 @@ namespace WebResumen.Controllers
             //var result=  await _context.CiclosAutoclaves.OrderByDescending(x => x.Id).ToListAsync();
             //return View(await _context.CiclosAutoclaves.OrderByDescending(x=>x.Id).ToListAsync());
             List<CiclosAutoclaves> _sabiUno = await _context.CiclosAutoclaves.ToListAsync();
-            var query = from x in _sabiUno.Where(x => x.IdAutoclave == "NF8387A").OrderByDescending(X => X.Id).Take(1) select x;
 
+            //var query = from x in _sabiUno.Where(x => x.IdAutoclave == "NF8387A").OrderByDescending(X => X.Id).Take(1) select x;
+            var querya = from x in _sabiUno.Where(x => x.IdAutoclave == "NF8387A").OrderByDescending(x => x.Id).Take(1) select x;
+            var queryb = from x in _sabiUno.Where(x => x.IdAutoclave == "8388B").OrderByDescending(x => x.Id).Take(1) select x;
+            var queryc = from x in _sabiUno.Where(x => x.IdAutoclave == "8389C").OrderByDescending(x => x.Id).Take(1) select x;
+            var queryd = from x in _sabiUno.Where(x => x.IdAutoclave == "8607D").OrderByDescending(x => x.Id).Take(1) select x;
+            var querye = from x in _sabiUno.Where(x => x.IdAutoclave == "NF1029E").OrderByDescending(x => x.Id).Take(1) select x;
+            var queryf = from x in _sabiUno.Where(x => x.IdAutoclave == "NF1030F").OrderByDescending(x => x.Id).Take(1) select x;
+            var queryg = from x in _sabiUno.Where(x => x.IdAutoclave == "NF1031G").OrderByDescending(x => x.Id).Take(1) select x;
+            var queryh = from x in _sabiUno.Where(x => x.IdAutoclave == "NA0658EGH").OrderByDescending(x => x.Id).Take(1) select x;
+            var queryi = from x in _sabiUno.Where(x => x.IdAutoclave == "NA0672EGI").OrderByDescending(x => x.Id).Take(1) select x;
+            var querym = from x in _sabiUno.Where(x => x.IdAutoclave == "NA0611EFM").OrderByDescending(x => x.Id).Take(1) select x;
+          
+            var pc = querya.Union(queryb).Union(queryc).Union(queryd).Union(querye).Union(queryf).Union(queryg).Union(queryh)
+                .Union(queryi).Union(querym);
 
-            return Json(query.ToList());
+            //return Json(query.ToList());
+
+            return Json(pc);
 
 
         }
