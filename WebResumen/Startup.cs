@@ -114,7 +114,7 @@ namespace WebResumen
            
             services.AddSession(options => {
                                 
-                options.IdleTimeout = TimeSpan.FromMinutes(30);//You can set Time   
+                options.IdleTimeout = TimeSpan.FromMinutes(120);//You can set Time   
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
 
@@ -123,7 +123,7 @@ namespace WebResumen
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                .AddCookie(options =>
                {
-                   options.Cookie.Expiration = TimeSpan.FromMinutes(30);
+                   options.Cookie.Expiration = TimeSpan.FromMinutes(120);
                });
 
 

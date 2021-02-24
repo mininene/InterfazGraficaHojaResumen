@@ -139,11 +139,15 @@ namespace WebResumen.Controllers
 
         public IActionResult Tiempo()
         {
+           
             var query = _context.Parametros.FirstOrDefault() ;
             int? data = query.Tsesion;
-
-
-            return Json(data);
+            var fname = _httpContextAccessor.HttpContext.Session.GetString("SessionName");
+            var result = Json(new
+            {
+                data,fname
+            });
+            return Json(result);
 
         }
 

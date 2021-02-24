@@ -89,7 +89,7 @@
                 })
 
 
-
+                .withPaginationType('full_numbers')
 
 
                 .withLanguage({
@@ -122,14 +122,44 @@
 
                         extend: 'excel',
                         text: '<i class="fa fa-file-text-o"></i> Excel',
+                        title: localStorage.getItem("Fname") + "_Vapor_" + new Date().toLocaleString(),
                         titleAttr: 'Excel',
+                        //filename: function () {
+                        //    var d = new Date();
+                        //    var n = d.toLocaleString();
+                        //    return localStorage.getItem("Fname") + n;
+                        //},
                         exportOptions: {
                             columns: ':visible'
                         },
                     },
                     {
                         extend: 'print',
+                        customize: function (win) {
+
+                            var last = null;
+                            var current = null;
+                            var bod = [];
+
+                            var css = '@page { size: landscape; }',
+                                head = win.document.head || win.document.getElementsByTagName('head')[0],
+                                style = win.document.createElement('style');
+
+                            style.type = 'text/css';
+                            style.media = 'print';
+
+                            if (style.styleSheet) {
+                                style.styleSheet.cssText = css;
+                            }
+                            else {
+                                style.appendChild(win.document.createTextNode(css));
+                            }
+
+                            head.appendChild(style);
+                        },
+                        footer: 'true',
                         text: '<i class="fa fa-print" aria-hidden="true"></i> Print',
+                        title: localStorage.getItem("Fname") + "      " + new Date().toLocaleString(),
                         titleAttr: 'Print',
                         exportOptions: {
                             columns: ':visible'
