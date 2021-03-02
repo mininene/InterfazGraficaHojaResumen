@@ -140,7 +140,7 @@ namespace WebResumen.Controllers
         public IActionResult Tiempo()
         {
            
-            var query = _context.Parametros.FirstOrDefault() ;
+            var query = _context.Parametros.OrderBy(x=>x.Tsesion).FirstOrDefault();
             int? data = query.Tsesion;
             var fname = _httpContextAccessor.HttpContext.Session.GetString("SessionName");
             var result = Json(new

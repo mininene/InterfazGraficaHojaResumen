@@ -8,8 +8,14 @@
               
                 
                 $scope.dtOptions = DTOptionsBuilder.newOptions()
+                    .withOption('deferRender', true)
                     .withOption('serverSide', false)
                     .withOption('processing', false)
+                    .withOption('searching', true)
+                   // .withOption('scrollCollapse', true)
+                   // .withOption('scroller', true)
+
+                   
                     .withOption('ajax', function (data, callback, settings) {
 
 
@@ -29,7 +35,7 @@
                             });
                         });
                     })
-
+                   
                     .withDataProp('info')
 
                     //$scope.dtOptions = DTOptionsBuilder
@@ -153,12 +159,17 @@
                             extend: 'excel',
                             text: '<i class="fa fa-file-text-o"></i> Excel',
                             title: localStorage.getItem("Fname") + "_Agua_" + new Date().toLocaleString(),
-                            titleAttr: 'Excel',
-                            //filename: function () {
-                            //    var d = new Date();
-                            //    var n = d.toLocaleString();
-                            //    return 'AutoClavesAguax' + n;
-                            //},
+                            titleAttr: 'Excel', action: function (e, dt, node, config) {
+                                // show sweetalert ...
+                                Swal.fire('Por Favor Espere');
+                                Swal.showLoading();
+
+                                setTimeout(function () {
+                                    $.fn.dataTable.ext.buttons.excelHtml5.action.call(this, e, dt, node, config);
+                                    Swal.fire('Descarga Completada');
+                                    Swal.hideLoading();
+                                }, 50);
+                            },
                             exportOptions: {
                                 columns: ':visible'
                             },
@@ -221,7 +232,11 @@
 
                     .withOption('scrollX', 'true')
                     .withOption('scrollY', '380px')
-                    .withOption('lengthMenu', [[10, 50, 100, -1], [10, 50, 100, 'All']]);
+                   
+                   
+             
+               
+                    .withOption('lengthMenu', [[10, 50, 100, 1000], [10, 50, 100, 1000]]);
 
                
 

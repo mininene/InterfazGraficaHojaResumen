@@ -65,7 +65,17 @@
                         extend: 'excel',
                         text: '<i class="fa fa-file-text-o"></i> Excel',
                         title: localStorage.getItem("Fname") + "_Auditrail_" + new Date().toLocaleString(),
-                        titleAttr: 'Excel',
+                        titleAttr: 'Excel', action: function (e, dt, node, config) {
+                            // show sweetalert ...
+                            Swal.fire('Por Favor Espere');
+                            Swal.showLoading();
+
+                            setTimeout(function () {
+                                $.fn.dataTable.ext.buttons.excelHtml5.action.call(this, e, dt, node, config);
+                                Swal.fire('Descarga Completada');
+                                Swal.hideLoading();
+                            }, 50);
+                        },
                         exportOptions: {
                             columns: ':visible'
                         },
@@ -132,7 +142,7 @@
                 .withOption('scrollX', 'true')
                 .withOption('scrollY', '380px')
                
-                .withOption('lengthMenu', [[10, 50, 100, -1], [10, 50, 100, 'All']]);
+                .withOption('lengthMenu', [[10, 50, 100, 1000], [10, 50, 100, 1000]]);
       
            
             $scope.formatDate = function (date) {

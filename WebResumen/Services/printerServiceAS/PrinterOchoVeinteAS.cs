@@ -23,11 +23,11 @@ namespace WebResumen.Services.printerServiceAS
     public class PrinterOchoVeinteAS : IPrinterOchoVeinteAS
     {
         private readonly AppDbContext _context;
-        private readonly IHostingEnvironment _env;
-        public PrinterOchoVeinteAS(AppDbContext context, IHostingEnvironment env)
+       
+        public PrinterOchoVeinteAS(AppDbContext context)
         {
             _context = context;
-            _env = env;
+           
         }
         public void printOchoVeinteAS(int? id)
         {

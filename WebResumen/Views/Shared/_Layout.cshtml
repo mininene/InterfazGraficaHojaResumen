@@ -25,8 +25,8 @@
     <link rel="stylesheet" href="~/css/Datatable/dataTables.colVis.css" />
     <link rel="stylesheet" href="~/css/Datatable/searchBuilder.dataTables.min.css" />
     <link rel="stylesheet" href="~/css/Datatable/bootstrap-datepicker3.css" />
-   
 
+    <link rel="stylesheet" https="//cdn.datatables.net/scroller/2.0.3/css/scroller.dataTables.min.css"/>
 
     <!-- Colvis -->
     @*<link  rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.9.4/css/jquery.dataTables.css" />*@
@@ -76,8 +76,8 @@
 
 
                             @*<li class="nav-item">
-             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-            </li>*@
+                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                                </li>*@
                             else
                             {
 
@@ -109,7 +109,7 @@
                                         <li class="nav-item">
                                             <a class="nav-link text-dark" asp-area="" asp-controller="Parametro" asp-action="Index">Configuración</a>
                                         </li>
-                                       
+
 
 
                                     }
@@ -126,35 +126,35 @@
             <div class="panel panel-default">
                 <div style="color:white" class="panel-heading">ghfdhgfdgh</div>
                 <div class="panel-body">
-                  <span style="color:black;background:yellow;font-weight:bold" id="SecondsUntilExpire"></span>
+                    <span style="color:black;background:yellow;font-weight:bold" id="SecondsUntilExpire"></span>
                 </div>
-                </div>
+            </div>
 
 
 
 
 
-                <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav ml-auto">
 
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">Logout</a>
-                    </li>
-                    <li class="nav-item">
-                        @*<p class="float-right navbar-text navbar-right text-danger">Hola, <strong>@User.Identity.Name.Replace("GLOBAL\\", "")!</strong> </p>*@
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">Logout</a>
+                </li>
+                <li class="nav-item">
+                    @*<p class="float-right navbar-text navbar-right text-danger">Hola, <strong>@User.Identity.Name.Replace("GLOBAL\\", "")!</strong> </p>*@
 
 
-                        @inject IHttpContextAccessor httpContextAccessor
-                        <p class=" navbar-text text-danger">Hola, <strong> @httpContextAccessor.HttpContext.Session.GetString("SessionUser")!</strong> </p>
-                    </li>
+                    @inject IHttpContextAccessor httpContextAccessor
+                    <p class=" navbar-text text-danger">Hola, <strong> @httpContextAccessor.HttpContext.Session.GetString("SessionUser")!</strong> </p>
+                </li>
 
-                </ul>
+            </ul>
         </nav>
 
 
     </header>
     <div class="container-fluid">
         <main role="main" class="pb-3">
-        
+
             <a class="float-right mr-5" asp-area="" asp-controller="Inicio" asp-action="Index"><i class="fa fa-chevron-circle-left" style="font-size:48px;color:darkblue"></i></a>
 
             @RenderBody()
@@ -197,6 +197,9 @@
     <script src="~/lib/libraries/DataTable/angular-datatables.js"></script>
     <script src="~/lib/libraries/DataTable/dataTables.buttons.min.js"></script>
 
+    <!-- Spinner -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
     <!-- Colvis -->
     <script src="~/lib/libraries/DataTable/dataTables.colVis.js"></script>
     <script src="~/lib/libraries/DataTable/angular-datatables.colvis.js"></script>
@@ -213,7 +216,7 @@
     <script src="~/lib/libraries/DataTable/SearchPanel/dataTables.searchPane.min.js"></script>
     <script src="~/lib/libraries/DataTable/SearchPanel/dataTables.select.min.js"></script>
     <script src="~/lib/libraries/DataTable/SearchPanel/highcharts.js"></script>
-
+    <script src="https://cdn.datatables.net/scroller/2.0.3/js/dataTables.scroller.min.js"></script>
 
     <!-- Bootstrap Date-Picker Plugin -->
     <script src="~/lib/libraries/DatePicker/bootstrap-datepicker.min.js"></script>

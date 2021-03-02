@@ -815,7 +815,7 @@ app.controller('homeCtrl', function ($scope, $http, $interval,$timeout,$q) {
 
 
 
-    $interval($scope.LoadData, 120000);
+    $interval($scope.LoadData, 30000);
     
     
 });

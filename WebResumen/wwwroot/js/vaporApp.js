@@ -122,13 +122,21 @@
 
                         extend: 'excel',
                         text: '<i class="fa fa-file-text-o"></i> Excel',
+                        //text: "Execl <span class=\"loading_spinner_ex initial_hide\"><i class=\"fa fa-spinner fa-spin\"></i></span>",
+                        className: "btn btn-md btn-success btn-track1",
                         title: localStorage.getItem("Fname") + "_Vapor_" + new Date().toLocaleString(),
-                        titleAttr: 'Excel',
-                        //filename: function () {
-                        //    var d = new Date();
-                        //    var n = d.toLocaleString();
-                        //    return localStorage.getItem("Fname") + n;
-                        //},
+                        titleAttr: 'Excel', action: function (e, dt, node, config) {
+                            // show sweetalert ...
+                            Swal.fire('Por Favor Espere');
+                            Swal.showLoading();
+
+                            setTimeout(function () {
+                                $.fn.dataTable.ext.buttons.excelHtml5.action.call(this, e, dt, node, config);
+                                Swal.fire('Descarga Completada');
+                                Swal.hideLoading();
+                            }, 50);
+                        },
+                      
                         exportOptions: {
                             columns: ':visible'
                         },
@@ -189,7 +197,7 @@
 
                 .withOption('scrollX', 'true')
                 .withOption('scrollY', '380px')
-                .withOption('lengthMenu', [[10, 50, 100, -1], [10, 50, 100, 'All']]);
+                .withOption('lengthMenu', [[10, 50, 100, 1000], [10, 50, 100, 1000]]);
 
 
 
