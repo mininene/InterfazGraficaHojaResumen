@@ -165,7 +165,8 @@ namespace WebResumen.Controllers
 
         public async Task<IActionResult> WritePrint()
         {
-            string ReportURL = @"\\essaappserver01\HojaResumen\old\archivo1.pdf";
+            //string ReportURL = @"\\essaappserver01\HojaResumen\old\archivo1.pdf";
+            string ReportURL = @"C:\Program Files\HojaResumen\old\archivo1.pdf";
             byte[] FileBytes = System.IO.File.ReadAllBytes(ReportURL);
             TempData["Print"] = "El Archivo ha sido Impreso";
             string EventoK = "Re-Impresión";
@@ -195,8 +196,9 @@ namespace WebResumen.Controllers
             int numero = int.Parse(ciclosAutoclaves.NumeroCiclo);
 
             string ciclo = ciclosAutoclaves.IdAutoclave + string.Format("{0:00000}", numero) + ".LOG";
-            string path = @"\\essaappserver01\HojaResumen\API\AutoClaveK\" + ciclo;
-
+            //string path = @"\\essaappserver01\HojaResumen\API\AutoClaveK\" + ciclo;
+            var query = _context.MaestroAutoclave.Where(t => t.Matricula == "0828K").FirstOrDefault();
+            var path = query.RutaSalida.ToString() + ciclo;
 
             string[] texts = System.IO.File.ReadAllLines(path, new UnicodeEncoding());
             ViewBag.Data = texts;

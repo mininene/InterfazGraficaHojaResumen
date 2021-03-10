@@ -207,7 +207,10 @@ namespace WebResumen.Controllers
             int numero = int.Parse(ciclosAutoclaves.NumeroCiclo);
 
             string ciclo = ciclosAutoclaves.IdAutoclave + string.Format("{0:00000}", numero) + ".LOG";
-            string path = @"\\essaappserver01\HojaResumen\API\AutoClaveA\" + ciclo;
+            // string path = @"\\essaappserver01\HojaResumen\API\AutoClaveA\" + ciclo;
+          
+            var query = _context.MaestroAutoclave.Where(t => t.Matricula == "NF8387A").FirstOrDefault();
+            var path = query.RutaSalida.ToString()+ciclo;
 
 
             string[] texts = System.IO.File.ReadAllLines(path, new UnicodeEncoding());
@@ -316,7 +319,8 @@ namespace WebResumen.Controllers
         }
         public async Task<IActionResult> WritePrint()
         {
-            string ReportURL = @"\\essaappserver01\HojaResumen\old\archivo1.pdf";
+           // string ReportURL = @"\\essaappserver01\HojaResumen\old\archivo1.pdf";
+            string ReportURL = @"C:\Program Files\HojaResumen\old\archivo1.pdf";
             byte[] FileBytes = System.IO.File.ReadAllBytes(ReportURL);
             string EventoA = "Re-Impresión";
             _log.Write(_httpContextAccessor.HttpContext.Session.GetString("SessionFullName"), DateTime.Now, EventoA + " " + _httpContextAccessor.HttpContext.Session.GetString("AutoclaveNumeroA"), _httpContextAccessor.HttpContext.Session.GetString("SessionComentarioA"));

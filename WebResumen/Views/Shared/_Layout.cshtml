@@ -167,9 +167,25 @@
 
         <!-- Copyright -->
         <div class="footer-copyright text-center py-3">
-            &copy; 2021 Copyright - <a asp-area="" asp-controller="Home" asp-action="Privacy">Baxter</a>
+            <div class="row">
+                <div class="col-sm">
+
+                </div>
+
+                <div class="col-sm">
+                    <p>&copy; 2021 Copyright - <a asp-area="" asp-controller="Home" asp-action="Privacy">Baxter</a></p>
+
+                </div>
+
+                <div class="col-sm">
+                    <p> Hoja Resumen <a asp-area="" asp-controller="Home" asp-action="Privacy">v1.0 <i class="fa fa-rocket"></i></a></p>
+                </div>
+
+            </div>
+
         </div>
         <!-- Copyright -->
+
     </footer>
 
 
@@ -198,7 +214,8 @@
     <script src="~/lib/libraries/DataTable/dataTables.buttons.min.js"></script>
 
     <!-- Spinner -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    @*<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>*@
+    <script src="~/lib/sweetalert/sweetalert2.js"></script>
 
     <!-- Colvis -->
     <script src="~/lib/libraries/DataTable/dataTables.colVis.js"></script>
@@ -237,6 +254,8 @@
     <script src="~/js/AudiTrailApp.js" asp-append-version="true"></script>
 
     <script src="~/js/print.min.js" asp-append-version="true"></script>
+
+    <script src="~/js/printActive/printOriginal.js" asp-append-version="true"></script>
 
 
 

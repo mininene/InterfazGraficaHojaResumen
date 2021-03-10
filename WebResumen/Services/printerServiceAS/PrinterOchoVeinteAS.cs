@@ -279,7 +279,7 @@ namespace WebResumen.Services.printerServiceAS
                 }
 
               //  var path = Path.Combine(_env.WebRootPath, "docs", "archivo.pdf");
-                string rut = @"\\essaappserver01\HojaResumen\old\archivo1.pdf";
+                string rut = @"C:\Program Files\HojaResumen\old\archivo1.pdf";
                 pdf.Save(rut);
               
 

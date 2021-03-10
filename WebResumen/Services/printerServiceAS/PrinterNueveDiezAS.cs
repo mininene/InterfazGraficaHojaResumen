@@ -224,7 +224,8 @@ namespace WebResumen.Services.printerServiceAS
                 tf.DrawString(q.ErrorCiclo, fontDos, XBrushes.Black, rect, XStringFormats.TopLeft);
             }
 
-                string rut = @"\\essaappserver01\HojaResumen\old\archivo1.pdf";
+                //string rut = @"\\essaappserver01\HojaResumen\old\archivo1.pdf";
+                string rut = @"C:\Program Files\HojaResumen\old\archivo1.pdf";
                 pdf.Save(rut);
 
 

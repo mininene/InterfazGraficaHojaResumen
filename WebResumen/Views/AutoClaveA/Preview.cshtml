@@ -3,51 +3,64 @@
 @{
     ViewData["Title"] = "Details";
 }
-
+<style>
+    @@media print {
+        .modal {
+            position: absolute;
+            left: 0;
+            top: 0;
+            margin: 0;
+            padding: 0;
+            overflow: visible !important;
+        }
+    }
+</style>
 <h1>Detalles</h1>
 
 @*<div>
-    <h4>Archivo de Origen </h4>
-</div>*@
+        <h4>Archivo de Origen </h4>
+    </div>*@
 <div>
-    
+
     <h4>
         @Html.DisplayFor(model => model.IdAutoclave) @Html.DisplayFor(model => model.NumeroCiclo)
 
-    </h4> 
-      
-        
+    </h4>
+
+
 
     </dl>
 </div>
 
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-        Ver
-    </button>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+    Ver
+</button>
 
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">@Html.DisplayFor(model => model.IdAutoclave)@Html.DisplayFor(model => model.NumeroCiclo)</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                      @foreach (string text in ViewBag.Data)
-                    {
-                        <p>@text</p>
-                    }
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">@Html.DisplayFor(model => model.IdAutoclave)@Html.DisplayFor(model => model.NumeroCiclo)</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+               
+                @foreach (string text in ViewBag.Data)
+                {
+                    @text<br>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                @*<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="printOriginalA();">Imprimir</button>*@
 
-                </div>
             </div>
         </div>
     </div>
+</div>
 
 
 
@@ -57,6 +70,6 @@
 
 
 
-    <div>
-        <a asp-action="Index">Back to List</a>
-    </div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

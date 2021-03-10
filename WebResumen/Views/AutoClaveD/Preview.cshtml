@@ -3,7 +3,18 @@
 @{
     ViewData["Title"] = "Details";
 }
-
+<style>
+    @@media print {
+        .modal {
+            position: absolute;
+            left: 0;
+            top: 0;
+            margin: 0;
+            padding: 0;
+            overflow: visible !important;
+        }
+    }
+</style>
 <h1>Detalles</h1>
 
 @*<div>
@@ -36,9 +47,9 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                      @foreach (string text in ViewBag.Data)
+                    @foreach (string text in ViewBag.Data)
                     {
-                        <p>@text</p>
+                        @text<br>
                     }
                 </div>
                 <div class="modal-footer">
