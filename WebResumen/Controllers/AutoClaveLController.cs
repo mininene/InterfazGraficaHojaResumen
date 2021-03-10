@@ -111,8 +111,9 @@ namespace WebResumen.Controllers
             var ciclosAutoclaves = await _context.CiclosSabiDos
                .FirstOrDefaultAsync(m => m.Id == id);
 
-            if (ciclosAutoclaves.Programa.Trim().Equals("9") || ciclosAutoclaves.Programa.Trim().Equals("10"))
-
+            //if (ciclosAutoclaves.Programa.Trim().Equals("9") || ciclosAutoclaves.Programa.Trim().Equals("10"))
+                int ciclosInt = Convert.ToInt32(ciclosAutoclaves.Programa.Trim());
+            if (ciclosInt > 0)
             {
                 _printerNueveDiez.printNueveDiez(id);
             }
@@ -139,8 +140,9 @@ namespace WebResumen.Controllers
             var ciclosAutoclaves = await _context.CiclosSabiDos
                .FirstOrDefaultAsync(m => m.Id == id);
 
-            if (ciclosAutoclaves.Programa.Trim().Equals("9") || ciclosAutoclaves.Programa.Trim().Equals("10"))
-
+          //  if (ciclosAutoclaves.Programa.Trim().Equals("9") || ciclosAutoclaves.Programa.Trim().Equals("10"))
+                int ciclosInt = Convert.ToInt32(ciclosAutoclaves.Programa.Trim());
+            if (ciclosInt > 0)
             {
                 _printerNueveDiezAS.printNueveDiezAS(id);
             }

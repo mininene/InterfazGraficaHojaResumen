@@ -119,7 +119,9 @@ namespace WebResumen.Controllers
             var ciclosAutoclaves = await _context.CiclosAutoclaves
                .FirstOrDefaultAsync(m => m.Id == id);
 
-            if (ciclosAutoclaves.Programa.Trim().Equals("8") || ciclosAutoclaves.Programa.Trim().Equals("20"))
+            //if (ciclosAutoclaves.Programa.Trim().Equals("8") || ciclosAutoclaves.Programa.Trim().Equals("20"))
+                int ciclosInt = Convert.ToInt32(ciclosAutoclaves.Programa.Trim());
+            if (ciclosInt >= 5)
 
             {
                 _printerOchoVeinte.printOchoVeinte(id);
@@ -153,7 +155,9 @@ namespace WebResumen.Controllers
             var ciclosAutoclaves = await _context.CiclosAutoclaves
                .FirstOrDefaultAsync(m => m.Id == id);
 
-            if (ciclosAutoclaves.Programa.Trim().Equals("8") || ciclosAutoclaves.Programa.Trim().Equals("20"))
+           // if (ciclosAutoclaves.Programa.Trim().Equals("8") || ciclosAutoclaves.Programa.Trim().Equals("20"))
+                int ciclosInt = Convert.ToInt32(ciclosAutoclaves.Programa.Trim());
+            if (ciclosInt >= 5)
 
             {
                 _printerOchoVeinteAS.printOchoVeinteAS(id);

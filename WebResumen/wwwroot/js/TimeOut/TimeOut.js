@@ -53,6 +53,7 @@
         if (_idleSecondsCounter >= IDLE_TIMEOUT) {
             window.clearInterval(_idleSecondsCounter);
             alert("Sesión Expirada!");
+           
 
             window.location.href = "/Home/Logout"
 

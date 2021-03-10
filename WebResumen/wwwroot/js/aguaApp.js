@@ -31,8 +31,9 @@
                             callback({
 
                                 info: response.data
-
+                                
                             });
+                           
                         });
                     })
                    
@@ -68,59 +69,90 @@
 
 
                     .withOption('initComplete', function () {
-                        /* Custom filtering function which will search data in column four between two values */
                        
-                       //  $(document).ready(function () { var table = $('#example').DataTable(); $("#example tfoot th").each(function (i) { var select = $('<select><option value=""></option></select>').appendTo($(this).empty()).on('change', function () { var val = $(this).val(); table.column(i).search(val ? '^' + $(this).val() + '$' : val, true, false).draw(); }); table.column(i).data().unique().sort().each(function (d, j) { select.append('<option value="' + d + '">' + d + '</option>') }); }); });
-                      //   $(document).ready(function () {  $('#example tfoot th').each( function () { var title = $('#example thead th').eq( $(this).index() ).text(); $(this).html( '<input type="text" placeholder="Search '+title+'" />' ); } );   var table = $('#example').DataTable();  table.columns().eq( 0 ).each( function ( colIdx ) { $( 'input', table.column( colIdx ).footer() ).on( 'keyup change', function () { table .column( colIdx ) .search( this.value ) .draw(); } ); } ); } )
+                      
+                        $.fn.dataTable.ext.search.push(
+                            function (settings, data, dataIndex) {
+                                var min = $('#min').val().split("-").reverse().join("-").replace("-", "/").replace("-", "/").substring(0, 6) + $('#min').val().split("-").reverse().join("-").replace("-", "/").replace("-", "/").substring(8, 10)
+                                var max = $('#max').val().split("-").reverse().join("-").replace("-", "/").replace("-", "/").substring(0, 6) + $('#max').val().split("-").reverse().join("-").replace("-", "/").replace("-", "/").substring(8, 10)
 
-                        //$(document).ready(function () {
-                        //    // Setup - add a text input to each footer cell
-                        //    $('#example thead tr').clone(true).appendTo('#example thead');
-                        //    $('#example thead tr:eq(1) th').each(function (i) {
-                        //        var title = $(this).text();
-                        //        $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+                                
+                                //console.log(min)
+                                //console.log(max)
+                                
+                                var startDate = data[7].substring(0,8)
+                                console.log(startDate)
+                                var date = new Date(startDate)
+                                var ti = new Date(min)
+                                console.log(ti)
+                                var tf = new Date(max)
+                                console.log(tf)
+                        //console.log(startDate);
 
-                        //        $('input', this).on('keyup change', function () {
-                        //            if (table.column(i).search() !== this.value) {
-                        //                table
-                        //                    .column(i)
-                        //                    .search(this.value)
-                        //                    .draw();
-                        //            }
-                        //        });
-                        //    });
-
-                        //    var table = $('#example').DataTable({
-                        //        orderCellsTop: true,
-                        //        fixedHeader: true
-                        //    });
-                        //})  
-
-                        //$.fn.dataTable.ext.search.push(
-                        //    function (settings, data, dataIndex) {
-                        //        var min = $('#min').datepicker({ dateFormat: "dd-mm-yy" }).val()
-                        //        console.log(min)
-                        //        var max = $('#max').datepicker("getDate");
-                        //        var startDate = new Date(data[4]);
-
-                        //        if (min == null && max == null) { return true; }
-                        //        if (min == null && startDate <= max) { return true; }
-                        //        if (max == null && startDate >= min) { return true; }
-                        //        if (startDate <= max && startDate >= min) { return true; }
-                        //        return false;
-                        //    }
-                        //);
+                                if (min == null && max == null) { return true; }
+                                if (min == null && startDate.includes(max)) { return true; }
+                                if (max == null && startDate.includes(min)) { return true; }
+                                if (startDate.includes(max) || startDate.includes(min)) { return true; }
+                               
+                                return false;
+                            }
+                        );
 
 
-                        //$("#min").datepicker({ onSelect: function () { table.draw(); }, changeMonth: true, changeYear: true });
-                        //$("#max").datepicker({ onSelect: function () { table.draw(); }, changeMonth: true, changeYear: true });
-                        //var table = $('#example').DataTable();
+                        $(document).ready(function () {
+                            var table = $('#example').DataTable();
 
-                        //// Event listener to the two range filtering inputs to redraw on input
-                        //$('#min, #max').change(function () {
-                        //    table.draw();
+                            // Event listener to the two range filtering inputs to redraw on input
+                            $('#min, #max').change(function () {
+                               //Swal.fire('Por Favor Espere');
+                                Swal.showLoading();
+                                table.draw();
+                                //Swal.hideLoading();
+                                Swal.close();
+                            });
+                            
 
-                        //});
+                           
+                        });
+
+                        $.fn.dataTable.ext.search.push(
+                            function (settings, data, dataIndex) {
+                                var fi = $('#fi').val().split("-").reverse().join("-").replace("-", "/").replace("-", "/").substring(0, 6) + $('#fi').val().split("-").reverse().join("-").replace("-", "/").replace("-", "/").substring(8, 10)
+                                var fa = $('#fa').val().split("-").reverse().join("-").replace("-", "/").replace("-", "/").substring(0, 6) + $('#fa').val().split("-").reverse().join("-").replace("-", "/").replace("-", "/").substring(8, 10)
+
+
+                                //console.log(min)
+                                //console.log(max)
+
+                                var startDate2 = data[8].substring(0, 8)
+                               
+
+                                if (fi == null && fa == null) { return true; }
+                                if (fi == null && startDate2.includes(fa)) { return true; }
+                                if (fa == null && startDate2.includes(fi)) { return true; }
+                                if (startDate2.includes(fa) || startDate2.includes(fi)) { return true; }
+
+                                return false;
+                            }
+                        );
+
+
+                        $(document).ready(function () {
+                            var table = $('#example').DataTable();
+
+                            // Event listener to the two range filtering inputs to redraw on input
+                            $('#fi, #fa').change(function () {
+                                //Swal.fire('Por Favor Espere');
+                                Swal.showLoading();
+                                table.draw();
+                                //Swal.hideLoading();
+                                Swal.close();
+                            });
+
+
+
+                        });
+                       
 
                     })
 
@@ -238,6 +270,7 @@
                
                     .withOption('lengthMenu', [[10, 50, 100, 1000], [10, 50, 100, 1000]]);
 
+               
                
 
 
