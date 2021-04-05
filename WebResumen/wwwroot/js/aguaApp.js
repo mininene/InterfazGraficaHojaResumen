@@ -73,28 +73,42 @@
                       
                         $.fn.dataTable.ext.search.push(
                             function (settings, data, dataIndex) {
-                                var min = $('#min').val().split("-").reverse().join("-").replace("-", "/").replace("-", "/").substring(0, 6) + $('#min').val().split("-").reverse().join("-").replace("-", "/").replace("-", "/").substring(8, 10)
-                                var max = $('#max').val().split("-").reverse().join("-").replace("-", "/").replace("-", "/").substring(0, 6) + $('#max').val().split("-").reverse().join("-").replace("-", "/").replace("-", "/").substring(8, 10)
 
-                                
-                                //console.log(min)
-                                //console.log(max)
-                                
-                                var startDate = data[7].substring(0,8)
-                                console.log(startDate)
-                                var date = new Date(startDate)
-                                var ti = new Date(min)
-                                console.log(ti)
-                                var tf = new Date(max)
-                                console.log(tf)
-                        //console.log(startDate);
-
-                                if (min == null && max == null) { return true; }
-                                if (min == null && startDate.includes(max)) { return true; }
-                                if (max == null && startDate.includes(min)) { return true; }
-                                if (startDate.includes(max) || startDate.includes(min)) { return true; }
                                
+                                var min = $('#min').val();
+                                var max = $('#max').val();
+                                var mini = new Date($('#min').val());
+                                var maxi = new Date($('#max').val());
+
+                                var filterstart = mini;
+                                var filterend = maxi;
+                                                                                       
+                                var iStartDateCol = 7; //using column 7 in this instance
+                                var iEndDateCol =7;
+                                var tabledatestart = data[iStartDateCol] ;
+                                var tabledateend = data[iEndDateCol];
+                             
+                                if (min === "" && max === "") {
+                                    return true;
+                                }
+                                else if ((moment(filterstart).isSame(tabledatestart) || moment(filterstart).isBefore(tabledatestart)) && max === "") {
+                                    return true;
+                                }
+                                else if ((moment(filterend).isSame(tabledatestart) || moment(filterend).isAfter(tabledatestart)) && min === "") {
+                                    return true;
+                                }
+                                else if ((moment(filterstart).isSame(tabledatestart) || moment(filterstart).isBefore(tabledatestart)) && (moment(filterend).isSame(tabledateend) || moment(filterend).isAfter(tabledateend))) {
+                                    return true;
+                                }
                                 return false;
+                                //if (
+                                //    (filterstart == "" || filterend == "") || (moment(tabledatestart).isSameOrAfter(filterend) && filterend === "") ||
+                                //    (moment(tabledatestart).isSameOrAfter(filterend) && moment(tabledatestart).isSameOrBefore(filterstart))
+                                //   // (moment(tabledatestart).isBetween(filterstart, filterend, undefined, '[]'))
+                                //) {
+                                //    return true;
+                                //}
+                                //return false;
                             }
                         );
 
@@ -117,22 +131,36 @@
 
                         $.fn.dataTable.ext.search.push(
                             function (settings, data, dataIndex) {
-                                var fi = $('#fi').val().split("-").reverse().join("-").replace("-", "/").replace("-", "/").substring(0, 6) + $('#fi').val().split("-").reverse().join("-").replace("-", "/").replace("-", "/").substring(8, 10)
-                                var fa = $('#fa').val().split("-").reverse().join("-").replace("-", "/").replace("-", "/").substring(0, 6) + $('#fa').val().split("-").reverse().join("-").replace("-", "/").replace("-", "/").substring(8, 10)
+                              
+                                var fi = $('#fi').val();
+                                var fa = $('#fa').val();
+                                var fin = new Date($('#fi').val());
+                                var fan = new Date($('#fa').val());
 
 
-                                //console.log(min)
-                                //console.log(max)
-
-                                var startDate2 = data[8].substring(0, 8)
-                               
-
-                                if (fi == null && fa == null) { return true; }
-                                if (fi == null && startDate2.includes(fa)) { return true; }
-                                if (fa == null && startDate2.includes(fi)) { return true; }
-                                if (startDate2.includes(fa) || startDate2.includes(fi)) { return true; }
-
+                                var filterstartf = fin;
+                                var filterendf = fan;
+                                var iStartDateColf = 8; //using column 5 in this instance
+                                var iEndDateColf =8;
+                                var tabledatestartf = data[iStartDateColf];
+                                var tabledateendf = data[iEndDateColf];
+                             
+                                if (fi === "" && fa === "") {
+                                    return true;
+                                }
+                                else if ((moment(filterstartf).isSame(tabledatestartf) || moment(filterstartf).isBefore(tabledatestartf)) && fa === "") {
+                                    return true;
+                                }
+                                else if ((moment(filterendf).isSame(tabledatestartf) || moment(filterendf).isAfter(tabledatestartf)) && fi === "") {
+                                    return true;
+                                }
+                                else if ((moment(filterstartf).isSame(tabledatestartf) || moment(filterstartf).isBefore(tabledatestartf)) && (moment(filterendf).isSame(tabledateendf) || moment(filterendf).isAfter(tabledateendf))) {
+                                    return true;
+                                }
                                 return false;
+                                
+
+                               
                             }
                         );
 
@@ -288,8 +316,16 @@
                     DTColumnBuilder.newColumn('programa').withTitle('N.Programa'),
                     DTColumnBuilder.newColumn('codigoProducto').withTitle('Cod.Producto'),
                     DTColumnBuilder.newColumn('lote').withTitle('Lote'),
-                    DTColumnBuilder.newColumn('horaInicio').withTitle('Hora Inicio'),
-                    DTColumnBuilder.newColumn('horaFin').withTitle('Hora Fin'),
+                    DTColumnBuilder.newColumn('horaInicio').withTitle('HoraInicio').renderWith(function (data, type, full, meta) {
+                        var x = moment(data, "DD.MM.YYYY HH.mm.ss").toDate();
+                        var y = moment(x).format("YYYY-MM-DD HH:mm:ss");
+                        return y
+                    }),
+                    DTColumnBuilder.newColumn('horaFin').withTitle('HoraFin').renderWith(function (data, type, full, meta) {
+                        var x = moment(data, "DD.MM.YYYY HH.mm.ss").toDate();
+                        var y = moment(x).format("YYYY-MM-DD HH:mm:ss");
+                        return y
+                    }),
                    // DTColumnBuilder.newColumn('duracionTotalF1').withTitle('Duración F1'),
                     DTColumnBuilder.newColumn('duracionTotalF1').withTitle('Duración F1').renderWith(function (data, type, full, meta) {
                         var x = data.split(':');

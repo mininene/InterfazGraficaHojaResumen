@@ -36,8 +36,8 @@ namespace WebResumen
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDataProtection()
-                .PersistKeysToFileSystem(new DirectoryInfo(@"C:\Users\SysHojaResumen\AppData\Local\IIS_KeyFolder"));
+          //  services.AddDataProtection()
+           //     .PersistKeysToFileSystem(new DirectoryInfo(@"C:\Users\SysHojaResumen\AppData\Local\IIS_KeyFolder"));
           
 
             services.AddDbContext<AppDbContext>(options => options  //Crear el context desde la base de datos
