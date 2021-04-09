@@ -59,7 +59,23 @@ namespace WebResumen.Controllers
                         {
                             if (user.IsAccountLockedOut())
                             {
-                                TempData["Bloqueo"] = "Cuenta Bloqueada";
+                                if (user.IsMemberOf(groupAdmins) || user.IsMemberOf(groupSupervisors) || user.IsMemberOf(groupUsers))
+                                {
+                                    ///////////////////////////////////////////////////////////////////////
+                                    using (var searcher = new DirectorySearcher(new DirectoryEntry(path)))
+                                    {
+                                        string fullName = string.Empty;
+                                        DirectoryEntry de = (user.GetUnderlyingObject() as DirectoryEntry);
+                                        if (de != null)
+                                        { fullName = de.Properties["displayName"][0].ToString(); }
+                                        string EventoIb = "Sesión Bloqueada";
+                                        string ComentarioIb = "Bloqueo de sesion";
+                                        _log.Write(fullName, DateTime.Now, EventoIb, ComentarioIb);
+                                    }
+                                }
+                                   
+                                    TempData["Bloqueo"] = "Cuenta Bloqueada";
+                               
                                 //return View();
                                 return RedirectToAction("Index", "Home");
 
@@ -88,6 +104,7 @@ namespace WebResumen.Controllers
                             else
                             {
                                 TempData["Grupo"] = "No pertenece a al grupo";
+                               
                                 //return View();
                                 return RedirectToAction("Index", "Home");
                                
@@ -98,7 +115,33 @@ namespace WebResumen.Controllers
                     }
                     catch
                     {
-                        TempData["Fail"] = "Login Fallido. Usuario o Contraseña Incorrecta";
+                        using (PrincipalContext ctxo = new PrincipalContext(ContextType.Domain, dominio))
+                        {
+                           
+                                UserPrincipal user = UserPrincipal.FindByIdentity(ctxo, model.Usuario);
+                            if (user != null)
+                            {
+                                ///////////////////////////////////////////////////////////////////////
+                                using (var searcher = new DirectorySearcher(new DirectoryEntry(path)))
+                                {
+                                    string fullName = string.Empty;
+                                    DirectoryEntry de = (user.GetUnderlyingObject() as DirectoryEntry);
+                                    if (de != null)
+                                    { fullName = de.Properties["displayName"][0].ToString(); }
+
+
+                                    string EventoIx = "Inicio sesión Fallido";
+                                    string ComentarioIx = "Fallo Inicio de sesión";
+                                    TempData["Fail"] = "Login Fallido. Contraseña Incorrecta";
+                                    _log.Write(fullName, DateTime.Now, EventoIx, ComentarioIx);
+                                }
+                            }
+                            else
+                            {
+                                TempData["Fail"] = "Login Fallido. Usuario Incorrecto";
+                            }
+                        }
+                        
                         return View();
                     }
                  }
