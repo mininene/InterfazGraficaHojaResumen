@@ -11,45 +11,23 @@ namespace WebResumen.Services.Authorization
 {
     public class ADGroupAdminsHandler : AuthorizationHandler<ADGroupAdminsRequirement>
     {
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public  ADGroupAdminsHandler(IHttpContextAccessor httpContextAccessor)
+        {
+            _httpContextAccessor = httpContextAccessor;
+
+            }
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, ADGroupAdminsRequirement requirement)
         {
 
-            //IHttpContextAccessor _httpContextAccessor = new HttpContextAccessor();
-            //var group = new List<string>();//save all your groups' name
-            //var wi = (WindowsIdentity)context.User.Identity;
-            //string dominio = @"global.baxter.com";
-            //UserPrincipal user = null;
-            //string userName = _httpContextAccessor.HttpContext.Session.GetString("SessionUser");
-            //PrincipalContext ctx = new PrincipalContext(ContextType.Domain, dominio);
-            //UserPrincipal usuario = UserPrincipal.FindByIdentity(ctx, userName);
-
-            //if (usuario != null)
-            //{
-            //    //PrincipalSearchResult<Principal> groups = user.GetGroups();
-            //    PrincipalSearchResult<Principal> groups = usuario.GetAuthorizationGroups();
-            //    foreach (GroupPrincipal g in groups)
-            //    {
-            //        try
-            //        {
-            //            Console.WriteLine(g.Name);
-            //            if (g.Name.Contains(requirement.adminsGroupName))//do the check
-            //            {
-            //                context.Succeed(requirement);
-            //            }
-
-            //            // group.Add(group.ToString());
-            //        }
-            //        catch (Exception e)
-            //        {
-            //            // ignored
-            //        }
-            //    }
-
-
-            //}
-            //return Task.CompletedTask;
+           
             var groups = new List<string>();//save all your groups' name
             var wi = (WindowsIdentity)context.User.Identity;
+           
+           
+
+
             if (wi.Groups != null)
             {
                 foreach (var group in wi.Groups)

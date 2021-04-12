@@ -17,28 +17,38 @@ using WebResumen.Services.LogRecord;
 
 namespace WebResumen.Controllers
 {
-   
-    [Authorize(Policy = "ADMIN")]
+
+    //[Authorize(Policy = "ADMIN")]
+  
     public class ParametroController : Controller
     {
         private readonly AppDbContext _context;
         private readonly ILogRecord _log;
         private readonly IConfiguration _config;
+        private readonly IAuthorizationService _authorizationService;
 
 
-        public ParametroController(AppDbContext context, ILogRecord log, IConfiguration config)
+        public ParametroController(AppDbContext context, ILogRecord log, IConfiguration config, IAuthorizationService authorizationService)
         {
             _context = context;
             _log = log;
             _config = config;
+            _authorizationService = authorizationService;
         }
 
         // GET: Parametro
         public async Task<IActionResult> Index()
 
         {
+            var authorizationResult = await _authorizationService.AuthorizeAsync(User, "Admins");
+            if (authorizationResult.Succeeded)
+            {
+                return View(await _context.Parametros.ToListAsync());
+            }
+            else {
 
-            return View(await _context.Parametros.ToListAsync());
+                return Redirect("/Inicio");
+            }
         }
 
         // GET: Parametro/Details/5
@@ -171,36 +181,40 @@ namespace WebResumen.Controllers
         [HttpGet]
         public async Task<IActionResult> Login(int? id)
         {
-            if (id == null)
+            var authorizationResult = await _authorizationService.AuthorizeAsync(User, "Admins");
+            if (authorizationResult.Succeeded)
             {
-                return NotFound();
+                if (id == null)
+                {
+                    return NotFound();
+                }
+
+                var parametros = await _context.Parametros
+                    .FirstOrDefaultAsync(m => m.Id == id);
+
+
+                if (parametros == null)
+                {
+                    return NotFound();
+                }
+                HttpContext.Session.SetString("SessionNombreM", "");
+                HttpContext.Session.SetString("SessionNombreMS", "");
+                HttpContext.Session.SetString("SessionDatosP", parametros.Id.ToString());
+                HttpContext.Session.SetString("SessionImpresoraSabiUno", parametros.ImpresoraSabiUno.ToString());
+                HttpContext.Session.SetString("SessionImpresoraSabiDos", parametros.ImpresoraSabiDos.ToString());
+                HttpContext.Session.SetString("SessionRutaLog", parametros.RutaLog.ToString());
+                HttpContext.Session.SetInt32("Tiempo", parametros.Tiempo);
+                HttpContext.Session.SetInt32("TiempoS", Convert.ToInt32(parametros.Tsesion));
+                HttpContext.Session.SetString("Reinicio", parametros.Reinicio.ToString());
+
+                @ViewBag.datos = parametros;
+
+
+
+
+                return View("Login");
             }
-
-            var parametros = await _context.Parametros
-                .FirstOrDefaultAsync(m => m.Id == id);
-
-
-            if (parametros == null)
-            {
-                return NotFound();
-            }
-            HttpContext.Session.SetString("SessionNombreM", "");
-            HttpContext.Session.SetString("SessionNombreMS", "");
-            HttpContext.Session.SetString("SessionDatosP", parametros.Id.ToString());
-            HttpContext.Session.SetString("SessionImpresoraSabiUno", parametros.ImpresoraSabiUno.ToString());
-            HttpContext.Session.SetString("SessionImpresoraSabiDos", parametros.ImpresoraSabiDos.ToString());
-            HttpContext.Session.SetString("SessionRutaLog", parametros.RutaLog.ToString());
-            HttpContext.Session.SetInt32("Tiempo", parametros.Tiempo);
-            HttpContext.Session.SetInt32("TiempoS", Convert.ToInt32(parametros.Tsesion));
-            HttpContext.Session.SetString("Reinicio", parametros.Reinicio.ToString());
-
-            @ViewBag.datos = parametros;
-
-
-
-
-            return View("Login");
-
+            else { return Redirect("/Inicio"); }
         }
 
         [HttpPost]

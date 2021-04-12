@@ -1,12 +1,14 @@
 ﻿$.getJSON('/Home/Tiempo', function (result) {
     var secondt = result.value.data;
     var fname = result.value.fname;
+    var name = result.value.name;
    // console.log(secondt);
   //  console.log(fname);
     var second = secondt * 60;
 
     localStorage.setItem("Inactividad", second);
     localStorage.setItem("Fname", fname);
+    localStorage.setItem("name", name);
     var valor = localStorage.getItem("Inactividad");
    
 

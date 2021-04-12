@@ -44,66 +44,27 @@ namespace WebResumen
             .UseSqlServer(Configuration
             .GetConnectionString("DefaultConnection")));
 
-
-
-           
+                      
            
             // Configure your policies
             services.AddAuthorization(options =>                        
-            {
-                //Para controladores
-                //options.AddPolicy("ADTodos", policy =>
-                //policy.Requirements.Add(new ADGroupAllRequirement("GLOBAL\\ESSA-HojaResumen_Users", "GLOBAL\\ESSA-HojaResumen_Admins", "GLOBAL\\ESSA-HojaResumen_Supervisors")));
-                               
+            {               
 
-                options.AddPolicy("ADMIN", policy =>
-                policy.Requirements.Add(new ADGroupAdminsRequirement("GLOBAL\\ESSA-HojaResumen_Admins"))); // controller con NT
-
-                //VISTAS
+                //check Authorization view and controllers
                 options.AddPolicy("AdminSupervisor", policy =>
-                policy.Requirements.Add(new ADGroupASRequirement(Configuration["SecuritySettings:ADGroupAdmins"], Configuration["SecuritySettings:ADGroupSupervisors"]))); //vista con AD
+                policy.Requirements.Add(new ADGroupASRequirement(Configuration["SecuritySettings:ADGroupAdmins"], Configuration["SecuritySettings:ADGroupSupervisors"]))); 
 
                 options.AddPolicy("Admins", policy =>
-                policy.Requirements.Add(new ADGroupRequirement(Configuration["SecuritySettings:ADGroupAdmins"])));  //vista con AD
+                policy.Requirements.Add(new ADGroupRequirement(Configuration["SecuritySettings:ADGroupAdmins"])));  
             
                 options.AddPolicy("Users", policy =>
-                policy.Requirements.Add(new ADGroupRequirement(Configuration["SecuritySettings:ADGroupUsers"])));  //vista con AD
+                policy.Requirements.Add(new ADGroupRequirement(Configuration["SecuritySettings:ADGroupUsers"])));  
               
-                //options.AddPolicy("SUP", policy =>
-                //   policy.Requirements.Add(new ADGroupRequirement("ESSA-HojaResumen_Supervisors")));
-
-                //  options.AddPolicy("JustAdmin", policy =>
-                //policy.Requirements.Add(new ADGroupRequirement("ESSA-HojaResumen_Admins")));
-
-                //Para control de vistas
-                //options.AddPolicy("ADUsers", policy =>
-                //   policy.RequireRole(Configuration["SecuritySettings:ADGroupUsers"]));  //verifica el grupo desde el json
-
-                //options.AddPolicy("ADMIN", policy =>
-                //   policy.RequireRole(Configuration["SecuritySettings:ADGroupAdmins"]));
-
-                //options.AddPolicy("ADSupervisors", policy =>
-                //   policy.RequireRole(Configuration["SecuritySettings:ADGroupSupervisors"]));
-
-                //options.AddPolicy("ADTodos", policy =>
-                //  policy.RequireRole("ADUsers", "ADAdmins","ADSupervisors"));
-
-
-                //policy.Requirements.Add(new CheckADGroupRequirement("GLOBAL\\ESSA-HojaResumen_Users")));
-                //options.AddPolicy("Readonly", policy =>
-                //              policy.RequireClaim("permission", "readOnly"));
-                //options.AddPolicy("Write", policy =>
-                //        policy.RequireClaim("permission", "write"));
-
-
+              
             });
-            services.AddSingleton<IAuthorizationHandler, ADGroupUsersHandler>(); // con esta llamada muevo las tres vistas
-            //services.AddSingleton<IAuthorizationHandler, ADGroupAdminsHandler>();
-            //services.AddSingleton<IAuthorizationHandler, ADGroupSupervisorsHandler>();
-
-            //services.AddSingleton<IAuthorizationHandler, ADGroupAllHandler>();
-            services.AddSingleton<IAuthorizationHandler, ADGroupASHandler>();
-            services.AddSingleton<IAuthorizationHandler, ADGroupAdminsHandler>();
+            services.AddSingleton<IAuthorizationHandler, ADGroupUsersHandler>(); // check admins and users group for view and controllers         
+            services.AddSingleton<IAuthorizationHandler, ADGroupASHandler>();  //check AdminSupervisor group for view and controllers
+          
 
             services.AddScoped(typeof(IPrinterOchoVeinte), typeof(PrinterOchoVeinte));
             services.AddScoped(typeof(IPrinterDosTresCuatro), typeof(PrinterDosTresCuatro));
@@ -160,7 +121,8 @@ namespace WebResumen
 
             app.UseAuthorization();
             app.UseSession(); // // IMPORTANT: This session call MUST go before UseMvc()
-        
+            
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

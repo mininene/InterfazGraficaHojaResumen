@@ -189,9 +189,10 @@ namespace WebResumen.Controllers
             var query = _context.Parametros.OrderBy(x=>x.Tsesion).FirstOrDefault();
             int? data = query.Tsesion;
             var fname = _httpContextAccessor.HttpContext.Session.GetString("SessionName");
+            var name = _httpContextAccessor.HttpContext.Session.GetString("SessionUser");
             var result = Json(new
             {
-                data,fname
+                data,fname,name
             });
             return Json(result);
 

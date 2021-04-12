@@ -14,16 +14,26 @@ namespace WebResumen.Controllers
     public class CiclosAutoClaveVaporController : Controller
     {
         private readonly AppDbContext _context;
+        private readonly IAuthorizationService _authorizationService;
 
-        public CiclosAutoClaveVaporController(AppDbContext context)
+        public CiclosAutoClaveVaporController(AppDbContext context, IAuthorizationService authorizationService)
         {
             _context = context;
+            _authorizationService = authorizationService;
         }
 
         // GET: CiclosAutoClaveVapor
         public async Task<IActionResult> Index()
         {
-            return View();
+            var authorizationResult = await _authorizationService.AuthorizeAsync(User, "AdminSupervisor");
+            if (authorizationResult.Succeeded)
+            {
+                return View();
+            }
+            else
+            {
+                return Redirect("/Inicio");
+            }
         }
 
         public async Task<JsonResult> ListVapor()

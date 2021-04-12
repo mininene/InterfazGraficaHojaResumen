@@ -12,22 +12,26 @@ using WebResumen.Models;
 namespace WebResumen.Controllers
 {
 
-   // [Authorize(Policy = "ADAS")]
-    //[Authorize(Policy = "readOnly")]
+   
 
     public class CiclosAutoclaveAguaController : Controller
     {
         private readonly AppDbContext _context;
+        private readonly IAuthorizationService _authorizationService;
 
-        public CiclosAutoclaveAguaController(AppDbContext context)
+        public CiclosAutoclaveAguaController(AppDbContext context, IAuthorizationService authorizationService)
         {
             _context = context;
+            _authorizationService = authorizationService;
         }
         public async Task<IActionResult> Index()
         {
-            
-            return View();
-           
+            var authorizationResult = await _authorizationService.AuthorizeAsync(User, "AdminSupervisor");
+            if (authorizationResult.Succeeded)
+            {
+                return View();
+            }
+            else { return Redirect("/Inicio"); }
 
         }
         // GET: CiclosAutoclaveAgua

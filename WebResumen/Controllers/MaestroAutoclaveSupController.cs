@@ -20,17 +20,27 @@ namespace WebResumen.Controllers
     {
         private readonly AppDbContext _context;
         private readonly IConfiguration _config;
+        private readonly IAuthorizationService _authorizationService;
 
-        public MaestroAutoclaveSupController(AppDbContext context, IConfiguration config)
+        public MaestroAutoclaveSupController(AppDbContext context, IConfiguration config, IAuthorizationService authorizationService)
         {
             _context = context;
             _config = config;
+            _authorizationService = authorizationService;
         }
 
         // GET: MaestroAutoclavesSup
         public async Task<IActionResult> Index()
         {
-            return View(await _context.MaestroAutoclave.ToListAsync());
+            var authorizationResult = await _authorizationService.AuthorizeAsync(User, "AdminSupervisor");
+            if (authorizationResult.Succeeded)
+            {
+                return View(await _context.MaestroAutoclave.ToListAsync());
+            }
+            else
+            {
+                return Redirect("/Inicio");
+            }
         }
 
         // GET: MaestroAutoclavesSup/Details/5
@@ -76,6 +86,7 @@ namespace WebResumen.Controllers
         // GET: MaestroAutoclavesSup/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+
             if (id == null)
             {
                 return NotFound();
@@ -169,36 +180,40 @@ namespace WebResumen.Controllers
         [HttpGet]
         public async Task<IActionResult> Login(int? id)
         {
-            if (id == null)
+            var authorizationResult = await _authorizationService.AuthorizeAsync(User, "AdminSupervisor");
+            if (authorizationResult.Succeeded)
             {
-                return NotFound();
+                if (id == null)
+                {
+                    return NotFound();
+                }
+
+                var maestroAutoclave = await _context.MaestroAutoclave
+                    .FirstOrDefaultAsync(m => m.Id == id);
+
+
+                if (maestroAutoclave == null)
+                {
+                    return NotFound();
+                }
+
+                HttpContext.Session.SetString("SessionNombreM", "");
+                HttpContext.Session.SetString("SessionDatosMS", maestroAutoclave.Id.ToString());
+                HttpContext.Session.SetString("SessionMatriculaMS", maestroAutoclave.Matricula.ToString());
+                HttpContext.Session.SetString("SessionNombreMS", maestroAutoclave.Nombre.ToString());
+                HttpContext.Session.SetString("SessionVersionMS", maestroAutoclave.Version.ToString());
+                HttpContext.Session.SetString("SessionIpMS", maestroAutoclave.Ip.ToString());
+                HttpContext.Session.SetString("SessionSeccionMS", maestroAutoclave.Seccion.ToString());
+                HttpContext.Session.SetString("SessionEstadoMS", maestroAutoclave.Estado.ToString());
+                HttpContext.Session.SetString("SessionUltimoCicloMS", maestroAutoclave.UltimoCiclo.ToString());
+                HttpContext.Session.SetString("SessionRutaSalidaMS", maestroAutoclave.RutaSalida.ToString());
+                HttpContext.Session.SetString("SessionRutaSalidaPDFMS", maestroAutoclave.RutaSalidaPdf.ToString());
+
+
+
+                return View("Login");
             }
-
-            var maestroAutoclave = await _context.MaestroAutoclave
-                .FirstOrDefaultAsync(m => m.Id == id);
-
-
-            if (maestroAutoclave == null)
-            {
-                return NotFound();
-            }
-
-            HttpContext.Session.SetString("SessionNombreM", "");
-            HttpContext.Session.SetString("SessionDatosMS", maestroAutoclave.Id.ToString());
-            HttpContext.Session.SetString("SessionMatriculaMS", maestroAutoclave.Matricula.ToString());
-            HttpContext.Session.SetString("SessionNombreMS", maestroAutoclave.Nombre.ToString());
-            HttpContext.Session.SetString("SessionVersionMS", maestroAutoclave.Version.ToString());
-            HttpContext.Session.SetString("SessionIpMS", maestroAutoclave.Ip.ToString());
-            HttpContext.Session.SetString("SessionSeccionMS", maestroAutoclave.Seccion.ToString());
-            HttpContext.Session.SetString("SessionEstadoMS", maestroAutoclave.Estado.ToString());
-            HttpContext.Session.SetString("SessionUltimoCicloMS", maestroAutoclave.UltimoCiclo.ToString());
-            HttpContext.Session.SetString("SessionRutaSalidaMS", maestroAutoclave.RutaSalida.ToString());
-            HttpContext.Session.SetString("SessionRutaSalidaPDFMS", maestroAutoclave.RutaSalidaPdf.ToString());
-
-
-
-            return View("Login");
-
+            else { return Redirect("/Inicio"); }
         }
 
         [HttpPost]
