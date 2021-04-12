@@ -36,8 +36,8 @@ namespace WebResumen
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-          //  services.AddDataProtection()
-           //     .PersistKeysToFileSystem(new DirectoryInfo(@"C:\Users\SysHojaResumen\AppData\Local\IIS_KeyFolder"));
+            //services.AddDataProtection()
+            //    .PersistKeysToFileSystem(new DirectoryInfo(Configuration["SecuritySettings:PersistKey"]));
           
 
             services.AddDbContext<AppDbContext>(options => options  //Crear el context desde la base de datos
@@ -61,14 +61,14 @@ namespace WebResumen
 
                 //VISTAS
                 options.AddPolicy("AdminSupervisor", policy =>
-                policy.Requirements.Add(new ADGroupASRequirement("ESSA-HojaResumen_Admins", "ESSA-HojaResumen_Supervisors"))); //vista con AD
+                policy.Requirements.Add(new ADGroupASRequirement(Configuration["SecuritySettings:ADGroupAdmins"], Configuration["SecuritySettings:ADGroupSupervisors"]))); //vista con AD
 
                 options.AddPolicy("Admins", policy =>
-                policy.Requirements.Add(new ADGroupRequirement("ESSA-HojaResumen_Admins")));  //vista con AD
+                policy.Requirements.Add(new ADGroupRequirement(Configuration["SecuritySettings:ADGroupAdmins"])));  //vista con AD
             
                 options.AddPolicy("Users", policy =>
-                policy.Requirements.Add(new ADGroupRequirement("ESSA-HojaResumen_Users")));  //vista con AD
-
+                policy.Requirements.Add(new ADGroupRequirement(Configuration["SecuritySettings:ADGroupUsers"])));  //vista con AD
+              
                 //options.AddPolicy("SUP", policy =>
                 //   policy.Requirements.Add(new ADGroupRequirement("ESSA-HojaResumen_Supervisors")));
 

@@ -23,11 +23,13 @@ namespace WebResumen.Services.printerServiceAS
     public class PrinterOchoVeinteAS : IPrinterOchoVeinteAS
     {
         private readonly AppDbContext _context;
-       
+        
+
         public PrinterOchoVeinteAS(AppDbContext context)
         {
             _context = context;
-           
+          
+
         }
         public void printOchoVeinteAS(int? id)
         {
@@ -37,7 +39,7 @@ namespace WebResumen.Services.printerServiceAS
           
             using (var pdf = new PdfDocument())
             {
-                pdf.Info.Title = "My First PDF";
+                pdf.Info.Title = "PDF";
                 PdfPage pdfPage = pdf.AddPage();
                 XGraphics graph = XGraphics.FromPdfPage(pdfPage);
                 XFont font = new XFont("Verdana", 8, XFontStyle.Regular);
@@ -278,10 +280,12 @@ namespace WebResumen.Services.printerServiceAS
                     tf.DrawString(q.ErrorCiclo, fontDos, XBrushes.Black, rect, XStringFormats.TopLeft);
                 }
 
-              //  var path = Path.Combine(_env.WebRootPath, "docs", "archivo.pdf");
+                // var path = Path.Combine(_env.WebRootPath, "docs", "archivo.pdf");
+                //var path = Path.Combine(_env.ContentRootPath, "PDF", "archivo1.pdf");
+                //pdf.Save(path);
                 string rut = @"C:\Program Files\HojaResumen\old\archivo1.pdf";
                 pdf.Save(rut);
-              
+
 
                 //MemoryStream stream = new MemoryStream();
                 //pdf.Save(stream, false);

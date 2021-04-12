@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using WebResumen.Models;
 using WebResumen.Models.ViewModels;
 using WebResumen.Services.LogRecord;
@@ -19,11 +20,13 @@ namespace WebResumen.Controllers
         private readonly AppDbContext _context;
         private readonly  ILogRecord _log;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public HomeController(AppDbContext context,ILogRecord log, IHttpContextAccessor httpContextAccessor)
+        private readonly IConfiguration _config;
+        public HomeController(AppDbContext context,ILogRecord log, IHttpContextAccessor httpContextAccessor, IConfiguration config)
         {
             _log = log;
             _httpContextAccessor = httpContextAccessor;
             _context = context;
+            _config = config;
         }
         [HttpGet]
         public IActionResult Index()
@@ -41,8 +44,8 @@ namespace WebResumen.Controllers
             {
                
                
-                string dominio = @"global.baxter.com";
-                string path = @"LDAP://global.baxter.com";
+                string dominio = _config["SecuritySettings:Dominio"];
+                string path = _config["SecuritySettings:ADPath"];
                 using (PrincipalContext ctx = new PrincipalContext(ContextType.Domain, dominio, model.Usuario, model.Contraseña))
                 {
 
@@ -50,10 +53,10 @@ namespace WebResumen.Controllers
                     try
                     {
                         UserPrincipal user = UserPrincipal.FindByIdentity(ctx, model.Usuario);
-
-                        GroupPrincipal groupAdmins = GroupPrincipal.FindByIdentity(ctx, "GLOBAL\\ESSA-HojaResumen_Admins");
-                        GroupPrincipal groupSupervisors = GroupPrincipal.FindByIdentity(ctx, "GLOBAL\\ESSA-HojaResumen_Supervisors");
-                        GroupPrincipal groupUsers = GroupPrincipal.FindByIdentity(ctx, "GLOBAL\\ESSA-HojaResumen_Users");
+                        
+                        GroupPrincipal groupAdmins = GroupPrincipal.FindByIdentity(ctx, _config["SecuritySettings:ADGroupAdmins"]);
+                        GroupPrincipal groupSupervisors = GroupPrincipal.FindByIdentity(ctx, _config["SecuritySettings:ADGroupSupervisors"]);
+                        GroupPrincipal groupUsers = GroupPrincipal.FindByIdentity(ctx, _config["SecuritySettings:ADGroupUsers"]);
 
                         if (user != null)
                         {

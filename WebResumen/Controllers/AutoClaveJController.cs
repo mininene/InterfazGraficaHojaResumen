@@ -15,6 +15,7 @@ using WebResumen.Services.LogRecord;
 using WebResumen.Services.PrinterService;
 using WebResumen.Models.ViewModels;
 using WebResumen.Services.printerServiceAS;
+using Microsoft.Extensions.Configuration;
 
 namespace WebResumen.Controllers
 {
@@ -28,14 +29,17 @@ namespace WebResumen.Controllers
         private readonly ILogRecord _log;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IPrinterNueveDiezAS _printerNueveDiezAS;
+        private readonly IConfiguration _config;
 
-        public AutoClaveJController(AppDbContext context, IPrinterNueveDiez printerNueveDiez, ILogRecord log, IHttpContextAccessor httpContextAccessor, IPrinterNueveDiezAS printerNueveDiezAS)
+        public AutoClaveJController(AppDbContext context, IPrinterNueveDiez printerNueveDiez, ILogRecord log, IHttpContextAccessor httpContextAccessor,
+            IPrinterNueveDiezAS printerNueveDiezAS, IConfiguration config)
         {
             _context = context;
             _printerNueveDiez = printerNueveDiez;
             _log = log;
             _httpContextAccessor = httpContextAccessor;
             _printerNueveDiezAS = printerNueveDiezAS;
+            _config = config;
         }
 
         // GET: AutoClaveJJ
@@ -248,8 +252,8 @@ namespace WebResumen.Controllers
             if (ModelState.IsValid)
             {
 
-                string dominio = @"global.baxter.com";
-                string path = @"LDAP://global.baxter.com";
+                string dominio = _config["SecuritySettings:Dominio"];
+                string path = _config["SecuritySettings:ADPath"]; 
                 using (PrincipalContext ctx = new PrincipalContext(ContextType.Domain, dominio, model.Usuario, model.Contraseña))
                 {
 
@@ -258,9 +262,9 @@ namespace WebResumen.Controllers
                     {
                         UserPrincipal user = UserPrincipal.FindByIdentity(ctx, model.Usuario);
 
-                        GroupPrincipal groupAdmins = GroupPrincipal.FindByIdentity(ctx, "GLOBAL\\ESSA-HojaResumen_Admins");
-                        GroupPrincipal groupSupervisors = GroupPrincipal.FindByIdentity(ctx, "GLOBAL\\ESSA-HojaResumen_Supervisors");
-                        GroupPrincipal groupUsers = GroupPrincipal.FindByIdentity(ctx, "GLOBAL\\ESSA-HojaResumen_Users");
+                        GroupPrincipal groupAdmins = GroupPrincipal.FindByIdentity(ctx, _config["SecuritySettings:ADGroupAdmins"]);
+                        GroupPrincipal groupSupervisors = GroupPrincipal.FindByIdentity(ctx, _config["SecuritySettings:ADGroupSupervisors"]);
+                        GroupPrincipal groupUsers = GroupPrincipal.FindByIdentity(ctx, _config["SecuritySettings:ADGroupUsers"]);
 
                         if (user != null)
                         {

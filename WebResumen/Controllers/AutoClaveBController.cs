@@ -21,6 +21,7 @@ using System.DirectoryServices.AccountManagement;
 using WebResumen.Services.LogRecord;
 using System.DirectoryServices;
 using WebResumen.Services.printerServiceAS;
+using Microsoft.Extensions.Configuration;
 
 namespace WebResumen.Controllers
 {
@@ -37,8 +38,10 @@ namespace WebResumen.Controllers
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IPrinterOchoVeinteAS _printerOchoVeinteAS;
         private readonly IPrinterDosTresCuatroAS _printerDosTresCuatroAS;
+        private readonly IConfiguration _config;
 
-        public AutoClaveBController(AppDbContext context, IPrinterOchoVeinte printerOchoVeinte, IPrinterDosTresCuatro printerDosTresCuatro, ILogRecord log, IHttpContextAccessor httpContextAccessor, IPrinterOchoVeinteAS printerOchoVeinteAS, IPrinterDosTresCuatroAS printerDosTresCuatroAS)
+        public AutoClaveBController(AppDbContext context, IPrinterOchoVeinte printerOchoVeinte, IPrinterDosTresCuatro printerDosTresCuatro, ILogRecord log,
+            IHttpContextAccessor httpContextAccessor, IPrinterOchoVeinteAS printerOchoVeinteAS, IPrinterDosTresCuatroAS printerDosTresCuatroAS, IConfiguration config)
         {
             _context = context;
             _printerOchoVeinte = printerOchoVeinte;
@@ -47,6 +50,7 @@ namespace WebResumen.Controllers
             _httpContextAccessor = httpContextAccessor;
             _printerOchoVeinteAS = printerOchoVeinteAS;
             _printerDosTresCuatroAS = printerDosTresCuatroAS;
+            _config = config;
 
         }
 
@@ -279,8 +283,8 @@ namespace WebResumen.Controllers
             if (ModelState.IsValid)
             {
 
-                string dominio = @"global.baxter.com";
-                string path = @"LDAP://global.baxter.com";
+                string dominio = _config["SecuritySettings:Dominio"];
+                string path = _config["SecuritySettings:ADPath"];
                 using (PrincipalContext ctx = new PrincipalContext(ContextType.Domain, dominio, model.Usuario, model.Contraseña))
                 {
 
@@ -289,9 +293,9 @@ namespace WebResumen.Controllers
                     {
                         UserPrincipal user = UserPrincipal.FindByIdentity(ctx, model.Usuario);
 
-                        GroupPrincipal groupAdmins = GroupPrincipal.FindByIdentity(ctx, "GLOBAL\\ESSA-HojaResumen_Admins");
-                        GroupPrincipal groupSupervisors = GroupPrincipal.FindByIdentity(ctx, "GLOBAL\\ESSA-HojaResumen_Supervisors");
-                        GroupPrincipal groupUsers = GroupPrincipal.FindByIdentity(ctx, "GLOBAL\\ESSA-HojaResumen_Users");
+                        GroupPrincipal groupAdmins = GroupPrincipal.FindByIdentity(ctx, _config["SecuritySettings:ADGroupAdmins"]);
+                        GroupPrincipal groupSupervisors = GroupPrincipal.FindByIdentity(ctx, _config["SecuritySettings:ADGroupSupervisors"]);
+                        GroupPrincipal groupUsers = GroupPrincipal.FindByIdentity(ctx, _config["SecuritySettings:ADGroupUsers"]);
 
                         if (user != null)
                         {
