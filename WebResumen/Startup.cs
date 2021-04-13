@@ -18,6 +18,7 @@ using Microsoft.Extensions.Hosting;
 using WebResumen.Models;
 using WebResumen.Services.Authentication;
 using WebResumen.Services.Authorization;
+using WebResumen.Services.LogError;
 using WebResumen.Services.LogRecord;
 using WebResumen.Services.PrinterService;
 using WebResumen.Services.printerServiceAS;
@@ -73,6 +74,8 @@ namespace WebResumen
             services.AddScoped(typeof(IPrinterDosTresCuatroAS), typeof(PrinterDosTresCuatroAS));
             services.AddScoped(typeof(IPrinterNueveDiezAS), typeof(PrinterNueveDiezAS));
 
+            services.AddSingleton(typeof(ILogErrors), typeof(LogErrors));
+
 
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -104,16 +107,20 @@ namespace WebResumen
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseStatusCodePagesWithRedirects("/Homexx/Error?code={0}");
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+
+                app.UseExceptionHandler("/Homexx/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+           
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

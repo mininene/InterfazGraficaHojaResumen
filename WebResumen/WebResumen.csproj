@@ -3,6 +3,10 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>5da6c911-ac1b-476c-a2d8-41d1acb4d9a1</UserSecretsId>
+    <Copyright>@Baxter 2021</Copyright>
+    <Authors>Iranzo F</Authors>
+    <Company>Baxter</Company>
+    <Description>Interfaz Grafica gestion ciclos esterilizados Autoclaves Agua y Vapor FEDEGARI</Description>
   </PropertyGroup>
 
   <ItemGroup>

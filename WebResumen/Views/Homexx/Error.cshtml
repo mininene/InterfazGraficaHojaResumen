@@ -1,0 +1,25 @@
+﻿@model ErrorViewModel
+@{
+    ViewData["Title"] = "Error";
+}
+
+
+
+
+<div class="container-fluid justify-content-center mt-5">
+     <div class="col text-center">
+        <img src="~/img/error.png" id="op" alt="op" />
+        <div class="error-template">
+            <h1 class="align-content-lg-center img-fluid animated fadeInUp">
+                Lo Sentimos,   @Model.ExceptionMessage!
+            </h1>
+            <div class="error-actions align-content-lg-center">
+                <a href="/Inicio" class="btn btn-primary btn-lg">
+                    <span class="glyphicon glyphicon-home"></span>
+                    Volver a Home
+                </a><a href="mailto:iranzo_javier_fuentes_herrera@baxter.com" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-envelope"></span> Contactar Soporte </a>
+            </div>
+        </div>
+    </div>
+</div>
+
