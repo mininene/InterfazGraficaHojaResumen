@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using PdfSharp.Drawing;
 using PdfSharp.Drawing.Layout;
 using PdfSharp.Pdf;
@@ -6,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Printing;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using WebResumen.Models;
@@ -15,9 +17,11 @@ namespace WebResumen.Services.printerServiceAS
     public class PrinterDosTresCuatroAS : IPrinterDosTresCuatroAS
     {
         private readonly AppDbContext _context;
-        public PrinterDosTresCuatroAS(AppDbContext context)
+        private readonly IConfiguration _config;
+        public PrinterDosTresCuatroAS(AppDbContext context, IConfiguration config)
         {
             _context = context;
+            _config = config;
         }
         public void printDosTresCuatroAS(int? id)
         {
@@ -246,8 +250,12 @@ namespace WebResumen.Services.printerServiceAS
                 tf.DrawString(q.ErrorCiclo, fontDos, XBrushes.Black, rect, XStringFormats.TopLeft);
             }
                 //string rut = @"\\essaappserver01\HojaResumen\old\archivo1.pdf";
-                string rut = @"C:\Program Files\HojaResumen\old\archivo1.pdf";
-                pdf.Save(rut);
+                //string rut = @"C:\Program Files\HojaResumen\old\archivo1.pdf";
+                //pdf.Save(rut);
+                string rut = _config["OptionalSettings:Pdf"] + "\\PDF";
+                Directory.CreateDirectory(rut);
+                string ruta = rut + "\\archivo1.pdf";
+                pdf.Save(ruta);
 
             }
         }

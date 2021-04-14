@@ -4,6 +4,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using PdfSharp.Drawing;
 using PdfSharp.Drawing.Layout;
 using PdfSharp.Pdf;
@@ -23,11 +24,13 @@ namespace WebResumen.Services.printerServiceAS
     public class PrinterOchoVeinteAS : IPrinterOchoVeinteAS
     {
         private readonly AppDbContext _context;
-        
+        private readonly IConfiguration _config;
 
-        public PrinterOchoVeinteAS(AppDbContext context)
+
+        public PrinterOchoVeinteAS(AppDbContext context, IConfiguration config)
         {
             _context = context;
+            _config = config;
           
 
         }
@@ -283,8 +286,11 @@ namespace WebResumen.Services.printerServiceAS
                 // var path = Path.Combine(_env.WebRootPath, "docs", "archivo.pdf");
                 //var path = Path.Combine(_env.ContentRootPath, "PDF", "archivo1.pdf");
                 //pdf.Save(path);
-                string rut = @"C:\Program Files\HojaResumen\old\archivo1.pdf";
-                pdf.Save(rut);
+                // string rut = @"C:\Program Files\HojaResumen\old\archivo1.pdf";
+                string rut = _config["OptionalSettings:Pdf"] + "\\PDF";
+                Directory.CreateDirectory(rut);
+                string ruta = rut + "\\archivo1.pdf";
+                pdf.Save(ruta);
 
 
                 //MemoryStream stream = new MemoryStream();

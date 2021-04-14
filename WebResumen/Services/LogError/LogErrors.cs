@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,11 +9,18 @@ namespace WebResumen.Services.LogError
 {
     public class LogErrors : ILogErrors
     {
-     
+        private readonly IConfiguration _config;
+        public LogErrors(IConfiguration config)
+        {
+            _config = config;
+
+        }
+       
         public void write(string mensaje)
         {
-            //string _path = AppDomain.CurrentDomain.BaseDirectory + "Log";
-            string _path = @"C:\Program Files\HojaResumen\old\" + "Log";
+
+            string _path = _config["OptionalSettings:LogWeb"] + "\\LogWeb";
+           // string _path = @"C:\Program Files\HojaResumen\old\" + "Log";
             Directory.CreateDirectory(_path);
 
             var fecha = DateTime.Now.ToString("dd/MM/yyyy");

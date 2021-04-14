@@ -61,6 +61,11 @@ namespace WebResumen.Controllers
                         return View(new ErrorViewModel { ExceptionMessage = "Archivo No Encontrado", RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
 
                     }
+                    else
+                    {
+                        return View(new ErrorViewModel { ExceptionMessage = "Error mientras se procesa la solicitud", RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+
+                    }
                 }
             }
             catch { }
@@ -68,7 +73,7 @@ namespace WebResumen.Controllers
             _log.write($"Error: {ErrorStatusCode.ToString()} ");
             if (ErrorStatusCode == 404)
             {
-                return View(new ErrorViewModel { ExceptionMessage = "Pagina no Encontrada", RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+                return View(new ErrorViewModel { ExceptionMessage = "Página no Encontrada", RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
 
             }
             else if (ErrorStatusCode == 500)
@@ -78,7 +83,7 @@ namespace WebResumen.Controllers
             }
             else
             {
-                return View(new ErrorViewModel { ExceptionMessage = "Error mientras procesa la solicitud", RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+                return View(new ErrorViewModel { ExceptionMessage = "Error mientras se procesa la solicitud", RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
 
             }
 

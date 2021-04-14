@@ -324,7 +324,7 @@ namespace WebResumen.Controllers
         public async Task<IActionResult> WritePrint()
         {
            // string ReportURL = @"\\essaappserver01\HojaResumen\old\archivo1.pdf";
-            string ReportURL = @"C:\Program Files\HojaResumen\old\archivo1.pdf";
+            string ReportURL = _config["OptionalSettings:Pdf"] + "\\PDF\\archivo1.pdf";
             byte[] FileBytes = System.IO.File.ReadAllBytes(ReportURL);
             string EventoA = "Re-Impresión";
             _log.Write(_httpContextAccessor.HttpContext.Session.GetString("SessionFullName"), DateTime.Now, EventoA + " " + _httpContextAccessor.HttpContext.Session.GetString("AutoclaveNumeroA"), _httpContextAccessor.HttpContext.Session.GetString("SessionComentarioA"));

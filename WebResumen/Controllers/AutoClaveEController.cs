@@ -182,8 +182,7 @@ namespace WebResumen.Controllers
 
         public async Task<IActionResult> WritePrint()
         {
-           // string ReportURL = @"\\essaappserver01\HojaResumen\old\archivo1.pdf";
-            string ReportURL = @"C:\Program Files\HojaResumen\old\archivo1.pdf";
+            string ReportURL = _config["OptionalSettings:Pdf"] + "\\PDF\\archivo1.pdf";
             byte[] FileBytes = System.IO.File.ReadAllBytes(ReportURL);
             TempData["Print"] = "El Archivo ha sido Impreso";
             string EventoE = "Re-Impresión";
