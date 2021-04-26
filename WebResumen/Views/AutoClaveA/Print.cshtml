@@ -23,7 +23,7 @@
     <div class="form-group">
 
         @*@Html.DropDownList("ImpresoraNombre", new SelectList(ViewBag.impresoras, "--seleccionar--"))*@
-        <a type="button" class="btn btn-success"   asp-action="PrintAS" asp-route-id="@httpContextAccessor.HttpContext.Session.GetString("SessionDatosA")">ImprimirAS</a>
+        <a type="button" class="btn btn-success"   asp-action="PrintAS" asp-route-id="@httpContextAccessor.HttpContext.Session.GetString("SessionDatosA")">Imprimir</a>
 
     </div>
     @*@foreach (var person in ViewBag.impresoras)

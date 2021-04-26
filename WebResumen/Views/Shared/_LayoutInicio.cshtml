@@ -48,7 +48,7 @@
                         @inject IHttpContextAccessor httpContextAccessor
                         @if (string.IsNullOrEmpty(@httpContextAccessor.HttpContext.Session.GetString("SessionUser")))
                         {
-                            Context.Response.Redirect("/Home");
+                            Context.Response.Redirect("/Home/LogoutEmpty");
                         }
                         else
                         {
@@ -116,10 +116,10 @@
                     <span style="color:black;background:yellow;font-weight:bold" id="SecondsUntilExpire"></span>
                 </div>
             </div>
-            <ul class="navbar-nav ml-auto">
+            <ul class="nav nav-pills">
 
                 <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">Logout</a>
+                    <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Logout"><i class="fas fa-sign-out-alt"></i>Cerrar sesión</a>
                 </li>
                 <li class="nav-item">
                     @*<p class="float-right navbar-text navbar-right text-danger">Hola, <strong>@User.Identity.Name.Replace("GLOBAL\\", "")!</strong> </p>*@

@@ -96,7 +96,7 @@ namespace WebResumen.Services.PrinterService
                 graph.DrawString(q.DuracionTotalF2, _negrita, _solid, new RectangleF(420, 230, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
                 graph.DrawString("min.s", _font, _solid, new RectangleF(460, 230, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
                 graph.DrawString("< --[  ]", _negrita, _solid, new RectangleF(495, 230, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
-                graph.DrawString(q.Tinicio, _negrita, _solid, new RectangleF(600, 230, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
+                graph.DrawString("I " + " " + q.Tinicio, _negrita, _solid, new RectangleF(600, 230, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
 
                 graph.DrawString("TIEMPO TP  TE2  TE3  TE4  TE9 TE10", _font, _solid, new RectangleF(20, 250, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
                 graph.DrawString(q.Tif2, _font, _solid, new RectangleF(300, 250, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
@@ -229,8 +229,8 @@ namespace WebResumen.Services.PrinterService
 
                 if (q.ErrorCiclo == "")
                 {
-                    graph.DrawString("ALARMAS:", _fontDos, _solid, new RectangleF(450, 735, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
-                    graph.DrawString("* NO EXISTEN ALARMAS REGISTRADAS", _fontDos, _solid, new RectangleF(450, 755, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
+                    //graph.DrawString("ALARMAS:", _fontDos, _solid, new RectangleF(450, 735, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
+                    //graph.DrawString("* NO EXISTEN ALARMAS REGISTRADAS", _fontDos, _solid, new RectangleF(450, 755, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
 
                 }
                 else

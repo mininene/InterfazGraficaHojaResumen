@@ -8,21 +8,21 @@
 <body ng-app="datatablesVaporApp" ng-controller="vaporCtrl as tagapp">
 
 
-    <table cellpadding="1" cellspacing="0" border="0" style="width: 67%; margin: 0 auto 2em auto;">
+    <table cellpadding="1" cellspacing="0" border="0" style="width: 45%; margin: 0 auto 2em auto;">
         <thead>
             <tr>
-                <th>Target</th>
-                <th>Buscar</th>
-                <th>Treat as regex</th>
-                <th>Use smart search</th>
+                <th hidden>Target</th>
+                <th hidden>Buscar</th>
+                <th hidden>Treat as regex</th>
+                <th hidden>Use smart search</th>
             </tr>
         </thead>
         <tbody>
             <tr id="filter_global">
                 <td>Busqueda Global</td>
                 <td align="center"><input type="text" class="global_filter" id="global_filter"></td>
-                <td align="center"><input type="checkbox" class="global_filter" id="global_regex"></td>
-                <td align="center"><input type="checkbox" class="global_filter" id="global_smart" checked="checked"></td>
+                <td align="center" hidden><input type="checkbox" class="global_filter" id="global_regex"></td>
+                <td align="center"hidden><input type="checkbox" class="global_filter" id="global_smart" checked="checked"></td>
             </tr>
             @*<tr id="filter_col1" data-column="0">
             <td>Column - Id</td>
@@ -33,8 +33,8 @@
             <tr id="filter_col2" data-column="1">
                 <td>IdAutoclave </td>
                 <td align="center"><input type="text" class="column_filter" id="col1_filter"></td>
-                <td align="center"><input type="checkbox" class="column_filter" id="col1_regex"></td>
-                <td align="center"><input type="checkbox" class="column_filter" id="col1_smart" checked="checked"></td>
+                <td align="center" hidden><input type="checkbox" class="column_filter" id="col1_regex"></td>
+                <td align="center"hidden><input type="checkbox" class="column_filter" id="col1_smart" checked="checked"></td>
             </tr>
             @*<tr id="filter_col3" data-column="2">
             <td>Carro</td>
@@ -45,14 +45,14 @@
             <tr id="filter_col4" data-column="3">
                 <td>N Progresivo</td>
                 <td align="center"><input type="text" class="column_filter" id="col3_filter"></td>
-                <td align="center"><input type="checkbox" class="column_filter" id="col3_regex"></td>
-                <td align="center"><input type="checkbox" class="column_filter" id="col3_smart" checked="checked"></td>
+                <td align="center"hidden><input type="checkbox" class="column_filter" id="col3_regex"></td>
+                <td align="center"hidden><input type="checkbox" class="column_filter" id="col3_smart" checked="checked"></td>
             </tr>
             <tr id="filter_col5" data-column="4">
                 <td>Programa</td>
                 <td align="center"><input type="text" class="column_filter" id="col4_filter"></td>
-                <td align="center"><input type="checkbox" class="column_filter" id="col4_regex"></td>
-                <td align="center"><input type="checkbox" class="column_filter" id="col4_smart" checked="checked"></td>
+                <td align="center"hidden><input type="checkbox" class="column_filter" id="col4_regex"></td>
+                <td align="center"hidden><input type="checkbox" class="column_filter" id="col4_smart" checked="checked"></td>
             </tr>
             @*<tr id="filter_col6" data-column="5">
             <td>Cod.Producto</td>

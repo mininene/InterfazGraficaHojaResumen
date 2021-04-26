@@ -63,6 +63,7 @@
 
                     // Active ColVis plugin
                     .withColVis()
+                    .withColVisOption('buttonText', 'Mostrar / Ocultar Columnas' + '<i class="fa fa-angle-down"></i>')
                     // Add a state change function
                     .withColVisStateChange(stateChange)
 
@@ -259,7 +260,7 @@
                                 head.appendChild(style);
                             },
                              footer: 'true',
-                            text: '<i class="fa fa-print" aria-hidden="true"></i> Print',
+                            text: '<i class="fa fa-print" aria-hidden="true"></i> Imprimir',
                             title:  localStorage.getItem("Fname")+"      "+ new Date().toLocaleString(),
                             titleAttr: 'Print',
                              exportOptions: {
@@ -270,7 +271,7 @@
                         },
                         {
                             extend: 'copy',
-                            text: '<i class="fa fa-files-o"></i> Copy',
+                            text: '<i class="fa fa-files-o"></i> Copiar',
                             titleAttr: 'Copy',
                             exportOptions: {
                                 columns: ':visible'
@@ -286,6 +287,7 @@
                         //    },
 
                         //},
+
 
                     ]
                     )

@@ -485,8 +485,8 @@
                                 @inject IAuthorizationService AuthorizationService
                                 @if ((await AuthorizationService.AuthorizeAsync(User, "ADUsers")).Succeeded)
                                 {*@
-                            <a type="button" class="btn btn-info " asp-action="Preview" asp-route-id="@item.Id">Vista</a>
-                            <a type="button" class="btn btn-success " asp-action="Login" asp-route-id="@item.Id">Print</a>
+                            <a type="button" class="btn btn-info " asp-action="Preview" asp-route-id="@item.Id">Ver</a>
+                            <a type="button" class="btn btn-success " asp-action="Login" asp-route-id="@item.Id">Imprimir</a>
                             @*}*@
                             @*else
                                 {

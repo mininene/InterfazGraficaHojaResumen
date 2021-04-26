@@ -28,8 +28,104 @@
 
                 // Active ColVis plugin
                 .withColVis()
+                .withColVisOption('buttonText', 'Mostrar / Ocultar Columnas' + '<i class="fa fa-angle-down"></i>')
                 // Add a state change function
                 .withColVisStateChange(stateChange)
+
+                .withOption('initComplete', function () {
+
+
+                    $.fn.dataTable.ext.search.push(
+                        function (settings, data, dataIndex) {
+
+
+                            var min = $('#min').val();
+                            var max = $('#max').val();
+                            console.log(min);
+                            var mini = new Date($('#min').val());
+                            var maxi = new Date($('#max').val());
+                            console.log(mini);
+
+                            var filterstart = min;
+                            var filterend = max;
+
+                            var iStartDateCol = 3; //using column 7 in this instance
+                            var iEndDateCol = 3;
+                            var tabledatestart = data[iStartDateCol];
+                            var tabledateend = data[iEndDateCol];
+
+                            if (min === "" && max === "") {
+                                return true;
+                            }
+                            else if ((moment(filterstart).isSame(tabledatestart) || moment(filterstart).isBefore(tabledatestart)) && max === "") {
+                                return true;
+                            }
+                            else if ((moment(filterend).isSame(tabledatestart) || moment(filterend).isAfter(tabledatestart)) && min === "") {
+                                return true;
+                            }
+                            else if ((moment(filterstart).isSame(tabledatestart) || moment(filterstart).isBefore(tabledatestart)) && (moment(filterend).isSame(tabledateend) || moment(filterend).isAfter(tabledateend))) {
+                                return true;
+                            }
+                            return false;
+                            //if (
+                            //    (filterstart == "" || filterend == "") || (moment(tabledatestart).isSameOrAfter(filterend) && filterend === "") ||
+                            //    (moment(tabledatestart).isSameOrAfter(filterend) && moment(tabledatestart).isSameOrBefore(filterstart))
+                            //   // (moment(tabledatestart).isBetween(filterstart, filterend, undefined, '[]'))
+                            //) {
+                            //    return true;
+                            //}
+                            //return false;
+                        }
+                    );
+
+
+                    $(document).ready(function () {
+                        var table = $('#example').DataTable();
+
+                        // Event listener to the two range filtering inputs to redraw on input
+                        $('#min, #max').change(function () {
+                            //Swal.fire('Por Favor Espere');
+                            Swal.showLoading();
+                            table.draw();
+                            //Swal.hideLoading();
+                            Swal.close();
+                        });
+
+
+
+                    });
+
+                    function filterGlobal() {
+                        $('#example').DataTable().search(
+                            $('#global_filter').val(),
+                            $('#global_regex').prop('checked'),
+                            $('#global_smart').prop('checked')
+                        ).draw();
+                    }
+
+                    function filterColumn(i) {
+                        $('#example').DataTable().column(i).search(
+                            $('#col' + i + '_filter').val(),
+                            $('#col' + i + '_regex').prop('checked'),
+                            $('#col' + i + '_smart').prop('checked')
+                        ).draw();
+                    }
+
+                    $(document).ready(function () {
+                        $('#example').DataTable();
+
+                        $('input.global_filter').on('keyup click', function () {
+                            filterGlobal();
+                        });
+
+                        $('input.column_filter').on('keyup click', function () {
+                            filterColumn($(this).parents('tr').attr('data-column'));
+                        });
+                    });
+                  
+
+
+                })
 
              
             .withPaginationType('full_numbers')
@@ -106,7 +202,7 @@
                             head.appendChild(style);
                         },
                         footer: 'true',
-                        text: '<i class="fa fa-print" aria-hidden="true"></i> Print',
+                        text: '<i class="fa fa-print" aria-hidden="true"></i> Imprimir',
                         title: localStorage.getItem("Fname") + "      " + new Date().toLocaleString(),
                         titleAttr: 'Print',
                         exportOptions: {
@@ -115,7 +211,7 @@
                     },
                     {
                         extend: 'copy',
-                        text: '<i class="fa fa-files-o"></i> Copy',
+                        text: '<i class="fa fa-files-o"></i> Copiar',
                         titleAttr: 'Copy',
                         exportOptions: {
                             columns: ':visible'
@@ -166,12 +262,14 @@
 
                 DTColumnBuilder.newColumn('fechaHora').withTitle('FechaHora').renderWith(function (data, type, full, meta) {
                     var fechaHora = data;
+                    console.log(fechaHora)
                     var date = new Date(fechaHora);
                     var dateStr =
-                        
-                        ("00" + date.getDate()).slice(-2)+ "/" +
-                        ("00" + (date.getMonth() + 1)).slice(-2)+ "/" +
-                        date.getFullYear() + " " +
+                        date.getFullYear() + "-" +
+                        ("00" + (date.getMonth() + 1)).slice(-2) + "-" +
+                        ("00" + date.getDate()).slice(-2)+ " " +
+                       
+                       
                         ("00" + date.getHours()).slice(-2) + ":" +
                         ("00" + date.getMinutes()).slice(-2) + ":" +
                         ("00" + date.getSeconds()).slice(-2);
@@ -190,6 +288,16 @@
             function stateChange(iColumn, bVisible) {
                // console.log('The column', iColumn, ' has changed its status to', bVisible);
             }
+
+
+          
+
+
+
+
+
+
+
          
         }) 
  

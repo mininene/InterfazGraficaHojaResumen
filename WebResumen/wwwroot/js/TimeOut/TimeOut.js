@@ -54,10 +54,10 @@
 
         if (_idleSecondsCounter >= IDLE_TIMEOUT) {
             window.clearInterval(_idleSecondsCounter);
-            alert("Sesión Expirada!");
+            //alert("Sesión Expirada!");
            
 
-            window.location.href = "/Home/Logout"
+            window.location.href = "/Home/LogoutAuto"
 
             _idleSecondsCounter = 0;
             //document.location.href = "logout.html";

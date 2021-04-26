@@ -2,6 +2,10 @@
   "iisSettings": {
     "windowsAuthentication": true,
     "anonymousAuthentication": false,
+    "iis": {
+      "applicationUrl": "http://localhost/WebResumen",
+      "sslPort": 0
+    },
     "iisExpress": {
       "applicationUrl": "http://localhost:55654",
       "sslPort": 44336

@@ -106,7 +106,7 @@ namespace WebResumen.Controllers
                             }
                             else
                             {
-                                TempData["Grupo"] = "No pertenece a al grupo";
+                                TempData["Grupo"] = "El Usuario No pertenece al grupo";
                                
                                 //return View();
                                 return RedirectToAction("Index", "Home");
@@ -135,7 +135,7 @@ namespace WebResumen.Controllers
 
                                     string EventoIx = "Inicio sesión Fallido";
                                     string ComentarioIx = "Fallo Inicio de sesión";
-                                    TempData["Fail"] = "Login Fallido. Contraseña Incorrecta";
+                                    TempData["Fail"] = "Inicio de Sesión Fallido. Contraseña Incorrecta";
                                     _log.Write(fullName, DateTime.Now, EventoIx, ComentarioIx);
                                 }
                             }
@@ -177,6 +177,44 @@ namespace WebResumen.Controllers
            
 
 
+
+            return RedirectToAction("Index", "Home");
+
+        }
+
+        public IActionResult LogoutAuto()
+        {
+
+            try
+            {
+
+                string Eventox = "Cierre de sesión automático";
+                string Comentariox = "Sesión expirada";
+                string usuario = _httpContextAccessor.HttpContext.Session.GetString("SessionName");
+                _log.Write(usuario, DateTime.Now, Eventox, Comentariox);
+            }
+            catch { }
+
+            HttpContext.Session.SetString("SessionPass", "");
+            HttpContext.Session.SetString("SessionUser", "");
+            HttpContext.Session.Clear();
+            HttpContext.Session.Remove(".AspNetCore.Session");
+
+
+
+
+            return RedirectToAction("Index", "Home");
+
+        }
+
+        public IActionResult LogoutEmpty()
+        {
+                       
+
+            HttpContext.Session.SetString("SessionPass", "");
+            HttpContext.Session.SetString("SessionUser", "");
+            HttpContext.Session.Clear();
+            HttpContext.Session.Remove(".AspNetCore.Session");
 
             return RedirectToAction("Index", "Home");
 

@@ -5,7 +5,7 @@
 }
 @using Microsoft.AspNetCore.Http
 @inject IHttpContextAccessor httpContextAccessor
-<h1>Edit</h1>
+<h1>Modificar</h1>
 
 <h4>MaestroAutoclave</h4>
 <hr />
@@ -66,7 +66,7 @@
                 <span asp-validation-for="RutaSalidaPdf" class="text-danger"value="@httpContextAccessor.HttpContext.Session.GetString("SessionRutaSalidaPDFM")"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Guardar" class="btn btn-primary" />
             </div>
         </form>
     </div>
