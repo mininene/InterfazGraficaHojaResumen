@@ -5,7 +5,9 @@
             controller('aguaCtrl', function ($scope, $http, $q, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder, DTDefaultOptions, $filter, $interval) {
                 DTDefaultOptions.setLoadingTemplate('<div class="spinner-border text-primary" role="status"></div >' + '  ' + '<span class="sr - only">Cargando...</span>') //spinner carga
 
-              
+                var getUrl = window.location;
+                var baseUrl ="";
+                //var baseUrl = getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
                 
                 $scope.dtOptions = DTOptionsBuilder.newOptions()
                     .withOption('deferRender', true)
@@ -21,7 +23,7 @@
 
                         $http({
                             method: 'GET',
-                            url: '/CiclosAutoClaveAgua/ListAgua',
+                            url: baseUrl+'/CiclosAutoClaveAgua/ListAgua',
                             headers: {
                                 'Content-Type': 'application/json'
                             }

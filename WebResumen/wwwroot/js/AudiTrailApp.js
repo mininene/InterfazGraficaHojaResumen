@@ -4,12 +4,14 @@
         controller('audiTrailCtrl', function ($scope, $http, $q, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder, DTDefaultOptions, $filter) {
             DTDefaultOptions.setLoadingTemplate('<div class="spinner-border text-primary" role="status"></div >' + '  ' + '<span class="sr - only">Cargando...</span>') //spinner carga
 
-            
+            var getUrl = window.location;
+            var baseUrl ="";
+           // var baseUrl = getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
 
             $scope.dtOptions = DTOptionsBuilder
                 .fromFnPromise(function () {
                     var defer = $q.defer();
-                    $http.get('/AudiTrail/ListAudiTrail').then(function (result) {
+                    $http.get(baseUrl+'/AudiTrail/ListAudiTrail').then(function (result) {
                         defer.resolve(result.data);
                         $scope.searchid = result.data
                         

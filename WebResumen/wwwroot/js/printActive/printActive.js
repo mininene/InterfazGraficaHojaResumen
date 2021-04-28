@@ -15,7 +15,9 @@
 
 //}, 5000)
 
-
+var getUrl = window.location;
+var baseUrl ="";
+//var baseUrl = getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
 
 function printFinishA() {
 
@@ -28,10 +30,10 @@ function printFinishA() {
        
 //    //});
   //  var myWindow = window.open('/AutoClaveA/WritePrint', "_blank"); 
-    var myWindow = window.open('/AutoClaveA/WritePrint'); 
+    var myWindow = window.open(baseUrl+'/AutoClaveA/WritePrint'); 
     myWindow.focus();
     myWindow.print();
-    window.location.href = '/AutoClaveA'
+    window.location.href = baseUrl+'/AutoClaveA'
 }
 
 
@@ -39,10 +41,10 @@ function printFinishB() {
 
     alert("El Archivo ha sido Impreso"); // What ever you want to do after window is closed .
      
-    var myWindow = window.open('/AutoClaveB/WritePrint');
+    var myWindow = window.open(baseUrl+'/AutoClaveB/WritePrint');
     myWindow.focus();
     myWindow.print();
-    window.location.href = '/AutoClaveB'
+    window.location.href =baseUrl+ '/AutoClaveB'
 }
 
 
@@ -50,10 +52,10 @@ function printFinishB() {
 function printFinishC() {
 
     alert("El Archivo ha sido Impreso"); // What ever you want to do after window is closed .
-    var myWindow = window.open('/AutoClaveC/WritePrint');
+    var myWindow = window.open(baseUrl+'/AutoClaveC/WritePrint');
     myWindow.focus();
     myWindow.print();
-    window.location.href = '/AutoClaveC'
+    window.location.href =baseUrl+ '/AutoClaveC'
 }
 
 
@@ -62,92 +64,92 @@ function printFinishC() {
 function printFinishD() {
 
     alert("El Archivo ha sido Impreso"); // What ever you want to do after window is closed .
-    var myWindow = window.open('/AutoClaveD/WritePrint');
+    var myWindow = window.open(baseUrl+'/AutoClaveD/WritePrint');
     myWindow.focus();
     myWindow.print();
-    window.location.href = '/AutoClaveD'
+    window.location.href =baseUrl+ '/AutoClaveD'
 }
 
 function printFinishE() {
 
     alert("El Archivo ha sido Impreso"); // What ever you want to do after window is closed .
-    var myWindow = window.open('/AutoClaveE/WritePrint');
+    var myWindow = window.open(baseUrl+'/AutoClaveE/WritePrint');
     myWindow.focus();
     myWindow.print();
-    window.location.href = '/AutoClaveE'
+    window.location.href = baseUrl+'/AutoClaveE'
 }
 
 function printFinishF() {
 
     alert("El Archivo ha sido Impreso"); // What ever you want to do after window is closed .
-    var myWindow = window.open('/AutoClaveF/WritePrint');
+    var myWindow = window.open(baseUrl+'/AutoClaveF/WritePrint');
     myWindow.focus();
     myWindow.print();
-    window.location.href = '/AutoClaveF'
+    window.location.href = baseUrl+'/AutoClaveF'
 }
 
 function printFinishG() {
 
     alert("El Archivo ha sido Impreso"); // What ever you want to do after window is closed .
-    var myWindow = window.open('/AutoClaveG/WritePrint');
+    var myWindow = window.open(baseUrl+'/AutoClaveG/WritePrint');
     myWindow.focus();
     myWindow.print();
-    window.location.href = '/AutoClaveG'
+    window.location.href =baseUrl+ '/AutoClaveG'
 }
 
 function printFinishH() {
 
     alert("El Archivo ha sido Impreso"); // What ever you want to do after window is closed .
-    var myWindow = window.open('/AutoClaveH/WritePrint');
+    var myWindow = window.open(baseUrl+'/AutoClaveH/WritePrint');
     myWindow.focus();
     myWindow.print();
-    window.location.href = '/AutoClaveH'
+    window.location.href =baseUrl+ '/AutoClaveH'
 }
 
 function printFinishI() {
 
     alert("El Archivo ha sido Impreso"); // What ever you want to do after window is closed .
-    var myWindow = window.open('/AutoClaveI/WritePrint');
+    var myWindow = window.open(baseUrl+'/AutoClaveI/WritePrint');
     myWindow.focus();
     myWindow.print();
-    window.location.href = '/AutoClaveI'
+    window.location.href = baseUrl+'/AutoClaveI'
 }
 
 function printFinishJ() {
 
     alert("El Archivo ha sido Impreso"); // What ever you want to do after window is closed .
-    var myWindow = window.open('/AutoClaveJ/WritePrint');
+    var myWindow = window.open(baseUrl+'/AutoClaveJ/WritePrint');
     myWindow.focus();
     myWindow.print();
-    window.location.href = '/AutoClaveJ'
+    window.location.href =baseUrl+ '/AutoClaveJ'
 }
 
 function printFinishK() {
 
     alert("El Archivo ha sido Impreso"); // What ever you want to do after window is closed .
-    var myWindow = window.open('/AutoClaveK/WritePrint');
+    var myWindow = window.open(baseUrl+'/AutoClaveK/WritePrint');
     myWindow.focus();
     myWindow.print();
-    window.location.href = '/AutoClaveK'
+    window.location.href = baseUrl+'/AutoClaveK'
 }
 
 
 function printFinishL() {
 
     alert("El Archivo ha sido Impreso"); // What ever you want to do after window is closed .
-    var myWindow = window.open('/AutoClaveL/WritePrint');
+    var myWindow = window.open(baseUrl+'/AutoClaveL/WritePrint');
     myWindow.focus();
     myWindow.print();
-    window.location.href = '/AutoClaveL'
+    window.location.href =baseUrl+ '/AutoClaveL'
 }
 
 function printFinishM() {
 
     alert("El Archivo ha sido Impreso"); // What ever you want to do after window is closed .
-    var myWindow = window.open('/AutoClaveM/WritePrint');
+    var myWindow = window.open(baseUrl+'/AutoClaveM/WritePrint');
     myWindow.focus();
     myWindow.print();
-    window.location.href = '/AutoClaveM'
+    window.location.href =baseUrl+ '/AutoClaveM'
 }
 
 

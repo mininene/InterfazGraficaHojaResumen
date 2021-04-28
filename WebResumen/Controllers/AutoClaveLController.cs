@@ -200,9 +200,10 @@ namespace WebResumen.Controllers
             string[] texts = System.IO.File.ReadAllLines(path, new UnicodeEncoding());
             ViewBag.Data = texts;
 
+            byte[] fileBytes = System.IO.File.ReadAllBytes(path);
+            return File(fileBytes, "text/html", ciclo);
 
-
-            return View(ciclosAutoclaves);
+           // return View(ciclosAutoclaves);
 
         }
 

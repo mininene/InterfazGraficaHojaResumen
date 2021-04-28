@@ -208,8 +208,9 @@ namespace WebResumen.Controllers
             ViewBag.Data = texts;
 
 
-
-            return View(ciclosAutoclaves);
+            byte[] fileBytes = System.IO.File.ReadAllBytes(path);
+            return File(fileBytes, "text/html", ciclo);
+           // return View(ciclosAutoclaves);
 
         }
 

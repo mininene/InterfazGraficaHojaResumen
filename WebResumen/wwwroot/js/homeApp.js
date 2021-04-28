@@ -1,10 +1,16 @@
 ﻿var app = angular.module('datatablesHomeApp', []);
 app.controller('homeCtrl', function ($scope, $http, $interval,$timeout,$q) {
     $scope.loading = true;
+    var getUrl = window.location;
+    var baseUrl ="";
+    //var baseUrl =  getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
+    
+
+   
     $q.all([
         //$http.get('/Inicio/ListHomex'),
-        $http.get('/Inicio/ListHome'),
-        $http.get('/AutoClaveA/ListaAutoclaveA'),
+        $http.get(baseUrl+"/Inicio/ListHome"),
+        $http.get(baseUrl+"/AutoClaveA/ListaAutoclaveA"),
         //$http.get('/AutoClaveB/ListaAutoclaveB'),
         //$http.get('/AutoClaveC/ListaAutoclaveC'),
         //$http.get('/AutoClaveD/ListaAutoclaveD'),
@@ -14,7 +20,7 @@ app.controller('homeCtrl', function ($scope, $http, $interval,$timeout,$q) {
         //$http.get('/AutoClaveH/ListaAutoclaveH'),
         //$http.get('/AutoClaveI/ListaAutoclaveI'),
         //$http.get('/AutoClaveM/ListaAutoclaveM'),
-        $http.get('/AutoClaveJ/ListaAutoclaveJ')
+        $http.get(baseUrl+"/AutoClaveJ/ListaAutoclaveJ")
         //$http.get('/AutoClaveK/ListaAutoclaveK'),
         //$http.get('/AutoClaveL/ListaAutoclaveL')
 
@@ -426,8 +432,8 @@ app.controller('homeCtrl', function ($scope, $http, $interval,$timeout,$q) {
        
         $q.all([
               //$http.get('/Inicio/ListHomex'),
-              $http.get('/Inicio/ListHome'),
-            $http.get('/AutoClaveA/ListaAutoclaveA'),
+            $http.get(baseUrl + "/Inicio/ListHome"),
+            $http.get(baseUrl + "/AutoClaveA/ListaAutoclaveA"),
             //$http.get('/AutoClaveB/ListaAutoclaveB'),
             //$http.get('/AutoClaveC/ListaAutoclaveC'),
             //$http.get('/AutoClaveD/ListaAutoclaveD'),
@@ -437,7 +443,7 @@ app.controller('homeCtrl', function ($scope, $http, $interval,$timeout,$q) {
             //$http.get('/AutoClaveH/ListaAutoclaveH'),
             //$http.get('/AutoClaveI/ListaAutoclaveI'),
             //$http.get('/AutoClaveM/ListaAutoclaveM'),
-            $http.get('/AutoClaveJ/ListaAutoclaveJ')
+            $http.get(baseUrl+"/AutoClaveJ/ListaAutoclaveJ")
             //$http.get('/AutoClaveK/ListaAutoclaveK'),
             //$http.get('/AutoClaveL/ListaAutoclaveL')
            

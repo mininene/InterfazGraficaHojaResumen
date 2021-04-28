@@ -1,4 +1,8 @@
-﻿$.getJSON('/Home/Tiempo', function (result) {
+﻿var getUrl = window.location;
+var baseUrl ="";
+//var baseUrl = getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
+
+$.getJSON(baseUrl+'/Home/Tiempo', function (result) {
     var secondt = result.value.data;
     var fname = result.value.fname;
     var name = result.value.name;
@@ -57,7 +61,7 @@
             //alert("Sesión Expirada!");
            
 
-            window.location.href = "/Home/LogoutAuto"
+            window.location.href = baseUrl+"/Home/LogoutAuto"
 
             _idleSecondsCounter = 0;
             //document.location.href = "logout.html";

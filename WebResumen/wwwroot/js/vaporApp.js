@@ -5,6 +5,9 @@
         controller('vaporCtrl', function ($scope, $http, $q, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder, DTDefaultOptions, $filter, $interval) {
             DTDefaultOptions.setLoadingTemplate('<div class="spinner-border text-primary" role="status"></div >' + '  ' + '<span class="sr - only">Cargando...</span>') //spinner carga
 
+            var getUrl = window.location;
+            var baseUrl ="";
+           // var baseUrl = getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
 
             $scope.dtOptions = DTOptionsBuilder.newOptions()
                 .withOption('serverSide', false)
@@ -14,7 +17,7 @@
 
                     $http({
                         method: 'GET',
-                        url: '/CiclosAutoClaveVapor/ListVapor',
+                        url: baseUrl+'/CiclosAutoClaveVapor/ListVapor',
                         headers: {
                             'Content-Type': 'application/json'
                         }
