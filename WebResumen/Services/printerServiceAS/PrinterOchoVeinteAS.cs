@@ -269,41 +269,65 @@ namespace WebResumen.Services.printerServiceAS
                 graph.DrawString(q.AperturaPuerta, font, XBrushes.Black, new XRect(20, 660, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
                 graph.DrawString("FIRMA OPERADOR        _______________________ ", font, XBrushes.Black, new XRect(20, 700, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
                 graph.DrawString("FIRMA GAR.DE CALID.   _______________________ ", font, XBrushes.Black, new XRect(20, 740, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
-                graph.DrawString("Pág 1 de 1  ", font, XBrushes.Black, new XRect(480, 800, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
-
+               
                 if (q.ErrorCiclo == "")
                 {
+                    graph.DrawString("Pág 1 de 1  ", font, XBrushes.Black, new XRect(480, 800, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+
                     //graph.DrawString("ALARMAS:", fontDos, XBrushes.Black, new XRect(340, 525, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
                     //graph.DrawString("* NO EXISTEN ALARMAS REGISTRADAS", fontDos, XBrushes.Black, new XRect(340, 535, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
 
                 }
                 else
                 {
-                    graph.DrawString("ALARMAS:", fontDos, XBrushes.Black, new XRect(340, 525, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
-                    tf.DrawString(q.ErrorCiclo, fontDos, XBrushes.Black, rect, XStringFormats.TopLeft);
+                    string[] error = q.ErrorCiclo.Split('\n');
+                    if (error.Count()>24)
+                    {
+                        PdfPage pdfPage2 = pdf.AddPage();
+                        XGraphics graph2 = XGraphics.FromPdfPage(pdfPage2);                   
+
+                        graph2.DrawString("ID. MAQUINA:" + "  " + q.IdAutoclave, font, XBrushes.Black, new XRect(20, 5, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+                        graph2.DrawString("N.PROGRESIVO:" + "  " + q.NumeroCiclo, font, XBrushes.Black, new XRect(140, 5, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+                        graph2.DrawString("Informe de ciclo de esterilización", font, XBrushes.Black, new XRect(270, 5, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+                        graph2.DrawString("Impreso: " + DateTime.Now, font, XBrushes.Black, new XRect(440, 5, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+                        graph2.DrawString("Por: " + _httpContextAccessor.HttpContext.Session.GetString("SessionName"), font, XBrushes.Black, new XRect(440, 15, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+                        graph.DrawString("ALARMAS:", fontDos, XBrushes.Black, new XRect(340, 525, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+                      
+                        for (int i = 0; i < error.Length; i++)
+                        {
+                            if (i >= 0 && i <=24)
+                            {
+                                graph.DrawString(error[i], fontDos, XBrushes.Black, new XRect(340, 535 + i * 10, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+                            }
+                            if (i > 24)
+                            {
+                                graph2.DrawString(error[i], fontDos, XBrushes.Black, new XRect(50, 30 + (i - 25) * 10, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+                            }
+
+                        }                                  
+
+                        graph.DrawString("Pág 1 de 2  ", font, XBrushes.Black, new XRect(480, 800, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+                        graph2.DrawString("Pág 2 de 2  ", font, XBrushes.Black, new XRect(480, 800, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+
+                    }
+                    else
+                    {
+                        graph.DrawString("ALARMAS:", fontDos, XBrushes.Black, new XRect(340, 525, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+                        tf.DrawString(q.ErrorCiclo, fontDos, XBrushes.Black, rect, XStringFormats.TopLeft);
+                        graph.DrawString("Pág 1 de 1  ", font, XBrushes.Black, new XRect(480, 800, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+
+                    }
+
                 }
 
-                // var path = Path.Combine(_env.WebRootPath, "docs", "archivo.pdf");
-                //var path = Path.Combine(_env.ContentRootPath, "PDF", "archivo1.pdf");
-                //pdf.Save(path);
-                // string rut = @"C:\Program Files\HojaResumen\old\archivo1.pdf";
+                
                 string rut = _config["OptionalSettings:Pdf"] + "\\PDF";
                 Directory.CreateDirectory(rut);
                 string ruta = rut + "\\archivo1.pdf";
                 pdf.Save(ruta);
 
 
-                //MemoryStream stream = new MemoryStream();
-                //pdf.Save(stream, false);
-                // stream.Position = 0;
-                //byte[] bytes = stream.ToArray();
-                // System.IO.File.WriteAllBytes("hello.pdf", bytes);
-                //var myfile = System.IO.File.ReadAllBytes("hello.pdf");
-                //return new FileContentResult(myfile, "application/pdf");
-
-
-                //return new FileStreamResult(stream, "application/pdf");
-                //return new FileContentResult(bytes, "application/pdf");
+                
 
             }
 

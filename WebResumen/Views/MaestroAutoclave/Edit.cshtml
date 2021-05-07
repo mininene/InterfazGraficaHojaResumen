@@ -22,48 +22,50 @@
             <div class="form-group">
                 <label asp-for="Nombre" class="control-label"></label>
                 <input asp-for="Nombre" class="form-control" />
-                <span asp-validation-for="Nombre" class="text-danger"value="@httpContextAccessor.HttpContext.Session.GetString("SessionNombreM")"></span>
+                <span asp-validation-for="Nombre" class="text-danger" value="@httpContextAccessor.HttpContext.Session.GetString("SessionNombreM")"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Version" class="control-label"></label>
                 <input asp-for="Version" class="form-control" />
-                <span asp-validation-for="Version" class="text-danger"value="@httpContextAccessor.HttpContext.Session.GetString("SessionVersionM")"></span>
+                <span asp-validation-for="Version" class="text-danger" value="@httpContextAccessor.HttpContext.Session.GetString("SessionVersionM")"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Ip" class="control-label"></label>
                 <input asp-for="Ip" class="form-control" />
-                <span asp-validation-for="Ip" class="text-danger"value="@httpContextAccessor.HttpContext.Session.GetString("SessionIpM")"></span>
+                <span asp-validation-for="Ip" class="text-danger" value="@httpContextAccessor.HttpContext.Session.GetString("SessionIpM")"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Seccion" class="control-label"></label>
                 <input asp-for="Seccion" class="form-control" />
-                <span asp-validation-for="Seccion" class="text-danger"value="@httpContextAccessor.HttpContext.Session.GetString("SessionSeccionM")"></span>
+                <span asp-validation-for="Seccion" class="text-danger" value="@httpContextAccessor.HttpContext.Session.GetString("SessionSeccionM")"></span>
             </div>
             @*<div class="form-group">
-                    <label asp-for="Estado" class="control-label"></label>
-                    <input asp-for="Estado" class="form-control" />
-                    <span asp-validation-for="Estado" class="text-danger"></span>
-                </div>*@
             <label asp-for="Estado" class="control-label"></label>
-            <select class="form-control" id="Estado" name="Estado">
-                <option value=True>True</option>
-                <option value=False>False</option>
-            </select>
+            <input asp-for="Estado" class="form-control" />
+            <span asp-validation-for="Estado" class="text-danger"></span>
+        </div>*@
+            <label asp-for="Estado" class="control-label"></label>
+            @Html.DropDownListFor(modelItem => modelItem.Estado, new[] { new SelectListItem { Text = "Activo", Value = "True" }, new SelectListItem { Text = "Inactivo", Value = "False" } }, new { @class = "form-control" })
+
+            @*<select class="form-control" id="Estado" name="Estado">
+            <option value=True>True</option>
+            <option value=False>False</option>
+        </select>*@
 
             <div class="form-group">
                 <label asp-for="UltimoCiclo" class="control-label"></label>
                 <input asp-for="UltimoCiclo" class="form-control" />
-                <span asp-validation-for="UltimoCiclo" class="text-danger"value="@httpContextAccessor.HttpContext.Session.GetString("SessionUltimoCicloM")"></span>
+                <span asp-validation-for="UltimoCiclo" class="text-danger" value="@httpContextAccessor.HttpContext.Session.GetString("SessionUltimoCicloM")"></span>
             </div>
             <div class="form-group">
                 <label asp-for="RutaSalida" class="control-label"></label>
                 <input asp-for="RutaSalida" class="form-control" />
-                <span asp-validation-for="RutaSalida" class="text-danger"value="@httpContextAccessor.HttpContext.Session.GetString("SessionRutaSalidaM")"></span>
+                <span asp-validation-for="RutaSalida" class="text-danger" value="@httpContextAccessor.HttpContext.Session.GetString("SessionRutaSalidaM")"></span>
             </div>
             <div class="form-group">
                 <label asp-for="RutaSalidaPdf" class="control-label"></label>
                 <input asp-for="RutaSalidaPdf" class="form-control" />
-                <span asp-validation-for="RutaSalidaPdf" class="text-danger"value="@httpContextAccessor.HttpContext.Session.GetString("SessionRutaSalidaPDFM")"></span>
+                <span asp-validation-for="RutaSalidaPdf" class="text-danger" value="@httpContextAccessor.HttpContext.Session.GetString("SessionRutaSalidaPDFM")"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Guardar" class="btn btn-primary" />

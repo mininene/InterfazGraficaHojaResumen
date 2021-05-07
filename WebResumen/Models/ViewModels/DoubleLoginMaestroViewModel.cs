@@ -13,7 +13,7 @@ namespace WebResumen.Models.ViewModels
         public string Usuario { get; set; }
 
         [Required(ErrorMessage = "Contraseña es requerida")]
-        [StringLength(20, ErrorMessage = "Debe tener entre 5 y 10 caracteres", MinimumLength = 8)]
+        //[StringLength(20, ErrorMessage = "Debe tener entre 5 y 10 caracteres", MinimumLength = 8)]
         [DataType(DataType.Password)]
         public string Contraseña { get; set; }
 

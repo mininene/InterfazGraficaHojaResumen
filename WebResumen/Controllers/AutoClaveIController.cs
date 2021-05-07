@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using ReflectionIT.Mvc.Paging;
 using WebResumen.Models;
 using WebResumen.Models.ViewModels;
 using WebResumen.Services.LogRecord;
@@ -46,21 +47,21 @@ namespace WebResumen.Controllers
         }
 
         // GET: AutoClaveI
-        public async Task<IActionResult> Index(string nCiclo, string nPrograma, string fecha)
+        public async Task<IActionResult> Index(string nCiclo, string nPrograma, string fecha, int? page)
         {
-            List<CiclosAutoclaves> _sabiUno = await _context.CiclosAutoclaves.ToListAsync();
-
-
-            var query = from x in _sabiUno.Where(x => x.IdAutoclave == "NA0672EGI").OrderByDescending(X => X.Id).Take(50) select x;
+           
+            var query = _context.CiclosAutoclaves.Where(x => x.IdAutoclave == "NA0672EGI").AsNoTracking().AsQueryable();
 
             if (!String.IsNullOrEmpty(nCiclo))
             {
+                page = 1;
                 query = query.Where(x => x.NumeroCiclo.Contains(nCiclo));
 
             }
 
             if (!String.IsNullOrEmpty(nPrograma))
             {
+                page = 1;
                 query = query.Where(x => x.Programa.Contains(nPrograma));
             }
 
@@ -68,18 +69,24 @@ namespace WebResumen.Controllers
 
             if (!String.IsNullOrEmpty(fecha))
             {
+                page = 1;
                 query = query.Where(x => x.HoraFin.Contains(fecha));
 
             }
 
             if (!String.IsNullOrEmpty(nCiclo) && !String.IsNullOrEmpty(nPrograma) && !String.IsNullOrEmpty(fecha))
             {
+                page = 1;
                 query = query.Where(x => x.NumeroCiclo.Contains(nCiclo)
                                        || x.Programa.Contains(nPrograma)
                                          || x.HoraFin.Contains(fecha));  // si pongo la fecha como string si que lo coge
             }
 
-            return View(query);
+            int pageSize = 50;
+            int pageNumber = (page ?? 1);
+            var model = await PagingList.CreateAsync(query.OrderByDescending(X => X.Id), pageSize, pageNumber);
+
+            return View(model);
         }
 
 

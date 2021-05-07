@@ -17,11 +17,11 @@ namespace WebResumen.Models
          public string RutaLog { get; set; }
 
         [Required(ErrorMessage = "Tiempo es requerido")]
-        [RegularExpression("^[0-9]*$", ErrorMessage = "Valor entre 1 y 10")]
+        [Range(1, 10, ErrorMessage = "Valor mayor que cero y menor que 10")]
         public int Tiempo { get; set; }
 
         [Required(ErrorMessage = "Tiempo es requerido")]
-        [RegularExpression("^[0-9]*$", ErrorMessage = "Valor entre 1 y 10")]
+        [Range(1,20, ErrorMessage = "Valor mayor que cero y menor que 20")]
         public int? Tsesion { get; set; } //NUEVO
         public bool? Reinicio { get; set; }
     }

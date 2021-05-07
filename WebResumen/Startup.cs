@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ReflectionIT.Mvc.Paging;
 using WebResumen.Models;
 using WebResumen.Services.Authentication;
 using WebResumen.Services.Authorization;
@@ -101,6 +102,11 @@ namespace WebResumen
 
             services.AddControllersWithViews()
                  .AddSessionStateTempDataProvider();
+            services.AddPaging(options => {
+                options.ViewName = "Bootstrap4";
+                options.HtmlIndicatorDown = " <span>&darr;</span>";
+                options.HtmlIndicatorUp = " <span>&uarr;</span>";
+            });
 
         }
 

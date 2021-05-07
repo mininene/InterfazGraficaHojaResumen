@@ -19,30 +19,14 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Nombre)
                 </th>
-                @*<th>
-                        @Html.DisplayNameFor(model => model.Version)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Ip)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Seccion)
-                    </th>*@
+               
                 <th>
                     @Html.DisplayNameFor(model => model.Estado)
                 </th>
                 <th>
                     Acciones
                 </th>
-                @*<th>
-                        @Html.DisplayNameFor(model => model.UltimoCiclo)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.RutaSalida)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.RutaSalidaPdf)
-                    </th>*@
+                
 
             </tr>
         </thead>
@@ -56,32 +40,17 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Nombre)
                     </td>
-                    @*<td>
-                            @Html.DisplayFor(modelItem => item.Version)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Ip)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Seccion)
-                        </td>*@
+                    
+                <td>
+                    @*@Html.DisplayFor(modelItem => item.Estado)*@
+                    @( item.Estado == true ? "Activo" : "Inactivo")
+
+                </td>
+                    
                     <td>
-                        @Html.DisplayFor(modelItem => item.Estado)
-                    </td>
-                    @*<td>
-                            @Html.DisplayFor(modelItem => item.UltimoCiclo)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.RutaSalida)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.RutaSalidaPdf)
-                        </td>*@
-                    <td>
-                        @*<a class="btn btn-success btn-sm text-white" asp-action="Edit" asp-route-id="@item.Id">Editar</a>*@
+                       
                         <a type="button" class="btn btn-success btn-sm" asp-action="Login" asp-route-id="@item.Id">Modificar</a>
-                        @*<a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
+                       
                     </td>
                 </tr>
             }

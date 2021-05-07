@@ -41,15 +41,16 @@ namespace WebResumen.Services.PrinterService
                 _tf.Alignment = StringAlignment.Near;
                 _td.FormatFlags = StringFormatFlags.LineLimit;
                 _td.Trimming = StringTrimming.Word;
-                _pr.PrintPage += new PrintPageEventHandler(printDoc_PrintPage);
+            int page = 1;
+            _pr.PrintPage += new PrintPageEventHandler(printDoc_PrintPage);
 
 
-
-           // _pr.PrinterSettings.PrinterName = @"\\essafileprint01\#ADMICOPY (ESSAFILEPRINT01)";
+           
+            // _pr.PrinterSettings.PrinterName = @"\\essafileprint01\#ADMICOPY (ESSAFILEPRINT01)";
            // _pr.PrinterSettings.PrinterName = "PDFCreator";
-            _pr.PrinterSettings.PrinterName =impresora.ToString() ;
+               _pr.PrinterSettings.PrinterName =impresora.ToString() ;
 
-
+           
             // Console.WriteLine(_pr.PrinterSettings.PrinterName.ToString());
 
             //System.Threading.Thread.Sleep(2000);
@@ -60,8 +61,9 @@ namespace WebResumen.Services.PrinterService
                 void printDoc_PrintPage(object sender, PrintPageEventArgs e)
                 { IHttpContextAccessor _httpContextAccessor = new HttpContextAccessor();
                     Graphics graph = e.Graphics;
-               
-                    graph.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
+                
+
+                graph.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
 
                     graph.DrawString("ID. MAQUINA:" + "  " + q.IdAutoclave, _font, _solid, new RectangleF(20, 5, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
                     graph.DrawString("N.PROGRESIVO:" + "  " + q.NumeroCiclo, _font, _solid, new RectangleF(190, 5, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
@@ -226,19 +228,71 @@ namespace WebResumen.Services.PrinterService
                     graph.DrawString(q.AperturaPuerta, _font, _solid, new RectangleF(20, 920, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
                     graph.DrawString("FIRMA OPERADOR        _______________________ ", _font, _solid, new RectangleF(20, 960, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
                     graph.DrawString("FIRMA GAR.DE CALID.   _______________________ ", _font, _solid, new RectangleF(20, 1020, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
-                    graph.DrawString("Pág 1 de 1  ", _font, _solid, new RectangleF(640, 1120, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
+                   // graph.DrawString("Pág 1 de 1  ", _font, _solid, new RectangleF(640, 1120, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
+                graph.DrawString("Pág 1 de 1  ", _font, _solid, new RectangleF(740, 1050, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
 
                 if (q.ErrorCiclo == "")
                     {
                         //graph.DrawString("ALARMAS:", _fontDos, _solid, new RectangleF(450, 740, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
                         //graph.DrawString("* NO EXISTEN ALARMAS REGISTRADAS", _fontDos, _solid, new RectangleF(450, 760, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
 
-                    }
+                    } /////////////////////////////
                     else
                     {
+                         string[] error = q.ErrorCiclo.Split('\n');
+                        if (error.Count() > 24)
+                         { 
+
+                        if (page == 1)
+                        {
+                            graph.DrawString("ALARMAS:", _fontDos, _solid, new RectangleF(450, 740, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
+                            graph.DrawString("Pág 1 de 2  ", _font, _solid, new RectangleF(740, 1050, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
+                            e.HasMorePages = true;
+                            for (int i = 0; i < error.Length; i++)
+                            {
+                                if (i >= 0 && i <= 24)
+                                {
+                                     graph.DrawString(error[i], _fontDos, _solid, new RectangleF(450, 750 + i * 10, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
+                                   
+                                }
+                            }
+
+                        }
+                        if (page == 2 )
+                        {
+                            e.Graphics.Clear(Color.White);
+                            graph.DrawString("ID. MAQUINA:" + "  " + q.IdAutoclave, _font, _solid, new RectangleF(20, 5, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
+                            graph.DrawString("N.PROGRESIVO:" + "  " + q.NumeroCiclo, _font, _solid, new RectangleF(190, 5, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
+                            graph.DrawString("Informe de ciclo de esterilización", _font, _solid, new RectangleF(360, 5, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
+                            graph.DrawString("Impreso: " + DateTime.Now, _font, _solid, new RectangleF(580, 5, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
+                            graph.DrawString("Por: " + _httpContextAccessor.HttpContext.Session.GetString("SessionName"), _font, _solid, new RectangleF(580, 20, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
+
+                            graph.DrawString("Pág 2 de 2  ", _font, _solid, new RectangleF(740, 1050, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
+                            e.HasMorePages = false;
+                            for (int i = 0; i < error.Length; i++)
+                            {
+                               
+                                if (i > 24)
+                                {
+                                                                      
+
+                                       graph.DrawString(error[i], _fontDos, _solid, new RectangleF(50, 30 + (i - 25) * 10, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
+                                   
+                                }
+                            }
+                        }
+                        page++;
+
+
+                    }
+                        ///////////////////////////
+                         else
+                         {
+
                         graph.DrawString("ALARMAS:", _fontDos, _solid, new RectangleF(450, 740, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
 
                         graph.DrawString(q.ErrorCiclo, _fontDos, _solid, _rect, _td);
+                         }
 
                     }
 

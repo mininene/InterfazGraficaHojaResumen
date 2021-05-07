@@ -21,7 +21,7 @@
             <div class="form-group">
                 @*<label asp-for="Matricula" class="control-label"></label>*@
                 @*@Html.DisplayFor(model => model.Matricula, new { @readonly = true })
-                <label>@httpContextAccessor.HttpContext.Session.GetString("SessionMatriculaMS")</label>*@
+            <label>@httpContextAccessor.HttpContext.Session.GetString("SessionMatriculaMS")</label>*@
                 <input asp-for="Matricula" class="form-control" type="hidden" value="@httpContextAccessor.HttpContext.Session.GetString("SessionMatriculaMS")" />
                 @*<span asp-validation-for="Matricula" class="text-danger"></span>*@
             </div>
@@ -46,15 +46,17 @@
                 @*<span asp-validation-for="Seccion" class="text-danger"></span>*@
             </div>
             @*<div class="form-group">
-                    <label asp-for="Estado" class="control-label"></label>
-                    <input asp-for="Estado" class="form-control" />
-                    <span asp-validation-for="Estado" class="text-danger"></span>
-                </div>*@
             <label asp-for="Estado" class="control-label"></label>
-            <select class="form-control" id="Estado" name="Estado">
+            <input asp-for="Estado" class="form-control" />
+            <span asp-validation-for="Estado" class="text-danger"></span>
+        </div>*@
+            <label asp-for="Estado" class="control-label"></label>
+             @Html.DropDownListFor(modelItem => modelItem.Estado, new[] { new SelectListItem { Text = "Activo", Value = "True" }, new SelectListItem { Text = "Inactivo", Value = "False" } },new { @class = "form-control" })
+            
+            @*<select class="form-control" id="Estado" name="Estado">
                 <option value=True>Activar</option>
                 <option value="False">Desactivar</option>
-            </select>
+            </select>*@
 
 
 

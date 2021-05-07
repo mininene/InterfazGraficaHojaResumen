@@ -1,4 +1,7 @@
-﻿@model IEnumerable<WebResumen.Models.CiclosSabiDos>
+﻿@*@model IEnumerable<WebResumen.Models.CiclosSabiDos>*@
+@model ReflectionIT.Mvc.Paging.PagingList<WebResumen.Models.CiclosSabiDos>
+@using ReflectionIT.Mvc.Paging
+@addTagHelper *, ReflectionIT.Mvc.Paging
 
 @{
     ViewData["Title"] = "Index";
@@ -44,14 +47,14 @@
         <thead class="thead-dark">
 
             <tr>
-               
+
                 <th>
                     @Html.DisplayNameFor(model => model.NumeroCiclo)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Programa)
                 </th>
-               
+
                 <th>
                     @Html.DisplayNameFor(model => model.HoraInicio)
                 </th>
@@ -61,7 +64,7 @@
                 <th>
                     Acciones
                 </th>
-              
+
                 <th></th>
             </tr>
         </thead>
@@ -69,29 +72,34 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    
+
                     <td>
                         @Html.DisplayFor(modelItem => item.NumeroCiclo)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Programa)
                     </td>
-                   
+
                     <td>
                         @Html.DisplayFor(modelItem => item.HoraInicio)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.HoraFin)
                     </td>
-                   
+
                     <td>
-                       
+
                         <a type="button" class="btn btn-info " asp-action="Preview" asp-route-id="@item.Id">Ver</a>
                         <a type="button" class="btn btn-success " asp-action="Login" asp-route-id="@item.Id">Imprimir</a>
-                       
+
                     </td>
                 </tr>
             }
         </tbody>
     </table>
 </div>
+
+ Página @(Model.PageCount < Model.PageIndex ? 0 : Model.PageIndex) de @Model.PageCount  Total Registros: @Model.TotalRecordCount
+<nav aria-label="Suppliers navigation example">
+    <vc:pager paging-list="@Model" />
+</nav>

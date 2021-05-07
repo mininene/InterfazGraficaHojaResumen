@@ -66,7 +66,8 @@
                         @Html.DisplayFor(modelItem => item.Seccion)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Estado)
+                        @*@Html.DisplayFor(modelItem => item.Estado)*@
+                        @(item.Estado == true ? "Activo" : "Inactivo")
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.UltimoCiclo)

@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using ReflectionIT.Mvc.Paging;
 using WebResumen.Models;
 using WebResumen.Models.ViewModels;
 using WebResumen.Services.LogRecord;
@@ -46,21 +47,21 @@ namespace WebResumen.Controllers
         }
 
         // GET: AutoClaveH
-        public async Task<IActionResult> Index(string nCiclo, string nPrograma, string fecha)
+        public async Task<IActionResult> Index(string nCiclo, string nPrograma, string fecha, int? page)
         {
-            List<CiclosAutoclaves> _sabiUno = await _context.CiclosAutoclaves.ToListAsync();
-
-
-            var query = from x in _sabiUno.Where(x => x.IdAutoclave == "NA0658EGH").OrderByDescending(X => X.Id).Take(50) select x;
+          
+            var query = _context.CiclosAutoclaves.Where(x => x.IdAutoclave == "NA0658EGH").AsNoTracking().AsQueryable();
 
             if (!String.IsNullOrEmpty(nCiclo))
             {
+                page = 1;
                 query = query.Where(x => x.NumeroCiclo.Contains(nCiclo));
 
             }
 
             if (!String.IsNullOrEmpty(nPrograma))
             {
+                page = 1;
                 query = query.Where(x => x.Programa.Contains(nPrograma));
             }
 
@@ -68,18 +69,24 @@ namespace WebResumen.Controllers
 
             if (!String.IsNullOrEmpty(fecha))
             {
+                page = 1;
                 query = query.Where(x => x.HoraFin.Contains(fecha));
 
             }
 
             if (!String.IsNullOrEmpty(nCiclo) && !String.IsNullOrEmpty(nPrograma) && !String.IsNullOrEmpty(fecha))
             {
+                page = 1;
                 query = query.Where(x => x.NumeroCiclo.Contains(nCiclo)
                                        || x.Programa.Contains(nPrograma)
                                          || x.HoraFin.Contains(fecha));  // si pongo la fecha como string si que lo coge
             }
 
-            return View(query);
+            int pageSize = 50;
+            int pageNumber = (page ?? 1);
+            var model = await PagingList.CreateAsync(query.OrderByDescending(X => X.Id), pageSize, pageNumber);
+
+            return View(model);
         }
 
 
@@ -121,11 +128,12 @@ namespace WebResumen.Controllers
 
            // if (ciclosAutoclaves.Programa.Trim().Equals("8") || ciclosAutoclaves.Programa.Trim().Equals("20"))
                 int ciclosInt = Convert.ToInt32(ciclosAutoclaves.Programa.Trim());
-            if (ciclosInt >= 5)
+            if (ciclosInt >= 5 && ciclosInt != 70)
 
             {
                 _printerOchoVeinte.printOchoVeinte(id);
             }
+            else { TempData["Print"] = "El Archivo No se pudo Imprimir"; return RedirectToAction("Index", "AutoClaveH"); }
 
             if (ciclosAutoclaves.Programa.Trim().Equals("2") || ciclosAutoclaves.Programa.Trim().Equals("3") || ciclosAutoclaves.Programa.Trim().Equals("4"))
             {
@@ -156,11 +164,12 @@ namespace WebResumen.Controllers
 
            // if (ciclosAutoclaves.Programa.Trim().Equals("8") || ciclosAutoclaves.Programa.Trim().Equals("20"))
                 int ciclosInt = Convert.ToInt32(ciclosAutoclaves.Programa.Trim());
-            if (ciclosInt >= 5)
+            if (ciclosInt >= 5 && ciclosInt !=70)
 
             {
                 _printerOchoVeinteAS.printOchoVeinteAS(id);
             }
+            else { TempData["Print"] = "El Archivo No se pudo Imprimir"; return RedirectToAction("Index", "AutoClaveH"); }
 
             if (ciclosAutoclaves.Programa.Trim().Equals("2") || ciclosAutoclaves.Programa.Trim().Equals("3") || ciclosAutoclaves.Programa.Trim().Equals("4"))
             {
@@ -180,11 +189,11 @@ namespace WebResumen.Controllers
         public async Task<IActionResult> WritePrint()
         {
             string ReportURL = _config["OptionalSettings:Pdf"] + "\\PDF\\archivo1.pdf";
-            byte[] FileBytes = System.IO.File.ReadAllBytes(ReportURL);
+            byte[] FileBytes =  System.IO.File.ReadAllBytes(ReportURL);
             TempData["Print"] = "El Archivo ha sido Impreso";
             string EventoH = "Re-Impresión";
             _log.Write(_httpContextAccessor.HttpContext.Session.GetString("SessionFullName"), DateTime.Now, EventoH + " " + _httpContextAccessor.HttpContext.Session.GetString("AutoclaveNumeroH"), _httpContextAccessor.HttpContext.Session.GetString("SessionComentarioH"));
-            return File(FileBytes, "application/pdf");
+            return File( FileBytes, "application/pdf");
             //return File(new FileStream(@"\\essaappserver01\HojaResumen\old\archivo1.pdf", FileMode.Open, FileAccess.Read), "application/pdf");
 
 

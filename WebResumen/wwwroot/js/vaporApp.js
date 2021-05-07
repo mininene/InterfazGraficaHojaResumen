@@ -320,6 +320,11 @@
                     var s = (min + sec).toFixed(2);
                     return s
                 }),
+
+                DTColumnBuilder.newColumn('tff2').withTitle('P.FINAL F2').renderWith(function (data, type, full, meta) {
+                    var x = data.substring(6, 14)
+                    return x
+                }),
           
                // DTColumnBuilder.newColumn('duracionTotalF3').withTitle('Duración F3'),
                 DTColumnBuilder.newColumn('duracionTotalF3').withTitle('Duración F3').renderWith(function (data, type, full, meta) {
