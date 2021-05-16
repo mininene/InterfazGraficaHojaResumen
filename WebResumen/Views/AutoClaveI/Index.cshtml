@@ -6,9 +6,9 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>
-    NA0672EGI
-</h1>
+<h2>
+    Ciclos Esterilización Producto NA0672EGI
+</h2>
 
 <p>
     @*<a asp-action="Create">Create New</a>*@
@@ -24,11 +24,9 @@
     </div>
 
 }
-@using (Html.BeginForm())
-{
-    <p>
-
-
+<div class="mt-4">
+    @using (Html.BeginForm())
+    {
 
         <form>
             Buscar por Nº Ciclo: @Html.TextBox("nCiclo")
@@ -39,67 +37,68 @@
 
             <input type="submit" value="Buscar" />
         </form>
-    </p>
+        <a class="btn btn-blue float-right" asp-area="" asp-controller="AutoClaveI" asp-action="CycleList">Listado</a>
 
+    }
+    </div>
 
-}
-<div class="mt-4" style="height: 600px; overflow: auto;">
-    <table class="table table-responsive-sm">
-        <thead class="thead-dark">
-            <tr>
-
-                <th>
-                    @Html.DisplayNameFor(model => model.NumeroCiclo)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Programa)
-                </th>
-
-                <th>
-                    @Html.DisplayNameFor(model => model.HoraInicio)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.HoraFin)
-                </th>
-                <th>
-                    Acciones
-                </th>
-
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
+    <div class="mt-4" style="height: 600px; overflow: auto;">
+        <table class="table table-responsive-sm">
+            <thead class="thead-dark">
                 <tr>
 
-                    <td>
-                        @Html.DisplayFor(modelItem => item.NumeroCiclo)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Programa)
-                    </td>
+                    <th>
+                        @Html.DisplayNameFor(model => model.NumeroCiclo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Programa)
+                    </th>
 
-                    <td>
-                        @Html.DisplayFor(modelItem => item.HoraInicio)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.HoraFin)
-                    </td>
+                    <th>
+                        @Html.DisplayNameFor(model => model.HoraInicio)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.HoraFin)
+                    </th>
+                    <th>
+                        Acciones
+                    </th>
 
-                    <td>
-
-                        <a type="button" class="btn btn-info " asp-action="Preview" asp-route-id="@item.Id">Ver</a>
-                        <a type="button" class="btn btn-success " asp-action="Login" asp-route-id="@item.Id">Imprimir</a>
-
-                    </td>
+                    <th></th>
                 </tr>
-            }
-        </tbody>
-    </table>
-</div>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
 
- Página @(Model.PageCount < Model.PageIndex ? 0 : Model.PageIndex) de @Model.PageCount  Total Registros: @Model.TotalRecordCount
-<nav aria-label="Suppliers navigation example">
-    <vc:pager paging-list="@Model" />
-</nav>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NumeroCiclo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Programa)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.HoraInicio)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.HoraFin)
+                        </td>
+
+                        <td>
+
+                            <a type="button" class="btn btn-info " asp-action="Preview" asp-route-id="@item.Id">Ver</a>
+                            <a type="button" class="btn btn-success " asp-action="Login" asp-route-id="@item.Id">Imprimir</a>
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    Página @(Model.PageCount < Model.PageIndex ? 0 : Model.PageIndex) de @Model.PageCount  Total Registros: @Model.TotalRecordCount
+    <nav aria-label="Suppliers navigation example">
+        <vc:pager paging-list="@Model" />
+    </nav>

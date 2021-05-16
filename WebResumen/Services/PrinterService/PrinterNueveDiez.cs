@@ -184,7 +184,7 @@ namespace WebResumen.Services.PrinterService
 
                 graph.DrawString("FASE 12: FIN DE CICLO         TIEMPO TP  TE2 TE3 TE4 TE9 TE10", _font, _solid, new RectangleF(20, 670, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
 
-                graph.DrawString(q.Tif12.Substring(0, 6), _font, _solid, new RectangleF(20, 690, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
+                graph.DrawString(q.Tif12.Substring(0, 6) + " " + "<--[  ]", _negrita, _solid, new RectangleF(20, 690, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
                 graph.DrawString(q.Tif12.Substring(6), _font, _solid, new RectangleF(200, 690, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
                 graph.DrawString(q.TisubF12.Substring(0, 2), _font, _solid, new RectangleF(600, 690, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
                 graph.DrawString(q.TisubF12.Substring(2) + " " + "<--[  ]", _negrita, _solid, new RectangleF(605, 690, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);

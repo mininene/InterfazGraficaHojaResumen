@@ -17,6 +17,8 @@ using WebResumen.Models.ViewModels;
 using WebResumen.Services.printerServiceAS;
 using Microsoft.Extensions.Configuration;
 using ReflectionIT.Mvc.Paging;
+using System.IO;
+using System.Net;
 
 namespace WebResumen.Controllers
 {
@@ -31,9 +33,10 @@ namespace WebResumen.Controllers
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IPrinterNueveDiezAS _printerNueveDiezAS;
         private readonly IConfiguration _config;
+        private readonly IAuthorizationService _authorizationService;
 
         public AutoClaveJController(AppDbContext context, IPrinterNueveDiez printerNueveDiez, ILogRecord log, IHttpContextAccessor httpContextAccessor,
-            IPrinterNueveDiezAS printerNueveDiezAS, IConfiguration config)
+            IPrinterNueveDiezAS printerNueveDiezAS, IConfiguration config, IAuthorizationService authorizationService)
         {
             _context = context;
             _printerNueveDiez = printerNueveDiez;
@@ -41,7 +44,8 @@ namespace WebResumen.Controllers
             _httpContextAccessor = httpContextAccessor;
             _printerNueveDiezAS = printerNueveDiezAS;
             _config = config;
-        }
+            _authorizationService=authorizationService;
+    }
 
         // GET: AutoClaveJJ
         public async Task<IActionResult> Index(string nCiclo, string nPrograma, string fecha, int? page)
@@ -218,6 +222,67 @@ namespace WebResumen.Controllers
             byte[] fileBytes = System.IO.File.ReadAllBytes(path);
             return File(fileBytes, "text/html", ciclo);
            // return View(ciclosAutoclaves);
+
+        }
+
+        public async Task<IActionResult> CycleList(string ciclo, int? page)
+        {
+            var query = _context.MaestroAutoclave.Where(t => t.Matricula == "0827J").FirstOrDefault();
+            var path = query.RutaSalida.ToString();
+
+            DirectoryInfo dir = new DirectoryInfo(path);
+            List<DownloadViewModel> Cyclelist = new List<DownloadViewModel>();
+            foreach (FileInfo file in dir.GetFiles())
+            {
+                Cyclelist.Add(new DownloadViewModel { Dir = file.FullName, Ciclo = file.FullName.Split('\\')[5], Numero = Convert.ToInt32(file.FullName.Split('\\')[5].Split('J')[1].Split('.')[0]) });
+            }
+
+
+            if (!String.IsNullOrEmpty(ciclo))
+            {
+                page = 1;
+                Cyclelist = Cyclelist.Where(x => x.Ciclo.Contains(ciclo)).ToList();
+
+            }
+            var testq = Cyclelist.AsQueryable();
+            int pageSize = 50;
+            int pageNumber = (page ?? 1);
+            var model = PagingList.Create(testq.OrderByDescending(t => t.Dir), pageSize, pageNumber);
+            model.Action = "CycleList";
+
+
+            return View(model);
+
+        }
+
+        public async Task<IActionResult> Download(string dir, string ciclo)
+        {
+            var authorizationResult = await _authorizationService.AuthorizeAsync(User, "AdminSupervisor");
+            var authorizationResult2 = await _authorizationService.AuthorizeAsync(User, "Users");
+            if (authorizationResult.Succeeded || authorizationResult2.Succeeded)
+            {
+                var path = $"https://essahojaresumen.global.baxter.com/LOGFiles/AutoClaveJ/{ciclo}";
+                using (WebClient wc = new WebClient())
+                {
+                    var byteArr = wc.DownloadData(path);
+                    return File(byteArr, "text/html", ciclo);
+                }
+            } //else
+            {
+                return Redirect("/Inicio");
+            }
+
+            //var authorizationResult =  await _authorizationService.AuthorizeAsync(User, "AdminSupervisor");
+            //var authorizationResult2 = await _authorizationService.AuthorizeAsync(User, "Users");
+            //if (authorizationResult.Succeeded || authorizationResult2.Succeeded)
+            //{ 
+            //    byte[] fileBytes = System.IO.File.ReadAllBytes(dir);
+            //    return File(fileBytes, "text/html", ciclo);
+            //}
+            //else
+            //{
+            //    return Redirect("/Inicio");
+            //}
 
         }
 

@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -31,10 +33,11 @@ namespace WebResumen.Controllers
         private readonly IPrinterOchoVeinteAS _printerOchoVeinteAS;
         private readonly IPrinterDosTresCuatroAS _printerDosTresCuatroAS;
         private readonly IConfiguration _config;
+        private readonly IAuthorizationService _authorizationService;
 
 
         public AutoClaveCController(AppDbContext context, IPrinterOchoVeinte printerOchoVeinte, IPrinterDosTresCuatro printerDosTresCuatro, ILogRecord log, 
-            IHttpContextAccessor httpContextAccessor, IPrinterOchoVeinteAS printerOchoVeinteAS, IPrinterDosTresCuatroAS printerDosTresCuatroAS, IConfiguration config)
+            IHttpContextAccessor httpContextAccessor, IPrinterOchoVeinteAS printerOchoVeinteAS, IPrinterDosTresCuatroAS printerDosTresCuatroAS, IConfiguration config, IAuthorizationService authorizationService)
         {
             _context = context;
             _printerOchoVeinte = printerOchoVeinte;
@@ -44,7 +47,8 @@ namespace WebResumen.Controllers
             _printerOchoVeinteAS = printerOchoVeinteAS;
             _printerDosTresCuatroAS = printerDosTresCuatroAS;
             _config = config;
-        }
+            _authorizationService= authorizationService;
+    }
 
         // GET: AutoClaveC
         public async Task<IActionResult> Index(string nCiclo, string nPrograma, string fecha, int? page)
@@ -241,6 +245,67 @@ namespace WebResumen.Controllers
 
 
            // return View(ciclosAutoclaves);
+
+        }
+
+        public async Task<IActionResult> CycleList(string ciclo, int? page)
+        {
+            var query = _context.MaestroAutoclave.Where(t => t.Matricula == "8389C").FirstOrDefault();
+            var path = query.RutaSalida.ToString();
+
+            DirectoryInfo dir = new DirectoryInfo(path);
+            List<DownloadViewModel> Cyclelist = new List<DownloadViewModel>();
+            foreach (FileInfo file in dir.GetFiles())
+            {
+                Cyclelist.Add(new DownloadViewModel { Dir = file.FullName, Ciclo = file.FullName.Split('\\')[5], Numero = Convert.ToInt32(file.FullName.Split('\\')[5].Split('C')[1].Split('.')[0]) });
+            }
+
+
+            if (!String.IsNullOrEmpty(ciclo))
+            {
+                page = 1;
+                Cyclelist = Cyclelist.Where(x => x.Ciclo.Contains(ciclo)).ToList();
+
+            }
+            var testq = Cyclelist.AsQueryable();
+            int pageSize = 50;
+            int pageNumber = (page ?? 1);
+            var model = PagingList.Create(testq.OrderByDescending(t => t.Dir), pageSize, pageNumber);
+            model.Action = "CycleList";
+
+
+            return View(model);
+
+        }
+
+        public async Task<IActionResult> Download(string dir, string ciclo)
+        {
+            var authorizationResult = await _authorizationService.AuthorizeAsync(User, "AdminSupervisor");
+            var authorizationResult2 = await _authorizationService.AuthorizeAsync(User, "Users");
+            if (authorizationResult.Succeeded || authorizationResult2.Succeeded)
+            {
+                var path = $"https://essahojaresumen.global.baxter.com/LOGFiles/AutoClaveC/{ciclo}";
+                using (WebClient wc = new WebClient())
+                {
+                    var byteArr = wc.DownloadData(path);
+                    return File(byteArr, "text/html", ciclo);
+                }
+            } //else
+            {
+                return Redirect("/Inicio");
+            }
+
+            //var authorizationResult =  await _authorizationService.AuthorizeAsync(User, "AdminSupervisor");
+            //var authorizationResult2 = await _authorizationService.AuthorizeAsync(User, "Users");
+            //if (authorizationResult.Succeeded || authorizationResult2.Succeeded)
+            //{ 
+            //    byte[] fileBytes = System.IO.File.ReadAllBytes(dir);
+            //    return File(fileBytes, "text/html", ciclo);
+            //}
+            //else
+            //{
+            //    return Redirect("/Inicio");
+            //}
 
         }
 

@@ -6,9 +6,9 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>
-    NF1029E
-</h1>
+<h2>
+    Ciclos Esterilización Producto NF1029E
+</h2>
 
 <p>
     @*<a asp-action="Create">Create New</a>*@
@@ -24,11 +24,10 @@
     </div>
 
 }
-@using (Html.BeginForm())
-{
-    <p>
 
-
+<div class="mt-4">
+    @using (Html.BeginForm())
+    {
 
         <form>
             Buscar por Nº Ciclo: @Html.TextBox("nCiclo")
@@ -39,10 +38,11 @@
 
             <input type="submit" value="Buscar" />
         </form>
-    </p>
 
+        <a class="btn btn-blue float-right" asp-area="" asp-controller="AutoClaveE" asp-action="CycleList">Listado</a>
 
-}
+    }
+</div>
 <div class="mt-4" style="height: 600px; overflow: auto;">
     <table class="table table-responsive-sm">
         <thead class="thead-dark">

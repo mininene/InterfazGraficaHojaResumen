@@ -8,9 +8,9 @@
 }
 
 
-<h1>
-    8388B
-</h1>
+<h2>
+    Ciclos Esterilización Producto 8388B
+</h2>
 
 @if (TempData["Print"] != null)
 {
@@ -25,13 +25,9 @@
 }
 
 
-
-@using (Html.BeginForm())
-{
-    <p>
-
-
-
+<div class="mt-4">
+    @using (Html.BeginForm())
+    {
         <form>
             Buscar por Nº Ciclo: @Html.TextBox("nCiclo")
             Buscar por Nº Programa: @Html.TextBox("nPrograma")
@@ -40,11 +36,12 @@
             <input type="submit" value="Buscar" />
         </form>
 
-    </p>
+    }
+    <a class="btn btn-blue float-right" asp-area="" asp-controller="AutoClaveB" asp-action="CycleList">Listado</a>
 
+</div>
 
-}
-
+   
 <div class="mt-4" style="height: 600px; overflow: auto;">
     <table class="table table-responsive-sm">
         <thead class="thead-dark">

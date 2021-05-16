@@ -4,6 +4,7 @@ using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using iTextSharp.text;
@@ -34,9 +35,10 @@ namespace WebResumen.Controllers
         private readonly ILogRecord _log;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IConfiguration _config;
+        private readonly IAuthorizationService _authorizationService;
 
         public AutoClaveAController(AppDbContext context, IPrinterOchoVeinte printerOchoVeinte, IPrinterDosTresCuatro printerDosTresCuatro, ILogRecord log, 
-            IHttpContextAccessor httpContextAccessor, IPrinterOchoVeinteAS printerOchoVeinteAS, IPrinterDosTresCuatroAS printerDosTresCuatroAS,IConfiguration config)
+            IHttpContextAccessor httpContextAccessor, IPrinterOchoVeinteAS printerOchoVeinteAS, IPrinterDosTresCuatroAS printerDosTresCuatroAS,IConfiguration config,  IAuthorizationService authorizationService)
         {
             _context = context;
             _printerOchoVeinte = printerOchoVeinte;
@@ -46,7 +48,8 @@ namespace WebResumen.Controllers
             _printerOchoVeinteAS = printerOchoVeinteAS;
             _printerDosTresCuatroAS = printerDosTresCuatroAS;
             _config = config;
-        }
+             _authorizationService=authorizationService;
+    }
 
         // GET: AutoClaveA
         public async Task<IActionResult> Index(string nCiclo, string nPrograma, string fecha, int? page)
@@ -212,19 +215,76 @@ namespace WebResumen.Controllers
             // string path = @"\\essaappserver01\HojaResumen\API\AutoClaveA\" + ciclo;
           
             var query = _context.MaestroAutoclave.Where(t => t.Matricula == "NF8387A").FirstOrDefault();
-            var path = query.RutaSalida.ToString()+ciclo;
-
-
-            string[] texts = System.IO.File.ReadAllLines(path, new UnicodeEncoding());
-            ViewBag.Data = texts;
-        
+            var path =  query.RutaSalida.ToString()+ciclo;                  
 
             byte[] fileBytes = System.IO.File.ReadAllBytes(path);
             return File(fileBytes, "text/html", ciclo);
 
-           // return View(ciclosAutoclaves);
+            
 
         }
+
+        public async Task<IActionResult> CycleList(string ciclo, int? page)
+        {
+            var query = _context.MaestroAutoclave.Where(t => t.Matricula == "NF8387A").FirstOrDefault();
+            var path = query.RutaSalida.ToString();
+                 
+            DirectoryInfo dir = new DirectoryInfo(path);      
+            List<DownloadViewModel> Cyclelist = new List<DownloadViewModel>();
+            foreach (FileInfo file in dir.GetFiles())
+            {
+                Cyclelist.Add(new DownloadViewModel { Dir = file.FullName, Ciclo = file.FullName.Split('\\')[5], Numero= Convert.ToInt32(file.FullName.Split('\\')[5].Split('A')[1].Split('.')[0]) });
+            }
+          
+
+            if (!String.IsNullOrEmpty(ciclo))
+            {
+                page = 1;
+                Cyclelist = Cyclelist.Where(x => x.Ciclo.Contains(ciclo)).ToList();
+               
+            }
+            var testq = Cyclelist.AsQueryable();
+            int pageSize = 50;
+            int pageNumber = (page ?? 1);
+            var model = PagingList.Create(testq.OrderByDescending(t => t.Dir), pageSize, pageNumber);
+            model.Action = "CycleList";
+
+
+            return View( model);
+
+        }
+
+        public async Task<IActionResult> Download(string dir, string ciclo)
+        {
+            var authorizationResult = await _authorizationService.AuthorizeAsync(User, "AdminSupervisor");
+            var authorizationResult2 = await _authorizationService.AuthorizeAsync(User, "Users");
+            if (authorizationResult.Succeeded || authorizationResult2.Succeeded)
+            {
+                var path = $"https://essahojaresumen.global.baxter.com/LOGFiles/AutoClaveA/{ciclo}";
+                using (WebClient wc = new WebClient())
+                {
+                    var byteArr = wc.DownloadData(path);
+                    return File(byteArr, "text/html", ciclo);
+                }
+            } //else
+            {
+                return Redirect("/Inicio");
+            }
+           
+            //var authorizationResult =  await _authorizationService.AuthorizeAsync(User, "AdminSupervisor");
+            //var authorizationResult2 = await _authorizationService.AuthorizeAsync(User, "Users");
+            //if (authorizationResult.Succeeded || authorizationResult2.Succeeded)
+            //{ 
+            //    byte[] fileBytes = System.IO.File.ReadAllBytes(dir);
+            //    return File(fileBytes, "text/html", ciclo);
+            //}
+            //else
+            //{
+            //    return Redirect("/Inicio");
+            //}
+
+        }
+
 
         public async Task<IActionResult> Print(int? id)
         {
@@ -412,13 +472,17 @@ namespace WebResumen.Controllers
                 return NotFound();
             }
 
+
             var ciclosAutoclaves = await _context.CiclosAutoclaves
                 .FirstOrDefaultAsync(m => m.Id == id);
-
+            //var ciclosAutoclaves = await _context.CiclosAutoclaves
+            //    .FirstOrDefaultAsync(m => Convert.ToInt32(m.NumeroCiclo) == id && m.IdAutoclave== "NF8387A");
 
             if (ciclosAutoclaves == null)
             {
-                return NotFound();
+                 return NotFound();
+                //TempData["Print"] = $"El ciclo {id} no puede ser impreso!";
+                //return RedirectToAction("CycleList", "AutoClaveA");
             }
 
             //ViewBag.datos = ciclosAutoclaves.Id;

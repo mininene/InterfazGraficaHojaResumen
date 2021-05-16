@@ -1,0 +1,110 @@
+﻿@model ReflectionIT.Mvc.Paging.PagingList<WebResumen.Models.ViewModels.DownloadViewModel>
+@using ReflectionIT.Mvc.Paging
+@addTagHelper *, ReflectionIT.Mvc.Paging
+
+@{
+    ViewData["Title"] = "Details";
+}
+@{
+    Layout = "~/Views/Shared/_LayoutInicio.cshtml";
+}
+
+<h2> Listado Ciclos Completos 8388B</h2>
+
+
+@if (TempData["Print"] != null)
+{
+
+
+
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>@TempData["Print"].ToString()!</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+
+
+}
+
+<div class="mt-4">
+    @using (Html.BeginForm())
+    {
+
+
+        <form>
+            Buscar por Nº Ciclo: @Html.TextBox("ciclo")
+
+
+            <input type="submit" value="Buscar" />
+        </form>
+
+
+
+    }
+    <a class="float-right" asp-area="" asp-controller="AutoClaveB" asp-action="Index"><i class="fa fa-chevron-circle-left" style="font-size:48px;color:darkblue"></i></a>
+
+</div>
+
+
+<div class="mt-4" style="height: 600px; overflow: auto;">
+    <table class="table table-sm">
+        <thead class="thead-dark">
+            <tr>
+
+                <th>
+                    Archivo
+                </th>
+                <th>
+                    NumeroCiclo
+                </th>
+
+                <th>
+                    Descargar
+                </th>
+                @*<th>
+                        Imprimir
+                    </th>*@
+
+
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Ciclo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Numero)
+                    </td>
+                    <td>
+                        @*<a onclick="test('@item.Dir.Replace(@"\\", @"\\\\").Replace(@"\", @"\\")','@item.Ciclo')"> <i  class="fa fa-download fa-2x" aria-hidden="true"></i>*@
+                        @*@Html.ActionLink(" ", "Download", new { dir = item.Dir, ciclo = item.Ciclo }, new { @class = "fa fa-download fa-2x" })*@
+                        @Html.ActionLink(" ", "Download", new { ciclo = item.Ciclo }, new { @class = "fa fa-download fa-2x" })
+                        @*<a href="https://essahojaresumen.global.baxter.com/LOGFiles/AutoClaveA/@item.Ciclo"> <i class="fa fa-download fa-2x" aria-hidden="true"></i>*@
+
+                    </td>
+                    @*<td>
+
+
+                            <a asp-action="Login" asp-route-id="@item.Numero"><i class="fa fa-print fa-2x" aria-hidden="true"></i></a>
+
+                        </td>*@
+
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+    Página @(Model.PageCount < Model.PageIndex ? 0 : Model.PageIndex) de @Model.PageCount  Total Registros: @Model.TotalRecordCount
+    <nav aria-label="Suppliers navigation example">
+        <vc:pager paging-list="@Model" />
+    </nav>

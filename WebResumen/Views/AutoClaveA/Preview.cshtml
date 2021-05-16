@@ -1,9 +1,111 @@
-﻿@model WebResumen.Models.CiclosAutoclaves
+﻿@*@model WebResumen.Models.CiclosAutoclaves*@
+@model List<WebResumen.Models.ViewModels.DownloadViewModel>
 
 @{
     ViewData["Title"] = "Details";
 }
-<style>
+
+
+@*<h5>@ViewBag.Data</h5>*@
+
+<div class="mt-4" style="height: 600px; overflow: auto;">
+    <table class="table table-responsive-sm">
+        <thead class="thead-dark">
+            <tr>
+
+                <th>
+                   Numero
+                </th>
+               
+                <th>
+                    Acciones
+                </th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ciclo)
+                </td>
+                <td>
+                    @*<button class="btn btn-blue" onclick="test('@item.dir.Replace(@"\\", @"\\\\").Replace(@"\", @"\\")','@item.ciclo')"><i class="fa fa-book" aria-hidden="true"></i></button><br />*@
+                @Html.ActionLink("Descargar", "Download", new { dir = item.Dir,ciclo=item.Ciclo })<i class="fa fa-book" aria-hidden="true"></i>
+               
+                </td>
+
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+
+
+
+
+@*<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Archivo</th>
+            <th scope="col">Handle</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">
+
+                @foreach (string text in ViewBag.Data)
+                {
+
+
+
+
+                }
+            </th>
+            <td>
+                @foreach (string text in ViewBag.Data)
+                {
+                    @text.Split('\\')[5]<br />
+
+                }
+            </td>
+
+            <td>
+                @foreach (string text in ViewBag.Data)
+                {
+                    <button class="btn btn-blue" onclick="test('@text.Replace(@"\\", @"\\\\").Replace(@"\", @"\\")')"><i class="fa fa-book" aria-hidden="true"></i></button><br />
+
+                }
+            </td>
+
+
+
+        </tr>
+        <tr>
+            <th scope="row">2</th>
+
+
+        </tr>
+        <tr>
+            <th scope="row">3</th>
+            <td>
+            </td>
+
+        </tr>
+    </tbody>
+</table>*@
+
+<!--<style>
     @@media print {
         .modal {
             position: absolute;
@@ -15,17 +117,16 @@
         }
     }
 </style>
-<h1>Detalles</h1>
-
+<h1>Detalles</h1>-->
 @*<div>
         <h4>Archivo de Origen </h4>
     </div>*@
-<div>
+<!--<div>
 
-    <h4>
-        @Html.DisplayFor(model => model.IdAutoclave) @Html.DisplayFor(model => model.NumeroCiclo)
+    <h4>-->
+@*@Html.DisplayFor(model => model.IdAutoclave) @Html.DisplayFor(model => model.NumeroCiclo)*@
 
-    </h4>
+<!--</h4>
 
 
 
@@ -37,34 +138,51 @@
 </button>
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!--<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">@Html.DisplayFor(model => model.IdAutoclave)@Html.DisplayFor(model => model.NumeroCiclo)</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-               
-                @foreach (string text in ViewBag.Data)
-                {
-                    @text<br>
-                }
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                @*<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="printOriginalA();">Imprimir</button>*@
+                <h5 class="modal-title" id="exampleModalLabel">-->
+@*@Html.DisplayFor(model => model.IdAutoclave)@Html.DisplayFor(model => model.NumeroCiclo)*@
+<!--</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
 
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>-->
+@*<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="printOriginalA();">Imprimir</button>*@
+
+@*</div>
             </div>
         </div>
-    </div>
-</div>
+    </div>-->*@
 
 
 
+<script>
+    console.log("Hola");
+    function test(parameter,parameter2) {
+        console.log("dentro");
+        console.log(parameter);
 
+        $.ajax({
+    url: '@Url.Action("Preview2", "AutoClaveA")',
+    type: "POST",
+    contentType: "application/json",
+            data: JSON.stringify({ dir: parameter, ciclo:parameter2 })
+        }).done(function (result) {
+            location.href = '@Url.Action("Preview2", "AutoClaveA")';
+
+
+});
+
+    }
+</script>
 
 
 
