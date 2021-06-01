@@ -39,6 +39,7 @@ $.getJSON(baseUrl+'/Home/Tiempo', function (result) {
     function CheckIdleTime() {
         _idleSecondsCounter++;
         var oPanel = document.getElementById("SecondsUntilExpire");
+        
         if (oPanel)
             // oPanel.innerHTML = (IDLE_TIMEOUT - _idleSecondsCounter) + "";
             var seconds = IDLE_TIMEOUT - _idleSecondsCounter;

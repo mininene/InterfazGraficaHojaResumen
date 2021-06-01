@@ -65,8 +65,8 @@
 
 
                             @*<li class="nav-item">
-                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                                </li>*@
+                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>*@
                             else
                             {
 
@@ -110,26 +110,42 @@
                 </div>
             </div>
 
-            <div class="panel panel-default">
-                <div style="color:white" class="panel-heading">ghfdhgfdgh</div>
-                <div class="panel-body">
-                    <span style="color:black;background:yellow;font-weight:bold" id="SecondsUntilExpire"></span>
+            <div class="btn-group">
+
+                <span class=" text-danger text-lg-right font-weight-bold mr-lg-5 mr-md-5 mr-sm-5" id="SecondsUntilExpire">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+
+            </div>
+
+            <div class="btn-group">
+
+
+                <button type="button" class="btn btn-primary btn-sm"><i class="fa fa-user fa-fw"></i>@httpContextAccessor.HttpContext.Session.GetString("SessionUser")</button>
+                <button type="button" class="btn btn-primary btn-sm dropdown-toggle dropdown-toggle-split" id="dropdownMenuReference" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-reference="parent">
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuReference">
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Logout"><i class="fas fa-sign-out-alt"></i>Cerrar Sesión</a>
                 </div>
             </div>
-            <ul class="nav nav-pills">
 
-                <li class="nav-item">
-                    <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Logout"><i class="fas fa-sign-out-alt"></i>Cerrar sesión</a>
-                </li>
-                <li class="nav-item">
-                    @*<p class="float-right navbar-text navbar-right text-danger">Hola, <strong>@User.Identity.Name.Replace("GLOBAL\\", "")!</strong> </p>*@
+            @*<div class="panel panel-default">
+            <div style="color:white" class="panel-heading">ghfdhgfdgh</div>
+            <div class="panel-body">
+                <span style="color:black;background:yellow;font-weight:bold" id="SecondsUntilExpire"></span>
+            </div>
+        </div>
+        <ul class="nav nav-pills">
 
+            <li class="nav-item">
+                <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Logout"><i class="fas fa-sign-out-alt"></i>Cerrar sesión</a>
+            </li>
+            <li class="nav-item">
 
-                    @inject IHttpContextAccessor httpContextAccessor
-                    <p class=" navbar-text text-danger">Hola, <strong> @httpContextAccessor.HttpContext.Session.GetString("SessionUser")!</strong> </p>
-                </li>
+                <p class=" navbar-text text-danger">Hola, <strong> @httpContextAccessor.HttpContext.Session.GetString("SessionUser")!</strong> </p>
+            </li>
 
-            </ul>
+        </ul>*@
         </nav>
 
 
