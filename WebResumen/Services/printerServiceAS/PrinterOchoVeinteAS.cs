@@ -1,22 +1,11 @@
-﻿
-
-
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using PdfSharp.Drawing;
 using PdfSharp.Drawing.Layout;
 using PdfSharp.Pdf;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
-using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
 using WebResumen.Models;
 
 namespace WebResumen.Services.printerServiceAS
@@ -31,7 +20,7 @@ namespace WebResumen.Services.printerServiceAS
         {
             _context = context;
             _config = config;
-          
+
 
         }
         public void printOchoVeinteAS(int? id)
@@ -39,7 +28,7 @@ namespace WebResumen.Services.printerServiceAS
             var q = _context.CiclosAutoclaves.FirstOrDefault(m => m.Id == id);
             var impresora = _context.Parametros.Select(t => t.ImpresoraSabiUno).FirstOrDefault();
 
-          
+
             using (var pdf = new PdfDocument())
             {
                 pdf.Info.Title = "PDF";
@@ -115,7 +104,7 @@ namespace WebResumen.Services.printerServiceAS
                 graph.DrawString("min.s", font, XBrushes.Black, new XRect(350, 220, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
                 graph.DrawString("<--[  ]", negrita, XBrushes.Black, new XRect(375, 220, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
 
-                graph.DrawString("I "+" "+q.Tinicio, negrita, XBrushes.Black, new XRect(460, 220, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+                graph.DrawString("I " + " " + q.Tinicio, negrita, XBrushes.Black, new XRect(460, 220, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
                 graph.DrawString("TIEMPO TP  TE2  TE3  TE4  TE9 TE10", font, XBrushes.Black, new XRect(20, 235, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
                 graph.DrawString(q.Tif5, font, XBrushes.Black, new XRect(230, 235, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
                 graph.DrawString(q.TisubF5, font, XBrushes.Black, new XRect(460, 235, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
@@ -135,24 +124,25 @@ namespace WebResumen.Services.printerServiceAS
 
                 graph.DrawString("TIEMPO TP  TE2  TE3  TE4  TE9 TE10", font, XBrushes.Black, new XRect(20, 285, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
                 //graph.DrawString(q.TIF6, font, XBrushes.Black, new XRect(230, 285, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
-                 if (q.Tif6.Substring(0, 6).Trim().Length >= 6)
+                if (q.Tif6.Substring(0, 6).Trim().Length >= 6)
                 { //se añade
-                 graph.DrawString(q.Tif6.Substring(0, 6), font, XBrushes.Black, new XRect(230, 285, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
-                 graph.DrawString(q.Tif6.Substring(6, 8), negrita, XBrushes.Black, new XRect(266, 285, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
-                 graph.DrawString(q.Tif6.Substring(11), font, XBrushes.Black, new XRect(275, 285, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
-                 graph.DrawString(q.TisubF6, font, XBrushes.Black, new XRect(460, 285, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+                    graph.DrawString(q.Tif6.Substring(0, 6), font, XBrushes.Black, new XRect(230, 285, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+                    graph.DrawString(q.Tif6.Substring(6, 8), negrita, XBrushes.Black, new XRect(266, 285, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+                    graph.DrawString(q.Tif6.Substring(11), font, XBrushes.Black, new XRect(275, 285, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+                    graph.DrawString(q.TisubF6, font, XBrushes.Black, new XRect(460, 285, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
 
                 }
-                else {
+                else
+                {
 
-                graph.DrawString(q.Tif6.Substring(0, 6), font, XBrushes.Black, new XRect(230, 285, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
-                graph.DrawString(q.Tif6.Substring(6, 6), negrita, XBrushes.Black, new XRect(255, 285, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
-                graph.DrawString(q.Tif6.Substring(11), font, XBrushes.Black, new XRect(275, 285, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
-                graph.DrawString(q.TisubF6, font, XBrushes.Black, new XRect(460, 285, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
-                    }
+                    graph.DrawString(q.Tif6.Substring(0, 6), font, XBrushes.Black, new XRect(230, 285, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+                    graph.DrawString(q.Tif6.Substring(6, 6), negrita, XBrushes.Black, new XRect(255, 285, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+                    graph.DrawString(q.Tif6.Substring(11), font, XBrushes.Black, new XRect(275, 285, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+                    graph.DrawString(q.TisubF6, font, XBrushes.Black, new XRect(460, 285, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+                }
 
                 graph.DrawString("TIEMPO TP  TE2  TE3  TE4  TE9 TE10", font, XBrushes.Black, new XRect(20, 300, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
-                  if (q.Tff6.Substring(0, 6).Trim().Length >= 6) //se añade
+                if (q.Tff6.Substring(0, 6).Trim().Length >= 6) //se añade
                 {
 
                     //graph.DrawString(q.Tff6.Substring(6, 8).Trim(), negrita, XBrushes.Black, new XRect(270, 300, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
@@ -269,7 +259,7 @@ namespace WebResumen.Services.printerServiceAS
                 graph.DrawString(q.AperturaPuerta, font, XBrushes.Black, new XRect(20, 660, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
                 graph.DrawString("FIRMA OPERADOR        _______________________ ", font, XBrushes.Black, new XRect(20, 700, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
                 graph.DrawString("FIRMA GAR.DE CALID.   _______________________ ", font, XBrushes.Black, new XRect(20, 740, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
-               
+
                 if (q.ErrorCiclo == "")
                 {
                     graph.DrawString("Pág 1 de 1  ", font, XBrushes.Black, new XRect(480, 800, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
@@ -281,10 +271,10 @@ namespace WebResumen.Services.printerServiceAS
                 else
                 {
                     string[] error = q.ErrorCiclo.Split('\n');
-                    if (error.Count()>24)
+                    if (error.Count() > 24)
                     {
                         PdfPage pdfPage2 = pdf.AddPage();
-                        XGraphics graph2 = XGraphics.FromPdfPage(pdfPage2);                   
+                        XGraphics graph2 = XGraphics.FromPdfPage(pdfPage2);
 
                         graph2.DrawString("ID. MAQUINA:" + "  " + q.IdAutoclave, font, XBrushes.Black, new XRect(20, 5, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
                         graph2.DrawString("N.PROGRESIVO:" + "  " + q.NumeroCiclo, font, XBrushes.Black, new XRect(140, 5, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
@@ -292,10 +282,10 @@ namespace WebResumen.Services.printerServiceAS
                         graph2.DrawString("Impreso: " + DateTime.Now, font, XBrushes.Black, new XRect(440, 5, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
                         graph2.DrawString("Por: " + _httpContextAccessor.HttpContext.Session.GetString("SessionName"), font, XBrushes.Black, new XRect(440, 15, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
                         graph.DrawString("ALARMAS:", fontDos, XBrushes.Black, new XRect(340, 525, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
-                      
+
                         for (int i = 0; i < error.Length; i++)
                         {
-                            if (i >= 0 && i <=24)
+                            if (i >= 0 && i <= 24)
                             {
                                 graph.DrawString(error[i], fontDos, XBrushes.Black, new XRect(340, 535 + i * 10, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
                             }
@@ -304,7 +294,7 @@ namespace WebResumen.Services.printerServiceAS
                                 graph2.DrawString(error[i], fontDos, XBrushes.Black, new XRect(50, 30 + (i - 25) * 10, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
                             }
 
-                        }                                  
+                        }
 
                         graph.DrawString("Pág 1 de 2  ", font, XBrushes.Black, new XRect(480, 800, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
                         graph2.DrawString("Pág 2 de 2  ", font, XBrushes.Black, new XRect(480, 800, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
@@ -320,19 +310,19 @@ namespace WebResumen.Services.printerServiceAS
 
                 }
 
-                
+
                 string rut = _config["OptionalSettings:Pdf"] + "\\PDF";
                 Directory.CreateDirectory(rut);
                 string ruta = rut + "\\archivo1.pdf";
                 pdf.Save(ruta);
 
 
-                
+
 
             }
 
 
         }
     }
- }
+}
 

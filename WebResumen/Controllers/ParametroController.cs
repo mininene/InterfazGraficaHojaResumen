@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using System;
 using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Routing;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using WebResumen.Models;
 using WebResumen.Models.ViewModels;
 using WebResumen.Services.LogRecord;
@@ -19,7 +16,7 @@ namespace WebResumen.Controllers
 {
 
     //[Authorize(Policy = "ADMIN")]
-  
+
     public class ParametroController : Controller
     {
         private readonly AppDbContext _context;
@@ -45,7 +42,8 @@ namespace WebResumen.Controllers
             {
                 return View(await _context.Parametros.ToListAsync());
             }
-            else {
+            else
+            {
 
                 return Redirect("/Inicio");
             }
@@ -128,7 +126,7 @@ namespace WebResumen.Controllers
 
                     if (await TryUpdateModelAsync<Parametros>(parametrosToUpdate,
                         "",
-                        c => c.Id, c => c.ImpresoraSabiUno, c => c.ImpresoraSabiDos, c => c.RutaLog, c => c.Tiempo, c =>c.Tsesion, c => c.Reinicio))
+                        c => c.Id, c => c.ImpresoraSabiUno, c => c.ImpresoraSabiDos, c => c.RutaLog, c => c.Tiempo, c => c.Tsesion, c => c.Reinicio))
                     {
                         try
                         {
@@ -143,23 +141,23 @@ namespace WebResumen.Controllers
                         }
                     }
 
-                        //_context.Update(parametros);
-                        //await _context.SaveChangesAsync();
-                        // Attach the object to the graph
-                        //id = parametros.Id;
+                    //_context.Update(parametros);
+                    //await _context.SaveChangesAsync();
+                    // Attach the object to the graph
+                    //id = parametros.Id;
 
-                        //var entry = _context.Parametros.Attach(parametros);
-                        //// Backup updated values
-                        //var updated = entry.CurrentValues.Clone();
-                        //// Reload entity from database, to track the original values
-                        //entry.Reload();
-                        //// Set the current values updated
-                        //entry.CurrentValues.SetValues(updated);
-                        //// Mark the entity as modified
-                        //entry.State = EntityState.Modified;
+                    //var entry = _context.Parametros.Attach(parametros);
+                    //// Backup updated values
+                    //var updated = entry.CurrentValues.Clone();
+                    //// Reload entity from database, to track the original values
+                    //entry.Reload();
+                    //// Set the current values updated
+                    //entry.CurrentValues.SetValues(updated);
+                    //// Mark the entity as modified
+                    //entry.State = EntityState.Modified;
 
-                        //await _context.SaveChangesAsync();
-                    }
+                    //await _context.SaveChangesAsync();
+                }
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!ParametrosExists(parametros.Id))
@@ -222,7 +220,7 @@ namespace WebResumen.Controllers
         {
             //var parametros = _context.Parametros
             //   .FirstOrDefaultAsync(m => m.Id == id);
-            var parametros =  _context.Parametros.FindAsync(id);
+            var parametros = _context.Parametros.FindAsync(id);
 
             if (ModelState.IsValid)
             {

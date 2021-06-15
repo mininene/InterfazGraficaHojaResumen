@@ -1,26 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Diagnostics;
+﻿using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Diagnostics;
+using System.IO;
 using WebResumen.Models;
 using WebResumen.Services.LogError;
 
 namespace WebResumen.Controllers
 {
-   
+
     //[Authorize(Policy = "ADUsers")]
-   
-   // [Authorize(Policy = "ADSupervisors")]
+
+    // [Authorize(Policy = "ADSupervisors")]
     public class HomexxController : Controller
     {
         private readonly ILogger<HomexxController> _logger;
-        private readonly ILogErrors  _log;
+        private readonly ILogErrors _log;
 
         public HomexxController(ILogger<HomexxController> logger, ILogErrors log)
         {
@@ -41,7 +36,7 @@ namespace WebResumen.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error(int code)
         {
-            
+
             var ErrorStatusCode = code;
             // Retrieve error information in case of internal errors
             try
@@ -88,7 +83,7 @@ namespace WebResumen.Controllers
             }
 
 
-            
+
         }
     }
 }

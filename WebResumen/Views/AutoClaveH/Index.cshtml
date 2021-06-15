@@ -29,15 +29,13 @@
     @using (Html.BeginForm())
     {
 
-        <form>
-            Buscar por Nº Ciclo: @Html.TextBox("nCiclo")
-            Buscar por Nº Programa: @Html.TextBox("nPrograma")
-            @*Buscar por Fecha:@Html.TextBox("fecha")*@
-            @*Buscar por Fecha:  <input type="date" id="fecha" name="fecha" asp-format="{0:dd/MM/yy}" class="form-control">*@@*@Html.TextBox("fecha")*@
+    <form>
+        Buscar por Nº Ciclo: @Html.TextBox("nCiclo", @Model.RouteValue["nCiclo"])
+        Buscar por Nº Programa: @Html.TextBox("nPrograma", @Model.RouteValue["nPrograma"])
 
 
-            <input type="submit" value="Buscar" />
-        </form>
+        <input type="submit" value="Buscar" />
+    </form>
         <a class="btn btn-blue float-right" asp-area="" asp-controller="AutoClaveH" asp-action="CycleList">Listado</a>
 
     }

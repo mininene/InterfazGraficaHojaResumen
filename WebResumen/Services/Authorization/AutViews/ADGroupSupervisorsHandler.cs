@@ -4,7 +4,6 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.DirectoryServices.AccountManagement;
-using System.Linq;
 using System.Security.Principal;
 using System.Threading.Tasks;
 
@@ -23,7 +22,7 @@ namespace WebResumen.Services.Authorization
             IHttpContextAccessor _httpContextAccessor = new HttpContextAccessor();
             var group = new List<string>();//save all your groups' name
             var wi = (WindowsIdentity)context.User.Identity;
-            string dominio = _config["SecuritySettings:Dominio"]; 
+            string dominio = _config["SecuritySettings:Dominio"];
             UserPrincipal user = null;
             string userName = _httpContextAccessor.HttpContext.Session.GetString("SessionUser");
             PrincipalContext ctx = new PrincipalContext(ContextType.Domain, dominio);
@@ -56,7 +55,7 @@ namespace WebResumen.Services.Authorization
                 //    context.Succeed(requirement);
                 //}
             }
-           
+
 
             return Task.CompletedTask;
         }

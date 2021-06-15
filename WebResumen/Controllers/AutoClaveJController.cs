@@ -1,30 +1,30 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using ReflectionIT.Mvc.Paging;
+using System;
 using System.Collections.Generic;
 using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using WebResumen.Models;
+using WebResumen.Models.ViewModels;
 using WebResumen.Services.LogRecord;
 using WebResumen.Services.PrinterService;
-using WebResumen.Models.ViewModels;
 using WebResumen.Services.printerServiceAS;
-using Microsoft.Extensions.Configuration;
-using ReflectionIT.Mvc.Paging;
-using System.IO;
-using System.Net;
 
 namespace WebResumen.Controllers
 {
-   // [Authorize(Policy = "ADTodos")]
+    // [Authorize(Policy = "ADTodos")]
 
-   
+
     public class AutoClaveJController : Controller
     {
         private readonly AppDbContext _context;
@@ -44,79 +44,74 @@ namespace WebResumen.Controllers
             _httpContextAccessor = httpContextAccessor;
             _printerNueveDiezAS = printerNueveDiezAS;
             _config = config;
-            _authorizationService=authorizationService;
-    }
+            _authorizationService = authorizationService;
+        }
 
         // GET: AutoClaveJJ
         public async Task<IActionResult> Index(string nCiclo, string nPrograma, string fecha, int? page)
         {
-                     
+
             var query = _context.CiclosSabiDos.Where(x => x.IdAutoclave == "0827J").AsNoTracking().AsQueryable();
 
 
             if (!String.IsNullOrEmpty(nCiclo))
             {
-                page = 1;
+               
                 query = query.Where(x => x.NumeroCiclo.Contains(nCiclo));
 
             }
 
             if (!String.IsNullOrEmpty(nPrograma))
             {
-                page = 1;
-                query = query.Where(x => x.Programa.Contains(nPrograma));
+                
+                query = query.Where(x => x.Programa.Equals(nPrograma));
             }
 
 
 
             if (!String.IsNullOrEmpty(fecha))
             {
-                page = 1;
+                
                 query = query.Where(x => x.HoraFin.Contains(fecha));
 
             }
 
             if (!String.IsNullOrEmpty(nCiclo) && !String.IsNullOrEmpty(nPrograma) && !String.IsNullOrEmpty(fecha))
             {
-                page = 1;
+               
                 query = query.Where(x => x.NumeroCiclo.Contains(nCiclo)
                                        || x.Programa.Contains(nPrograma)
                                          || x.HoraFin.Contains(fecha));  // si pongo la fecha como string si que lo coge
             }
 
-            int pageSize = 50;
             int pageNumber = (page ?? 1);
+            int pageSize = 50;
+            int count = query.ToList().Count;
+            if (pageNumber - 1 > count / pageSize)
+            {
+                pageNumber = 1;
+            }
             var model = await PagingList.CreateAsync(query.OrderByDescending(X => X.Id), pageSize, pageNumber);
+            model.RouteValue = new RouteValueDictionary {
+             { "nPrograma", nPrograma}, { "nCiclo", nCiclo}   };
 
             return View(model);
         }
 
 
-        public async Task<JsonResult> ListAutoclaveJ()
-        {
-            //var result=  await _context.CiclosAutoclaves.OrderByDescending(x => x.Id).ToListAsync();
-            //return View(await _context.CiclosAutoclaves.OrderByDescending(x=>x.Id).ToListAsync());
-            List<CiclosSabiDos> _sabiDos = await _context.CiclosSabiDos.ToListAsync();
-            var query = from x in _sabiDos.Where(x => x.IdAutoclave == "0827J").OrderByDescending(X => X.Id).Take(50) select x;
-
-
-            return Json(query.ToList());
-
-
-        }
+   
 
         public async Task<JsonResult> ListaAutoclaveJ()
         {
-            //var result=  await _context.CiclosAutoclaves.OrderByDescending(x => x.Id).ToListAsync();
-            //return View(await _context.CiclosAutoclaves.OrderByDescending(x=>x.Id).ToListAsync());
+            
             List<CiclosSabiDos> _sabiDos = await _context.CiclosSabiDos.ToListAsync();
-            //var query = from x in _sabiDos.Where(x => x.IdAutoclave == "0827J").OrderByDescending(X => X.Id).Take(1) select x;
+          
             var queryj = from x in _sabiDos.Where(x => x.IdAutoclave == "0827J").OrderByDescending(x => x.Id).Take(1) select x;
             var queryk = from x in _sabiDos.Where(x => x.IdAutoclave == "0828K").OrderByDescending(x => x.Id).Take(1) select x;
             var queryl = from x in _sabiDos.Where(x => x.IdAutoclave == "1167L").OrderByDescending(x => x.Id).Take(1) select x;
             var pc = queryj.Union(queryk).Union(queryl);
 
-            //return Json(query.ToList());
+           
             return Json(pc);
 
 
@@ -130,15 +125,15 @@ namespace WebResumen.Controllers
             }
             var ciclosAutoclaves = await _context.CiclosSabiDos
                .FirstOrDefaultAsync(m => m.Id == id);
-            int ciclosInt= Convert.ToInt32(ciclosAutoclaves.Programa.Trim());
-           // if (ciclosAutoclaves.Programa.Trim().Equals("9") || ciclosAutoclaves.Programa.Trim().Equals("10"))
-           if(ciclosInt>0)
+            int ciclosInt = Convert.ToInt32(ciclosAutoclaves.Programa.Trim());
+            // if (ciclosAutoclaves.Programa.Trim().Equals("9") || ciclosAutoclaves.Programa.Trim().Equals("10"))
+            if (ciclosInt > 0)
 
             {
                 _printerNueveDiez.printNueveDiez(id);
             }
 
-           
+
             if (ciclosAutoclaves == null)
             {
                 return NotFound();
@@ -161,7 +156,7 @@ namespace WebResumen.Controllers
                .FirstOrDefaultAsync(m => m.Id == id);
             int ciclosInt = Convert.ToInt32(ciclosAutoclaves.Programa.Trim());
             if (ciclosInt > 0)
-                //if (ciclosAutoclaves.Programa.Trim().Equals("9") || ciclosAutoclaves.Programa.Trim().Equals("10"))
+            //if (ciclosAutoclaves.Programa.Trim().Equals("9") || ciclosAutoclaves.Programa.Trim().Equals("10"))
 
             {
                 _printerNueveDiezAS.printNueveDiezAS(id);
@@ -173,7 +168,7 @@ namespace WebResumen.Controllers
                 return NotFound();
             }
             TempData["Print"] = "El Archivo ha sido Impreso";
-            
+
             return View("Printing");
             //return View(ciclosAutoclaves);
         }
@@ -209,7 +204,7 @@ namespace WebResumen.Controllers
             int numero = int.Parse(ciclosAutoclaves.NumeroCiclo);
 
             string ciclo = ciclosAutoclaves.IdAutoclave + string.Format("{0:00000}", numero) + ".LOG";
-          //  string path = @"\\essaappserver01\HojaResumen\API\AutoClaveJ\" + ciclo;
+            //  string path = @"\\essaappserver01\HojaResumen\API\AutoClaveJ\" + ciclo;
 
             var query = _context.MaestroAutoclave.Where(t => t.Matricula == "0827J").FirstOrDefault();
             var path = query.RutaSalida.ToString() + ciclo;
@@ -221,7 +216,7 @@ namespace WebResumen.Controllers
 
             byte[] fileBytes = System.IO.File.ReadAllBytes(path);
             return File(fileBytes, "text/html", ciclo);
-           // return View(ciclosAutoclaves);
+            // return View(ciclosAutoclaves);
 
         }
 
@@ -261,7 +256,7 @@ namespace WebResumen.Controllers
             var authorizationResult2 = await _authorizationService.AuthorizeAsync(User, "Users");
             if (authorizationResult.Succeeded || authorizationResult2.Succeeded)
             {
-                var path = $"https://essahojaresumen.global.baxter.com/LOGFiles/AutoClaveJ/{ciclo}";
+                var path = _config["CiclosPath:Path"] + $"AutoClaveJ/{ciclo}";
                 using (WebClient wc = new WebClient())
                 {
                     var byteArr = wc.DownloadData(path);
@@ -305,7 +300,7 @@ namespace WebResumen.Controllers
                 return NotFound();
             }
 
-           // ViewBag.datos = ciclosAutoclaves.Id;
+            // ViewBag.datos = ciclosAutoclaves.Id;
             HttpContext.Session.SetString("SessionDatosJ", ciclosAutoclaves.Id.ToString());
             HttpContext.Session.SetString("AutoclaveNumeroJ", ("AutoClaveJ" + " " + "N°Ciclo:" + ciclosAutoclaves.NumeroCiclo).ToString());
 
@@ -325,7 +320,7 @@ namespace WebResumen.Controllers
             {
 
                 string dominio = _config["SecuritySettings:Dominio"];
-                string path = _config["SecuritySettings:ADPath"]; 
+                string path = _config["SecuritySettings:ADPath"];
                 using (PrincipalContext ctx = new PrincipalContext(ContextType.Domain, dominio, model.Usuario, model.Contraseña))
                 {
 
@@ -355,7 +350,7 @@ namespace WebResumen.Controllers
                                     HttpContext.Session.SetString("SessionComentarioJ", model.Comentario);
                                     //HttpContext.Session.SetString("SessionDatosJ", model.Dato);
                                     HttpContext.Session.SetString("SessionTiempoJ", DateTime.Now.ToString("HH:mm:ss"));
-                                   
+
                                     return View("Print");
                                 }
 
@@ -377,7 +372,7 @@ namespace WebResumen.Controllers
                 }
             }
 
-           
+
             return View();
 
 

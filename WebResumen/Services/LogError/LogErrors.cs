@@ -1,9 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace WebResumen.Services.LogError
 {
@@ -15,12 +12,12 @@ namespace WebResumen.Services.LogError
             _config = config;
 
         }
-       
+
         public void write(string mensaje)
         {
 
             string _path = _config["OptionalSettings:LogWeb"] + "\\LogWeb";
-           // string _path = @"C:\Program Files\HojaResumen\old\" + "Log";
+            // string _path = @"C:\Program Files\HojaResumen\old\" + "Log";
             Directory.CreateDirectory(_path);
 
             var fecha = DateTime.Now.ToString("dd/MM/yyyy");
@@ -29,7 +26,7 @@ namespace WebResumen.Services.LogError
             {
                 sw.WriteLine($"[{fecha}  {hora}]  { mensaje}");
             }
-           
+
         }
     }
 }

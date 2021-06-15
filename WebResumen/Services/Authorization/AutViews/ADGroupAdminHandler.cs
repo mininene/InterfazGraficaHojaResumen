@@ -5,14 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
-using System.Linq;
-using System.Security.Principal;
 using System.Threading.Tasks;
 
 namespace WebResumen.Services.Authorization
 {
-  
-    public class ADGroupAdminHandler : AuthorizationHandler<ADGroupRequirement> 
+
+    public class ADGroupAdminHandler : AuthorizationHandler<ADGroupRequirement>
     {
         private readonly IConfiguration _config;
         public ADGroupAdminHandler(IConfiguration config)
@@ -24,7 +22,7 @@ namespace WebResumen.Services.Authorization
 
             IHttpContextAccessor _httpContextAccessor = new HttpContextAccessor();
             var group = new List<string>();//save all your groups' name
-          
+
             string dominio = _config["SecuritySettings:Dominio"];
             string path = _config["SecuritySettings:ADPath"];
             var result = new List<string>();

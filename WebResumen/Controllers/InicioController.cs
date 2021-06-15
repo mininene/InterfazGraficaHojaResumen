@@ -1,22 +1,19 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using WebResumen.Models;
 using WebResumen.Models.ViewModels;
 using WebResumen.Services.LogRecord;
 
 namespace WebResumen.Controllers
 {
-   
 
-   // [Authorize(Policy = "ADTodos")]
+
+    // [Authorize(Policy = "ADTodos")]
     public class InicioController : Controller
     {
         private readonly AppDbContext _context;
@@ -29,7 +26,7 @@ namespace WebResumen.Controllers
         {
             _context = context;
             _log = log;
-         }
+        }
 
         // GET: Inicio
         public async Task<IActionResult> Index()
@@ -41,9 +38,9 @@ namespace WebResumen.Controllers
         {
             List<CiclosAutoclaves> _sabiUno = await _context.CiclosAutoclaves.ToListAsync();
             List<CiclosSabiDos> _sabiDos = await _context.CiclosSabiDos.ToListAsync();
-           
-            var result = await _context.MaestroAutoclave.OrderBy(x=>x.Id).ToListAsync();
-           
+
+            var result = await _context.MaestroAutoclave.OrderBy(x => x.Id).ToListAsync();
+
             //var multipleOrder = from t1 in result
             //                    from t2 in sabiUno
             //                    where (Convert.ToInt32(t1.UltimoCiclo) - 1).ToString() == t2.NumeroCiclo
@@ -73,7 +70,7 @@ namespace WebResumen.Controllers
 
             //                    };
 
-          
+
 
 
 
@@ -91,7 +88,7 @@ namespace WebResumen.Controllers
             var sabiUno = await _context.CiclosAutoclaves.OrderByDescending(x => x.Id).ToListAsync();
             var sabiDos = await _context.CiclosSabiDos.OrderByDescending(x => x.Id).ToListAsync();
 
-            
+
 
 
             var multiple = from t1 in result
@@ -111,9 +108,9 @@ namespace WebResumen.Controllers
 
 
 
-            return Json( multipleOrder, ViewBag.Message);
+            return Json(multipleOrder, ViewBag.Message);
 
-           
+
 
 
         }

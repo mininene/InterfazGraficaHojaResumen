@@ -10,9 +10,7 @@
     Ciclos Esterilización Producto 8607D
 </h2>
 
-<p>
-    @*<a asp-action="Create">Create New</a>*@
-</p>
+
 @if (TempData["Print"] != null)
 {
 
@@ -25,51 +23,48 @@
 
 }
 <div class="mt-4">
+
     @using (Html.BeginForm())
     {
-        <form>
-            Buscar por Nº Ciclo: @Html.TextBox("nCiclo")
-            Buscar por Nº Programa: @Html.TextBox("nPrograma")
-            @*Buscar por Fecha:@Html.TextBox("fecha")*@
-            @*Buscar por Fecha:  <input type="date" id="fecha" name="fecha" asp-format="{0:dd/MM/yy}" class="form-control">*@@*@Html.TextBox("fecha")*@
+    <form>
+        Buscar por Nº Ciclo: @Html.TextBox("nCiclo", @Model.RouteValue["nCiclo"] )
+        Buscar por Nº Programa: @Html.TextBox("nPrograma", @Model.RouteValue["nPrograma"] )
+       
+        <input type="submit" value="Buscar" />
+    </form>
 
-
-            <input type="submit" value="Buscar" />
-        </form>
-
-        <a class="btn btn-blue float-right" asp-area="" asp-controller="AutoClaveD" asp-action="CycleList">Listado</a>
+    <a class="btn btn-blue float-right" asp-area="" asp-controller="AutoClaveD" asp-action="CycleList">Listado</a>
     }
-</div>
+     
 
 
+    <div class="mt-4" style="height: 600px; overflow: auto;">
+        <table class="table table-responsive-sm">
+            <thead class="thead-dark">
+                <tr>
 
-<div class="mt-4" style="height: 600px; overflow: auto;">
-    <table class="table table-responsive-sm">
-        <thead class="thead-dark">
-            <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.NumeroCiclo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Programa)
+                    </th>
 
-                <th>
-                    @Html.DisplayNameFor(model => model.NumeroCiclo)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Programa)
-                </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.HoraInicio)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.HoraFin)
+                    </th>
+                    <th>
+                        Acciones
+                    </th>
 
-                <th>
-                    @Html.DisplayNameFor(model => model.HoraInicio)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.HoraFin)
-                </th>
-                <th>
-                    Acciones
-                </th>
-
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
             {
                 <tr>
 
@@ -95,10 +90,11 @@
                     </td>
                 </tr>
             }
-        </tbody>
-    </table>
-</div>
- Página @(Model.PageCount < Model.PageIndex ? 0 : Model.PageIndex) de @Model.PageCount  Total Registros: @Model.TotalRecordCount
-<nav aria-label="Suppliers navigation example">
-    <vc:pager paging-list="@Model" />
-</nav>
+            </tbody>
+        </table>
+    </div>
+    Página @(Model.PageCount < Model.PageIndex ? 0 : Model.PageIndex) de @Model.PageCount  Total Registros: @Model.TotalRecordCount
+    <nav aria-label="Suppliers navigation example">
+        <vc:pager paging-list="@Model" />
+    </nav>
+

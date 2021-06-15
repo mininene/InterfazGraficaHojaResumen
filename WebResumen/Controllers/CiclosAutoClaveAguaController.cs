@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using WebResumen.Models;
 
 
 namespace WebResumen.Controllers
 {
 
-   
+
 
     public class CiclosAutoclaveAguaController : Controller
     {
@@ -35,17 +33,17 @@ namespace WebResumen.Controllers
 
         }
         // GET: CiclosAutoclaveAgua
-        public  async Task<JsonResult> ListAgua()
+        public async Task<JsonResult> ListAgua()
         {
             //var result=  await _context.CiclosAutoclaves.OrderByDescending(x => x.Id).ToListAsync();
             //return View(await _context.CiclosAutoclaves.OrderByDescending(x=>x.Id).ToListAsync());
 
             var result = from s in _context.CiclosAutoclaves.OrderByDescending(x => x.Id)
-                           select s;
-           
+                         select s;
 
-            return Json(await  result.ToListAsync());
-           
+
+            return Json(await result.ToListAsync());
+
 
         }
 
@@ -61,12 +59,12 @@ namespace WebResumen.Controllers
         {
             //var result=  await _context.CiclosAutoclaves.OrderByDescending(x => x.Id).ToListAsync();
             //return View(await _context.CiclosAutoclaves.OrderByDescending(x=>x.Id).ToListAsync());
-            
+
             var Lo = model.nCiclo;
             var li = model.nPrograma;
             var result = from s in _context.CiclosAutoclaves.OrderByDescending(x => x.Id)
                          select s;
-           
+
 
             if (!String.IsNullOrEmpty(model.nCiclo))
             {

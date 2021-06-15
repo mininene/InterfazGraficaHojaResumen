@@ -1,23 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using System;
 using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using WebResumen.Models;
 using WebResumen.Models.ViewModels;
 
 
 namespace WebResumen.Controllers
 {
-   // [Authorize(Policy = "ADMIN")]
-   
+    // [Authorize(Policy = "ADMIN")]
+
     public class MaestroAutoclaveController : Controller
     {
         private readonly AppDbContext _context;
@@ -49,7 +47,7 @@ namespace WebResumen.Controllers
         public async Task<JsonResult> ListMaestro()
         {
             var result = await _context.MaestroAutoclave.ToListAsync();
-            
+
             return Json(result);
 
 
@@ -291,7 +289,7 @@ namespace WebResumen.Controllers
                 }
             }
 
-         
+
             return View();
 
 

@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using System;
 using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using WebResumen.Models;
 using WebResumen.Models.ViewModels;
 
@@ -91,7 +89,7 @@ namespace WebResumen.Controllers
             {
                 return NotFound();
             }
-          
+
             var maestroAutoclave = await _context.MaestroAutoclave.FindAsync(id);
             if (maestroAutoclave == null)
             {
@@ -265,10 +263,10 @@ namespace WebResumen.Controllers
                                     //HttpContext.Session.SetString("SessionUltimoCicloMS", model.UltimoCiclo);
                                     //HttpContext.Session.SetString("SessionRutaSalidaMS", model.RutaSalida);
                                     //HttpContext.Session.SetString("SessionRutaSalidaPDFMS", model.RutaSalidaPDF);
-                       
+
                                     HttpContext.Session.SetString("SessionTiempoP", DateTime.Now.ToString("HH:mm:ss"));
                                     return View("Edit");
-                                   
+
                                 }
 
                             }
@@ -289,7 +287,7 @@ namespace WebResumen.Controllers
                 }
             }
 
-            
+
             return View();
 
 

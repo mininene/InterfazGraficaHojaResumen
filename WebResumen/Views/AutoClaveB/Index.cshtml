@@ -28,13 +28,13 @@
 <div class="mt-4">
     @using (Html.BeginForm())
     {
-        <form>
-            Buscar por Nº Ciclo: @Html.TextBox("nCiclo")
-            Buscar por Nº Programa: @Html.TextBox("nPrograma")
+    <form>
+        Buscar por Nº Ciclo: @Html.TextBox("nCiclo", @Model.RouteValue["nCiclo"])
+        Buscar por Nº Programa: @Html.TextBox("nPrograma", @Model.RouteValue["nPrograma"])
 
 
-            <input type="submit" value="Buscar" />
-        </form>
+        <input type="submit" value="Buscar" />
+    </form>
 
     }
     <a class="btn btn-blue float-right" asp-area="" asp-controller="AutoClaveB" asp-action="CycleList">Listado</a>

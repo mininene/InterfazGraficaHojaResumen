@@ -1,11 +1,10 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
@@ -56,16 +55,16 @@ namespace WebResumen.Models
                 {
                     //var tiempoF = TimeSpan.Parse(DateTime.Now);
                     //var tiempoI = TimeSpan.Parse(_httpContextAccessor.HttpContext.Session.GetString("SessionTiempo"));
-                   // var tiempoFx =  DateTime.Now.Subtract(Convert.ToDateTime(_httpContextAccessor.HttpContext.Session.GetString("SessionTiempo")));
+                    // var tiempoFx =  DateTime.Now.Subtract(Convert.ToDateTime(_httpContextAccessor.HttpContext.Session.GetString("SessionTiempo")));
                     //var difT = tiempoF - tiempoI;
                     //var dur = difT.TotalMinutes.ToString();
-                    
+
 
                     var auditEntry = new AudiTrail
                     {
                         Usuario = _httpContextAccessor.HttpContext.Session.GetString("SessionName"),
                         Tabla = entry.Entity.GetType().Name,
-                        Evento = Evento.Update.ToString()+" "+ _httpContextAccessor.HttpContext.Session.GetString("SessionNombreMS")+" " + _httpContextAccessor.HttpContext.Session.GetString("SessionNombreM"),
+                        Evento = Evento.Update.ToString() + " " + _httpContextAccessor.HttpContext.Session.GetString("SessionNombreMS") + " " + _httpContextAccessor.HttpContext.Session.GetString("SessionNombreM"),
                         Campo = property.Metadata.Name,
                         Valor = property.OriginalValue.ToString(),
                         ValorActualizado = property.CurrentValue.ToString(),

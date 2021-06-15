@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using WebResumen.Models;
 
 namespace WebResumen.Controllers
@@ -40,8 +37,8 @@ namespace WebResumen.Controllers
         {
 
             var result = from q in _context.AudiTrail.OrderByDescending(q => q.Id) select q;
-            
-               return Json(await result.ToListAsync());
+
+            return Json(await result.ToListAsync());
         }
 
     }

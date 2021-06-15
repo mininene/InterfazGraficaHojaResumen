@@ -5,8 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
-using System.Linq;
-using System.Security.Principal;
 using System.Threading.Tasks;
 
 namespace WebResumen.Services.Authorization
@@ -20,9 +18,9 @@ namespace WebResumen.Services.Authorization
         }
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, ADGroupRequirement requirement)
         {
-           
+
             IHttpContextAccessor _httpContextAccessor = new HttpContextAccessor();
-           
+
             string dominio = _config["SecuritySettings:Dominio"];
             string path = _config["SecuritySettings:ADPath"];
             var result = new List<string>();
@@ -40,7 +38,7 @@ namespace WebResumen.Services.Authorization
                     if (entry.Properties.Contains("cn"))
                         result.Add(entry.Properties["cn"][0].ToString());
 
-                foreach(var t in result)
+                foreach (var t in result)
                 {
                     Console.WriteLine(t);
                     if (t.Contains(requirement.GroupName))//do the check
@@ -49,7 +47,7 @@ namespace WebResumen.Services.Authorization
                     }
                 }
             }
-          
+
 
             return Task.CompletedTask;
         }

@@ -1,38 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Printing;
-using System.Text.RegularExpressions;
-using System.Text;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using iTextSharp.text;
-using iTextSharp.text.pdf;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using WebResumen.Models;
-using WebResumen.Services.PrinterService;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
-using WebResumen.Models.ViewModels;
-using System.DirectoryServices.AccountManagement;
-using WebResumen.Services.LogRecord;
-using System.DirectoryServices;
-using WebResumen.Services.printerServiceAS;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using ReflectionIT.Mvc.Paging;
+using System;
+using System.Collections.Generic;
+using System.DirectoryServices;
+using System.DirectoryServices.AccountManagement;
+using System.IO;
+using System.Linq;
 using System.Net;
+using System.Text;
+using System.Threading.Tasks;
+using WebResumen.Models;
+using WebResumen.Models.ViewModels;
+using WebResumen.Services.LogRecord;
+using WebResumen.Services.PrinterService;
+using WebResumen.Services.printerServiceAS;
 
 namespace WebResumen.Controllers
 {
-   // [Authorize(Policy = "ADTodos")]
+    // [Authorize(Policy = "ADTodos")]
 
 
     public class AutoClaveBController : Controller
     {
-        
+
         private readonly AppDbContext _context;
         private readonly IPrinterOchoVeinte _printerOchoVeinte;
         private readonly IPrinterDosTresCuatro _printerDosTresCuatro;
@@ -44,7 +39,7 @@ namespace WebResumen.Controllers
         private readonly IAuthorizationService _authorizationService;
 
         public AutoClaveBController(AppDbContext context, IPrinterOchoVeinte printerOchoVeinte, IPrinterDosTresCuatro printerDosTresCuatro, ILogRecord log,
-            IHttpContextAccessor httpContextAccessor, IPrinterOchoVeinteAS printerOchoVeinteAS, IPrinterDosTresCuatroAS printerDosTresCuatroAS, IConfiguration config,  IAuthorizationService authorizationService)
+            IHttpContextAccessor httpContextAccessor, IPrinterOchoVeinteAS printerOchoVeinteAS, IPrinterDosTresCuatroAS printerDosTresCuatroAS, IConfiguration config, IAuthorizationService authorizationService)
         {
             _context = context;
             _printerOchoVeinte = printerOchoVeinte;
@@ -54,34 +49,34 @@ namespace WebResumen.Controllers
             _printerOchoVeinteAS = printerOchoVeinteAS;
             _printerDosTresCuatroAS = printerDosTresCuatroAS;
             _config = config;
-             _authorizationService = authorizationService;
+            _authorizationService = authorizationService;
 
-    }
+        }
 
-    // GET: AutoClaveB
-    public async Task<IActionResult> Index(string nCiclo, string nPrograma, string fecha, int? page)
+        // GET: AutoClaveB
+        public async Task<IActionResult> Index(string nCiclo, string nPrograma, string fecha, int? page)
         {
-           
-                      
+
+
             var query = _context.CiclosAutoclaves.Where(x => x.IdAutoclave == "8388B").AsNoTracking().AsQueryable();
             if (!String.IsNullOrEmpty(nCiclo))
             {
-                page = 1;
+                
                 query = query.Where(x => x.NumeroCiclo.Contains(nCiclo));
 
             }
 
             if (!String.IsNullOrEmpty(nPrograma))
             {
-                page = 1;
-                query = query.Where(x => x.Programa.Contains(nPrograma));
+              
+                query = query.Where(x => x.Programa.Equals(nPrograma));
             }
 
 
 
             if (!String.IsNullOrEmpty(fecha))
             {
-                page = 1;
+               
                 query = query.Where(x => x.HoraFin.Contains(fecha));
 
             }
@@ -93,39 +88,22 @@ namespace WebResumen.Controllers
                                        || x.Programa.Contains(nPrograma)
                                          || x.HoraFin.Contains(fecha));  // si pongo la fecha como string si que lo coge
             }
-            int pageSize = 50;
             int pageNumber = (page ?? 1);
+            int pageSize = 50;
+            int count = query.ToList().Count;
+            if (pageNumber - 1 > count / pageSize)
+            {
+                pageNumber = 1;
+            }
             var model = await PagingList.CreateAsync(query.OrderByDescending(X => X.Id), pageSize, pageNumber);
+            model.RouteValue = new RouteValueDictionary {
+             { "nPrograma", nPrograma}, { "nCiclo", nCiclo}   };
 
             return View(model);
 
-        }
+        }     
 
-        public async Task<JsonResult> ListAutoclaveB()
-        {
-            //var result=  await _context.CiclosAutoclaves.OrderByDescending(x => x.Id).ToListAsync();
-            //return View(await _context.CiclosAutoclaves.OrderByDescending(x=>x.Id).ToListAsync());
-            List<CiclosAutoclaves> _sabiUno = await _context.CiclosAutoclaves.ToListAsync();
-            var query = from x in _sabiUno.Where(x => x.IdAutoclave == "8388B").OrderByDescending(X => X.Id).Take(50) select x;
-
-
-            return Json(query.ToList());
-
-
-        }
-
-        public async Task<JsonResult> ListaAutoclaveB()
-        {
-            //var result=  await _context.CiclosAutoclaves.OrderByDescending(x => x.Id).ToListAsync();
-            //return View(await _context.CiclosAutoclaves.OrderByDescending(x=>x.Id).ToListAsync());
-            List<CiclosAutoclaves> _sabiUno = await _context.CiclosAutoclaves.ToListAsync();
-            var query = from x in _sabiUno.Where(x => x.IdAutoclave == "8388B").OrderByDescending(X => X.Id).Take(1) select x;
-
-
-            return Json(query.ToList());
-
-
-        }
+    
 
 
         public async Task<IActionResult> Print(int? id)
@@ -137,8 +115,8 @@ namespace WebResumen.Controllers
             var ciclosAutoclaves = await _context.CiclosAutoclaves
                .FirstOrDefaultAsync(m => m.Id == id);
 
-          //  if (ciclosAutoclaves.Programa.Trim().Equals("8") || ciclosAutoclaves.Programa.Trim().Equals("20"))
-                int ciclosInt = Convert.ToInt32(ciclosAutoclaves.Programa.Trim());
+            //  if (ciclosAutoclaves.Programa.Trim().Equals("8") || ciclosAutoclaves.Programa.Trim().Equals("20"))
+            int ciclosInt = Convert.ToInt32(ciclosAutoclaves.Programa.Trim());
             if (ciclosInt >= 5)
 
             {
@@ -160,7 +138,7 @@ namespace WebResumen.Controllers
             _log.Write(_httpContextAccessor.HttpContext.Session.GetString("SessionFullName"), DateTime.Now, EventoB + " " + _httpContextAccessor.HttpContext.Session.GetString("AutoclaveNumeroB"), _httpContextAccessor.HttpContext.Session.GetString("SessionComentarioB"));
 
             return RedirectToAction("Index", "AutoClaveB");
-           
+
 
 
 
@@ -175,8 +153,8 @@ namespace WebResumen.Controllers
             var ciclosAutoclaves = await _context.CiclosAutoclaves
                .FirstOrDefaultAsync(m => m.Id == id);
 
-           // if (ciclosAutoclaves.Programa.Trim().Equals("8") || ciclosAutoclaves.Programa.Trim().Equals("20"))
-                int ciclosInt = Convert.ToInt32(ciclosAutoclaves.Programa.Trim());
+            // if (ciclosAutoclaves.Programa.Trim().Equals("8") || ciclosAutoclaves.Programa.Trim().Equals("20"))
+            int ciclosInt = Convert.ToInt32(ciclosAutoclaves.Programa.Trim());
             if (ciclosInt >= 5)
 
             {
@@ -203,7 +181,7 @@ namespace WebResumen.Controllers
 
         public async Task<IActionResult> WritePrint()
         {
-            
+
             string ReportURL = _config["OptionalSettings:Pdf"] + "\\PDF\\archivo1.pdf";
             byte[] FileBytes = System.IO.File.ReadAllBytes(ReportURL);
             string EventoB = "Re-Impresión";
@@ -237,7 +215,7 @@ namespace WebResumen.Controllers
             int numero = int.Parse(ciclosAutoclaves.NumeroCiclo);
 
             string ciclo = ciclosAutoclaves.IdAutoclave + string.Format("{0:00000}", numero) + ".LOG";
-           // string path = @"\\essaappserver01\HojaResumen\API\AutoClaveB\" + ciclo;
+            // string path = @"\\essaappserver01\HojaResumen\API\AutoClaveB\" + ciclo;
 
             var query = _context.MaestroAutoclave.Where(t => t.Matricula == "8388B").FirstOrDefault();
             var path = query.RutaSalida.ToString() + ciclo;
@@ -288,7 +266,7 @@ namespace WebResumen.Controllers
             var authorizationResult2 = await _authorizationService.AuthorizeAsync(User, "Users");
             if (authorizationResult.Succeeded || authorizationResult2.Succeeded)
             {
-                var path = $"https://essahojaresumen.global.baxter.com/LOGFiles/AutoClaveB/{ciclo}";
+                var path = _config["CiclosPath:Path"] + $"AutoClaveB/{ciclo}";
                 using (WebClient wc = new WebClient())
                 {
                     var byteArr = wc.DownloadData(path);
@@ -326,8 +304,8 @@ namespace WebResumen.Controllers
 
             var ciclosAutoclaves = await _context.CiclosAutoclaves
                 .FirstOrDefaultAsync(m => m.Id == id);
-           
-            
+
+
             if (ciclosAutoclaves == null)
             {
                 return NotFound();
@@ -341,13 +319,13 @@ namespace WebResumen.Controllers
 
 
             return View("Login");
-            
+
         }
 
         [HttpPost]
         public IActionResult Login(DoubleLoginViewModel model, int? id)
         {
-            var ciclosAutoclaves =  _context.CiclosAutoclaves
+            var ciclosAutoclaves = _context.CiclosAutoclaves
                .FirstOrDefaultAsync(m => m.Id == id);
 
             if (ModelState.IsValid)
@@ -373,7 +351,7 @@ namespace WebResumen.Controllers
                             {
                                 using (var searcher = new DirectorySearcher(new DirectoryEntry(path)))
                                 {
-                                    if (model.Usuario!="" && model.Contraseña!="" && model.Comentario!="")
+                                    if (model.Usuario != "" && model.Contraseña != "" && model.Comentario != "")
                                     {
                                         string fullName = string.Empty;
                                         DirectoryEntry de = (user.GetUnderlyingObject() as DirectoryEntry);
@@ -387,7 +365,7 @@ namespace WebResumen.Controllers
                                         //HttpContext.Session.SetString("SessionDatosB", model.Dato);
                                         HttpContext.Session.SetString("SessionTiempoB", DateTime.Now.ToString("HH:mm:ss"));
                                         //string EventoB = "Re-Impresión";
-                                      
+
                                         //_log.Write(fullName, DateTime.Now, EventoB + " " + _httpContextAccessor.HttpContext.Session.GetString("AutoclaveNumeroB"), model.Comentario);
 
                                         return View("Print");
@@ -415,7 +393,7 @@ namespace WebResumen.Controllers
                 }
             }
 
-            
+
             return View();
 
 

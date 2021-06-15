@@ -1,5 +1,3 @@
-using System;
-
 namespace WebResumen.Models
 {
     public class ErrorViewModel
