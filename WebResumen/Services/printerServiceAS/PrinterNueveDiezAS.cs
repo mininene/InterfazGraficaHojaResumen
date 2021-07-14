@@ -4,6 +4,7 @@ using PdfSharp.Drawing;
 using PdfSharp.Drawing.Layout;
 using PdfSharp.Pdf;
 using System;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using WebResumen.Models;
@@ -31,13 +32,18 @@ namespace WebResumen.Services.printerServiceAS
                 XFont font = new XFont("Verdana", 8, XFontStyle.Regular);
                 XFont fontDos = new XFont("Verdana", 7, XFontStyle.Regular);
                 XFont negrita = new XFont("Verdana", 8, XFontStyle.Bold);
+                XFont negritaDos = new XFont("Verdana", 7, XFontStyle.Bold);
+
                 XTextFormatter tf = new XTextFormatter(graph);
                 XRect rect = new XRect(40, 100, 250, 220);
-                //graph.DrawRectangle(XBrushes.SeaShell, rect);
+                XRect recta = new XRect(130, 105, 430, 20); //25/06/2021
+               
 
 
                 rect = new XRect(340, 520, 250, 220);
+                recta = new XRect(130, 105, 430, 20); //25/06/2021
                 graph.DrawRectangle(XBrushes.White, rect);
+                graph.DrawRectangle(XBrushes.White, recta);
                 tf.Alignment = XParagraphAlignment.Justify;
 
 
@@ -64,7 +70,8 @@ namespace WebResumen.Services.printerServiceAS
                 graph.DrawString("ID. MAQUINA:", font, XBrushes.Black, new XRect(20, 95, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
                 graph.DrawString(q.IdAutoclave + " " + "<--[  ]", negrita, XBrushes.Black, new XRect(130, 95, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
                 graph.DrawString("NOTAS:", font, XBrushes.Black, new XRect(20, 105, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
-                graph.DrawString(q.Notas.Trim() + " " + "<--[  ]", negrita, XBrushes.Black, new XRect(130, 105, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+               // graph.DrawString(q.Notas.Trim() + " " + "<--[  ]", negrita, XBrushes.Black, new XRect(130, 105, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+                tf.DrawString(q.Notas.Trim() + " " + "<--[  ]", negritaDos, XBrushes.Black, recta, XStringFormats.TopLeft); //cambio 25/06/2021
 
                 graph.DrawString("MODELO:", font, XBrushes.Black, new XRect(20, 125, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
                 graph.DrawString(q.Modelo, font, XBrushes.Black, new XRect(130, 125, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
@@ -80,17 +87,24 @@ namespace WebResumen.Services.printerServiceAS
                 graph.DrawString(q.DuracionTotalF2, negrita, XBrushes.Black, new XRect(320, 175, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
                 graph.DrawString("min.s", font, XBrushes.Black, new XRect(350, 175, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
                 graph.DrawString("<--[  ]", negrita, XBrushes.Black, new XRect(375, 175, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
-                graph.DrawString("I " + " " + q.Tinicio, negrita, XBrushes.Black, new XRect(460, 175, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+                DateTime temp = DateTime.ParseExact(q.Tinicio, "dd/MM/yy HH:mm:ss", CultureInfo.InvariantCulture);
+                DateTime fechaInicioFormat = DateTime.ParseExact(temp.ToString("dd/MM/yyyy HH:mm:ss"), "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
+                graph.DrawString("I " + " " + fechaInicioFormat, negrita, XBrushes.Black, new XRect(460, 175, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
 
                 graph.DrawString("TIEMPO TP  TE2  TE3  TE4  TE9 TE10", font, XBrushes.Black, new XRect(20, 190, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
                 graph.DrawString(q.Tif2, font, XBrushes.Black, new XRect(230, 190, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
                 graph.DrawString(q.TisubF2, font, XBrushes.Black, new XRect(460, 190, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
 
                 graph.DrawString("TIEMPO TP  TE2  TE3  TE4  TE9 TE10", font, XBrushes.Black, new XRect(20, 205, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
-                graph.DrawString(q.Tff2.Substring(0, 6), font, XBrushes.Black, new XRect(230, 205, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
-                graph.DrawString(q.Tff2.Substring(6, 6), negrita, XBrushes.Black, new XRect(255, 205, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
-                graph.DrawString(q.Tff2.Substring(11), font, XBrushes.Black, new XRect(275, 205, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+                var tff2 = q.Tff2.Split(new String[] { "  " }, StringSplitOptions.RemoveEmptyEntries);
+                graph.DrawString(tff2[0], font, XBrushes.Black, new XRect(230, 205, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+                graph.DrawString(tff2[1].Trim(), negrita, XBrushes.Black, new XRect(263, 205, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+                graph.DrawString($"{tff2[2]}  {tff2[3]}  {tff2[4]}  {tff2[5]}  {tff2[6]}", font, XBrushes.Black, new XRect(290, 205, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
                 graph.DrawString(q.TfsubF2, font, XBrushes.Black, new XRect(460, 205, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+                //graph.DrawString(q.Tff2.Substring(0, 6), font, XBrushes.Black, new XRect(230, 205, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+                //graph.DrawString(q.Tff2.Substring(6, 6), negrita, XBrushes.Black, new XRect(255, 205, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+                //graph.DrawString(q.Tff2.Substring(11), font, XBrushes.Black, new XRect(275, 205, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+
 
                 graph.DrawString("FASE 3:  " + q.Fase3, font, XBrushes.Black, new XRect(20, 225, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
                 graph.DrawString("DURAC.TOTAL FASE:", font, XBrushes.Black, new XRect(230, 225, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
@@ -99,15 +113,17 @@ namespace WebResumen.Services.printerServiceAS
                 graph.DrawString("<--[  ]", negrita, XBrushes.Black, new XRect(375, 225, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
 
                 graph.DrawString("TIEMPO TP  TE2  TE3  TE4  TE9 TE10 ", font, XBrushes.Black, new XRect(20, 240, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
-                graph.DrawString(q.Tif3.Substring(0, 6), font, XBrushes.Black, new XRect(230, 240, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
-                graph.DrawString(q.Tif3.Substring(6, 6), negrita, XBrushes.Black, new XRect(255, 240, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
-                graph.DrawString(q.Tif3.Substring(11), font, XBrushes.Black, new XRect(275, 240, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+                var tif3 = q.Tif3.Split(new String[] { "  " }, StringSplitOptions.RemoveEmptyEntries);
+                graph.DrawString(tif3[0], font, XBrushes.Black, new XRect(230, 240, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+                graph.DrawString(tif3[1].Trim(), negrita, XBrushes.Black, new XRect(263, 240, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+                graph.DrawString($"{tif3[2]}  {tif3[3]}  {tif3[4]}  {tif3[5]}  {tif3[6]}", font, XBrushes.Black, new XRect(290, 240, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
                 graph.DrawString(q.TisubF3, font, XBrushes.Black, new XRect(460, 240, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
 
                 graph.DrawString("TIEMPO TP  TE2  TE3  TE4  TE9 TE10", font, XBrushes.Black, new XRect(20, 255, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
-                graph.DrawString(q.Tff3.Substring(0, 6), font, XBrushes.Black, new XRect(230, 255, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
-                graph.DrawString(q.Tff3.Substring(6, 6), negrita, XBrushes.Black, new XRect(255, 255, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
-                graph.DrawString(q.Tff3.Substring(11), font, XBrushes.Black, new XRect(275, 255, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+                var tff3 = q.Tff3.Split(new String[] { "  " }, StringSplitOptions.RemoveEmptyEntries);
+                graph.DrawString(tff3[0], font, XBrushes.Black, new XRect(230, 255, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+                graph.DrawString(tff3[1].Trim(), negrita, XBrushes.Black, new XRect(263, 255, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+                graph.DrawString($"{tff3[2]}  {tff3[3]}  {tff3[4]}  {tff3[5]}  {tff3[6]}", font, XBrushes.Black, new XRect(290, 255, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
                 graph.DrawString(q.TfsubF3.Substring(0, 2), font, XBrushes.Black, new XRect(460, 255, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
                 graph.DrawString(q.TfsubF3.Substring(2) + " " + "<--[  ]", negrita, XBrushes.Black, new XRect(465, 255, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
 
@@ -161,8 +177,9 @@ namespace WebResumen.Services.printerServiceAS
                 graph.DrawString(q.DuracionTotalF11 + " " + "min.s", font, XBrushes.Black, new XRect(320, 455, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
 
                 graph.DrawString("FASE 12: FIN DE CICLO         TIEMPO TP  TE2  TE3  TE4  TE9 TE10", font, XBrushes.Black, new XRect(20, 475, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
-                graph.DrawString(q.Tif12.Substring(0, 6) + " " + "<--[  ]", negrita, XBrushes.Black, new XRect(20, 490, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
-                graph.DrawString(q.Tif12.Substring(6), font, XBrushes.Black, new XRect(160, 490, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+                var tif12 = q.Tif12.Split(new String[] { "  " }, StringSplitOptions.RemoveEmptyEntries);
+                graph.DrawString(tif12[0] + " " + "<--[  ]", negrita, XBrushes.Black, new XRect(20, 490, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+                graph.DrawString($"{tif12[1]}  {tif12[2]}  {tif12[3]}  {tif12[4]}  {tif12[5]}  {tif12[6]}", font, XBrushes.Black, new XRect(160, 490, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
                 graph.DrawString(q.TisubF12.Substring(0, 2), font, XBrushes.Black, new XRect(460, 490, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
                 graph.DrawString(q.TisubF12.Substring(2) + " " + "<--[  ]", negrita, XBrushes.Black, new XRect(465, 490, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
 
@@ -215,9 +232,7 @@ namespace WebResumen.Services.printerServiceAS
                 {
                     graph.DrawString("Pág 1 de 1  ", font, XBrushes.Black, new XRect(480, 800, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
 
-                    //graph.DrawString("ALARMAS:", fontDos, XBrushes.Black, new XRect(340, 510, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
-                    //graph.DrawString("* NO EXISTEN ALARMAS REGISTRADAS", fontDos, XBrushes.Black, new XRect(340, 520, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
-
+                  
                 }
                 else
                 {

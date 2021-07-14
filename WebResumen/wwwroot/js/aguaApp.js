@@ -29,7 +29,7 @@
                             }
                         }).then(function (response) {
                             $scope.searchid = response.data;
-                            //console.log(response.data)
+                          //  console.log(response.data)
                             callback({
 
                                 info: response.data
@@ -317,13 +317,35 @@
                     DTColumnBuilder.newColumn('idAutoclave').withTitle('idAutoclave'),
                     DTColumnBuilder.newColumn('notas').withTitle('N.Carro'),
                     DTColumnBuilder.newColumn('numeroCiclo').withTitle('N.Progresivo'),
-                    DTColumnBuilder.newColumn('programa').withTitle('N.Programa'),
+                    DTColumnBuilder.newColumn('programa').withTitle('N.Programa').renderWith(function (data, type, full, meta) {
+                        var x = parseInt(data);
+                        return x;
+                    }),
                     DTColumnBuilder.newColumn('codigoProducto').withTitle('Cod.Producto'),
                     DTColumnBuilder.newColumn('lote').withTitle('Lote'),
-                    DTColumnBuilder.newColumn('horaInicio').withTitle('HoraInicio').renderWith(function (data, type, full, meta) {
-                        var x = moment(data, "DD.MM.YYYY HH.mm.ss").toDate();
-                        var y = moment(x).format("YYYY-MM-DD HH:mm:ss");
-                        return y
+                    DTColumnBuilder.newColumn('tinicio').withTitle('HoraInicio').renderWith(function (data, type, full, meta) {
+                        if (data.includes(".")) {
+                           
+                            var t = data.split(" ");
+                            var fechaInicio = t[0];
+                            var HoraInicio = t[2];
+                            var h = HoraInicio.split(".");
+                            var dia = parseInt(h[0]);
+                            var hora = h[1];
+                            var x = moment(fechaInicio, "DD.MM.YYYY").toDate();
+                            var result = new Date(x);
+                            result.setDate(result.getDate() + dia);              
+                            var y = moment(result).format("YYYY-MM-DD") + " " + hora;
+                          
+                            return y;
+                           
+                          
+                        } else {
+                            var x = moment(data, "DD.MM.YYYY HH.mm.ss").toDate();
+                            var y = moment(x).format("YYYY-MM-DD HH:mm:ss");
+
+                            return y
+                        }
                     }),
                     DTColumnBuilder.newColumn('horaFin').withTitle('HoraFin').renderWith(function (data, type, full, meta) {
                         var x = moment(data, "DD.MM.YYYY HH.mm.ss").toDate();

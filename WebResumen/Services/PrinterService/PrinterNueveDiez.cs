@@ -2,6 +2,7 @@
 using System;
 using System.Drawing;
 using System.Drawing.Printing;
+using System.Globalization;
 using System.Linq;
 using WebResumen.Models;
 
@@ -28,13 +29,16 @@ namespace WebResumen.Services.PrinterService
             System.Drawing.Font _font = new System.Drawing.Font("Verdana", 8, FontStyle.Regular);
             System.Drawing.Font _fontDos = new System.Drawing.Font("verdana", 7, FontStyle.Regular);
             System.Drawing.Font _negrita = new System.Drawing.Font("Verdana", 8, FontStyle.Bold);
+            System.Drawing.Font _negritaDos = new System.Drawing.Font("Verdana", 7, FontStyle.Bold);
             SolidBrush _solid = new SolidBrush(Color.Black);
 
             StringFormat _tf = new StringFormat();
             StringFormat _td = new StringFormat();
             RectangleF _rect = new RectangleF();
+            RectangleF _recta = new RectangleF();
 
             _rect = new RectangleF(450, 760, 350, 300);
+            _recta = new RectangleF(180, 145, 600, 30);//25/06/2021
             _tf.Alignment = StringAlignment.Near;
             _td.FormatFlags = StringFormatFlags.LineLimit;
             _td.Trimming = StringTrimming.Word;
@@ -81,7 +85,8 @@ namespace WebResumen.Services.PrinterService
                 graph.DrawString("ID. MAQUINA:", _font, _solid, new RectangleF(20, 130, width, height), _tf);
                 graph.DrawString(q.IdAutoclave + " " + "<--[  ]", _negrita, _solid, new RectangleF(180, 130, width, height), _tf);
                 graph.DrawString("NOTAS:", _font, _solid, new RectangleF(20, 145, width, height), _tf);
-                graph.DrawString(q.Notas.Trim() + " " + "<--[  ]", _negrita, _solid, new RectangleF(180, 145, width, height), _tf);
+                //graph.DrawString(q.Notas.Trim() + " " + "<--[  ]", _negrita, _solid, new RectangleF(180, 145, width, height), _tf);
+                graph.DrawString(q.Notas.Trim() + " " + "<--[  ]", _negritaDos, _solid, _recta, _td);
 
                 graph.DrawString("MODELO:", _font, _solid, new RectangleF(20, 170, width, height), _tf);
                 graph.DrawString(q.Modelo, _font, _solid, new RectangleF(180, 170, width, height), _tf);
@@ -97,7 +102,11 @@ namespace WebResumen.Services.PrinterService
                 graph.DrawString(q.DuracionTotalF2, _negrita, _solid, new RectangleF(420, 230, width, height), _tf);
                 graph.DrawString("min.s", _font, _solid, new RectangleF(460, 230, width, height), _tf);
                 graph.DrawString("< --[  ]", _negrita, _solid, new RectangleF(495, 230, width, height), _tf);
-                graph.DrawString("I " + " " + q.Tinicio, _negrita, _solid, new RectangleF(600, 230, width, height), _tf);
+               // graph.DrawString("I " + " " + q.Tinicio, _negrita, _solid, new RectangleF(600, 230, width, height), _tf);
+
+                DateTime temp = DateTime.ParseExact(q.Tinicio, "dd/MM/yy HH:mm:ss", CultureInfo.InvariantCulture);
+                DateTime fechaInicioFormat = DateTime.ParseExact(temp.ToString("dd/MM/yyyy HH:mm:ss"), "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
+                graph.DrawString("I " + " " + fechaInicioFormat, _negrita, _solid, new RectangleF(600, 230, width, height), _tf);
 
                 graph.DrawString("TIEMPO TP  TE2  TE3  TE4  TE9 TE10", _font, _solid, new RectangleF(20, 250, width, height), _tf);
                 graph.DrawString(q.Tif2, _font, _solid, new RectangleF(300, 250, width, height), _tf);
@@ -105,9 +114,13 @@ namespace WebResumen.Services.PrinterService
 
 
                 graph.DrawString("TIEMPO TP  TE2  TE3  TE4  TE9 TE10 ", _font, _solid, new RectangleF(20, 270, width, height), _tf);
-                graph.DrawString(q.Tff2.Substring(0, 6), _font, _solid, new RectangleF(300, 270, width, height), _tf);
-                graph.DrawString(q.Tff2.Substring(6, 6).Trim(), _negrita, _solid, new RectangleF(345, 270, width, height), _tf);
-                graph.DrawString(q.Tff2.Substring(12), _font, _solid, new RectangleF(370, 270, width, height), _tf);
+                var tff2 = q.Tff2.Split(new String[] { "  " }, StringSplitOptions.RemoveEmptyEntries);
+                graph.DrawString(tff2[0], _font, _solid, new RectangleF(300, 270, width, height), _tf);
+                graph.DrawString(tff2[1].Trim(), _negrita, _solid, new RectangleF(345, 270, width, height), _tf);
+                graph.DrawString($"{tff2[2]}  {tff2[3]}  {tff2[4]}  {tff2[5]}  {tff2[6]}", _font, _solid, new RectangleF(380, 270, width, height), _tf);
+                //graph.DrawString(q.Tff2.Substring(0, 6), _font, _solid, new RectangleF(300, 270, width, height), _tf);
+                //graph.DrawString(q.Tff2.Substring(6, 6).Trim(), _negrita, _solid, new RectangleF(345, 270, width, height), _tf);
+                //graph.DrawString(q.Tff2.Substring(12), _font, _solid, new RectangleF(370, 270, width, height), _tf);
                 graph.DrawString(q.TfsubF2, _font, _solid, new RectangleF(600, 270, width, height), _tf);
 
 
@@ -119,18 +132,30 @@ namespace WebResumen.Services.PrinterService
                 graph.DrawString("< --[  ]", _negrita, _solid, new RectangleF(495, 295, width, height), _tf);
 
                 graph.DrawString("TIEMPO TP  TE2  TE3  TE4  TE9 TE10 ", _font, _solid, new RectangleF(20, 315, width, height), _tf);
-                graph.DrawString(q.Tif3.Substring(0, 6), _font, _solid, new RectangleF(300, 315, width, height), _tf);
-                graph.DrawString(q.Tif3.Substring(6, 6).Trim(), _negrita, _solid, new RectangleF(345, 315, width, height), _tf);
-                graph.DrawString(q.Tif3.Substring(12), _font, _solid, new RectangleF(370, 315, width, height), _tf);
-                graph.DrawString(q.TfsubF2, _font, _solid, new RectangleF(600, 315, width, height), _tf);
+                var tif3 = q.Tif3.Split(new String[] { "  " }, StringSplitOptions.RemoveEmptyEntries);
+                graph.DrawString(tif3[0], _font, _solid, new RectangleF(300, 315, width, height), _tf);
+                graph.DrawString(tif3[1].Trim(), _negrita, _solid, new RectangleF(345, 315, width, height), _tf);
+                graph.DrawString($"{tif3[2]}  {tif3[3]}  {tif3[4]}  {tif3[5]}  {tif3[6]}", _font, _solid, new RectangleF(380, 315, width, height), _tf);
+                 graph.DrawString(q.TisubF3, _font, _solid, new RectangleF(600, 315, width, height), _tf); //
+                //graph.DrawString(q.Tif3.Substring(0, 6), _font, _solid, new RectangleF(300, 315, width, height), _tf);
+                //graph.DrawString(q.Tif3.Substring(6, 6).Trim(), _negrita, _solid, new RectangleF(345, 315, width, height), _tf);
+                //graph.DrawString(q.Tif3.Substring(12), _font, _solid, new RectangleF(370, 315, width, height), _tf);
+               
 
 
                 graph.DrawString("TIEMPO TP  TE2  TE3  TE4  TE9 TE10 ", _font, _solid, new RectangleF(20, 335, width, height), _tf);
-                graph.DrawString(q.Tff3.Substring(0, 6), _font, _solid, new RectangleF(300, 335, width, height), _tf);
-                graph.DrawString(q.Tff3.Substring(6, 6).Trim(), _negrita, _solid, new RectangleF(345, 335, width, height), _tf);
-                graph.DrawString(q.Tff3.Substring(12), _font, _solid, new RectangleF(370, 335, width, height), _tf);
+                var tff3 = q.Tff3.Split(new String[] { "  " }, StringSplitOptions.RemoveEmptyEntries);
+                graph.DrawString(tff3[0], _font, _solid, new RectangleF(300, 335, width, height), _tf);
+                graph.DrawString(tff3[1].Trim(), _negrita, _solid, new RectangleF(345, 335, width, height), _tf);
+                graph.DrawString($"{tff3[2]}  {tff3[3]}  {tff3[4]}  {tff3[5]}  {tff3[6]}", _font, _solid, new RectangleF(380, 335, width, height), _tf);
                 graph.DrawString(q.TfsubF3.Substring(0, 2), _font, _solid, new RectangleF(600, 335, width, height), _tf);
                 graph.DrawString(q.TfsubF3.Substring(2) + " " + "<--[  ]", _negrita, _solid, new RectangleF(605, 335, width, height), _tf);
+
+                //graph.DrawString(q.Tff3.Substring(0, 6), _font, _solid, new RectangleF(300, 335, width, height), _tf);
+                //graph.DrawString(q.Tff3.Substring(6, 6).Trim(), _negrita, _solid, new RectangleF(345, 335, width, height), _tf);
+                //graph.DrawString(q.Tff3.Substring(12), _font, _solid, new RectangleF(370, 335, width, height), _tf);
+
+
 
 
                 graph.DrawString("FASE 4:  " + q.Fase4, _font, _solid, new RectangleF(20, 360, width, height), _tf);
@@ -183,9 +208,12 @@ namespace WebResumen.Services.PrinterService
                 graph.DrawString(q.DuracionTotalF11 + " " + "min.s", _font, _solid, new RectangleF(420, 645, width, height), _tf);
 
                 graph.DrawString("FASE 12: FIN DE CICLO         TIEMPO TP  TE2 TE3 TE4 TE9 TE10", _font, _solid, new RectangleF(20, 670, width, height), _tf);
+                var tif12 = q.Tif12.Split(new String[] { "  " }, StringSplitOptions.RemoveEmptyEntries);
+                graph.DrawString(tif12[0] + " " + "<--[  ]", _negrita, _solid, new RectangleF(20, 690, width, height), _tf);
+                graph.DrawString($"{tif12[1]}  {tif12[2]}  {tif12[3]}  {tif12[4]}  {tif12[5]}  {tif12[6]}", _font, _solid, new RectangleF(200, 690, width, height), _tf);
 
-                graph.DrawString(q.Tif12.Substring(0, 6) + " " + "<--[  ]", _negrita, _solid, new RectangleF(20, 690, width, height), _tf);
-                graph.DrawString(q.Tif12.Substring(6), _font, _solid, new RectangleF(200, 690, width, height), _tf);
+                //graph.DrawString(q.Tif12.Substring(0, 6) + " " + "<--[  ]", _negrita, _solid, new RectangleF(20, 690, width, height), _tf);
+                //graph.DrawString(q.Tif12.Substring(6), _font, _solid, new RectangleF(200, 690, width, height), _tf);
                 graph.DrawString(q.TisubF12.Substring(0, 2), _font, _solid, new RectangleF(600, 690, width, height), _tf);
                 graph.DrawString(q.TisubF12.Substring(2) + " " + "<--[  ]", _negrita, _solid, new RectangleF(605, 690, width, height), _tf);
 
@@ -226,14 +254,10 @@ namespace WebResumen.Services.PrinterService
                 graph.DrawString(q.AperturaPuerta, _font, _solid, new RectangleF(20, 915, width, height), _tf);
                 graph.DrawString("FIRMA OPERADOR        _______________________ ", _font, _solid, new RectangleF(20, 955, width, height), _tf);
                 graph.DrawString("FIRMA GAR.DE CALID.   _______________________ ", _font, _solid, new RectangleF(20, 1015, width, height), _tf);
-                // graph.DrawString("Pág 1 de 1  ", _font, _solid, new RectangleF(640, 1120, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
-                graph.DrawString("Pág 1 de 1  ", _font, _solid, new RectangleF(710, 1050, width, height), _tf);
-
+               
                 if (q.ErrorCiclo == "")
                 {
-                    //graph.DrawString("ALARMAS:", _fontDos, _solid, new RectangleF(450, 735, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
-                    //graph.DrawString("* NO EXISTEN ALARMAS REGISTRADAS", _fontDos, _solid, new RectangleF(450, 755, _pr.DefaultPageSettings.PrintableArea.Width, _pr.DefaultPageSettings.PrintableArea.Height), _tf);
-
+                    graph.DrawString("Pág 1 de 1  ", _font, _solid, new RectangleF(650, 1050, width, height), _tf);
                 }
                 else
                 {
@@ -244,7 +268,7 @@ namespace WebResumen.Services.PrinterService
                         if (page == 1)
                         {
                             graph.DrawString("ALARMAS:", _fontDos, _solid, new RectangleF(450, 740, width, height), _tf);
-                            graph.DrawString("Pág 1 de 2  ", _font, _solid, new RectangleF(710, 1050, width, height), _tf);
+                            graph.DrawString("Pág 1 de 2  ", _font, _solid, new RectangleF(650, 1050, width, height), _tf);
                             e.HasMorePages = true;
                             for (int i = 0; i < error.Length; i++)
                             {
@@ -265,7 +289,7 @@ namespace WebResumen.Services.PrinterService
                             graph.DrawString("Impreso: " + DateTime.Now, _font, _solid, new RectangleF(580, 5, width, height), _tf);
                             graph.DrawString("Por: " + _httpContextAccessor.HttpContext.Session.GetString("SessionName"), _font, _solid, new RectangleF(580, 20, width, height), _tf);
 
-                            graph.DrawString("Pág 2 de 2  ", _font, _solid, new RectangleF(710, 1050, width, height), _tf);
+                            graph.DrawString("Pág 2 de 2  ", _font, _solid, new RectangleF(650, 1050, width, height), _tf);
                             e.HasMorePages = false;
                             for (int i = 0; i < error.Length; i++)
                             {
@@ -288,6 +312,7 @@ namespace WebResumen.Services.PrinterService
                         graph.DrawString("ALARMAS:", _fontDos, _solid, new RectangleF(450, 735, width, height), _tf);
 
                         graph.DrawString(q.ErrorCiclo, _fontDos, _solid, _rect, _td);
+                        graph.DrawString("Pág 1 de 1  ", _font, _solid, new RectangleF(650, 1050, width, height), _tf);
                     }
 
                 }

@@ -183,7 +183,7 @@ app.controller('homeCtrl', function ($scope, $http, $interval,$timeout,$q) {
 
 
 
-    $interval($scope.LoadData, 30000);
+    $interval($scope.LoadData, 60000);
     
     
 });
